@@ -69,7 +69,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
             else -> DateViewHolder(parent)
         }
         if (vh !is DateViewHolder) {
-            vh.itemView.setOnClickListener {
+            vh.container?.setOnClickListener {
                 val pos = vh.adapterPosition
                 getItem(pos)?.let { item -> onItemCLickListener?.onItemClick(pos, item) }
             }
@@ -82,6 +82,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     abstract class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val container: View? = itemView.findViewById(R.id.container)
         abstract fun bind(item: LogItem)
     }
 

@@ -1,5 +1,6 @@
 package com.example.glucose_tracker.ui.log_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.glucose_tracker.R
+import com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.example.glucose_tracker.utils.setShown
 
 class LogListFragment: Fragment() {
@@ -25,6 +27,7 @@ class LogListFragment: Fragment() {
         adapter = LogListAdapter(recyclerView)
         adapter.setOnItemClickListener { pos, item ->
             Log.d("TAG", "$pos $item")
+            startActivity(Intent(context, EditGlucoseActivity::class.java))
         }
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(HeaderDecor(adapter))
