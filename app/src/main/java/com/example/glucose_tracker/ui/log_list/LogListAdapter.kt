@@ -90,11 +90,13 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     ) {
         private val textValue = itemView.findViewById<TextView>(R.id.text_value)
         private val textTime = itemView.findViewById<TextView>(R.id.text_time)
-        // private val textMeasured = itemView.findViewById<TextView>(R.id.text_measured) todo
+        private val textMeasured = itemView.findViewById<TextView>(R.id.text_measured)
+        private val measuredArr = itemView.resources.getStringArray(R.array.measured)
 
         override fun bind(item: LogItem) {
             textValue.text = item.valueMmol
             textTime.text = item.time
+            textMeasured.text = measuredArr[item.measured ?: 0]
         }
     }
 

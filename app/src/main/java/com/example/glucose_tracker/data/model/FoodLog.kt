@@ -14,6 +14,8 @@ data class FoodLog(
     @ColumnInfo(name = "food_id")
     val foodId: Long,
 
+    val quantity: Int,
+
     val date: LocalDate,
     val time: LocalTime
 )

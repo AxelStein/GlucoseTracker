@@ -9,4 +9,38 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="fasting">Fasting</string>
+
+    <string name="before_breakfast">Before breakfast</string>
+    <string name="after_breakfast">After breakfast</string>
+
+    <string name="before_lunch">Before lunch</string>
+    <string name="after_lunch">After lunch</string>
+
+    <string name="before_dinner">Before dinner</string>
+    <string name="after_dinner">After dinner</string>
+
+    <string name="before_supper">Before supper</string>
+    <string name="after_supper">After supper</string>
+
+    <string name="other">Other</string>
+
+    <string-array name="measured">
+        <item>@string/fasting</item>
+
+        <item>@string/before_breakfast</item>
+        <item>@string/after_breakfast</item>
+
+        <item>@string/before_lunch</item>
+        <item>@string/after_lunch</item>
+
+        <item>@string/before_dinner</item>
+        <item>@string/after_dinner</item>
+
+        <item>@string/before_supper</item>
+        <item>@string/after_supper</item>
+
+        <item>@string/other</item>
+    </string-array>
 </resources>
