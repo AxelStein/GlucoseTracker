@@ -3,11 +3,13 @@ package com.example.glucose_tracker.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.ui.log_list.LogListFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import com.example.glucose_tracker.utils.hide
+import com.example.glucose_tracker.utils.show
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +22,20 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.content, LogListFragment(), "LogList")
             .commit()
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        val fab = findViewById<ExtendedFloatingActionButton>(R.id.fab)
+        val fabMenu = findViewById<View>(R.id.fab_menu)
+        val dim = findViewById<View>(R.id.dim)
+
+        dim.setOnClickListener {
+            it.hide()
+            fabMenu.hide()
+            fab.show()
+        }
+
+        fab.setOnClickListener {
+            fab.hide()
+            fabMenu.show()
+            dim.show()
         }
     }
 
