@@ -110,6 +110,7 @@
                 app:drawableStartCompat="@drawable/outline_description_black_24dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/btn_add_meal"
                 android:clickable="true"
                 android:focusable="true"

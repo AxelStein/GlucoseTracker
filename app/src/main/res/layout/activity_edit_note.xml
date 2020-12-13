@@ -33,37 +33,35 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/btn_date"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="3"
-                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawablePadding="16dp"
                 android:focusable="true"
-                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp"
                 android:text="Thu, December 10"
-                android:textColor="@color/black"
                 android:textSize="16sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:drawablePadding="16dp"
                 app:drawableStartCompat="@drawable/baseline_date_range_black_24dp" />
 
             <TextView
-                android:id="@+id/btn_time"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawablePadding="16dp"
                 android:focusable="true"
-                android:gravity="center_vertical|end"
+                android:background="?attr/selectableItemBackground"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:drawablePadding="16dp"
+                app:drawableStartCompat="@drawable/baseline_access_time_black_24dp"
                 android:text="12:30"
-                android:textColor="@color/black"
                 android:textSize="16sp"
-                app:drawableStartCompat="@drawable/baseline_access_time_black_24dp" />
+                android:textColor="@color/black"
+                android:gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"/>
 
         </LinearLayout>
 
@@ -72,29 +70,17 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:helperText="mmol/L"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_glucose"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Sugar concentration"
-                android:maxLength="4"
+                android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
-                android:inputType="numberDecimal" />
+                android:hint="Note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Spinner
-            android:id="@+id/spinner_measured"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
-            android:entries="@array/measured" />
 
     </LinearLayout>
 

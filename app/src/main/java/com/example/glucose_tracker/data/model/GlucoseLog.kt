@@ -9,13 +9,13 @@ import org.joda.time.LocalTime
 @Entity(tableName = "glucose_log")
 data class GlucoseLog(
         @PrimaryKey
-        val id: Long,
+        val id: Long?,
 
         @ColumnInfo(name = "value_mmol")
         val valueMmol: Float,
 
         @ColumnInfo(name = "value_mg")
-        val valueMg: Float,
+        val valueMg: Int,
 
         val measured: Int,
         val date: LocalDate,

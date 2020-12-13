@@ -1,11 +1,13 @@
 package com.example.glucose_tracker.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.glucose_tracker.R
+import com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.example.glucose_tracker.ui.log_list.LogListFragment
 import com.example.glucose_tracker.utils.hide
 import com.example.glucose_tracker.utils.show
@@ -36,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             fab.hide()
             fabMenu.show()
             dim.show()
+        }
+
+        findViewById<View>(R.id.btn_add_glucose).setOnClickListener {
+            startActivity(Intent(this, EditGlucoseActivity::class.java))
+            dim.performClick()
         }
     }
 

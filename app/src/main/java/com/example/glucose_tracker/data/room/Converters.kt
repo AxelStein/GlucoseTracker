@@ -17,7 +17,7 @@ class Converters {
 
     @TypeConverter
     fun timeToStr(time: LocalTime): String {
-        return time.toString()
+        return time.toString("HH:mm")
     }
 
     @TypeConverter

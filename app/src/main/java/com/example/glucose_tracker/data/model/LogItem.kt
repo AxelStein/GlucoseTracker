@@ -20,5 +20,5 @@ data class LogItem(
         val note: String?,
         val foods: String?,
         val date: String,
-        val time: String
+        val time: String,
 )

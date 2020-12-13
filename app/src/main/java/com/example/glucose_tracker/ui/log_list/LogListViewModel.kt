@@ -20,6 +20,25 @@ class LogListViewModel: ViewModel() {
         items = dao.getItems().map(::formatItem).toLiveData(50)
     }
 
+    /*
+    private fun formatItems(items: List<LogItem>): List<LogItem> {
+        items.sortedWith(object : Comparator<LogItem> {
+            override fun compare(a: LogItem?, b: LogItem?): Int {
+                val d1 = LocalDate(a?.date)
+                val d2 = LocalDate(b?.date)
+                val c = d2.compareTo(d1)
+                if (c == 0) {
+                    val t1 = LocalTime(a?.date)
+                    val t2 = LocalTime(a?.date)
+                    return t1.compareTo(t2)
+                }
+                return c
+            }
+        })
+        return items.sortedWith(compareByDescending { it.date })
+    }
+    */
+
     private fun formatItem(item: LogItem): LogItem {
         item.valueMmol = item.valueMmol + " mmol/L"
         return item
