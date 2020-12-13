@@ -17,7 +17,7 @@ class LogListViewModel: ViewModel() {
 
     init {
         App.appComponent.inject(this)
-        items = dao.getItems().map(::formatItem).toLiveData(50)
+        items = dao.getItems().toLiveData(50)
     }
 
     /*
@@ -38,9 +38,10 @@ class LogListViewModel: ViewModel() {
         return items.sortedWith(compareByDescending { it.date })
     }
     */
-
+    /*
     private fun formatItem(item: LogItem): LogItem {
         item.valueMmol = item.valueMmol + " mmol/L"
         return item
     }
+    */
 }

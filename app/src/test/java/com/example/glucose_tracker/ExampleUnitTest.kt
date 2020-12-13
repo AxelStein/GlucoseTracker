@@ -1,7 +1,7 @@
 package com.example.glucose_tracker
 
-import com.example.glucose_tracker.data.model.LogItem
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
+import org.joda.time.LocalTime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -13,6 +13,7 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        /*
         var list = listOf(
                 LogItem(1, 0, null, null, 0, null, null, "2020-12-09T20:00:30.740+02:00", ""),
                 LogItem(2, 0, null, null, 0, null, null, "2020-12-09T07:20:30.740+02:00", ""),
@@ -35,6 +36,12 @@ class ExampleUnitTest {
             val time = dateTime.toLocalTime()
             println("date=$date time=$time")
         }
+        */
+        val date = LocalDate("2020-12-12")
+        val time = LocalTime("17:20")
+        println(date.toString("yyyy-MM-dd.SSSZZ"))
+        //var dateTime = DateTime().withDate(date).withTime(time)
+        //println(dateTime)
         assertEquals(4, 2 + 2)
     }
 }

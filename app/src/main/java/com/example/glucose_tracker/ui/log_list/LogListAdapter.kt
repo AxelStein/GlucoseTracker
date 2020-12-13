@@ -14,6 +14,7 @@ import com.example.glucose_tracker.R
 import com.example.glucose_tracker.data.model.LogItem
 import com.example.glucose_tracker.ui.OnItemClickListener
 import com.example.glucose_tracker.utils.formatDate
+import com.example.glucose_tracker.utils.formatTime
 import org.joda.time.LocalDate
 
 class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<LogItem>() {
@@ -40,12 +41,13 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     override fun submitList(pagedList: PagedList<LogItem>?) {
         super.submitList(pagedList)
 
-        var date = ""
+        var date: LocalDate? = null
         pagedList?.forEachIndexed { index, item ->
-            if (date.isEmpty() || item.date != date) {
-                headers[index] = formatDate(recyclerView.context, LocalDate(item.date))
+            if (date == null || date != item.date) {
+                headers[index] = formatDate(recyclerView.context, item.dateTime)
                 date = item.date
             }
+            item.timeFormatted = formatTime(recyclerView.context, item.dateTime)
         }
     }
 
@@ -66,13 +68,11 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
             0 -> GlucoseViewHolder(parent)
             1 -> NoteViewHolder(parent)
             2 -> FoodsViewHolder(parent)
-            else -> DateViewHolder(parent)
+            else -> TODO()
         }
-        if (vh !is DateViewHolder) {
-            vh.container?.setOnClickListener {
-                val pos = vh.adapterPosition
-                getItem(pos)?.let { item -> onItemCLickListener?.onItemClick(pos, item) }
-            }
+        vh.container?.setOnClickListener {
+            val pos = vh.adapterPosition
+            getItem(pos)?.let { item -> onItemCLickListener?.onItemClick(pos, item) }
         }
         return vh
     }
@@ -96,7 +96,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
         override fun bind(item: LogItem) {
             textValue.text = item.valueMmol
-            textTime.text = item.time
+            textTime.text = item.timeFormatted
             textMeasured.text = measuredArr[item.measured ?: 0]
         }
     }
@@ -109,7 +109,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
         override fun bind(item: LogItem) {
             textNote.text = item.note
-            textTime.text = item.time
+            textTime.text = item.timeFormatted
         }
     }
 
@@ -121,15 +121,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
         override fun bind(item: LogItem) {
             textFoods.text = item.foods
-            textTime.text = item.time
-        }
-    }
-
-    class DateViewHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_date, parent, false)
-    ) {
-        override fun bind(item: LogItem) {
-            (itemView as TextView).text = item.date
+            textTime.text = item.timeFormatted
         }
     }
 }

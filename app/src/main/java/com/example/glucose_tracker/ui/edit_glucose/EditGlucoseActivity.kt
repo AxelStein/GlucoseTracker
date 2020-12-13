@@ -18,6 +18,7 @@ import com.example.glucose_tracker.utils.formatDate
 import com.example.glucose_tracker.utils.formatTime
 import com.example.glucose_tracker.utils.is24HourFormat
 import com.google.android.material.textfield.TextInputEditText
+import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 import org.joda.time.MutableDateTime
@@ -49,7 +50,7 @@ class EditGlucoseActivity: AppCompatActivity() {
             ).show()
         }
         viewModel.date.observe(this, {
-            btnDate.text = formatDate(this, it)
+            btnDate.text = formatDate(this, DateTime().withDate(it))
         })
 
         val btnTime = findViewById<TextView>(R.id.btn_time)
@@ -63,10 +64,10 @@ class EditGlucoseActivity: AppCompatActivity() {
             ).show()
         }
         viewModel.time.observe(this, {
-            val dateTime = MutableDateTime.now()
-            dateTime.hourOfDay = it.hourOfDay
-            dateTime.minuteOfHour = it.minuteOfHour
-            btnTime.text = formatTime(this, dateTime.millis)
+            val dt = MutableDateTime.now()
+            dt.hourOfDay = it.hourOfDay
+            dt.minuteOfHour = it.minuteOfHour
+            btnTime.text = formatTime(this, dt.toDateTime())
         })
 
         val inputGlucose = findViewById<TextInputEditText>(R.id.input_glucose)
