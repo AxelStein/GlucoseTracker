@@ -2,6 +2,8 @@ package com.example.glucose_tracker.ui.edit_glucose
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import com.example.glucose_tracker.R
+import com.example.glucose_tracker.data.model.LogItem
+import com.example.glucose_tracker.ui.dialogs.ConfirmDialog
+import com.example.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.example.glucose_tracker.utils.formatDate
 import com.example.glucose_tracker.utils.formatTime
 import com.example.glucose_tracker.utils.is24HourFormat
@@ -21,7 +26,21 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.joda.time.DateTime
 
-class EditGlucoseActivity: AppCompatActivity() {
+class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
+    companion object {
+        private const val EXTRA_ID = "com.example.glucose_tracker.ui.edit_glucose.EXTRA_ID"
+
+        fun launch(context: Context) {
+            context.startActivity(Intent(context, EditGlucoseActivity::class.java))
+        }
+
+        fun launch(context: Context, item: LogItem) {
+            val intent = Intent(context, EditGlucoseActivity::class.java)
+            intent.putExtra(EXTRA_ID, item.id)
+            context.startActivity(intent)
+        }
+    }
+
     private val viewModel: EditGlucoseViewModel by viewModels()
     private var initInputGlucose = true
     private var initSpinner = true
@@ -35,6 +54,8 @@ class EditGlucoseActivity: AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
+
+        viewModel.loadData(intent.getIntExtra(EXTRA_ID, 0))
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
@@ -110,10 +131,20 @@ class EditGlucoseActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.menu_save -> {
-                viewModel.save()
+            R.id.menu_save -> viewModel.save()
+            R.id.menu_delete -> {
+                ConfirmDialog.Builder().from(this)
+                        .title("Are you sure?")
+                        .message("Log will be permanently deleted.")
+                        .positiveBtnText("delete")
+                        .negativeBtnText("cancel")
+                        .show()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onConfirm(tag: String?) {
+        viewModel.delete()
     }
 }

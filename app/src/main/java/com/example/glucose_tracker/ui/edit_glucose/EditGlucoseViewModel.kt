@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.glucose_tracker.data.model.GlucoseLog
 import com.example.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.example.glucose_tracker.ui.App
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
@@ -27,11 +29,31 @@ class EditGlucoseViewModel : ViewModel() {
     private val _actionFinish = MutableLiveData(false)
     val actionFinish = _actionFinish as LiveData<Boolean>
 
+    private val log = MutableLiveData<GlucoseLog>()
+
     @Inject
     lateinit var dao: GlucoseLogDao
 
     init {
         App.appComponent.inject(this)
+    }
+
+    fun loadData(id: Int) {
+        if (log.value == null) {
+            dao.get(id).subscribe(object : SingleObserver<GlucoseLog> {
+                override fun onSubscribe(d: Disposable) {
+                    
+                }
+
+                override fun onSuccess(t: GlucoseLog) {
+
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+            })
+        }
     }
 
     fun save() {
@@ -81,5 +103,9 @@ class EditGlucoseViewModel : ViewModel() {
 
     fun setMeasured(measured: Int) {
         _measured.value = measured
+    }
+
+    fun delete() {
+        // todo
     }
 }
