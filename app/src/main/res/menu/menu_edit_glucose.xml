@@ -6,4 +6,7 @@
         android:id="@+id/menu_save"
         android:title="save"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_remove"
+        android:title="Remove" />
 </menu>

@@ -4,35 +4,31 @@ import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.LocalTime
 
 data class LogItem(
-        @PrimaryKey
-        val id: Long,
+    @PrimaryKey
+    val id: Long,
 
-        @ColumnInfo(name = "item_type")
-        val itemType: Int,
+    @ColumnInfo(name = "item_type")
+    val itemType: Int,
 
-        @ColumnInfo(name = "value_mmol")
-        var valueMmol: String?,
+    @ColumnInfo(name = "value_mmol")
+    var valueMmol: String?,
 
-        @ColumnInfo(name = "value_mg")
-        var valueMg: String?,
+    @ColumnInfo(name = "value_mg")
+    var valueMg: String?,
 
-        val measured: Int?,
-        val note: String?,
-        val foods: String?,
-        val date: LocalDate,
-        val time: LocalTime,
+    val measured: Int?,
+    val note: String?,
+    val foods: String?,
+
+    @ColumnInfo(name = "date_time")
+    val dateTime: DateTime
 ) {
-        @Ignore
-        var dateTime: DateTime = DateTime().withDate(date).withTime(time)
+    @Ignore
+    var timeFormatted: String? = null
 
-        @Ignore
-        var timeFormatted: String? = null
-
-        init {
-            valueMmol += " mmol/L"
-        }
+    init {
+        valueMmol += " mmol/L"
+    }
 }

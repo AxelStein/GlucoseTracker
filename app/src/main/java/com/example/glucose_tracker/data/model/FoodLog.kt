@@ -3,19 +3,21 @@ package com.example.glucose_tracker.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.joda.time.LocalDate
-import org.joda.time.LocalTime
+import org.joda.time.DateTime
 
 @Entity(tableName = "food_log")
 data class FoodLog(
-    @PrimaryKey
-    val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "row_id")
+    val rowId: Long?,
+
+    val id: Long?,
 
     @ColumnInfo(name = "food_id")
     val foodId: Long,
 
     val quantity: Int,
 
-    val date: LocalDate,
-    val time: LocalTime
+    @ColumnInfo(name = "date_time")
+    val dateTime: DateTime?
 )

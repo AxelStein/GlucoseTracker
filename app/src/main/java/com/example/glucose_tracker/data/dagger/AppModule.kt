@@ -2,6 +2,7 @@ package com.example.glucose_tracker.data.dagger
 
 import androidx.room.Room
 import com.example.glucose_tracker.data.room.*
+import com.example.glucose_tracker.data.room.dao.*
 import com.example.glucose_tracker.ui.App
 import dagger.Module
 import dagger.Provides

@@ -7,6 +7,7 @@ import com.example.glucose_tracker.data.model.FoodList
 import com.example.glucose_tracker.data.model.FoodLog
 import com.example.glucose_tracker.data.model.GlucoseLog
 import com.example.glucose_tracker.data.model.NoteLog
+import com.example.glucose_tracker.data.room.dao.*
 
 @Database(entities = [FoodList::class, FoodLog::class, GlucoseLog::class, NoteLog::class],
         version = 1, exportSchema = false)

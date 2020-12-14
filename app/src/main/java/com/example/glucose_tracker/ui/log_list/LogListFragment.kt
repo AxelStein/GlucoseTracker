@@ -30,7 +30,6 @@ class LogListFragment: Fragment() {
             }
         }
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(HeaderDecor(adapter))
         return root
     }
 

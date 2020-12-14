@@ -1,4 +1,4 @@
-package com.example.glucose_tracker.data.room
+package com.example.glucose_tracker.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

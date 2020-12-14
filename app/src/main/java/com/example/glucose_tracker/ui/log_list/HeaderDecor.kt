@@ -16,6 +16,10 @@ class HeaderDecor(private val adapter: HeaderAdapter?) : RecyclerView.ItemDecora
         fun getHeaderView(position: Int): View
     }
 
+    fun invalidate() {
+        headers.clear()
+    }
+
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val position = parent.getChildLayoutPosition(view)
         if (position != RecyclerView.NO_POSITION && adapter!!.hasHeader(position)) {
@@ -37,9 +41,11 @@ class HeaderDecor(private val adapter: HeaderAdapter?) : RecyclerView.ItemDecora
             if (position != RecyclerView.NO_POSITION && adapter!!.hasHeader(position)) {
                 canvas.save()
                 val headerView = headers[position]
-                canvas.translate(0f, child.y - headerView.height)
-                headerView.draw(canvas)
-                canvas.restore()
+                if (headerView != null) {
+                    canvas.translate(0f, child.y - headerView.height)
+                    headerView.draw(canvas)
+                    canvas.restore()
+                }
             }
         }
     }

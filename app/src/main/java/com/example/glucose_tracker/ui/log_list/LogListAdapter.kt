@@ -1,5 +1,6 @@
 package com.example.glucose_tracker.ui.log_list
 
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,11 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
     private var onItemCLickListener: OnItemClickListener<LogItem>? = null
     private val headers = SparseArray<String>()
+    private val headerDecor = HeaderDecor(this)
+
+    init {
+        recyclerView.addItemDecoration(headerDecor)
+    }
 
     fun setOnItemClickListener(l: (pos: Int, item: LogItem) -> Unit) {
         onItemCLickListener = object : OnItemClickListener<LogItem> {
@@ -38,17 +44,22 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
         }
     }
 
-    override fun submitList(pagedList: PagedList<LogItem>?) {
-        super.submitList(pagedList)
+    override fun submitList(list: PagedList<LogItem>?) {
+        Log.d("TAG", "submitList = $list")
+
+        recyclerView.invalidateItemDecorations()
+        headerDecor.invalidate()
+        headers.clear()
 
         var date: LocalDate? = null
-        pagedList?.forEachIndexed { index, item ->
-            if (date == null || date != item.date) {
+        list?.forEachIndexed { index, item ->
+            if (date == null || date != item.dateTime.toLocalDate()) {
                 headers[index] = formatDate(recyclerView.context, item.dateTime)
-                date = item.date
+                date = item.dateTime.toLocalDate()
             }
             item.timeFormatted = formatTime(recyclerView.context, item.dateTime)
         }
+        super.submitList(list)
     }
 
     override fun hasHeader(position: Int): Boolean = headers.indexOfKey(position) >= 0
