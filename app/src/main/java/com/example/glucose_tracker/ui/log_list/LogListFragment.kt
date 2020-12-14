@@ -1,6 +1,5 @@
 package com.example.glucose_tracker.ui.log_list
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +25,7 @@ class LogListFragment: Fragment() {
         adapter = LogListAdapter(recyclerView)
         adapter.setOnItemClickListener { _, item ->
             if (item.itemType == 0) {
-                startActivity(Intent(context, EditGlucoseActivity::class.java))
+                EditGlucoseActivity.launch(requireContext(), item)
             }
         }
         recyclerView.adapter = adapter

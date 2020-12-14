@@ -1,5 +1,6 @@
 package com.example.glucose_tracker.ui.edit_glucose
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,10 +18,10 @@ class EditGlucoseViewModel : ViewModel() {
     private val _dateTime = MutableLiveData(MutableDateTime())
     val dateTime = _dateTime as LiveData<MutableDateTime>
 
-    private val _glucose = MutableLiveData(0f)
+    private val _glucose = MutableLiveData<Float>()
     val glucose = _glucose as LiveData<Float>
 
-    private val _measured = MutableLiveData(0)
+    private val _measured = MutableLiveData<Int>()
     val measured = _measured as LiveData<Int>
 
     private val _errorGlucoseEmpty = MutableLiveData(false)
@@ -29,7 +30,7 @@ class EditGlucoseViewModel : ViewModel() {
     private val _actionFinish = MutableLiveData(false)
     val actionFinish = _actionFinish as LiveData<Boolean>
 
-    private val log = MutableLiveData<GlucoseLog>()
+    private var log: GlucoseLog? = null
 
     @Inject
     lateinit var dao: GlucoseLogDao
@@ -38,21 +39,27 @@ class EditGlucoseViewModel : ViewModel() {
         App.appComponent.inject(this)
     }
 
-    fun loadData(id: Int) {
-        if (log.value == null) {
-            dao.get(id).subscribe(object : SingleObserver<GlucoseLog> {
-                override fun onSubscribe(d: Disposable) {
-                    
-                }
+    fun loadData(id: Long) {
+        if (id != 0L && log == null) {
+            dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<GlucoseLog> {
+                override fun onSubscribe(d: Disposable) {}
 
-                override fun onSuccess(t: GlucoseLog) {
-
+                override fun onSuccess(l: GlucoseLog) {
+                    Log.d("TAG", "onSuccess $l")
+                    log = l
+                    _dateTime.postValue(l.dateTime.toMutableDateTime())
+                    _glucose.postValue(l.valueMmol)
+                    _measured.postValue(l.measured)
                 }
 
                 override fun onError(e: Throwable) {
-
+                    e.printStackTrace()
                 }
             })
+        } else {
+            _dateTime.postValue(MutableDateTime())
+            _glucose.postValue(0f)
+            _measured.postValue(0)
         }
     }
 
@@ -61,13 +68,17 @@ class EditGlucoseViewModel : ViewModel() {
             _errorGlucoseEmpty.value = true
         } else {
             val log = GlucoseLog(
-                    null,
+                    log?.id,
                     _glucose.value ?: 0f,
                     intoMgDl(_glucose.value),
                     _measured.value ?: 0,
                     _dateTime.value?.toDateTime() ?: DateTime(),
             )
-            dao.insert(log).subscribeOn(io()).subscribe()
+            var completable = dao.insert(log)
+            if (log.id != null) {
+                completable = dao.update(log)
+            }
+            completable.subscribeOn(io()).subscribe()
             _actionFinish.value = true
         }
     }
@@ -106,6 +117,9 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     fun delete() {
-        // todo
+        log?.let {
+            dao.delete(it).subscribeOn(io()).subscribe()
+            _actionFinish.value = true
+        }
     }
 }

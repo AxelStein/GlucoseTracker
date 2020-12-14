@@ -18,29 +18,20 @@
     <string name="before_lunch">Before lunch</string>
     <string name="after_lunch">After lunch</string>
 
+    <string name="before_snack">Before snack</string>
+    <string name="after_snack">After snack</string>
+
     <string name="before_dinner">Before dinner</string>
     <string name="after_dinner">After dinner</string>
 
-    <string name="before_supper">Before supper</string>
-    <string name="after_supper">After supper</string>
+    <string name="before_meal">Before meal</string>
+    <string name="after_meal">After meal</string>
 
     <string name="other">Other</string>
 
     <string-array name="measured">
         <item>@string/fasting</item>
-
-        <item>@string/before_breakfast</item>
-        <item>@string/after_breakfast</item>
-
-        <item>@string/before_lunch</item>
-        <item>@string/after_lunch</item>
-
-        <item>@string/before_dinner</item>
-        <item>@string/after_dinner</item>
-
-        <item>@string/before_supper</item>
-        <item>@string/after_supper</item>
-
-        <item>@string/other</item>
+        <item>@string/before_meal</item>
+        <item>@string/after_meal</item>
     </string-array>
 </resources>

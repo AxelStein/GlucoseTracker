@@ -55,7 +55,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
 
-        viewModel.loadData(intent.getIntExtra(EXTRA_ID, 0))
+        viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
@@ -126,6 +126,9 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_glucose, menu)
+
+        val id = intent.getLongExtra(EXTRA_ID, 0L)
+        menu?.findItem(R.id.menu_delete)?.isVisible = id != 0L
         return super.onCreateOptionsMenu(menu)
     }
 

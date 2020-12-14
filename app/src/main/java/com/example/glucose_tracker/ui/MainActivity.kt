@@ -1,6 +1,5 @@
 package com.example.glucose_tracker.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.btn_add_glucose).setOnClickListener {
-            startActivity(Intent(this, EditGlucoseActivity::class.java))
+            EditGlucoseActivity.launch(this)
             dim.performClick()
         }
     }
