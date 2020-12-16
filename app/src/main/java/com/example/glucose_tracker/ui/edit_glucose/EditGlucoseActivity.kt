@@ -24,7 +24,6 @@ import com.example.glucose_tracker.utils.formatTime
 import com.example.glucose_tracker.utils.is24HourFormat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import org.joda.time.DateTime
 
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     companion object {
@@ -42,8 +41,6 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     }
 
     private val viewModel: EditGlucoseViewModel by viewModels()
-    private var initInputGlucose = true
-    private var initSpinner = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +56,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
-            val date = viewModel.dateTime.value ?: DateTime()
+            val date = viewModel.getCurrentDateTime()
             DatePickerDialog(
                     this,
                     { _, year, month, dayOfMonth ->
@@ -71,7 +68,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
 
         val btnTime = findViewById<TextView>(R.id.btn_time)
         btnTime.setOnClickListener {
-            val time = viewModel.dateTime.value ?: DateTime()
+            val time = viewModel.getCurrentDateTime()
             TimePickerDialog(this,
                     { _, hourOfDay, minuteOfHour ->
                         viewModel.setTime(hourOfDay, minuteOfHour)
@@ -80,46 +77,41 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             ).show()
         }
 
-        viewModel.dateTime.observe(this, {
+        viewModel.dateTimeObserver().observe(this, {
             btnDate.text = formatDate(this, it)
             btnTime.text = formatTime(this, it)
         })
 
         val inputLayoutGlucose = findViewById<TextInputLayout>(R.id.input_layout_glucose)
-        viewModel.errorGlucoseEmpty.observe(this, {
+        viewModel.errorGlucoseEmptyObserver().observe(this, {
             if (it) {
                 inputLayoutGlucose.error = "There is no value"
             }
             inputLayoutGlucose.isErrorEnabled = it
         })
-        viewModel.actionFinish.observe(this, { if (it) finish() })
+        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
 
         val editGlucose = findViewById<TextInputEditText>(R.id.edit_glucose)
-        viewModel.glucose.observe(this, { value ->
-            if (initInputGlucose) {
-                initInputGlucose = false
-                if (value > 0f) {
-                    editGlucose.setText(value.toString())
-                    editGlucose.setSelection(editGlucose.length())
-                }
-                editGlucose.doAfterTextChanged {
-                    viewModel.setGlucose(it.toString())
-                }
+        editGlucose.doAfterTextChanged {
+            viewModel.setGlucose(it.toString())
+        }
+        viewModel.glucoseObserver().observe(this, { value ->
+            if (value != editGlucose.text.toString()) {
+                editGlucose.setText(value.toString())
+                editGlucose.setSelection(editGlucose.length())
             }
         })
 
         val spinnerMeasured = findViewById<Spinner>(R.id.spinner_measured)
-        viewModel.measured.observe(this, {
-            if (initSpinner) {
-                initSpinner = false
-                spinnerMeasured.setSelection(it)
-
-                spinnerMeasured.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        viewModel.setMeasured(position)
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
+        spinnerMeasured.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.setMeasured(position)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        viewModel.measuredObserver().observe(this, { value ->
+            if (value != spinnerMeasured.selectedItemPosition) {
+                spinnerMeasured.setSelection(value)
             }
         })
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.glucose_tracker.data.model.GlucoseLog
 import com.example.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.example.glucose_tracker.ui.App
+import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers.io
@@ -15,22 +16,13 @@ import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
 class EditGlucoseViewModel : ViewModel() {
-    private val _dateTime = MutableLiveData(MutableDateTime())
-    val dateTime = _dateTime as LiveData<MutableDateTime>
-
-    private val _glucose = MutableLiveData<Float>()
-    val glucose = _glucose as LiveData<Float>
-
-    private val _measured = MutableLiveData<Int>()
-    val measured = _measured as LiveData<Int>
-
-    private val _errorGlucoseEmpty = MutableLiveData(false)
-    val errorGlucoseEmpty = _errorGlucoseEmpty as LiveData<Boolean>
-
-    private val _actionFinish = MutableLiveData(false)
-    val actionFinish = _actionFinish as LiveData<Boolean>
-
-    private var log: GlucoseLog? = null
+    private val dateTime = MutableLiveData<MutableDateTime>()
+    private val glucose = MutableLiveData<String>()
+    private val measured = MutableLiveData<Int>()
+    private val errorGlucoseEmpty = MutableLiveData<Boolean>()
+    private val actionFinish = MutableLiveData<Boolean>()
+    private var id = 0L
+    private var loadData = true
 
     @Inject
     lateinit var dao: GlucoseLogDao
@@ -39,48 +31,94 @@ class EditGlucoseViewModel : ViewModel() {
         App.appComponent.inject(this)
     }
 
-    fun loadData(id: Long) {
-        if (id != 0L && log == null) {
-            dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<GlucoseLog> {
-                override fun onSubscribe(d: Disposable) {}
+    fun dateTimeObserver(): LiveData<MutableDateTime> {
+        return dateTime
+    }
 
-                override fun onSuccess(l: GlucoseLog) {
-                    Log.d("TAG", "onSuccess $l")
-                    log = l
-                    _dateTime.postValue(l.dateTime.toMutableDateTime())
-                    _glucose.postValue(l.valueMmol)
-                    _measured.postValue(l.measured)
+    fun glucoseObserver(): LiveData<String> {
+        return glucose
+    }
+
+    fun measuredObserver(): LiveData<Int> {
+        return measured
+    }
+
+    fun errorGlucoseEmptyObserver(): LiveData<Boolean> {
+        return errorGlucoseEmpty
+    }
+
+    fun actionFinishObserver(): LiveData<Boolean> {
+        return actionFinish
+    }
+
+    fun getCurrentDateTime(): DateTime {
+        return dateTime.value?.toDateTime() ?: DateTime()
+    }
+
+    fun loadData(id: Long) {
+        if (loadData) {
+            this.id = id
+            this.loadData = false
+
+            if (id != 0L) {
+                dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<GlucoseLog> {
+                    override fun onSubscribe(d: Disposable) {}
+
+                    override fun onSuccess(l: GlucoseLog) {
+                        dateTime.postValue(l.dateTime.toMutableDateTime())
+                        glucose.postValue(l.valueMmol.toString())
+                        measured.postValue(l.measured)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+                })
+            } else {
+                dateTime.postValue(MutableDateTime())
+                glucose.postValue("")
+                measured.postValue(0)
+            }
+        }
+    }
+
+    fun save() {
+        val g = glucose.value ?: ""
+        if (g.isEmpty()) {
+            errorGlucoseEmpty.value = true
+        } else {
+            val log = createLog()
+            var completable = dao.insert(log)
+            if (log.id != 0L) {
+                completable = dao.update(log)
+            }
+            Log.d("TAG", "save $log")
+            completable.subscribeOn(io()).subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onComplete() {
+                    Log.d("TAG", "onComplete")
                 }
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
                 }
             })
-        } else {
-            _dateTime.postValue(MutableDateTime())
-            _glucose.postValue(0f)
-            _measured.postValue(0)
+            actionFinish.value = true
         }
     }
 
-    fun save() {
-        if (_glucose.value != null && _glucose.value == 0f) {
-            _errorGlucoseEmpty.value = true
-        } else {
-            val log = GlucoseLog(
-                    log?.id,
-                    _glucose.value ?: 0f,
-                    intoMgDl(_glucose.value),
-                    _measured.value ?: 0,
-                    _dateTime.value?.toDateTime() ?: DateTime(),
-            )
-            var completable = dao.insert(log)
-            if (log.id != null) {
-                completable = dao.update(log)
-            }
-            completable.subscribeOn(io()).subscribe()
-            _actionFinish.value = true
-        }
+    private fun createLog(): GlucoseLog {
+        val g = glucose.value?.toFloat() ?: 0f
+        return GlucoseLog(
+            if (id == 0L) null else id,
+                glucose.value?.toFloat() ?: 0f,
+            intoMgDl(g),
+            measured.value ?: 0,
+            dateTime.value?.toDateTime() ?: DateTime()
+        )
     }
 
     private fun intoMgDl(mmolL: Float?): Int {
@@ -88,38 +126,37 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
-        _dateTime.value.apply {
+        dateTime.value.apply {
             this?.year = year
             this?.monthOfYear = month
             this?.dayOfMonth = dayOfMonth
         }
-        _dateTime.value = _dateTime.value
+        dateTime.postValue(dateTime.value)
     }
 
     fun setTime(hourOfDay: Int, minuteOfHour: Int) {
-        _dateTime.value.apply {
+        dateTime.value.apply {
             this?.hourOfDay = hourOfDay
             this?.minuteOfHour = minuteOfHour
         }
-        _dateTime.value = _dateTime.value
+        dateTime.postValue(dateTime.value)
     }
 
     fun setGlucose(value: String) {
-        val g = if (value.isEmpty()) 0f else value.toFloat()
-        if (g > 0) {
-            _errorGlucoseEmpty.value = false
+        glucose.value = value
+        if (value.isNotEmpty()) {
+            errorGlucoseEmpty.value = false
         }
-        _glucose.value = g
     }
 
     fun setMeasured(measured: Int) {
-        _measured.value = measured
+        this.measured.value = measured
     }
 
     fun delete() {
-        log?.let {
-            dao.delete(it).subscribeOn(io()).subscribe()
-            _actionFinish.value = true
+        if (id != 0L) {
+            dao.deleteById(id).subscribeOn(io()).subscribe()
+            actionFinish.value = true
         }
     }
 }

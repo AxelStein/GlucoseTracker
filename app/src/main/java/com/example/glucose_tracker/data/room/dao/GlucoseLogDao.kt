@@ -16,6 +16,9 @@ interface GlucoseLogDao {
     @Delete
     fun delete(log: GlucoseLog): Completable
 
+    @Query("delete from glucose_log where id = :id")
+    fun deleteById(id: Long): Completable
+
     @Query("select * from glucose_log where id = :id")
     fun get(id: Long): Single<GlucoseLog>
 }
