@@ -23,6 +23,7 @@
         android:paddingBottom="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
