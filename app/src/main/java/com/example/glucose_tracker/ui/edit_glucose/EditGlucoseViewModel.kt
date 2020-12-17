@@ -19,6 +19,8 @@ class EditGlucoseViewModel : ViewModel() {
     private val glucose = MutableLiveData<String>()
     private val measured = MutableLiveData<Int>()
     private val errorGlucoseEmpty = MutableLiveData<Boolean>()
+    private val errorSave = MutableLiveData<Boolean>()
+    private val errorDelete = MutableLiveData<Boolean>()
     private val actionFinish = MutableLiveData<Boolean>()
     private var id = 0L
     private var loadData = true
@@ -46,6 +48,14 @@ class EditGlucoseViewModel : ViewModel() {
         return errorGlucoseEmpty
     }
 
+    fun errorSaveObserver(): LiveData<Boolean> {
+        return errorSave
+    }
+
+    fun errorDeleteObserver(): LiveData<Boolean> {
+        return errorDelete
+    }
+
     fun actionFinishObserver(): LiveData<Boolean> {
         return actionFinish
     }
@@ -54,7 +64,13 @@ class EditGlucoseViewModel : ViewModel() {
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 
-    fun getGlucoseValue(): Float = glucose.value?.toFloat() ?: 0f
+    fun getGlucoseValue(): Float {
+        val s = glucose.value
+        if (s.isNullOrEmpty()) {
+            return 0f
+        }
+        return s.toFloat()
+    }
 
     fun getMeasured(): Int = measured.value ?: 0
 
@@ -114,7 +130,7 @@ class EditGlucoseViewModel : ViewModel() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
-                    // todo show error
+                    errorSave.postValue(true)
                 }
             })
         }
@@ -170,7 +186,7 @@ class EditGlucoseViewModel : ViewModel() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
-                    // todo show error
+                    errorDelete.postValue(true)
                 }
             })
         }

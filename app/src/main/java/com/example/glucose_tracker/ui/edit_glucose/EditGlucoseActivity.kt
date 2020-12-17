@@ -22,6 +22,8 @@ import com.example.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.example.glucose_tracker.utils.formatDate
 import com.example.glucose_tracker.utils.formatTime
 import com.example.glucose_tracker.utils.is24HourFormat
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -101,6 +103,16 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             inputLayoutGlucose.isErrorEnabled = it
         })
         viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+        viewModel.errorSaveObserver().observe(this, {
+            if (it) {
+                Snackbar.make(toolbar, "Error saving log", LENGTH_INDEFINITE).show()
+            }
+        })
+        viewModel.errorDeleteObserver().observe(this, {
+            if (it) {
+                Snackbar.make(toolbar, "Error deleting log", LENGTH_INDEFINITE).show()
+            }
+        })
 
         val editGlucose = findViewById<TextInputEditText>(R.id.edit_glucose)
         editGlucose.doAfterTextChanged {
