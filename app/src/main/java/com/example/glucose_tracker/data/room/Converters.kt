@@ -5,12 +5,8 @@ import org.joda.time.DateTime
 
 class Converters {
     @TypeConverter
-    fun dateToStr(date: DateTime): String {
-        return date.toString()
-    }
+    fun dateToStr(date: DateTime): String = date.toString()
 
     @TypeConverter
-    fun strToDate(s: String): DateTime {
-        return DateTime(s)
-    }
+    fun strToDate(s: String): DateTime = DateTime(s)
 }

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
+import com.example.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.example.glucose_tracker.ui.log_list.LogListFragment
 import com.example.glucose_tracker.utils.hide
 import com.example.glucose_tracker.utils.show
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn_add_glucose).setOnClickListener {
             EditGlucoseActivity.launch(this)
+            dim.performClick()
+        }
+
+        findViewById<View>(R.id.btn_add_note).setOnClickListener {
+            EdiNoteActivity.launch(this)
             dim.performClick()
         }
     }

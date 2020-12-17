@@ -23,7 +23,7 @@ data class LogItem(
     val foods: String?,
 
     @ColumnInfo(name = "date_time")
-    val dateTime: DateTime
+    var dateTime: DateTime
 ) {
     @Ignore
     var timeFormatted: String? = null

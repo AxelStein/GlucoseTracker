@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.edit_glucose.EditGlucoseActivity" />
+        <activity android:name=".ui.edit_note.EdiNoteActivity" />
     </application>
 
 </manifest>

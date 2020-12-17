@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
+import com.example.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.example.glucose_tracker.utils.setShown
 
 class LogListFragment: Fragment() {
@@ -24,8 +25,9 @@ class LogListFragment: Fragment() {
 
         adapter = LogListAdapter(recyclerView)
         adapter.setOnItemClickListener { _, item ->
-            if (item.itemType == 0) {
-                EditGlucoseActivity.launch(requireContext(), item)
+            when (item.itemType) {
+                0 -> EditGlucoseActivity.launch(requireContext(), item)
+                1 -> EdiNoteActivity.launch(requireContext(), item)
             }
         }
         recyclerView.adapter = adapter

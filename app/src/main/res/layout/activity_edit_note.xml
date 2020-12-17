@@ -20,6 +20,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:focusable="true"
         android:paddingBottom="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
@@ -33,52 +34,59 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:clickable="true"
-                android:focusable="true"
+                android:id="@+id/btn_date"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="3"
                 android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp"
                 android:text="Thu, December 10"
-                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:drawablePadding="16dp"
+                android:textSize="16sp"
                 app:drawableStartCompat="@drawable/baseline_date_range_black_24dp" />
 
             <TextView
-                android:clickable="true"
-                android:focusable="true"
+                android:id="@+id/btn_time"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
                 android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical|end"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:drawablePadding="16dp"
-                app:drawableStartCompat="@drawable/baseline_access_time_black_24dp"
                 android:text="12:30"
-                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:gravity="center_vertical|end"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"/>
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/baseline_access_time_black_24dp" />
 
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
+            android:id="@+id/input_layout_note"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="140">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:inputType="numberDecimal"
-                android:imeOptions="actionDone"
-                android:hint="Note"
+                android:id="@+id/edit_note"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="Note"
+                android:imeOptions="actionDone"
+                android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
+                android:maxLength="140" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
