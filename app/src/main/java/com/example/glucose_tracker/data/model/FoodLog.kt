@@ -7,10 +7,6 @@ import org.joda.time.DateTime
 
 @Entity(tableName = "food_log")
 data class FoodLog(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "row_id")
-    val rowId: Long?,
-
     val id: Long?,
 
     @ColumnInfo(name = "food_id")
@@ -20,4 +16,8 @@ data class FoodLog(
 
     @ColumnInfo(name = "date_time")
     val dateTime: DateTime?
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "row_id")
+    var rowId = 0L
+}

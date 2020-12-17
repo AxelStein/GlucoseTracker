@@ -28,6 +28,9 @@ import com.google.android.material.textfield.TextInputLayout
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     companion object {
         private const val EXTRA_ID = "com.example.glucose_tracker.ui.edit_glucose.EXTRA_ID"
+        private const val EXTRA_DATE_TIME = "com.example.glucose_tracker.ui.edit_glucose.EXTRA_DATE_TIME"
+        private const val EXTRA_GLUCOSE = "com.example.glucose_tracker.ui.edit_glucose.EXTRA_GLUCOSE"
+        private const val EXTRA_MEASURED = "com.example.glucose_tracker.ui.edit_glucose.EXTRA_MEASURED"
 
         fun launch(context: Context) {
             context.startActivity(Intent(context, EditGlucoseActivity::class.java))
@@ -52,7 +55,15 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
 
-        viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
+        if (savedInstanceState != null && viewModel.shouldRestore()) {
+            val id = savedInstanceState.getLong(EXTRA_ID)
+            val dateTime = savedInstanceState.getString(EXTRA_DATE_TIME)
+            val glucose = savedInstanceState.getFloat(EXTRA_GLUCOSE)
+            val measured = savedInstanceState.getInt(EXTRA_MEASURED)
+            viewModel.restore(id, dateTime, glucose, measured)
+        } else {
+            viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
+        }
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
@@ -114,6 +125,14 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
                 spinnerMeasured.setSelection(value)
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(EXTRA_ID, viewModel.getId())
+        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
+        outState.putFloat(EXTRA_GLUCOSE, viewModel.getGlucoseValue())
+        outState.putInt(EXTRA_MEASURED, viewModel.getMeasured())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -1,6 +1,5 @@
 package com.example.glucose_tracker.ui.edit_glucose
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -51,8 +50,22 @@ class EditGlucoseViewModel : ViewModel() {
         return actionFinish
     }
 
-    fun getCurrentDateTime(): DateTime {
-        return dateTime.value?.toDateTime() ?: DateTime()
+    fun getId(): Long = id
+
+    fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
+
+    fun getGlucoseValue(): Float = glucose.value?.toFloat() ?: 0f
+
+    fun getMeasured(): Int = measured.value ?: 0
+
+    fun shouldRestore() = loadData
+
+    fun restore(id: Long, dateTime: String?, glucose: Float, measured: Int) {
+        this.id = id
+        this.dateTime.value = MutableDateTime(dateTime)
+        this.glucose.value = glucose.toString()
+        this.measured.value = measured
+        loadData = false
     }
 
     fun loadData(id: Long) {
@@ -83,8 +96,8 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     fun save() {
-        val g = glucose.value ?: ""
-        if (g.isEmpty()) {
+        val glucoseValue = getGlucoseValue()
+        if (glucoseValue == 0f) {
             errorGlucoseEmpty.value = true
         } else {
             val log = createLog()
@@ -92,33 +105,28 @@ class EditGlucoseViewModel : ViewModel() {
             if (log.id != 0L) {
                 completable = dao.update(log)
             }
-            Log.d("TAG", "save $log")
             completable.subscribeOn(io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {
-
-                }
+                override fun onSubscribe(d: Disposable) {}
 
                 override fun onComplete() {
-                    Log.d("TAG", "onComplete")
+                    actionFinish.postValue(true)
                 }
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    // todo show error
                 }
             })
-            actionFinish.value = true
         }
     }
 
     private fun createLog(): GlucoseLog {
-        val g = glucose.value?.toFloat() ?: 0f
-        return GlucoseLog(
-            if (id == 0L) null else id,
-                glucose.value?.toFloat() ?: 0f,
-            intoMgDl(g),
-            measured.value ?: 0,
-            dateTime.value?.toDateTime() ?: DateTime()
-        )
+        val glucoseValue = getGlucoseValue()
+        return GlucoseLog(glucoseValue,
+                intoMgDl(glucoseValue),
+                getMeasured(),
+                getCurrentDateTime()
+        ).also { it.id = id }
     }
 
     private fun intoMgDl(mmolL: Float?): Int {
@@ -126,20 +134,18 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
-        dateTime.value.apply {
+        dateTime.postValue(dateTime.value.apply {
             this?.year = year
             this?.monthOfYear = month
             this?.dayOfMonth = dayOfMonth
-        }
-        dateTime.postValue(dateTime.value)
+        })
     }
 
     fun setTime(hourOfDay: Int, minuteOfHour: Int) {
-        dateTime.value.apply {
+        dateTime.postValue(dateTime.value.apply {
             this?.hourOfDay = hourOfDay
             this?.minuteOfHour = minuteOfHour
-        }
-        dateTime.postValue(dateTime.value)
+        })
     }
 
     fun setGlucose(value: String) {
@@ -155,8 +161,18 @@ class EditGlucoseViewModel : ViewModel() {
 
     fun delete() {
         if (id != 0L) {
-            dao.deleteById(id).subscribeOn(io()).subscribe()
-            actionFinish.value = true
+            dao.deleteById(id).subscribeOn(io()).subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {}
+
+                override fun onComplete() {
+                    actionFinish.postValue(true)
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                    // todo show error
+                }
+            })
         }
     }
 }

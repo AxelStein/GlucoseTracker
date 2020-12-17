@@ -1,6 +1,5 @@
 package com.example.glucose_tracker.ui.log_list
 
-import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
@@ -45,8 +44,6 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     override fun submitList(list: PagedList<LogItem>?) {
-        Log.d("TAG", "submitList = $list")
-
         recyclerView.invalidateItemDecorations()
         headerDecor.invalidate()
         headers.clear()

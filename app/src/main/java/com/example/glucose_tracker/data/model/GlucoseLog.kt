@@ -7,9 +7,6 @@ import org.joda.time.DateTime
 
 @Entity(tableName = "glucose_log")
 data class GlucoseLog(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long?,
-
     @ColumnInfo(name = "value_mmol")
     val valueMmol: Float,
 
@@ -20,4 +17,7 @@ data class GlucoseLog(
 
     @ColumnInfo(name = "date_time")
     val dateTime: DateTime
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id = 0L
+}
