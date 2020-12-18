@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class HeaderDecor(private val adapter: HeaderAdapter?) : RecyclerView.ItemDecoration() {
+class HeaderDecor(private val adapter: HeaderAdapter) : RecyclerView.ItemDecoration() {
     private var headers: SparseArray<View> = SparseArray()
 
     interface HeaderAdapter {
@@ -22,11 +22,13 @@ class HeaderDecor(private val adapter: HeaderAdapter?) : RecyclerView.ItemDecora
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val position = parent.getChildLayoutPosition(view)
-        if (position != RecyclerView.NO_POSITION && adapter!!.hasHeader(position)) {
-            val headerView = adapter.getHeaderView(position)
-            headers.put(position, headerView)
-            measureHeaderView(headerView, parent)
-
+        if (position != RecyclerView.NO_POSITION && adapter.hasHeader(position)) {
+            var headerView = headers[position]
+            if (headerView == null) {
+                headerView = adapter.getHeaderView(position)
+                headers.put(position, headerView)
+                measureHeaderView(headerView, parent)
+            }
             val lp = headerView.layoutParams as ViewGroup.MarginLayoutParams
             outRect.top = headerView.height + lp.topMargin
         } else {
@@ -38,10 +40,10 @@ class HeaderDecor(private val adapter: HeaderAdapter?) : RecyclerView.ItemDecora
         for (i in 0 until parent.childCount) {
             val child = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(child)
-            if (position != RecyclerView.NO_POSITION && adapter!!.hasHeader(position)) {
-                canvas.save()
+            if (position != RecyclerView.NO_POSITION && adapter.hasHeader(position)) {
                 val headerView = headers[position]
                 if (headerView != null) {
+                    canvas.save()
                     canvas.translate(0f, child.y - headerView.height)
                     headerView.draw(canvas)
                     canvas.restore()

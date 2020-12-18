@@ -13,19 +13,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.data.model.LogItem
 import com.example.glucose_tracker.ui.OnItemClickListener
+import com.example.glucose_tracker.utils.CompareBuilder
 import com.example.glucose_tracker.utils.formatDate
 import com.example.glucose_tracker.utils.formatTime
 import org.joda.time.LocalDate
 
-class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<LogItem>() {
-    override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
-        return oldItem == newItem
-    }
+class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion), HeaderDecor.HeaderAdapter {
 
-    override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
-        return oldItem == newItem
+    companion object : DiffUtil.ItemCallback<LogItem>() {
+        override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
+            return oldItem.id == newItem.id && oldItem.itemType == oldItem.itemType
+        }
+
+        override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
+            return CompareBuilder().append(oldItem.id, newItem.id)
+                    .append(oldItem.itemType, newItem.itemType)
+                    .append(oldItem.valueMmol, newItem.valueMg)
+                    .append(oldItem.valueMg, newItem.valueMg)
+                    .append(oldItem.measured, newItem.measured)
+                    .append(oldItem.note, newItem.note)
+                    .append(oldItem.foods, newItem.foods)
+                    .append(oldItem.dateTime, newItem.dateTime)
+                    .areEqual()
+        }
     }
-}), HeaderDecor.HeaderAdapter {
 
     private var onItemCLickListener: OnItemClickListener<LogItem>? = null
     private val headers = SparseArray<String>()
@@ -44,19 +55,21 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     override fun submitList(list: PagedList<LogItem>?) {
-        recyclerView.invalidateItemDecorations()
         headerDecor.invalidate()
         headers.clear()
 
         var date: LocalDate? = null
         list?.forEachIndexed { index, item ->
-            if (date == null || date != item.dateTime.toLocalDate()) {
+            val itemDate = item.dateTime.toLocalDate()
+            if (date == null || date != itemDate) {
                 headers[index] = formatDate(recyclerView.context, item.dateTime)
-                date = item.dateTime.toLocalDate()
+                date = itemDate
             }
             item.timeFormatted = formatTime(recyclerView.context, item.dateTime)
         }
+
         super.submitList(list)
+        recyclerView.postDelayed({ recyclerView.invalidateItemDecorations() }, 100)
     }
 
     override fun hasHeader(position: Int): Boolean = headers.indexOfKey(position) >= 0
