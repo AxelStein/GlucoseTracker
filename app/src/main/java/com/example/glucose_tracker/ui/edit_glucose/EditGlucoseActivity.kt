@@ -7,12 +7,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -26,6 +22,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     companion object {
@@ -74,9 +71,9 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             DatePickerDialog(
                     this,
                     { _, year, month, dayOfMonth ->
-                        viewModel.setDate(year, month+1, dayOfMonth)
+                        viewModel.setDate(year, month + 1, dayOfMonth)
                     },
-                    date.year, date.monthOfYear-1, date.dayOfMonth
+                    date.year, date.monthOfYear - 1, date.dayOfMonth
             ).show()
         }
 
@@ -144,16 +141,32 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             }
         })
 
-        val spinnerMeasured = findViewById<Spinner>(R.id.spinner_measured)
-        spinnerMeasured.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.setMeasured(position)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        val adapter = CArrayAdapter(
+                this,
+                R.layout.dropdown_menu_popup_item,
+                resources.getStringArray(R.array.measured)
+        )
+
+        val measuredDropdown = findViewById<AutoCompleteTextView>(R.id.measured_dropdown)
+        measuredDropdown.inputType = 0  // disable ime input
+        measuredDropdown.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
+        measuredDropdown.setAdapter(adapter)
+        measuredDropdown.setOnClickListener { editGlucose.hideKeyboard() }
+
+        val inputLayoutMeasured = findViewById<TextInputLayout>(R.id.input_layout_measured)
+        inputLayoutMeasured.setEndIconOnClickListener {
+            // override default behavior in order to close ime
+            measuredDropdown.performClick()
         }
+        measuredDropdown.setOnItemClickListener { _, _, position, _ ->
+            inputLayoutMeasured.clearFocus()
+            viewModel.setMeasured(position)
+        }
+
         viewModel.measuredObserver().observe(this, { value ->
-            if (value != spinnerMeasured.selectedItemPosition) {
-                spinnerMeasured.setSelection(value)
+            if (value != measuredDropdown.listSelection) {
+                measuredDropdown.listSelection = value
+                measuredDropdown.setText(adapter.getItem(value), false)
             }
         })
     }
