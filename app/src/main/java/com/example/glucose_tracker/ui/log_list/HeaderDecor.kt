@@ -30,7 +30,8 @@ class HeaderDecor(private val adapter: HeaderAdapter) : RecyclerView.ItemDecorat
                 measureHeaderView(headerView, parent)
             }
             val lp = headerView.layoutParams as ViewGroup.MarginLayoutParams
-            outRect.top = headerView.height + lp.topMargin
+            val margin = if (position == 0) 0 else lp.topMargin
+            outRect.top = headerView.height + margin
         } else {
             headers.remove(position)
         }

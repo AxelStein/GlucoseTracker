@@ -37,7 +37,7 @@
     <string name="hint_note">Note</string>
     <string name="no_data">No data</string>
     <string name="action_save">Save</string>
-    <string name="no_value">There is no value</string>
+    <string name="no_value">Please fill in this field</string>
     <string name="error_saving_note">Error saving note</string>
     <string name="error_deleting_note">Error deleting note</string>
     <string name="error_saving_log">Error saving log</string>

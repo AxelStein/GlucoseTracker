@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -19,10 +21,8 @@ import com.example.glucose_tracker.R
 import com.example.glucose_tracker.data.model.LogItem
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.example.glucose_tracker.utils.formatDate
-import com.example.glucose_tracker.utils.formatTime
-import com.example.glucose_tracker.utils.is24HourFormat
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.example.glucose_tracker.utils.*
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -55,6 +55,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationOnClickListener { finish() }
 
         if (savedInstanceState != null && viewModel.shouldRestore()) {
@@ -95,33 +96,51 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             btnTime.text = formatTime(this, it)
         })
 
+        val editGlucose = findViewById<TextInputEditText>(R.id.edit_glucose)
+        editGlucose.doAfterTextChanged {
+            viewModel.setGlucose(it.toString())
+        }
+        editGlucose.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == IME_ACTION_DONE) {
+                (v as EditText).hideKeyboard()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+
+        var focusEdit = true
+        viewModel.glucoseObserver().observe(this, { value ->
+            if (value != editGlucose.text.toString()) {
+                editGlucose.setText(value.toString())
+                editGlucose.setSelection(editGlucose.length())
+            }
+            if (focusEdit) {
+                focusEdit = false
+                if (value.isNullOrEmpty()) {
+                    editGlucose.showKeyboard()
+                } else {
+                    editGlucose.hideKeyboard()
+                }
+            }
+        })
+
         val inputLayoutGlucose = findViewById<TextInputLayout>(R.id.input_layout_glucose)
         viewModel.errorGlucoseEmptyObserver().observe(this, {
             if (it) {
                 inputLayoutGlucose.error = getString(R.string.no_value)
+                editGlucose.showKeyboard()
             }
             inputLayoutGlucose.isErrorEnabled = it
         })
         viewModel.actionFinishObserver().observe(this, { if (it) finish() })
         viewModel.errorSaveObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_saving_log, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
             }
         })
         viewModel.errorDeleteObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
-            }
-        })
-
-        val editGlucose = findViewById<TextInputEditText>(R.id.edit_glucose)
-        editGlucose.doAfterTextChanged {
-            viewModel.setGlucose(it.toString())
-        }
-        viewModel.glucoseObserver().observe(this, { value ->
-            if (value != editGlucose.text.toString()) {
-                editGlucose.setText(value.toString())
-                editGlucose.setSelection(editGlucose.length())
+                Snackbar.make(toolbar, R.string.error_deleting_log, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
             }
         })
 

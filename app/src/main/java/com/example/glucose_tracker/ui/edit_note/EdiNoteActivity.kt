@@ -16,9 +16,7 @@ import com.example.glucose_tracker.R
 import com.example.glucose_tracker.data.model.LogItem
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.example.glucose_tracker.utils.formatDate
-import com.example.glucose_tracker.utils.formatTime
-import com.example.glucose_tracker.utils.is24HourFormat
+import com.example.glucose_tracker.utils.*
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -51,6 +49,7 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationOnClickListener { finish() }
 
         if (savedInstanceState != null && viewModel.shouldRestore()) {
@@ -90,10 +89,32 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
             btnTime.text = formatTime(this, it)
         })
 
+        val editNote = findViewById<TextInputEditText>(R.id.edit_note)
+        editNote.doAfterTextChanged {
+            viewModel.setNote(it.toString())
+        }
+
+        var focusEdit = true
+        viewModel.noteObserver().observe(this, { value ->
+            if (value != editNote.text.toString()) {
+                editNote.setText(value.toString())
+                editNote.setSelection(editNote.length())
+            }
+            if (focusEdit) {
+                focusEdit = false
+                if (value.isNullOrEmpty()) {
+                    editNote.showKeyboard()
+                } else {
+                    editNote.hideKeyboard()
+                }
+            }
+        })
+
         val inputLayoutNote = findViewById<TextInputLayout>(R.id.input_layout_note)
         viewModel.errorNoteEmptyObserver().observe(this, {
             if (it) {
                 inputLayoutNote.error = getString(R.string.no_value)
+                editNote.showKeyboard()
             }
             inputLayoutNote.isErrorEnabled = it
         })
@@ -106,17 +127,6 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
         viewModel.errorDeleteObserver().observe(this, {
             if (it) {
                 Snackbar.make(toolbar, R.string.error_deleting_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
-            }
-        })
-
-        val editNote = findViewById<TextInputEditText>(R.id.edit_note)
-        editNote.doAfterTextChanged {
-            viewModel.setNote(it.toString())
-        }
-        viewModel.noteObserver().observe(this, { value ->
-            if (value != editNote.text.toString()) {
-                editNote.setText(value.toString())
-                editNote.setSelection(editNote.length())
             }
         })
     }

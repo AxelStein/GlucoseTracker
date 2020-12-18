@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:navigationIcon="@drawable/baseline_clear_white_24dp"
             app:popupTheme="@style/Theme.GlucoseTracker.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -29,7 +30,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

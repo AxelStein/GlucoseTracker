@@ -21,7 +21,7 @@
     <string name="no_data">Нет записей</string>
     <string name="hint_note">Заметка</string>
     <string name="mmol_l">ммоль/л</string>
-    <string name="no_value">Поле ввода пустое</string>
+    <string name="no_value">Пожалуйста, заполните это поле</string>
     <string name="error_saving_note">Ошибка сохранения заметки</string>
     <string name="error_deleting_note">Ошибка удаления заметки</string>
     <string name="error_deleting_log">Ошибка удаления</string>
