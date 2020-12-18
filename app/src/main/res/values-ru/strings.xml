@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Настройки</string>
+    <string name="before_breakfast">До завтрака</string>
+    <string name="after_breakfast">После завтрака</string>
+    <string name="before_lunch">До обеда</string>
+    <string name="after_lunch">После обеда</string>
+    <string name="before_dinner">До ужина</string>
+    <string name="after_dinner">После ужина</string>
+    <string name="other">Другое</string>
+    <string name="title_confirm">Вы уверены?</string>
+    <string name="msg_delete_note">Заметка будет удалена навсегда.</string>
+    <string name="msg_delete_glucose">Запись будет удалена навсегда.</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="fab_add_log">запись</string>
+    <string name="fab_menu_blood_sugar">Сахар крови</string>
+    <string name="fab_menu_note">Заметка</string>
+    <string name="hint_sugar_level">Уровень сахара</string>
+    <string name="action_save">Сохранить</string>
+    <string name="no_data">Нет записей</string>
+    <string name="hint_note">Заметка</string>
+    <string name="mmol_l">ммоль/л</string>
+    <string name="no_value">Поле ввода пустое</string>
+    <string name="error_saving_note">Ошибка сохранения заметки</string>
+    <string name="error_deleting_note">Ошибка удаления заметки</string>
+    <string name="error_deleting_log">Ошибка удаления</string>
+    <string name="error_saving_log">Ошибка сохранения</string>
+</resources>

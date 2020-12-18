@@ -42,8 +42,26 @@ class ConfirmDialog : AppCompatDialogFragment() {
             return this
         }
 
+        fun title(id: Int): Builder {
+            _title = if (activity != null) {
+                activity?.getString(id) ?: ""
+            } else {
+                fragment?.getString(id) ?: ""
+            }
+            return this
+        }
+
         fun title(s: String): Builder {
             _title = s
+            return this
+        }
+
+        fun message(id: Int): Builder {
+            _message = if (activity != null) {
+                activity?.getString(id) ?: ""
+            } else {
+                fragment?.getString(id) ?: ""
+            }
             return this
         }
 
@@ -52,8 +70,26 @@ class ConfirmDialog : AppCompatDialogFragment() {
             return this
         }
 
+        fun positiveBtnText(id: Int): Builder {
+            _positiveBtnText = if (activity != null) {
+                activity?.getString(id) ?: ""
+            } else {
+                fragment?.getString(id) ?: ""
+            }
+            return this
+        }
+
         fun positiveBtnText(s: String): Builder {
             _positiveBtnText = s
+            return this
+        }
+
+        fun negativeBtnText(id: Int): Builder {
+            _negativeBtnText = if (activity != null) {
+                activity?.getString(id) ?: ""
+            } else {
+                fragment?.getString(id) ?: ""
+            }
             return this
         }
 

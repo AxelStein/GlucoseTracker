@@ -1,16 +1,6 @@
 <resources>
-    <string name="app_name">Glucose Tracker</string>
+    <string name="app_name" translatable="false">Glucose Tracker</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <string name="fasting">Fasting</string>
 
     <string name="before_breakfast">Before breakfast</string>
     <string name="after_breakfast">After breakfast</string>
@@ -33,4 +23,23 @@
         <item>@string/before_dinner</item>
         <item>@string/after_dinner</item>
     </string-array>
+
+    <string name="title_confirm">Are you sure?</string>
+    <string name="msg_delete_note">Note will be permanently deleted.</string>
+    <string name="msg_delete_glucose">Log will be permanently deleted.</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="fab_add_log">add log</string>
+    <string name="fab_menu_blood_sugar">Blood sugar</string>
+    <string name="fab_menu_note">Note</string>
+    <string name="hint_sugar_level">Sugar level</string>
+    <string name="mmol_l">mmol/L</string>
+    <string name="hint_note">Note</string>
+    <string name="no_data">No data</string>
+    <string name="action_save">Save</string>
+    <string name="no_value">There is no value</string>
+    <string name="error_saving_note">Error saving note</string>
+    <string name="error_deleting_note">Error deleting note</string>
+    <string name="error_saving_log">Error saving log</string>
+    <string name="error_deleting_log">Error deleting log</string>
 </resources>

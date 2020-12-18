@@ -93,19 +93,19 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
         val inputLayoutNote = findViewById<TextInputLayout>(R.id.input_layout_note)
         viewModel.errorNoteEmptyObserver().observe(this, {
             if (it) {
-                inputLayoutNote.error = "There is no value"
+                inputLayoutNote.error = getString(R.string.no_value)
             }
             inputLayoutNote.isErrorEnabled = it
         })
         viewModel.actionFinishObserver().observe(this, { if (it) finish() })
         viewModel.errorSaveObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, "Error saving note", BaseTransientBottomBar.LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_saving_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
             }
         })
         viewModel.errorDeleteObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, "Error deleting note", BaseTransientBottomBar.LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_deleting_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
             }
         })
 
@@ -141,10 +141,10 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                        .title("Are you sure?")
-                        .message("Note will be permanently deleted.")
-                        .positiveBtnText("delete")
-                        .negativeBtnText("cancel")
+                        .title(R.string.title_confirm)
+                        .message(R.string.msg_delete_note)
+                        .positiveBtnText(R.string.action_delete)
+                        .negativeBtnText(R.string.action_cancel)
                         .show()
             }
         }

@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -31,7 +32,7 @@
             android:id="@+id/text_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4.7 mmol/L"
+            tools:text="4.7 mmol/L"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_marginStart="72dp"
@@ -46,7 +47,7 @@
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9:30"
+            tools:text="9:30"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/text_measured"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +58,7 @@
             android:id="@+id/text_measured"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="After breakfast"
+            tools:text="After breakfast"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time" />

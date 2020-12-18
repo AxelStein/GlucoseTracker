@@ -98,19 +98,19 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         val inputLayoutGlucose = findViewById<TextInputLayout>(R.id.input_layout_glucose)
         viewModel.errorGlucoseEmptyObserver().observe(this, {
             if (it) {
-                inputLayoutGlucose.error = "There is no value"
+                inputLayoutGlucose.error = getString(R.string.no_value)
             }
             inputLayoutGlucose.isErrorEnabled = it
         })
         viewModel.actionFinishObserver().observe(this, { if (it) finish() })
         viewModel.errorSaveObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, "Error saving log", LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
             }
         })
         viewModel.errorDeleteObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, "Error deleting log", LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
             }
         })
 
@@ -160,10 +160,10 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                        .title("Are you sure?")
-                        .message("Log will be permanently deleted.")
-                        .positiveBtnText("delete")
-                        .negativeBtnText("cancel")
+                        .title(R.string.title_confirm)
+                        .message(R.string.msg_delete_glucose)
+                        .positiveBtnText(R.string.action_delete)
+                        .negativeBtnText(R.string.action_cancel)
                         .show()
             }
         }
