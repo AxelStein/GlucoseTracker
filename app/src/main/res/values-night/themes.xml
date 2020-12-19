@@ -7,6 +7,9 @@
         <item name="colorAccent">@color/color_secondary_night</item>
         <item name="logListBackgroundColor">@color/log_list_bg_color_night</item>
         <item name="logItemBackgroundColor">@color/log_item_bg_color_night</item>
+        <item name="bottomNavItemTextColor">@drawable/bottom_nav_item_text_night</item>
+        <item name="bottomNavItemIconColor">@drawable/bottom_nav_item_icon_night</item>
+        <item name="bottomNavBackgroundColor">@color/color_primary_night</item>
     </style>
 
     <style name="Theme.GlucoseTracker.NoActionBar">

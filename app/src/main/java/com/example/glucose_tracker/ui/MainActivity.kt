@@ -11,7 +11,7 @@ import com.example.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.example.glucose_tracker.ui.log_list.LogListFragment
 import com.example.glucose_tracker.utils.hide
 import com.example.glucose_tracker.utils.show
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dim: View
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.content, LogListFragment(), "LogList")
             .commit()
 
-        val fab = findViewById<ExtendedFloatingActionButton>(R.id.fab)
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
         val fabMenu = findViewById<View>(R.id.fab_menu)
 
         dim = findViewById<View>(R.id.dim)

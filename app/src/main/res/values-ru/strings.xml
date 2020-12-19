@@ -27,4 +27,7 @@
     <string name="error_deleting_log">Ошибка удаления</string>
     <string name="error_saving_log">Ошибка сохранения</string>
     <string name="hint_measured">Измерение</string>
+    <string name="bottom_nav_home">Главная</string>
+    <string name="bottom_nav_statistics">Статистика</string>
+    <string name="bottom_nav_more">Еще</string>
 </resources>

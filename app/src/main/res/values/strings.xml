@@ -43,4 +43,8 @@
     <string name="error_saving_log">Error saving log</string>
     <string name="error_deleting_log">Error deleting log</string>
     <string name="hint_measured">Measured</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_statistics">Statistics</string>
+    <string name="bottom_nav_more">More</string>
+    <string name="fab_menu_a1c" translatable="false">A1c</string>
 </resources>

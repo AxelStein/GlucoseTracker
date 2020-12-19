@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,19 +36,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab"
-            app:icon="@drawable/baseline_add_black_24dp"
-            android:text="@string/fab_add_log"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:background="?attr/bottomNavBackgroundColor"
+            app:menu="@menu/menu_bottom_nav"
+            app:itemIconTint="?attr/bottomNavItemIconColor"
+            app:itemTextColor="?attr/bottomNavItemTextColor"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/fab"
+        app:backgroundTint="?attr/colorSecondary"
+        android:src="@drawable/baseline_add_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="72dp"/>
+
     <View
-        android:fitsSystemWindows="true"
         android:id="@+id/dim"
         android:visibility="gone"
         android:background="#80FFFFFF"
@@ -63,7 +74,7 @@
     <androidx.cardview.widget.CardView
         android:visibility="gone"
         android:id="@+id/fab_menu"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="72dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +103,7 @@
                 android:layout_height="48dp"
                 android:drawablePadding="16dp"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_addchart_black_24dp" />
+                app:drawableStartCompat="@drawable/baseline_dock_black_24dp" />
 
             <TextView
                 android:id="@+id/btn_add_note"
@@ -110,6 +121,23 @@
                 android:drawablePadding="16dp"
                 app:drawableTint="?android:attr/textColorSecondary"
                 app:drawableStartCompat="@drawable/outline_description_black_24dp"/>
+
+            <TextView
+                android:id="@+id/btn_add_a1c"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:paddingStart="16dp"
+                android:paddingEnd="32dp"
+                android:text="@string/fab_menu_a1c"
+                android:textSize="16sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:drawablePadding="16dp"
+                app:drawableTint="?android:attr/textColorSecondary"
+                app:drawableStartCompat="@drawable/baseline_addchart_black_24dp"/>
 
             <TextView
                 android:visibility="gone"
