@@ -81,7 +81,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            app:helperText="@string/mmol_l">
+            app:suffixText="@string/mmol_l">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_glucose"
