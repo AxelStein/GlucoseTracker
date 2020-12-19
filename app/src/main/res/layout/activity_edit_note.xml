@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +24,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:focusable="true"
+        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
@@ -47,8 +49,9 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp"
                 tools:text="Thu, December 10"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableTint="?android:attr/textColorSecondary"
                 app:drawableStartCompat="@drawable/baseline_date_range_black_24dp" />
 
             <TextView
@@ -63,8 +66,9 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 tools:text="12:30"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableTint="?android:attr/textColorSecondary"
                 app:drawableStartCompat="@drawable/baseline_access_time_black_24dp" />
 
         </LinearLayout>
@@ -86,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_note"
                 android:imeOptions="actionDone"
-                android:inputType="textAutoComplete|textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine"
                 android:maxLength="140" />
 
         </com.google.android.material.textfield.TextInputLayout>

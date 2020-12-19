@@ -14,6 +14,7 @@ import com.example.glucose_tracker.utils.show
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var dim: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<ExtendedFloatingActionButton>(R.id.fab)
         val fabMenu = findViewById<View>(R.id.fab_menu)
-        val dim = findViewById<View>(R.id.dim)
 
+        dim = findViewById<View>(R.id.dim)
         dim.setOnClickListener {
             it.hide()
             fabMenu.hide()
@@ -48,6 +49,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.btn_add_note).setOnClickListener {
             EdiNoteActivity.launch(this)
             dim.performClick()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (dim.isShown) {
+            dim.performClick()
+        } else {
+            super.onBackPressed()
         }
     }
 
