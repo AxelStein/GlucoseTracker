@@ -21,9 +21,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content, LogListFragment(), "LogList")
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.content, LogListFragment(), "LogList")
+                    .commit()
+        }
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         val fabMenu = findViewById<View>(R.id.fab_menu)

@@ -10,14 +10,20 @@ import com.example.glucose_tracker.ui.App
 import javax.inject.Inject
 
 class LogListViewModel: ViewModel() {
-    var items: LiveData<PagedList<LogItem>>
+    private var items: LiveData<PagedList<LogItem>>? = null
 
     @Inject
     lateinit var dao: LogDao
 
     init {
         App.appComponent.inject(this)
-        items = dao.getItems().mapByPage(::map).toLiveData(10)
+    }
+
+    fun getItems(): LiveData<PagedList<LogItem>> {
+        if (items == null) {
+            items = dao.getItems().mapByPage(::map).toLiveData(50)
+        }
+        return items as LiveData<PagedList<LogItem>>
     }
 
     private fun map(items: MutableList<LogItem>): List<LogItem> {

@@ -14,14 +14,14 @@ import com.example.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.example.glucose_tracker.utils.setShown
 
 class LogListFragment: Fragment() {
+    private val model: LogListViewModel by viewModels()
     private lateinit var adapter: LogListAdapter
     private lateinit var textEmpty: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_log_list, container, false)
-        textEmpty = root.findViewById(R.id.text_empty)
-
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view)
+        textEmpty = root.findViewById(R.id.text_empty)
 
         adapter = LogListAdapter(recyclerView)
         adapter.setOnItemClickListener { _, item ->
@@ -36,9 +36,7 @@ class LogListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val model: LogListViewModel by viewModels()
-        model.items.observe(viewLifecycleOwner, {
+        model.getItems().observe(viewLifecycleOwner, {
             adapter.submitList(it)
             textEmpty.setShown(it.isEmpty())
         })
