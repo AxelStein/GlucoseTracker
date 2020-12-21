@@ -5,9 +5,12 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType.TYPE_CLASS_NUMBER
+import android.text.InputType.TYPE_NUMBER_VARIATION_NORMAL
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.view.inputmethod.EditorInfo.TYPE_NUMBER_FLAG_DECIMAL
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
@@ -17,6 +20,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.data.model.LogItem
+import com.example.glucose_tracker.data.settings.AppSettings
+import com.example.glucose_tracker.ui.App
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.example.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.example.glucose_tracker.utils.*
@@ -24,6 +29,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import javax.inject.Inject
 
 
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
@@ -46,8 +52,12 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
 
     private val viewModel: EditGlucoseViewModel by viewModels()
 
+    @Inject
+    lateinit var appSettings: AppSettings
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        App.appComponent.inject(this)
         setContentView(R.layout.activity_edit_glucose)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -60,7 +70,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         if (savedInstanceState != null && viewModel.shouldRestore()) {
             val id = savedInstanceState.getLong(EXTRA_ID)
             val dateTime = savedInstanceState.getString(EXTRA_DATE_TIME)
-            val glucose = savedInstanceState.getFloat(EXTRA_GLUCOSE)
+            val glucose = savedInstanceState.getString(EXTRA_GLUCOSE, "")
             val measured = savedInstanceState.getInt(EXTRA_MEASURED)
             viewModel.restore(id, dateTime, glucose, measured)
         } else {
@@ -95,7 +105,13 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             btnTime.text = formatTime(this, it)
         })
 
+        val useMmol = appSettings.useMmolAsGlucoseUnits()
+
         val editGlucose = findViewById<TextInputEditText>(R.id.edit_glucose)
+        editGlucose.inputType =
+                if (useMmol) TYPE_CLASS_NUMBER or TYPE_NUMBER_FLAG_DECIMAL
+                else TYPE_CLASS_NUMBER or TYPE_NUMBER_VARIATION_NORMAL
+
         editGlucose.doAfterTextChanged {
             viewModel.setGlucose(it.toString())
         }
@@ -125,6 +141,10 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         })
 
         val inputLayoutGlucose = findViewById<TextInputLayout>(R.id.input_layout_glucose)
+        inputLayoutGlucose.suffixText =
+                if (useMmol) getString(R.string.mmol_l)
+                else getString(R.string.mg_dl)
+
         viewModel.errorGlucoseEmptyObserver().observe(this, {
             if (it) {
                 inputLayoutGlucose.error = getString(R.string.no_value)
@@ -178,7 +198,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         super.onSaveInstanceState(outState)
         outState.putLong(EXTRA_ID, viewModel.getId())
         outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
-        outState.putFloat(EXTRA_GLUCOSE, viewModel.getGlucoseValue())
+        outState.putString(EXTRA_GLUCOSE, viewModel.getGlucoseValue())
         outState.putInt(EXTRA_MEASURED, viewModel.getMeasured())
     }
 

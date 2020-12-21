@@ -3,7 +3,6 @@ package com.example.glucose_tracker.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.glucose_tracker.ui.App
 import org.joda.time.DateTime
 
 data class LogItem(
@@ -29,7 +28,6 @@ data class LogItem(
     @Ignore
     var timeFormatted: String? = null
 
-    init {
-        valueMmol = "$valueMmol ${App.mmol_l}"
-    }
+    @Ignore
+    var useMmol = true
 }

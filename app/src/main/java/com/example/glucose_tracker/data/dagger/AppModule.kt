@@ -3,6 +3,8 @@ package com.example.glucose_tracker.data.dagger
 import androidx.room.Room
 import com.example.glucose_tracker.data.room.AppDatabase
 import com.example.glucose_tracker.data.room.dao.*
+import com.example.glucose_tracker.data.settings.AppResources
+import com.example.glucose_tracker.data.settings.AppSettings
 import com.example.glucose_tracker.ui.App
 import com.google.gson.*
 import dagger.Module
@@ -66,5 +68,17 @@ class AppModule(private val app: App) {
                 } as JsonDeserializer<DateTime>
             )
             .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppSettings(): AppSettings {
+        return AppSettings(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppResources(): AppResources {
+        return AppResources(app)
     }
 }

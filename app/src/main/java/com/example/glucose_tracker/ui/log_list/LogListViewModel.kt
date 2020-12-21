@@ -6,6 +6,8 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.example.glucose_tracker.data.model.LogItem
 import com.example.glucose_tracker.data.room.dao.LogDao
+import com.example.glucose_tracker.data.settings.AppResources
+import com.example.glucose_tracker.data.settings.AppSettings
 import com.example.glucose_tracker.ui.App
 import javax.inject.Inject
 
@@ -14,6 +16,12 @@ class LogListViewModel: ViewModel() {
 
     @Inject
     lateinit var dao: LogDao
+
+    @Inject
+    lateinit var appSettings: AppSettings
+
+    @Inject
+    lateinit var appResources: AppResources
 
     init {
         App.appComponent.inject(this)
@@ -27,6 +35,12 @@ class LogListViewModel: ViewModel() {
     }
 
     private fun map(items: MutableList<LogItem>): List<LogItem> {
+        val useMmol = appSettings.useMmolAsGlucoseUnits()
+        items.forEach {
+            it.useMmol = useMmol
+            it.valueMmol = "${it.valueMmol} ${appResources.mmolSuffix}"
+            it.valueMg = "${it.valueMg} ${appResources.mgSuffix}"
+        }
         items.sortByDescending { it.dateTime.toLocalDate() }
         items.sortWith(object : Comparator<LogItem> {
             override fun compare(a: LogItem?, b: LogItem?): Int {

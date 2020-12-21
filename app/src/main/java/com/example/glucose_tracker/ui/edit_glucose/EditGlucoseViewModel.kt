@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.glucose_tracker.data.model.GlucoseLog
 import com.example.glucose_tracker.data.room.dao.GlucoseLogDao
+import com.example.glucose_tracker.data.settings.AppSettings
 import com.example.glucose_tracker.ui.App
 import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
@@ -24,12 +25,17 @@ class EditGlucoseViewModel : ViewModel() {
     private val actionFinish = MutableLiveData<Boolean>()
     private var id = 0L
     private var loadData = true
+    private var useMmolAsGlucoseUnits = true
 
     @Inject
     lateinit var dao: GlucoseLogDao
 
+    @Inject
+    lateinit var appSettings: AppSettings
+
     init {
         App.appComponent.inject(this)
+        useMmolAsGlucoseUnits = appSettings.useMmolAsGlucoseUnits()
     }
 
     fun dateTimeObserver(): LiveData<MutableDateTime> {
@@ -64,7 +70,11 @@ class EditGlucoseViewModel : ViewModel() {
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 
-    fun getGlucoseValue(): Float {
+    fun getGlucoseValue(): String {
+        return glucose.value ?: ""
+    }
+
+    private fun getGlucoseValueMmol(): Float {
         val s = glucose.value
         if (s.isNullOrEmpty()) {
             return 0f
@@ -72,14 +82,22 @@ class EditGlucoseViewModel : ViewModel() {
         return s.toFloat()
     }
 
+    private fun getGlucoseValueMg(): Int {
+        val s = glucose.value
+        if (s.isNullOrEmpty()) {
+            return 0
+        }
+        return s.toInt()
+    }
+
     fun getMeasured(): Int = measured.value ?: 0
 
     fun shouldRestore() = loadData
 
-    fun restore(id: Long, dateTime: String?, glucose: Float, measured: Int) {
+    fun restore(id: Long, dateTime: String?, glucose: String, measured: Int) {
         this.id = id
         this.dateTime.value = MutableDateTime(dateTime)
-        this.glucose.value = glucose.toString()
+        this.glucose.value = glucose
         this.measured.value = measured
         loadData = false
     }
@@ -95,7 +113,10 @@ class EditGlucoseViewModel : ViewModel() {
 
                     override fun onSuccess(l: GlucoseLog) {
                         dateTime.postValue(l.dateTime.toMutableDateTime())
-                        glucose.postValue(l.valueMmol.toString())
+                        glucose.postValue(
+                                if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
+                                else l.valueMg.toString()
+                        )
                         measured.postValue(l.measured)
                     }
 
@@ -112,8 +133,7 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     fun save() {
-        val glucoseValue = getGlucoseValue()
-        if (glucoseValue == 0f) {
+        if (glucose.value.isNullOrEmpty()) {
             errorGlucoseEmpty.value = true
         } else {
             val log = createLog()
@@ -137,9 +157,9 @@ class EditGlucoseViewModel : ViewModel() {
     }
 
     private fun createLog(): GlucoseLog {
-        val glucoseValue = getGlucoseValue()
-        return GlucoseLog(glucoseValue,
-                intoMgDl(glucoseValue),
+        val mmol = if (useMmolAsGlucoseUnits) getGlucoseValueMmol() else intoMmol(getGlucoseValueMg())
+        val mg = if (useMmolAsGlucoseUnits) intoMgDl(getGlucoseValueMmol()) else getGlucoseValueMg()
+        return GlucoseLog(mmol, mg,
                 getMeasured(),
                 getCurrentDateTime()
         ).also { it.id = id }
@@ -147,6 +167,10 @@ class EditGlucoseViewModel : ViewModel() {
 
     private fun intoMgDl(mmolL: Float?): Int {
         return ((mmolL ?: 0f) * 18f).toInt()
+    }
+
+    private fun intoMmol(mg: Int?): Float {
+        return mg?.div(18f) ?: 0f
     }
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
