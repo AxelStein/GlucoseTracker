@@ -10,6 +10,9 @@ interface NoteLogDao {
     @Insert
     fun insert(log: NoteLog): Completable
 
+    @Insert
+    fun insert(list: List<NoteLog>)
+
     @Update
     fun update(log: NoteLog): Completable
 
@@ -19,6 +22,18 @@ interface NoteLogDao {
     @Query("delete from note_log where id = :id")
     fun deleteById(id: Long): Completable
 
+    @Query("delete from note_log")
+    fun deleteAll()
+
     @Query("select * from note_log where id = :id")
     fun get(id: Long): Single<NoteLog>
+
+    @Query("select * from note_log")
+    fun get(): List<NoteLog>
+
+    @Transaction
+    fun importBackup(backup: List<NoteLog>) {
+        deleteAll()
+        insert(backup)
+    }
 }

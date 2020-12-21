@@ -5,12 +5,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.glucose_tracker.R
 import com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.example.glucose_tracker.ui.edit_note.EdiNoteActivity
-import com.example.glucose_tracker.ui.log_list.LogListFragment
 import com.example.glucose_tracker.utils.hide
 import com.example.glucose_tracker.utils.show
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -21,16 +24,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.content, LogListFragment(), "LogList")
-                    .commit()
-        }
-
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         val fabMenu = findViewById<View>(R.id.fab_menu)
 
-        dim = findViewById<View>(R.id.dim)
+        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        bottomNavView.setupWithNavController(navController)
+        bottomNavView.setOnNavigationItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.menu_home -> fab.show()
+                else -> fab.hide()
+            }
+            NavigationUI.onNavDestinationSelected(item, navController)
+        }
+
+        dim = findViewById(R.id.dim)
         dim.setOnClickListener {
             it.hide()
             fabMenu.hide()

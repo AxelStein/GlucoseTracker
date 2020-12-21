@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
-import android.widget.*
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -98,11 +100,12 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             viewModel.setGlucose(it.toString())
         }
         editGlucose.setOnEditorActionListener { v, actionId, _ ->
+            var consumed = false
             if (actionId == IME_ACTION_DONE) {
                 (v as EditText).hideKeyboard()
-                return@setOnEditorActionListener true
+                consumed = true
             }
-            return@setOnEditorActionListener false
+            consumed
         }
 
         var focusEdit = true

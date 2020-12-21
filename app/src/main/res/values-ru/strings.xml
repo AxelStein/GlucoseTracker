@@ -30,4 +30,10 @@
     <string name="bottom_nav_home">Главная</string>
     <string name="bottom_nav_statistics">Статистика</string>
     <string name="bottom_nav_more">Еще</string>
+    <string name="bottom_nav_settings">Настройки</string>
+    <string name="mg_dl">мг/дл</string>
+    <string name="pref_list_glucose_units">Единицы измерения глюкозы</string>
+    <string name="pref_export_backup">Экспортировать в файл</string>
+    <string name="pref_import_backup">Импортировать из файла</string>
+    <string name="pref_category_backup">Резервная копия и импорт</string>
 </resources>

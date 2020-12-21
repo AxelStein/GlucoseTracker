@@ -1,6 +1,5 @@
 package com.example.glucose_tracker.ui.edit_note
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -106,7 +105,6 @@ class EditNoteViewModel : ViewModel() {
             if (log.id != 0L) {
                 completable = dao.update(log)
             }
-            Log.d("TAG", "save $log")
             completable.subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {}
 

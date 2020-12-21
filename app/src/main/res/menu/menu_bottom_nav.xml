@@ -12,7 +12,13 @@
         android:title="@string/bottom_nav_statistics" />
 
     <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/outline_settings_black_24dp"
+        android:title="@string/bottom_nav_settings" />
+    <!--
+    <item
         android:id="@+id/menu_plus"
         android:icon="@drawable/baseline_more_horiz_black_24dp"
         android:title="@string/bottom_nav_more" />
+    -->
 </menu>

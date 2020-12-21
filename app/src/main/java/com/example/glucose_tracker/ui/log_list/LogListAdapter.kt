@@ -69,6 +69,10 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
         }
 
         super.submitList(list)
+    }
+
+    override fun onCurrentListChanged(previousList: PagedList<LogItem>?, currentList: PagedList<LogItem>?) {
+        super.onCurrentListChanged(previousList, currentList)
         recyclerView.postDelayed({ recyclerView.invalidateItemDecorations() }, 100)
     }
 
