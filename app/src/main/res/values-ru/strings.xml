@@ -40,4 +40,14 @@
     <string name="error_import_file">Ошибка импортирования файла</string>
     <string name="error_export_file">Ошибка создания резервной копии</string>
     <string name="pref_night_mode">Ночной режим</string>
+    <string name="period_two_weeks">За последние 2 недели</string>
+    <string name="period_month">За последний месяц</string>
+    <string name="period_three_months">За последние 3 месяца</string>
+    <string name="stats_min">Минимальное значение</string>
+    <string name="stats_max">Максимальное значение</string>
+    <string name="stats_avg">Среднее значение</string>
+    <string name="stats_a1c">A1C расчетное значение</string>
+    <string name="diabetes_control_good">Хороший контроль диабета</string>
+    <string name="diabetes_control_bad">Плохой контроль диабета</string>
+    <string name="diabetes_control_average">Средний контроль диабета</string>
 </resources>

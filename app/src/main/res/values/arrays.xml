@@ -21,4 +21,10 @@
         <item>@string/mmol_l</item>
         <item>@string/mg_dl</item>
     </string-array>
+
+    <string-array name="stats_period">
+        <item>@string/period_two_weeks</item>
+        <item>@string/period_month</item>
+        <item>@string/period_three_months</item>
+    </string-array>
 </resources>

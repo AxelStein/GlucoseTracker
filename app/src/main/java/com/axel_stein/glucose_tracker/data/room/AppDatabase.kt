@@ -18,4 +18,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun glucoseLogDao(): GlucoseLogDao
     abstract fun noteLogDao(): NoteLogDao
     abstract fun logDao(): LogDao
+    abstract fun statsDao(): StatsDao
 }

@@ -78,7 +78,13 @@ class AppModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun provideAppResources(): AppResources {
-        return AppResources(app)
+    fun provideAppResources(settings: AppSettings): AppResources {
+        return AppResources(app, settings)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatsDao(db: AppDatabase): StatsDao {
+        return db.statsDao()
     }
 }

@@ -1,6 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spinner_period"
+        android:entries="@array/stats_period"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:minHeight="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?android:attr/dividerHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <TableLayout
+        android:id="@+id/table"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/stats_min"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"/>
+
+            <TextView
+                android:id="@+id/text_min"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                tools:text="4.2 mmol/L"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/stats_max"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"/>
+
+            <TextView
+                android:id="@+id/text_max"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                tools:text="7.4 mmol/L"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/stats_avg"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"/>
+
+            <TextView
+                android:id="@+id/text_avg"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                tools:text="5.6 mmol/L"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/stats_a1c"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"/>
+
+            <TextView
+                android:id="@+id/text_a1c"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                tools:text="5.3%"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        tools:text="@string/diabetes_control_good"
+        app:layout_constraintTop_toBottomOf="@+id/table"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:id="@+id/text_a1c_control"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

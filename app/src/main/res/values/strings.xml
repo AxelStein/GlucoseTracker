@@ -46,4 +46,16 @@
     <string name="error_import_file">File import error</string>
     <string name="error_export_file">Export file error</string>
     <string name="pref_night_mode">Night mode</string>
+
+    <string name="period_two_weeks">Last 2 weeks</string>
+    <string name="period_month">Last month</string>
+    <string name="period_three_months">Last 3 months</string>
+
+    <string name="stats_min">Minimum value</string>
+    <string name="stats_max">Maximum value</string>
+    <string name="stats_avg">Average value</string>
+    <string name="stats_a1c">A1C estimated value</string>
+    <string name="diabetes_control_good">Good diabetes control</string>
+    <string name="diabetes_control_average">Average diabetes control</string>
+    <string name="diabetes_control_bad">Bad diabetes control</string>
 </resources>
