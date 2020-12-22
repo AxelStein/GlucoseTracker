@@ -7,9 +7,17 @@ class AppSettings(val app: App) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(app)
 
     fun useMmolAsGlucoseUnits(): Boolean {
-        return when(prefs.getString("glucose_units", "mmol_l")) {
+        return when(getGlucoseUnits()) {
             "mmol_l" -> true
             else -> false
         }
+    }
+
+    fun getGlucoseUnits(): String {
+        return prefs.getString("glucose_units", "mmol_l") ?: "mmol_l"
+    }
+
+    fun setGlucoseUnits(units: String) {
+        prefs.edit().putString("glucose_units", units).apply()
     }
 }

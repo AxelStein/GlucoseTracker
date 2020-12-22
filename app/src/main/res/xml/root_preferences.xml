@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
         app:key="glucose_units"
@@ -15,13 +16,13 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="export"
+            app:key="export_backup"
             app:title="@string/pref_export_backup" />
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="import"
-            app:title="@string/pref_import_backup" />
+            app:key="import_backup"
+            app:title="@string/pref_import_backup"/>
 
     </PreferenceCategory>
 

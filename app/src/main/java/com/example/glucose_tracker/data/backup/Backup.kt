@@ -7,4 +7,5 @@ data class Backup(
     val version: Int,
     val glucoseLogs: List<GlucoseLog>,
     val noteLogs: List<NoteLog>,
+    val glucoseUnits: String
 )
