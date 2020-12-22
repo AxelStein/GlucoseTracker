@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.glucose_tracker">
+    package="com.axel_stein.glucose_tracker">
 
     <application
         android:allowBackup="true"
@@ -8,10 +8,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.GlucoseTracker.NoActionBar"
-        android:name=".ui.App">
+        android:name="com.axel_stein.glucose_tracker.ui.App">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.axel_stein.glucose_tracker.ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.edit_glucose.EditGlucoseActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity" />
 
-        <activity android:name=".ui.edit_note.EdiNoteActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

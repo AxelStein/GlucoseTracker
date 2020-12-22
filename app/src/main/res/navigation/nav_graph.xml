@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/menu_home"
-        android:name="com.example.glucose_tracker.ui.log_list.LogListFragment">
+        android:name="com.axel_stein.glucose_tracker.ui.log_list.LogListFragment">
         <action
             android:id="@+id/action_logListFragment_to_editGlucoseActivity"
             app:destination="@id/editGlucoseActivity" />
@@ -16,21 +16,21 @@
 
     <fragment
         android:id="@+id/menu_stats"
-        android:name="com.example.glucose_tracker.ui.statistics.StatisticsFragment"
+        android:name="com.axel_stein.glucose_tracker.ui.statistics.StatisticsFragment"
         android:label="StatisticsFragment" />
 
     <fragment
         android:id="@+id/menu_settings"
-        android:name="com.example.glucose_tracker.ui.settings.SettingsFragment" />
+        android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsFragment" />
 
     <activity
         android:id="@+id/editGlucoseActivity"
-        android:name="com.example.glucose_tracker.ui.edit_glucose.EditGlucoseActivity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity"
         android:label="EditGlucoseActivity" />
 
     <activity
         android:id="@+id/ediNoteActivity"
-        android:name="com.example.glucose_tracker.ui.edit_note.EdiNoteActivity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity"
         android:label="EdiNoteActivity" />
 
 </navigation>
