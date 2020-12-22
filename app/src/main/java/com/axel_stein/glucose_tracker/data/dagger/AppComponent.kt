@@ -5,6 +5,7 @@ import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModel
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModel
 import com.axel_stein.glucose_tracker.ui.log_list.LogListViewModel
+import com.axel_stein.glucose_tracker.ui.settings.SettingsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +17,5 @@ interface AppComponent {
     fun inject(vm: EditNoteViewModel)
     fun inject(helper: BackupHelper)
     fun inject(activity: EditGlucoseActivity)
+    fun inject(fragment: SettingsFragment)
 }

@@ -11,19 +11,30 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.core.content.FileProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
+import com.axel_stein.glucose_tracker.data.settings.AppSettings
+import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.readStrFromFileUri
 import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.Disposable
 import java.io.File
+import javax.inject.Inject
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val backupHelper = BackupHelper()
     private val codePickFile = 1
+
+    @Inject
+    lateinit var appSettings: AppSettings
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -31,6 +42,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val nightMode = preferenceManager.findPreference<SwitchPreference>("night_mode")
+        nightMode?.setOnPreferenceChangeListener { _, mode ->
+            appSettings.enableNightMode(mode as Boolean)
+            true
+        }
 
         val exportBackup = preferenceManager.findPreference<Preference>("export_backup")
         exportBackup?.setOnPreferenceClickListener {
