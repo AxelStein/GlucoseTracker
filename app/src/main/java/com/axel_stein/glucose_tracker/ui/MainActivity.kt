@@ -12,33 +12,35 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.axel_stein.glucose_tracker.utils.hide
+import com.axel_stein.glucose_tracker.utils.setShown
 import com.axel_stein.glucose_tracker.utils.show
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dim: View
+    private lateinit var fab: FloatingActionButton
+    private lateinit var fabMenu: View
+    private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
+    private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        val fabMenu = findViewById<View>(R.id.fab_menu)
+        fab = findViewById(R.id.fab)
+        fabMenu = findViewById(R.id.fab_menu)
+        dim = findViewById(R.id.dim)
 
-        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        bottomNavView.setupWithNavController(navController)
-        bottomNavView.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.menu_home -> fab.show()
-                else -> fab.hide()
-            }
-            NavigationUI.onNavDestinationSelected(item, navController)
+        if (savedInstanceState != null) {
+            fab.setShown(savedInstanceState.getBoolean(extraShowFab, true))
+
+            val showFabMenu = savedInstanceState.getBoolean(extraShowFabMenu, true)
+            fabMenu.setShown(showFabMenu)
+            dim.setShown(showFabMenu)
         }
 
-        dim = findViewById(R.id.dim)
         dim.setOnClickListener {
             it.hide()
             fabMenu.hide()
@@ -60,6 +62,17 @@ class MainActivity : AppCompatActivity() {
             EdiNoteActivity.launch(this)
             dim.performClick()
         }
+
+        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        bottomNavView.setupWithNavController(navController)
+        bottomNavView.setOnNavigationItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.menu_home -> fab.show()
+                else -> fab.hide()
+            }
+            NavigationUI.onNavDestinationSelected(item, navController)
+        }
     }
 
     override fun onBackPressed() {
@@ -68,6 +81,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(extraShowFab, fab.isShown)
+        outState.putBoolean(extraShowFabMenu, fabMenu.isShown)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
