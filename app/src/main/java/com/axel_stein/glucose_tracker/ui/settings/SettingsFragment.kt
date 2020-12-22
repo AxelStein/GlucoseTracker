@@ -5,8 +5,9 @@ import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.core.content.FileProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -50,6 +51,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    Toast.makeText(requireContext(), R.string.error_export_file, LENGTH_SHORT).show()
                 }
             })
             true
@@ -81,15 +83,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if (requestCode == codePickFile) {
             readStrFromFileUri(requireContext().contentResolver, data?.data)
                 .flatMapCompletable { backupHelper.importBackup(it) }
+                .observeOn(mainThread())
                 .subscribe(object : CompletableObserver {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onComplete() {
-                        Log.d("TAG", "onComplete")
+                        Toast.makeText(requireContext(), R.string.msg_import_completed, LENGTH_SHORT).show()
                     }
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
+                        Toast.makeText(requireContext(), R.string.error_import_file, LENGTH_SHORT).show()
                     }
                 })
         }

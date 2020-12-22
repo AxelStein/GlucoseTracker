@@ -36,4 +36,7 @@
     <string name="pref_export_backup">Экспортировать в файл</string>
     <string name="pref_import_backup">Импортировать из файла</string>
     <string name="pref_category_backup">Резервная копия и импорт</string>
+    <string name="msg_import_completed">Импорт завершен</string>
+    <string name="error_import_file">Ошибка импортирования файла</string>
+    <string name="error_export_file">Ошибка создания резервной копии</string>
 </resources>
