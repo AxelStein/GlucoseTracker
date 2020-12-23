@@ -15,7 +15,9 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditGlucoseViewModel : ViewModel() {
+class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
+                           glucose: String = "", measured: Int = 0,
+                           dateTime: String? = null) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val glucose = MutableLiveData<String>()
     private val measured = MutableLiveData<Int>()
@@ -23,8 +25,6 @@ class EditGlucoseViewModel : ViewModel() {
     private val errorSave = MutableLiveData<Boolean>()
     private val errorDelete = MutableLiveData<Boolean>()
     private val actionFinish = MutableLiveData<Boolean>()
-    private var id = 0L
-    private var loadData = true
     private var useMmolAsGlucoseUnits = true
 
     @Inject
@@ -36,6 +36,14 @@ class EditGlucoseViewModel : ViewModel() {
     init {
         App.appComponent.inject(this)
         useMmolAsGlucoseUnits = appSettings.useMmolAsGlucoseUnits()
+
+        if (load) {
+            loadData()
+        } else {
+            this.dateTime.value = MutableDateTime(dateTime)
+            this.glucose.value = glucose
+            this.measured.value = measured
+        }
     }
 
     fun dateTimeObserver(): LiveData<MutableDateTime> {
@@ -92,43 +100,28 @@ class EditGlucoseViewModel : ViewModel() {
 
     fun getMeasured(): Int = measured.value ?: 0
 
-    fun shouldRestore() = loadData
+    private fun loadData() {
+        if (id != 0L) {
+            dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<GlucoseLog> {
+                override fun onSubscribe(d: Disposable) {}
 
-    fun restore(id: Long, dateTime: String?, glucose: String, measured: Int) {
-        this.id = id
-        this.dateTime.value = MutableDateTime(dateTime)
-        this.glucose.value = glucose
-        this.measured.value = measured
-        loadData = false
-    }
+                override fun onSuccess(l: GlucoseLog) {
+                    dateTime.postValue(l.dateTime.toMutableDateTime())
+                    glucose.postValue(
+                            if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
+                            else l.valueMg.toString()
+                    )
+                    measured.postValue(l.measured)
+                }
 
-    fun loadData(id: Long) {
-        if (loadData) {
-            this.id = id
-            this.loadData = false
-
-            if (id != 0L) {
-                dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<GlucoseLog> {
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(l: GlucoseLog) {
-                        dateTime.postValue(l.dateTime.toMutableDateTime())
-                        glucose.postValue(
-                                if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
-                                else l.valueMg.toString()
-                        )
-                        measured.postValue(l.measured)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
-            } else {
-                dateTime.postValue(MutableDateTime())
-                glucose.postValue("")
-                measured.postValue(0)
-            }
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })
+        } else {
+            dateTime.postValue(MutableDateTime())
+            glucose.postValue("")
+            measured.postValue(0)
         }
     }
 

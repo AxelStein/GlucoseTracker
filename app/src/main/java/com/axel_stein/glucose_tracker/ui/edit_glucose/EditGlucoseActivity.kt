@@ -14,10 +14,10 @@ import android.view.inputmethod.EditorInfo.TYPE_NUMBER_FLAG_DECIMAL
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
@@ -34,10 +34,10 @@ import javax.inject.Inject
 
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     companion object {
-        private const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_ID"
-        private const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_DATE_TIME"
-        private const val EXTRA_GLUCOSE = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_GLUCOSE"
-        private const val EXTRA_MEASURED = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_MEASURED"
+        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_ID"
+        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_DATE_TIME"
+        const val EXTRA_GLUCOSE = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_GLUCOSE"
+        const val EXTRA_MEASURED = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_MEASURED"
 
         fun launch(context: Context) {
             context.startActivity(Intent(context, EditGlucoseActivity::class.java))
@@ -50,7 +50,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         }
     }
 
-    private val viewModel: EditGlucoseViewModel by viewModels()
+    private lateinit var viewModel: EditGlucoseViewModel
 
     @Inject
     lateinit var appSettings: AppSettings
@@ -60,22 +60,16 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         App.appComponent.inject(this)
         setContentView(R.layout.activity_edit_glucose)
 
+        val id = intent.getLongExtra(EXTRA_ID, 0L)
+        viewModel = ViewModelProvider(this, EdiGlucoseFactory(id, savedInstanceState))
+                .get(EditGlucoseViewModel::class.java)
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationOnClickListener { finish() }
-
-        if (savedInstanceState != null && viewModel.shouldRestore()) {
-            val id = savedInstanceState.getLong(EXTRA_ID)
-            val dateTime = savedInstanceState.getString(EXTRA_DATE_TIME)
-            val glucose = savedInstanceState.getString(EXTRA_GLUCOSE, "")
-            val measured = savedInstanceState.getInt(EXTRA_MEASURED)
-            viewModel.restore(id, dateTime, glucose, measured)
-        } else {
-            viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
-        }
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
