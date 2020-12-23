@@ -14,21 +14,27 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditA1cViewModel: ViewModel() {
+class EditA1cViewModel(private var id: Long = 0L, load: Boolean = true,
+                       _a1c: String = "", _dateTime: String? = null) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
-    private val data = MutableLiveData<String>()
+    private val a1c = MutableLiveData<String>()
     private val errorValueEmpty = MutableLiveData<Boolean>()
     private val errorSave = MutableLiveData<Boolean>()
     private val errorDelete = MutableLiveData<Boolean>()
     private val actionFinish = MutableLiveData<Boolean>()
-    private var id = 0L
-    private var loadData = true
 
     @Inject
     lateinit var dao: A1cLogDao
 
     init {
         App.appComponent.inject(this)
+
+        if (load) {
+            loadData()
+        } else {
+            this.a1c.value = _a1c
+            this.dateTime.value = MutableDateTime(_dateTime)
+        }
     }
 
     fun dateTimeObserver(): LiveData<MutableDateTime> {
@@ -36,7 +42,7 @@ class EditA1cViewModel: ViewModel() {
     }
 
     fun valueObserver(): LiveData<String> {
-        return data
+        return a1c
     }
 
     fun errorValueEmptyObserver(): LiveData<Boolean> {
@@ -59,39 +65,25 @@ class EditA1cViewModel: ViewModel() {
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 
-    fun getValue() = data.value ?: ""
+    fun getValue() = a1c.value ?: ""
 
-    fun shouldRestore() = loadData
+    private fun loadData() {
+        if (id != 0L) {
+            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<A1cLog> {
+                override fun onSubscribe(d: Disposable) {}
 
-    fun restore(id: Long, dateTime: String?, note: String?) {
-        this.id = id
-        this.dateTime.value = MutableDateTime(dateTime)
-        this.data.value = note
-        loadData = false
-    }
+                override fun onSuccess(l: A1cLog) {
+                    a1c.postValue(l.value.toString())
+                    dateTime.postValue(l.dateTime.toMutableDateTime())
+                }
 
-    fun loadData(id: Long) {
-        if (loadData) {
-            this.id = id
-            this.loadData = false
-
-            if (id != 0L) {
-                dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<A1cLog> {
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(l: A1cLog) {
-                        data.postValue(l.value.toString())
-                        dateTime.postValue(l.dateTime.toMutableDateTime())
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
-            } else {
-                dateTime.postValue(MutableDateTime())
-                data.postValue("")
-            }
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })
+        } else {
+            dateTime.postValue(MutableDateTime())
+            a1c.postValue("")
         }
     }
 
@@ -140,7 +132,7 @@ class EditA1cViewModel: ViewModel() {
     }
 
     fun setValue(value: String) {
-        data.value = value
+        a1c.value = value
         if (value.isNotEmpty()) {
             errorValueEmpty.value = false
         }

@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
@@ -24,9 +24,9 @@ import com.google.android.material.textfield.TextInputLayout
 
 class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     companion object {
-        private const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_ID"
-        private const val EXTRA_A1C = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_A1C"
-        private const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_DATE_TIME"
+        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_ID"
+        const val EXTRA_A1C = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_A1C"
+        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_DATE_TIME"
 
         fun launch(context: Context) {
             context.startActivity(Intent(context, EditA1cActivity::class.java))
@@ -39,11 +39,15 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         }
     }
 
-    private val viewModel: EditA1cViewModel by viewModels()
+    private lateinit var viewModel: EditA1cViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_a1c)
+
+        val id = intent.getLongExtra(EXTRA_ID, 0L)
+        viewModel = ViewModelProvider(this, EditA1cFactory(id, savedInstanceState))
+                .get(EditA1cViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -51,15 +55,6 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationOnClickListener { finish() }
-
-        if (savedInstanceState != null && viewModel.shouldRestore()) {
-            val id = savedInstanceState.getLong(EXTRA_ID)
-            val dateTime = savedInstanceState.getString(EXTRA_DATE_TIME)
-            val a1c = savedInstanceState.getString(EXTRA_A1C)
-            viewModel.restore(id, dateTime, a1c)
-        } else {
-            viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
-        }
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {
@@ -110,23 +105,23 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             }
         })
 
-        val inputLayoutNote = findViewById<TextInputLayout>(R.id.input_layout)
+        val inputLayout = findViewById<TextInputLayout>(R.id.input_layout)
         viewModel.errorValueEmptyObserver().observe(this, {
             if (it) {
-                inputLayoutNote.error = getString(R.string.no_value)
+                inputLayout.error = getString(R.string.no_value)
                 editA1c.showKeyboard()
             }
-            inputLayoutNote.isErrorEnabled = it
+            inputLayout.isErrorEnabled = it
         })
         viewModel.actionFinishObserver().observe(this, { if (it) finish() })
         viewModel.errorSaveObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, R.string.error_saving_note, LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
             }
         })
         viewModel.errorDeleteObserver().observe(this, {
             if (it) {
-                Snackbar.make(toolbar, R.string.error_deleting_note, LENGTH_INDEFINITE).show()
+                Snackbar.make(toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
             }
         })
     }
@@ -134,8 +129,8 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putLong(EXTRA_ID, viewModel.getId())
-        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
         outState.putString(EXTRA_A1C, viewModel.getValue())
+        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
