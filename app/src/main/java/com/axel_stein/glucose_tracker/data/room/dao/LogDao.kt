@@ -12,9 +12,9 @@ interface LogDao {
     // "join food_list on food_log.food_id = food_list.id group by food_log.id "
 
     @Query("""
-        select id, value_mmol, value_mg, measured, date_time, 0 as item_type, null as note, null as foods from glucose_log union 
-        select id, null as value_mmol, null as value_mg, null as measured, date_time, 1 as item_type, note, null as foods 
-        from note_log
+        select id, value_mmol, value_mg, measured, date_time, 0 as item_type, null as note, null as foods, null as a1c from glucose_log union 
+        select id, null as value_mmol, null as value_mg, null as measured, date_time, 2 as item_type, null as note, null as foods, value as a1c from a1c_log union 
+        select id, null as value_mmol, null as value_mg, null as measured, date_time, 1 as item_type, note, null as foods, null as a1c from note_log
     """)
     fun getItems(): DataSource.Factory<Int, LogItem>
 }

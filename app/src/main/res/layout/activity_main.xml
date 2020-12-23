@@ -140,7 +140,7 @@
                 android:layout_height="48dp"
                 android:drawablePadding="16dp"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_addchart_black_24dp"/>
+                app:drawableStartCompat="@drawable/outline_perm_device_information_black_24dp"/>
 
             <TextView
                 android:visibility="gone"

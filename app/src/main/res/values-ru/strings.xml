@@ -46,8 +46,9 @@
     <string name="stats_min">Минимальное значение</string>
     <string name="stats_max">Максимальное значение</string>
     <string name="stats_avg">Среднее значение</string>
-    <string name="stats_a1c">A1C расчетное значение</string>
+    <string name="stats_a1c">HbA1c расчетное значение</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
     <string name="diabetes_control_average">Средний контроль диабета</string>
+    <string name="msg_delete_a1c">Запись будет удалена навсегда.</string>
 </resources>

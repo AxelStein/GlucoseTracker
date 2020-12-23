@@ -20,6 +20,7 @@ data class LogItem(
 
     val measured: Int?,
     val note: String?,
+    var a1c: String?,
     val foods: String?,
 
     @ColumnInfo(name = "date_time")

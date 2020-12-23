@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity
 import com.axel_stein.glucose_tracker.utils.hide
@@ -60,6 +61,10 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn_add_note).setOnClickListener {
             EdiNoteActivity.launch(this)
+            dim.performClick()
+        }
+        findViewById<View>(R.id.btn_add_a1c).setOnClickListener {
+            EditA1cActivity.launch(this)
             dim.performClick()
         }
 

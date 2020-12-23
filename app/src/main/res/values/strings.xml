@@ -16,6 +16,7 @@
     <string name="title_confirm">Are you sure?</string>
     <string name="msg_delete_note">Note will be permanently deleted.</string>
     <string name="msg_delete_glucose">Log will be permanently deleted.</string>
+    <string name="msg_delete_a1c">Log will be permanently deleted.</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
     <string name="fab_add_log">add log</string>
@@ -36,7 +37,7 @@
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_statistics">Statistics</string>
     <string name="bottom_nav_more">More</string>
-    <string name="fab_menu_a1c" translatable="false">A1c</string>
+    <string name="fab_menu_a1c" translatable="false">HbA1c</string>
     <string name="bottom_nav_settings">Settings</string>
     <string name="pref_list_glucose_units">Glucose units</string>
     <string name="pref_category_backup">Backup and import</string>
@@ -54,8 +55,9 @@
     <string name="stats_min">Minimum value</string>
     <string name="stats_max">Maximum value</string>
     <string name="stats_avg">Average value</string>
-    <string name="stats_a1c">A1C estimated value</string>
+    <string name="stats_a1c">HbA1c estimated value</string>
     <string name="diabetes_control_good">Good diabetes control</string>
     <string name="diabetes_control_average">Average diabetes control</string>
     <string name="diabetes_control_bad">Bad diabetes control</string>
+    <string name="hint_a1c" translatable="false">HbA1c</string>
 </resources>

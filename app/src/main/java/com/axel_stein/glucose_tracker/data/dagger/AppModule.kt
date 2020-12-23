@@ -87,4 +87,10 @@ class AppModule(private val app: App) {
     fun provideStatsDao(db: AppDatabase): StatsDao {
         return db.statsDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideA1cDao(db: AppDatabase): A1cLogDao {
+        return db.a1cDao()
+    }
 }

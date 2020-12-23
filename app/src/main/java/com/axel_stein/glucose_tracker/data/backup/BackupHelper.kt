@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.data.backup
 
+import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
@@ -19,6 +20,9 @@ class BackupHelper {
 
     @Inject
     lateinit var noteLogDao: NoteLogDao
+
+    @Inject
+    lateinit var a1cLogDao: A1cLogDao
 
     @Inject
     lateinit var gson: Gson
@@ -41,6 +45,7 @@ class BackupHelper {
                     1,
                     glucoseLogDao.get(),
                     noteLogDao.get(),
+                    a1cLogDao.get(),
                     appSettings.getGlucoseUnits()
             )
             val data = gson.toJson(backup, Backup::class.java)
@@ -54,6 +59,7 @@ class BackupHelper {
             val backup = gson.fromJson(data, Backup::class.java)
             glucoseLogDao.importBackup(backup.glucoseLogs)
             noteLogDao.importBackup(backup.noteLogs)
+            a1cLogDao.importBackup(backup.a1cLogs)
             appSettings.setGlucoseUnits(backup.glucoseUnits)
         }.subscribeOn(io())
     }

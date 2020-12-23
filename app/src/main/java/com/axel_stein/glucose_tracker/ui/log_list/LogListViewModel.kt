@@ -40,6 +40,7 @@ class LogListViewModel: ViewModel() {
             it.useMmol = useMmol
             it.valueMmol = "${it.valueMmol} ${appResources.mmolSuffix}"
             it.valueMg = "${it.valueMg} ${appResources.mgSuffix}"
+            it.a1c = "${it.a1c}%"
         }
         items.sortByDescending { it.dateTime.toLocalDate() }
         items.sortWith(object : Comparator<LogItem> {

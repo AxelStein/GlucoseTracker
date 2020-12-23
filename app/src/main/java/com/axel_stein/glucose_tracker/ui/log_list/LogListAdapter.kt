@@ -32,6 +32,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
                     .append(oldItem.valueMg, newItem.valueMg)
                     .append(oldItem.measured, newItem.measured)
                     .append(oldItem.note, newItem.note)
+                    .append(oldItem.a1c, newItem.a1c)
                     .append(oldItem.foods, newItem.foods)
                     .append(oldItem.dateTime, newItem.dateTime)
                     .areEqual()
@@ -92,7 +93,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
         val vh = when(viewType) {
             0 -> GlucoseViewHolder(parent)
             1 -> NoteViewHolder(parent)
-            2 -> FoodsViewHolder(parent)
+            2 -> A1cViewHolder(parent)
             else -> TODO()
         }
         vh.container?.setOnClickListener {
@@ -146,6 +147,18 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
         override fun bind(item: LogItem) {
             textFoods.text = item.foods
+            textTime.text = item.timeFormatted
+        }
+    }
+
+    class A1cViewHolder(parent: ViewGroup) : ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_a1c, parent, false)
+    ) {
+        private val textValue = itemView.findViewById<TextView>(R.id.text_value)
+        private val textTime = itemView.findViewById<TextView>(R.id.text_time)
+
+        override fun bind(item: LogItem) {
+            textValue.text = item.a1c
             textTime.text = item.timeFormatted
         }
     }

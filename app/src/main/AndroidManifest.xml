@@ -23,6 +23,8 @@
 
         <activity android:name="com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity" />
 
+        <activity android:name=".ui.edit_a1c.EditA1cActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.axel_stein.glucose_tracker.fileprovider"
