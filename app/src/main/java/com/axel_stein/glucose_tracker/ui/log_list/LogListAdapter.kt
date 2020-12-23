@@ -56,7 +56,6 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     override fun submitList(list: PagedList<LogItem>?) {
-        headerDecor.invalidate()
         headers.clear()
 
         var date: LocalDate? = null
@@ -79,11 +78,10 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
     override fun hasHeader(position: Int): Boolean = headers.indexOfKey(position) >= 0
 
-    override fun getHeaderView(position: Int): View {
-        val view = LayoutInflater.from(recyclerView.context).inflate(R.layout.item_date, recyclerView, false) as TextView
-        view.text = headers[position]
-        return view
-    }
+    override fun inflateHeaderView(): TextView = LayoutInflater.from(recyclerView.context)
+                .inflate(R.layout.item_date, recyclerView, false) as TextView
+
+    override fun getHeaderTitle(position: Int): String = headers[position]
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position)?.itemType ?: -1
@@ -135,18 +133,6 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
 
         override fun bind(item: LogItem) {
             textNote.text = item.note
-            textTime.text = item.timeFormatted
-        }
-    }
-
-    class FoodsViewHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_foods, parent, false)
-    ) {
-        private val textFoods = itemView.findViewById<TextView>(R.id.text_foods)
-        private val textTime = itemView.findViewById<TextView>(R.id.text_time)
-
-        override fun bind(item: LogItem) {
-            textFoods.text = item.foods
             textTime.text = item.timeFormatted
         }
     }

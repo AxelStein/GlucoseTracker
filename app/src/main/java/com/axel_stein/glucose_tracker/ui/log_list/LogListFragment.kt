@@ -22,6 +22,7 @@ class LogListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_log_list, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.setHasFixedSize(true)
         textEmpty = root.findViewById(R.id.text_empty)
 
         adapter = LogListAdapter(recyclerView)
