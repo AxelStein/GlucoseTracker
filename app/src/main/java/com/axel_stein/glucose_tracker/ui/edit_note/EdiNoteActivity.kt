@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
@@ -24,9 +24,9 @@ import com.google.android.material.textfield.TextInputLayout
 
 class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
     companion object {
-        private const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_ID"
-        private const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_DATE_TIME"
-        private const val EXTRA_NOTE = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_NOTE"
+        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_ID"
+        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_DATE_TIME"
+        const val EXTRA_NOTE = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_NOTE"
 
         fun launch(context: Context) {
             context.startActivity(Intent(context, EdiNoteActivity::class.java))
@@ -39,11 +39,15 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
         }
     }
 
-    private val viewModel: EditNoteViewModel by viewModels()
+    private lateinit var viewModel: EditNoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_note)
+
+        val id = intent.getLongExtra(EXTRA_ID, 0L)
+        viewModel = ViewModelProvider(this, EditNoteFactory(id, savedInstanceState))
+                .get(EditNoteViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -51,15 +55,6 @@ class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationOnClickListener { finish() }
-
-        if (savedInstanceState != null && viewModel.shouldRestore()) {
-            val id = savedInstanceState.getLong(EXTRA_ID)
-            val dateTime = savedInstanceState.getString(EXTRA_DATE_TIME)
-            val note = savedInstanceState.getString(EXTRA_NOTE)
-            viewModel.restore(id, dateTime, note)
-        } else {
-            viewModel.loadData(intent.getLongExtra(EXTRA_ID, 0L))
-        }
 
         val btnDate = findViewById<TextView>(R.id.btn_date)
         btnDate.setOnClickListener {

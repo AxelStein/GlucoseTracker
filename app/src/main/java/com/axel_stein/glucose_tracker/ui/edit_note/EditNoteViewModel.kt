@@ -14,21 +14,27 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditNoteViewModel : ViewModel() {
+class EditNoteViewModel(private var id: Long = 0L, load: Boolean = true,
+                        note: String = "", _dateTime: String? = null) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val noteData = MutableLiveData<String>()
     private val errorNoteEmpty = MutableLiveData<Boolean>()
     private val errorSave = MutableLiveData<Boolean>()
     private val errorDelete = MutableLiveData<Boolean>()
     private val actionFinish = MutableLiveData<Boolean>()
-    private var id = 0L
-    private var loadData = true
 
     @Inject
     lateinit var dao: NoteLogDao
 
     init {
         App.appComponent.inject(this)
+        
+        if (load) {
+            loadData()
+        } else {
+            this.noteData.value = note
+            this.dateTime.value = MutableDateTime(_dateTime)
+        }
     }
 
     fun dateTimeObserver(): LiveData<MutableDateTime> {
@@ -61,37 +67,23 @@ class EditNoteViewModel : ViewModel() {
 
     fun getNote() = noteData.value ?: ""
 
-    fun shouldRestore() = loadData
+    private fun loadData() {
+        if (id != 0L) {
+            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<NoteLog> {
+                override fun onSubscribe(d: Disposable) {}
 
-    fun restore(id: Long, dateTime: String?, note: String?) {
-        this.id = id
-        this.dateTime.value = MutableDateTime(dateTime)
-        this.noteData.value = note
-        loadData = false
-    }
+                override fun onSuccess(l: NoteLog) {
+                    dateTime.postValue(l.dateTime.toMutableDateTime())
+                    noteData.postValue(l.note)
+                }
 
-    fun loadData(id: Long) {
-        if (loadData) {
-            this.id = id
-            this.loadData = false
-
-            if (id != 0L) {
-                dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<NoteLog> {
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(l: NoteLog) {
-                        dateTime.postValue(l.dateTime.toMutableDateTime())
-                        noteData.postValue(l.note)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
-            } else {
-                dateTime.postValue(MutableDateTime())
-                noteData.postValue("")
-            }
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })
+        } else {
+            dateTime.postValue(MutableDateTime())
+            noteData.postValue("")
         }
     }
 
