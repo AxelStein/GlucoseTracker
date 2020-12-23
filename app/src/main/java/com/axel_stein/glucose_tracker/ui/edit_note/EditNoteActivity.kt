@@ -22,18 +22,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class EdiNoteActivity : AppCompatActivity(), OnConfirmListener {
+class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
     companion object {
         const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_ID"
         const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_DATE_TIME"
         const val EXTRA_NOTE = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_NOTE"
 
         fun launch(context: Context) {
-            context.startActivity(Intent(context, EdiNoteActivity::class.java))
+            context.startActivity(Intent(context, EditNoteActivity::class.java))
         }
 
         fun launch(context: Context, item: LogItem) {
-            val intent = Intent(context, EdiNoteActivity::class.java)
+            val intent = Intent(context, EditNoteActivity::class.java)
             intent.putExtra(EXTRA_ID, item.id)
             context.startActivity(intent)
         }

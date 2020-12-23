@@ -3,9 +3,9 @@ package com.axel_stein.glucose_tracker.ui.edit_note
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity.Companion.EXTRA_DATE_TIME
-import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity.Companion.EXTRA_ID
-import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity.Companion.EXTRA_NOTE
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity.Companion.EXTRA_DATE_TIME
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity.Companion.EXTRA_ID
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity.Companion.EXTRA_NOTE
 
 @Suppress("UNCHECKED_CAST")
 class EditNoteFactory(private val id: Long, private val state: Bundle?): ViewModelProvider.Factory {

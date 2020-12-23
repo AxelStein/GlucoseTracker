@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
-import com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
 import com.axel_stein.glucose_tracker.utils.setShown
 
 class LogListFragment: Fragment() {
@@ -29,7 +29,7 @@ class LogListFragment: Fragment() {
         adapter.setOnItemClickListener { _, item ->
             when (item.itemType) {
                 0 -> EditGlucoseActivity.launch(requireContext(), item)
-                1 -> EdiNoteActivity.launch(requireContext(), item)
+                1 -> EditNoteActivity.launch(requireContext(), item)
                 2 -> EditA1cActivity.launch(requireContext(), item)
             }
         }

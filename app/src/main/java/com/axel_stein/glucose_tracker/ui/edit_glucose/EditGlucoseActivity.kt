@@ -61,7 +61,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         setContentView(R.layout.activity_edit_glucose)
 
         val id = intent.getLongExtra(EXTRA_ID, 0L)
-        viewModel = ViewModelProvider(this, EdiGlucoseFactory(id, savedInstanceState))
+        viewModel = ViewModelProvider(this, EditGlucoseFactory(id, savedInstanceState))
                 .get(EditGlucoseViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)

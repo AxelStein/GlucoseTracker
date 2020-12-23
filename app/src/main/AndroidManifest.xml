@@ -21,7 +21,7 @@
 
         <activity android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity" />
 
-        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity" />
 
         <activity android:name=".ui.edit_a1c.EditA1cActivity" />
 

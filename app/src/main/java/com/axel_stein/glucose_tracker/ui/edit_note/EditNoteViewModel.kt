@@ -28,7 +28,7 @@ class EditNoteViewModel(private var id: Long = 0L, load: Boolean = true,
 
     init {
         App.appComponent.inject(this)
-        
+
         if (load) {
             loadData()
         } else {

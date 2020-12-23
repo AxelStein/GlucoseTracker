@@ -30,7 +30,7 @@
 
     <activity
         android:id="@+id/ediNoteActivity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EdiNoteActivity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity"
         android:label="EdiNoteActivity" />
 
 </navigation>
