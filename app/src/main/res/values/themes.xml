@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GlucoseTracker" parent="Theme.MaterialComponents.DayNight.Bridge">
+        <item name="colorPrimary">@color/color_primary_day</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_day</item>
+        <item name="colorSecondary">@color/color_secondary_day</item>
+        <item name="colorAccent">@color/color_primary_day</item>
+        <item name="logListBackgroundColor">@color/log_list_bg_color_day</item>
+        <item name="logItemBackgroundColor">@color/log_item_bg_color_day</item>
+        <item name="bottomNavItemTextColor">@drawable/bottom_nav_item_text_day</item>
+        <item name="bottomNavItemIconColor">@drawable/bottom_nav_item_icon_day</item>
+        <item name="bottomNavBackgroundColor">@color/color_bg_day</item>
+        <item name="android:windowBackground">@color/color_bg_day</item>
+        <item name="android:navigationBarColor">@color/color_bg_day</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Theme.GlucoseTracker.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GlucoseTracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GlucoseTracker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

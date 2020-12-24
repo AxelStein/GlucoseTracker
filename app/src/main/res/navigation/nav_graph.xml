@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_nav"
+    app:startDestination="@+id/menu_home">
+
+    <fragment
+        android:id="@+id/menu_home"
+        android:name="com.axel_stein.glucose_tracker.ui.log_list.LogListFragment">
+        <action
+            android:id="@+id/action_logListFragment_to_editGlucoseActivity"
+            app:destination="@id/editGlucoseActivity" />
+        <action
+            android:id="@+id/action_logListFragment_to_ediNoteActivity"
+            app:destination="@id/ediNoteActivity" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/menu_stats"
+        android:name="com.axel_stein.glucose_tracker.ui.statistics.StatisticsFragment"
+        android:label="StatisticsFragment" />
+
+    <fragment
+        android:id="@+id/menu_settings"
+        android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsFragment" />
+
+    <activity
+        android:id="@+id/editGlucoseActivity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity"
+        android:label="EditGlucoseActivity" />
+
+    <activity
+        android:id="@+id/ediNoteActivity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity"
+        android:label="EdiNoteActivity" />
+
+</navigation>

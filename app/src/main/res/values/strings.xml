@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name" translatable="false">Glucose Tracker</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="before_breakfast">Before breakfast</string>
+    <string name="after_breakfast">After breakfast</string>
+
+    <string name="before_lunch">Before lunch</string>
+    <string name="after_lunch">After lunch</string>
+
+    <string name="before_dinner">Before dinner</string>
+    <string name="after_dinner">After dinner</string>
+
+    <string name="other">Other</string>
+
+    <string name="title_confirm">Are you sure?</string>
+    <string name="msg_delete_note">Note will be permanently deleted.</string>
+    <string name="msg_delete_glucose">Log will be permanently deleted.</string>
+    <string name="msg_delete_a1c">Log will be permanently deleted.</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="fab_add_log">add log</string>
+    <string name="fab_menu_blood_sugar">Blood sugar</string>
+    <string name="fab_menu_note">Note</string>
+    <string name="hint_sugar_level">Sugar level</string>
+    <string name="mmol_l">mmol/L</string>
+    <string name="mg_dl">mg/dL</string>
+    <string name="hint_note">Note</string>
+    <string name="no_data">No data</string>
+    <string name="action_save">Save</string>
+    <string name="no_value">Please fill in this field</string>
+    <string name="error_saving_note">Error saving note</string>
+    <string name="error_deleting_note">Error deleting note</string>
+    <string name="error_saving_log">Error saving log</string>
+    <string name="error_deleting_log">Error deleting log</string>
+    <string name="hint_measured">Measured</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_statistics">Statistics</string>
+    <string name="bottom_nav_more">More</string>
+    <string name="fab_menu_a1c" translatable="false">HbA1c</string>
+    <string name="bottom_nav_settings">Settings</string>
+    <string name="pref_list_glucose_units">Glucose units</string>
+    <string name="pref_category_backup">Backup and import</string>
+    <string name="pref_export_backup">Export to file</string>
+    <string name="pref_import_backup">Import from file</string>
+    <string name="msg_import_completed">Import completed</string>
+    <string name="error_import_file">File import error</string>
+    <string name="error_export_file">Export file error</string>
+    <string name="pref_night_mode">Night mode</string>
+
+    <string name="period_two_weeks">Last 2 weeks</string>
+    <string name="period_month">Last month</string>
+    <string name="period_three_months">Last 3 months</string>
+
+    <string name="stats_min">Minimum value</string>
+    <string name="stats_max">Maximum value</string>
+    <string name="stats_avg">Average value</string>
+    <string name="stats_a1c">HbA1c estimated value</string>
+    <string name="diabetes_control_good">Good diabetes control</string>
+    <string name="diabetes_control_average">Average diabetes control</string>
+    <string name="diabetes_control_bad">Bad diabetes control</string>
+    <string name="hint_a1c" translatable="false">HbA1c</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bottomNavItemTextColor" format="color|reference"/>
+    <attr name="bottomNavItemIconColor" format="color|reference"/>
+    <attr name="bottomNavBackgroundColor" format="color|reference"/>
+    <attr name="logListBackgroundColor" format="color|reference"/>
+    <attr name="logItemBackgroundColor" format="color|reference"/>
+</resources>

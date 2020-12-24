@@ -1,0 +1,30 @@
+<resources>
+    <string-array name="measured">
+        <item>@string/before_breakfast</item>
+        <item>@string/after_breakfast</item>
+
+        <item>@string/before_lunch</item>
+        <item>@string/after_lunch</item>
+
+        <item>@string/before_dinner</item>
+        <item>@string/after_dinner</item>
+
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="glucose_units_values">
+        <item>mmol_l</item>
+        <item>mg_dl</item>
+    </string-array>
+
+    <string-array name="glucose_units_entries">
+        <item>@string/mmol_l</item>
+        <item>@string/mg_dl</item>
+    </string-array>
+
+    <string-array name="stats_period">
+        <item>@string/period_two_weeks</item>
+        <item>@string/period_month</item>
+        <item>@string/period_three_months</item>
+    </string-array>
+</resources>
