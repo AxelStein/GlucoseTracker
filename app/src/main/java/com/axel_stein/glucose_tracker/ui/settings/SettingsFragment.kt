@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -97,7 +98,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == codePickFile) {
+        if (requestCode == codePickFile && resultCode == Activity.RESULT_OK) {
             readStrFromFileUri(requireContext().contentResolver, data?.data)
                 .flatMapCompletable { backupHelper.importBackup(it) }
                 .observeOn(mainThread())
