@@ -56,6 +56,7 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     override fun submitList(list: PagedList<LogItem>?) {
+        headerDecor.invalidate()
         headers.clear()
 
         var date: LocalDate? = null

@@ -2,6 +2,7 @@ package com.axel_stein.glucose_tracker.ui.log_list
 
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.util.Log
 import android.util.LruCache
 import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
@@ -25,6 +26,10 @@ class HeaderDecor(private val adapter: HeaderAdapter) : ItemDecoration() {
         fun hasHeader(position: Int): Boolean
         fun inflateHeaderView(): TextView
         fun getHeaderTitle(position: Int): String
+    }
+
+    fun invalidate() {
+        cache = LruCache(10)
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: State) {
@@ -61,7 +66,10 @@ class HeaderDecor(private val adapter: HeaderAdapter) : ItemDecoration() {
             if (position != NO_POSITION && adapter.hasHeader(position)) {
                 val headerView = cache[position]
                 if (headerView != null) {
-                    headerView.text = adapter.getHeaderTitle(position)
+                    if (headerView.tag != position) {
+                        headerView.tag = position
+                        headerView.text = adapter.getHeaderTitle(position)
+                    }
                     canvas.save()
                     canvas.translate(0f, child.y - headerView.height)
                     headerView.draw(canvas)

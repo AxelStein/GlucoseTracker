@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         val animator = ViewAnimationUtils.createCircularReveal(view, x, y, endRadius, 0f)
                 .setDuration(400)
         animator.addListener(onEnd = {
-            view.visibility = View.INVISIBLE
+            view.visibility = INVISIBLE
         })
         animator.start()
     }
