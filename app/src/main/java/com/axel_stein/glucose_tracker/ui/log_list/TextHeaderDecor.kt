@@ -2,8 +2,9 @@ package com.axel_stein.glucose_tracker.ui.log_list
 
 import android.graphics.Canvas
 import android.graphics.Rect
-import android.util.Log
 import android.util.LruCache
+import android.util.SparseArray
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.makeMeasureSpec
@@ -17,29 +18,33 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 
 
-class HeaderDecor(private val adapter: HeaderAdapter) : ItemDecoration() {
+class TextHeaderDecor(private val headerResourceId: Int) : ItemDecoration() {
+    private var headers = SparseArray<String>()
     private var cache: LruCache<Int, TextView> = LruCache(10)
     private var itemOffsetFirst = 0
     private var itemOffset = 0
 
-    interface HeaderAdapter {
-        fun hasHeader(position: Int): Boolean
-        fun inflateHeaderView(): TextView
-        fun getHeaderTitle(position: Int): String
+    fun setHeaders(headers: SparseArray<String>) {
+        this.headers = headers
+        cache = LruCache(10)
     }
 
-    fun invalidate() {
-        cache = LruCache(10)
+    private fun hasHeader(position: Int): Boolean = headers.indexOfKey(position) >= 0
+
+    private fun inflateHeaderView(parent: RecyclerView): TextView {
+        return LayoutInflater.from(parent.context)
+                .inflate(headerResourceId, parent, false)
+                as TextView
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: State) {
         val position = parent.getChildAdapterPosition(view)
         val first = position == 0
 
-        if (position != NO_POSITION && adapter.hasHeader(position)) {
+        if (position != NO_POSITION && hasHeader(position)) {
             var headerView = cache[position]
             if (headerView == null) {
-                headerView = adapter.inflateHeaderView()
+                headerView = inflateHeaderView(parent)
                 cache.put(position, headerView)
                 measureHeaderView(headerView, parent)
             }
@@ -63,12 +68,12 @@ class HeaderDecor(private val adapter: HeaderAdapter) : ItemDecoration() {
         for (i in 0 until parent.childCount) {
             val child = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(child)
-            if (position != NO_POSITION && adapter.hasHeader(position)) {
+            if (position != NO_POSITION && hasHeader(position)) {
                 val headerView = cache[position]
                 if (headerView != null) {
                     if (headerView.tag != position) {
                         headerView.tag = position
-                        headerView.text = adapter.getHeaderTitle(position)
+                        headerView.text = headers[position]
                     }
                     canvas.save()
                     canvas.translate(0f, child.y - headerView.height)

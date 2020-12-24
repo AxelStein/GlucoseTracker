@@ -1,12 +1,9 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.util.set
-import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +11,8 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
-import com.axel_stein.glucose_tracker.utils.formatDate
-import com.axel_stein.glucose_tracker.utils.formatTime
-import org.joda.time.LocalDate
 
-class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion), HeaderDecor.HeaderAdapter {
+class LogListAdapter : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<LogItem>() {
         override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
@@ -40,12 +34,6 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
     }
 
     private var onItemCLickListener: OnItemClickListener<LogItem>? = null
-    private val headers = SparseArray<String>()
-    private val headerDecor = HeaderDecor(this)
-
-    init {
-        recyclerView.addItemDecoration(headerDecor)
-    }
 
     fun setOnItemClickListener(l: (pos: Int, item: LogItem) -> Unit) {
         onItemCLickListener = object : OnItemClickListener<LogItem> {
@@ -54,35 +42,6 @@ class LogListAdapter(private val recyclerView: RecyclerView) : PagedListAdapter<
             }
         }
     }
-
-    override fun submitList(list: PagedList<LogItem>?) {
-        headerDecor.invalidate()
-        headers.clear()
-
-        var date: LocalDate? = null
-        list?.forEachIndexed { index, item ->
-            val itemDate = item.dateTime.toLocalDate()
-            if (date == null || date != itemDate) {
-                headers[index] = formatDate(recyclerView.context, item.dateTime)
-                date = itemDate
-            }
-            item.timeFormatted = formatTime(recyclerView.context, item.dateTime)
-        }
-
-        super.submitList(list)
-    }
-
-    override fun onCurrentListChanged(previousList: PagedList<LogItem>?, currentList: PagedList<LogItem>?) {
-        super.onCurrentListChanged(previousList, currentList)
-        recyclerView.postDelayed({ recyclerView.invalidateItemDecorations() }, 100)
-    }
-
-    override fun hasHeader(position: Int): Boolean = headers.indexOfKey(position) >= 0
-
-    override fun inflateHeaderView(): TextView = LayoutInflater.from(recyclerView.context)
-                .inflate(R.layout.item_date, recyclerView, false) as TextView
-
-    override fun getHeaderTitle(position: Int): String = headers[position]
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position)?.itemType ?: -1
