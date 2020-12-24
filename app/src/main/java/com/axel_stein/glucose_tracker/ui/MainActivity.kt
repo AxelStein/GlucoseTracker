@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.addListener
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -12,18 +16,18 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
-import com.axel_stein.glucose_tracker.utils.hide
 import com.axel_stein.glucose_tracker.utils.setShown
-import com.axel_stein.glucose_tracker.utils.show
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+
 class MainActivity : AppCompatActivity() {
+    private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
+    private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
+
     private lateinit var dim: View
     private lateinit var fab: FloatingActionButton
     private lateinit var fabMenu: View
-    private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
-    private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,20 +42,20 @@ class MainActivity : AppCompatActivity() {
             fab.setShown(savedInstanceState.getBoolean(extraShowFab, true))
 
             val showFabMenu = savedInstanceState.getBoolean(extraShowFabMenu, true)
-            fabMenu.setShown(showFabMenu)
-            dim.setShown(showFabMenu)
+            fabMenu.visibility = if (showFabMenu) VISIBLE else INVISIBLE
+            dim.visibility = if (showFabMenu) VISIBLE else INVISIBLE
         }
 
         dim.setOnClickListener {
-            it.hide()
-            fabMenu.hide()
+            unRevealDim()
+            unRevealFabMenu()
             fab.show()
         }
 
         fab.setOnClickListener {
             fab.hide()
-            fabMenu.show()
-            dim.show()
+            revealFabMenu()
+            revealDim()
         }
 
         findViewById<View>(R.id.btn_add_glucose).setOnClickListener {
@@ -78,6 +82,48 @@ class MainActivity : AppCompatActivity() {
             }
             NavigationUI.onNavDestinationSelected(item, navController)
         }
+    }
+
+    private fun revealFabMenu() {
+        revealView(fabMenu, fabMenu.width, fabMenu.height)
+    }
+
+    private fun unRevealFabMenu() {
+        unRevealView(fabMenu, fabMenu.width, fabMenu.height)
+    }
+
+    private fun revealDim() {
+        revealView(dim, fab.centerX(), fab.centerY())
+    }
+
+    private fun unRevealDim() {
+        unRevealView(dim, fab.centerX(), fab.centerY())
+    }
+
+    private fun revealView(view: View, x: Int, y: Int) {
+        val endRadius = (view.width + view.height).toFloat()
+        val animator = ViewAnimationUtils.createCircularReveal(view, x, y, 0f, endRadius)
+                .setDuration(400)
+        view.visibility = VISIBLE
+        animator.start()
+    }
+
+    private fun unRevealView(view: View, x: Int, y: Int) {
+        val endRadius = (view.width + view.height).toFloat()
+        val animator = ViewAnimationUtils.createCircularReveal(view, x, y, endRadius, 0f)
+                .setDuration(400)
+        animator.addListener(onEnd = {
+            view.visibility = View.INVISIBLE
+        })
+        animator.start()
+    }
+
+    private fun View.centerX(): Int {
+        return (this.x + this.width / 2).toInt()
+    }
+
+    private fun View.centerY(): Int {
+        return (this.y + this.height / 2).toInt()
     }
 
     override fun onBackPressed() {
