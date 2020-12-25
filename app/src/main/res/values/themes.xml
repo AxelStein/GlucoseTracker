@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.GlucoseTracker" parent="Theme.MaterialComponents.DayNight.Bridge">
         <item name="colorPrimary">@color/color_primary_day</item>
@@ -12,7 +12,11 @@
         <item name="bottomNavBackgroundColor">@color/color_bg_day</item>
         <item name="android:windowBackground">@color/color_bg_day</item>
         <item name="android:navigationBarColor">@color/color_bg_day</item>
+        <item name="toolbarBackgroundColor">@color/toolbar_bg_color_day</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="diabetesControlGoodColor">@color/color_good_diabetes_control_day</item>
+        <item name="diabetesControlAvgColor">@color/color_avg_diabetes_control_day</item>
+        <item name="diabetesControlBadColor">@color/color_bad_diabetes_control_day</item>
     </style>
 
     <style name="Theme.GlucoseTracker.NoActionBar">

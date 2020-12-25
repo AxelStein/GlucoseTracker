@@ -7,6 +7,10 @@
     <color name="color_secondary_day">#ffeb3b</color>
     <color name="log_list_bg_color_day">#eee</color>
     <color name="log_item_bg_color_day">#fff</color>
+    <color name="toolbar_bg_color_day">@color/color_primary_day</color>
+    <color name="color_good_diabetes_control_day">#388E3C</color>
+    <color name="color_avg_diabetes_control_day">#F57C00</color>
+    <color name="color_bad_diabetes_control_day">#B00020</color>
 
     <!--night theme colors-->
     <color name="color_bg_night">#303030</color>
@@ -15,8 +19,8 @@
     <color name="color_secondary_night">#c8b900</color>
     <color name="log_list_bg_color_night">#303030</color>
     <color name="log_item_bg_color_night">#404040</color>
-
-    <color name="color_good_diabetes_control">#388E3C</color>
-    <color name="color_avg_diabetes_control">#F57C00</color>
-    <color name="color_bad_diabetes_control">#B00020</color>
+    <color name="toolbar_bg_color_night">@color/color_primary_night</color>
+    <color name="color_good_diabetes_control_night">#A5D6A7</color>
+    <color name="color_avg_diabetes_control_night">#FFCC80</color>
+    <color name="color_bad_diabetes_control_night">#cf6679</color>
 </resources>
