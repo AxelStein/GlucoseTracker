@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
+import com.axel_stein.glucose_tracker.utils.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.formatDate
 import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.setShown
@@ -30,6 +32,9 @@ open class LogListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(layoutResourceId, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view)
+        // Bug fix for IndexOutOfBoundsException is disabling predictive animations
+        // https://stackoverflow.com/questions/31759171/recyclerview-and-java-lang-indexoutofboundsexception-inconsistency-detected-in
+        recyclerView.layoutManager = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(headerDecor)
 
