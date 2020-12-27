@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="?attr/logListBackgroundColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:background="?attr/logItemBackgroundColor"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/input_layout_year"
+            app:boxStrokeWidth="0dp"
+            app:hintEnabled="false"
+            app:boxStrokeWidthFocused="0dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:minHeight="48dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_year"
+                tools:text="2020"
+                app:drawableTint="?android:attr/textColorSecondary"
+                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_black_24dp"
+                android:textSize="16sp"
+                android:minHeight="48dp"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/input_layout_month"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_month"
+                tools:text="December"
+                app:drawableTint="?android:attr/textColorSecondary"
+                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_black_24dp"
+                android:textSize="16sp"
+                android:minHeight="48dp"
+                android:inputType="none"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        tools:listitem="@layout/item_glucose"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_below="@+id/layout"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:layout_below="@+id/layout"
+        android:background="?android:attr/dividerHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <TextView
+        android:id="@+id/text_empty"
+        android:text="@string/no_data"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

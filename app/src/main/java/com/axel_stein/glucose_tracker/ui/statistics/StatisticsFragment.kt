@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.utils.hideView
+import com.axel_stein.glucose_tracker.utils.setItemSelectedListener
 import com.axel_stein.glucose_tracker.utils.show
 
 class StatisticsFragment: Fragment() {
@@ -42,11 +42,8 @@ class StatisticsFragment: Fragment() {
             }
         })
 
-        spinnerPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                model.setPeriod(position)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        spinnerPeriod.onItemSelectedListener = setItemSelectedListener {
+            model.setPeriod(it)
         }
         return root
     }

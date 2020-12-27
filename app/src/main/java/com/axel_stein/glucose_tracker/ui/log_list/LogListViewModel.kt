@@ -1,18 +1,23 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.data.room.dao.LogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class LogListViewModel: ViewModel() {
-    private var items: LiveData<PagedList<LogItem>>? = null
+    private val items = MutableLiveData<List<LogItem>>()
+    private var yearMonth = ""
+    private val disposables = CompositeDisposable()
 
     @Inject
     lateinit var dao: LogDao
@@ -27,23 +32,47 @@ class LogListViewModel: ViewModel() {
         App.appComponent.inject(this)
     }
 
-    fun getItems(): LiveData<PagedList<LogItem>> {
-        if (items == null) {
-            items = dao.getItems().mapByPage(::map).toLiveData(50)
+    fun loadRecentItems() {
+        if (items.value.isNullOrEmpty()) {
+            disposables.clear()
+            disposables.add(dao.getRecentItems().subscribe {
+                Log.d("TAG", "loadRecentItems")
+                items.postValue(sort(it.toMutableList()))
+            })
         }
-        return items as LiveData<PagedList<LogItem>>
     }
 
-    private fun map(items: MutableList<LogItem>): List<LogItem> {
+    fun loadItemsByYearMonth(yearMonth: String) {
+        if (yearMonth != this.yearMonth) {
+            disposables.clear()
+            this.yearMonth = yearMonth
+            disposables.add(dao.getItems(yearMonth).subscribe {
+                Log.d("TAG", "loadItemsByYearMonth $yearMonth")
+                items.postValue(sort(it.toMutableList()))
+            })
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+        disposables.dispose()
+    }
+
+    fun getItemsData(): LiveData<List<LogItem>> {
+        return items
+    }
+
+    private fun sort(items: MutableList<LogItem>?): List<LogItem>? {
         val useMmol = appSettings.useMmolAsGlucoseUnits()
-        items.forEach {
+        items?.forEach {
             it.useMmol = useMmol
             it.valueMmol = "${it.valueMmol} ${appResources.mmolSuffix}"
             it.valueMg = "${it.valueMg} ${appResources.mgSuffix}"
             it.a1c = "${it.a1c}%"
         }
-        items.sortByDescending { it.dateTime.toLocalDate() }
-        items.sortWith(object : Comparator<LogItem> {
+        items?.sortByDescending { it.dateTime.toLocalDate() }
+        items?.sortWith(object : Comparator<LogItem> {
             override fun compare(a: LogItem?, b: LogItem?): Int {
                 val d1 = a?.dateTime?.toLocalDate()
                 val d2 = b?.dateTime?.toLocalDate()

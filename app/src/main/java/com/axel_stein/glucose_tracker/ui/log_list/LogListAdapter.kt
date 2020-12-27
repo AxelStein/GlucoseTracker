@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
 
-class LogListAdapter : PagedListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
+class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<LogItem>() {
         override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {

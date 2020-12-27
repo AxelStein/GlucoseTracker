@@ -27,4 +27,19 @@
         <item>@string/period_month</item>
         <item>@string/period_three_months</item>
     </string-array>
+
+    <string-array name="months">
+        <item>@string/month_jan</item>
+        <item>@string/month_feb</item>
+        <item>@string/month_mar</item>
+        <item>@string/month_apr</item>
+        <item>@string/month_may</item>
+        <item>@string/month_jun</item>
+        <item>@string/month_jul</item>
+        <item>@string/month_aug</item>
+        <item>@string/month_sep</item>
+        <item>@string/month_oct</item>
+        <item>@string/month_nov</item>
+        <item>@string/month_dec</item>
+    </string-array>
 </resources>

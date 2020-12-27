@@ -4,9 +4,9 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 
-fun setViewVisible(visible: Boolean, vararg views: View) {
+fun setViewVisible(visible: Boolean, vararg views: View?) {
     for (v in views) {
-        v.visibility = when(visible) {
+        v?.visibility = when(visible) {
             true -> VISIBLE
             else -> GONE
         }

@@ -52,4 +52,17 @@
     <string name="diabetes_control_average">Умеренный контроль диабета</string>
     <string name="msg_delete_a1c">Запись будет удалена навсегда.</string>
     <string name="bottom_nav_archive">Архив</string>
+
+    <string name="month_jan">Январь</string>
+    <string name="month_feb">Февраль</string>
+    <string name="month_mar">Март</string>
+    <string name="month_apr">Апрель</string>
+    <string name="month_may">Май</string>
+    <string name="month_jun">Июнь</string>
+    <string name="month_jul">Июль</string>
+    <string name="month_aug">Август</string>
+    <string name="month_sep">Сентябрь</string>
+    <string name="month_oct">Октябрь</string>
+    <string name="month_nov">Ноябрь</string>
+    <string name="month_dec">Декабрь</string>
 </resources>

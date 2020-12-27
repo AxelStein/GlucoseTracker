@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
@@ -21,14 +20,15 @@ import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.setShown
 import org.joda.time.LocalDate
 
-class LogListFragment: Fragment() {
-    private val model: LogListViewModel by viewModels()
+open class LogListFragment: Fragment() {
+    protected var layoutResourceId = R.layout.fragment_log_list
+    protected val viewModel: LogListViewModel by viewModels()
     private lateinit var adapter: LogListAdapter
     private lateinit var textEmpty: TextView
     private val headerDecor = TextHeaderDecor(R.layout.item_date)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_log_list, container, false)
+        val root = inflater.inflate(layoutResourceId, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(headerDecor)
@@ -49,14 +49,14 @@ class LogListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model.getItems().observe(viewLifecycleOwner, { list ->
+        viewModel.getItemsData().observe(viewLifecycleOwner, { list ->
             updateHeaders(list)
             adapter.submitList(list)
             textEmpty.setShown(list.isEmpty())
         })
     }
 
-    private fun updateHeaders(list: PagedList<LogItem>?) {
+    private fun updateHeaders(list: List<LogItem>?) {
         val headers = SparseArray<String>()
         var date: LocalDate? = null
         list?.forEachIndexed { index, item ->

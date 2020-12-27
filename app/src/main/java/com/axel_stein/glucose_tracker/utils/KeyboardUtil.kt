@@ -20,7 +20,7 @@ fun EditText.hideKeyboard() {
     clearFocus()
 }
 
-fun hide(activity: Activity) {
+fun hideKeyboard(activity: Activity) {
     val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     imm?.hideSoftInputFromWindow(activity.findViewById<View>(android.R.id.content).windowToken, 0)
 }
