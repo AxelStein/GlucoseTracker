@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker
+package com.axel_stein.glucose_tracker.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room

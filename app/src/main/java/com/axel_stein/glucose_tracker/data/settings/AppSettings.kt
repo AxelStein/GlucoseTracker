@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 
-class AppSettings(val ctx: Context) {
+class AppSettings(ctx: Context) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
 
     init {

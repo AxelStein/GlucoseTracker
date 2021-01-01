@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
+import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.CompletableObserver
@@ -23,7 +24,8 @@ class EditGlucoseViewModel(
     measured: Int = 0,
     dateTime: String? = null,
     dao: GlucoseLogDao? = null,
-    appSettings: AppSettings? = null
+    appSettings: AppSettings? = null,
+    appResources: AppResources? = null
 ) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val glucose = MutableLiveData<String>()
@@ -40,6 +42,9 @@ class EditGlucoseViewModel(
     @Inject
     lateinit var appSettings: AppSettings
 
+    @Inject
+    lateinit var appResources: AppResources
+
     init {
         if (dao == null) {
             App.appComponent.inject(this)
@@ -47,6 +52,9 @@ class EditGlucoseViewModel(
             this.dao = dao
             if (appSettings != null) {
                 this.appSettings = appSettings
+            }
+            if (appResources != null) {
+                this.appResources = appResources
             }
         }
 
@@ -222,7 +230,13 @@ class EditGlucoseViewModel(
     }
 
     fun setMeasured(measured: Int) {
-        this.measured.value = measured
+        val maxMeasured = appResources.measuredArray().size - 1
+
+        this.measured.value = when {
+            measured < 0 -> 0
+            measured > maxMeasured -> maxMeasured
+            else -> measured
+        }
     }
 
     fun delete() {

@@ -14,4 +14,6 @@ class AppResources(val ctx: Context, val settings: AppSettings) {
 
     fun currentSuffix() = if (settings.useMmolAsGlucoseUnits()) mmolSuffix else mgSuffix
 
+    fun measuredArray(): Array<String> = ctx.resources.getStringArray(R.array.measured)
+
 }
