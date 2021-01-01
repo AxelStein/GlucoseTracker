@@ -21,15 +21,15 @@ class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion
 
         override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
             return CompareBuilder().append(oldItem.id, newItem.id)
-                    .append(oldItem.itemType, newItem.itemType)
-                    .append(oldItem.valueMmol, newItem.valueMg)
-                    .append(oldItem.valueMg, newItem.valueMg)
-                    .append(oldItem.measured, newItem.measured)
-                    .append(oldItem.note, newItem.note)
-                    .append(oldItem.a1c, newItem.a1c)
-                    .append(oldItem.foods, newItem.foods)
-                    .append(oldItem.dateTime, newItem.dateTime)
-                    .areEqual()
+                .append(oldItem.itemType, newItem.itemType)
+                .append(oldItem.valueMmol, newItem.valueMg)
+                .append(oldItem.valueMg, newItem.valueMg)
+                .append(oldItem.measured, newItem.measured)
+                .append(oldItem.note, newItem.note)
+                .append(oldItem.a1c, newItem.a1c)
+                .append(oldItem.foods, newItem.foods)
+                .append(oldItem.dateTime, newItem.dateTime)
+                .areEqual()
         }
     }
 

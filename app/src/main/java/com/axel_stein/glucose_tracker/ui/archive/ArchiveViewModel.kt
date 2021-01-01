@@ -1,7 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.archive
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,7 +41,6 @@ class ArchiveViewModel: ViewModel() {
     init {
         App.appComponent.inject(this)
         disposables.add(dao.getYears().subscribeOn(io()).subscribe { newList ->
-            Log.e("ArchiveViewModel", "getYears $newList")
             var index = 0
             if (this.years.isNotEmpty()) {
                 val currentYear = this.years[selectedYear]
@@ -104,7 +102,6 @@ class ArchiveViewModel: ViewModel() {
     }
 
     fun setCurrentMonth(position: Int) {
-        Log.d("ArchiveViewModel", "setCurrentMonth $position")
         if (months.isNotEmpty()) {
             setSelectedMonth(position)
             loadItems()
@@ -112,7 +109,6 @@ class ArchiveViewModel: ViewModel() {
     }
 
     fun setCurrentYear(position: Int) {
-        Log.d("ArchiveViewModel", "setCurrentYear $position")
         if (years.isNotEmpty()) {
             setSelectedYear(position)
             loadMonths(years[position])
@@ -124,7 +120,6 @@ class ArchiveViewModel: ViewModel() {
 
     private fun loadMonths(year: String) {
         disposables.add(dao.getMonths(year).subscribeOn(io()).subscribe { newList ->
-            Log.e("ArchiveViewModel", "getMonths $newList")
             val months = mutableListOf<Int>()
             newList.forEach { months.add(it.toInt()) }
 
@@ -147,8 +142,9 @@ class ArchiveViewModel: ViewModel() {
         if (!years.isNullOrEmpty() && !months.isNullOrEmpty()) {
             val currentYear = years[selectedYear]
             val currentMonth = months[selectedMonth]
-            Log.e("ArchiveViewModel", "loadItems $currentYear $currentMonth")
-            loadItemsByYearMonth.postValue("$currentYear-${currentMonth.toString().padStart(2, '0')}")
+            loadItemsByYearMonth.postValue(
+                "$currentYear-${currentMonth.toString().padStart(2, '0')}"
+            )
         }
     }
 }

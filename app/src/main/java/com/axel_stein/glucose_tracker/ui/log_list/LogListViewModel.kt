@@ -1,7 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,7 +35,6 @@ class LogListViewModel: ViewModel() {
         if (items.value.isNullOrEmpty()) {
             disposables.clear()
             disposables.add(dao.getRecentItems().subscribe {
-                Log.d("TAG", "loadRecentItems")
                 items.postValue(sort(it.toMutableList()))
             })
         }
@@ -47,7 +45,6 @@ class LogListViewModel: ViewModel() {
             disposables.clear()
             this.yearMonth = yearMonth
             disposables.add(dao.getItems(yearMonth).subscribe {
-                Log.d("TAG", "loadItemsByYearMonth $yearMonth")
                 items.postValue(sort(it.toMutableList()))
             })
         }

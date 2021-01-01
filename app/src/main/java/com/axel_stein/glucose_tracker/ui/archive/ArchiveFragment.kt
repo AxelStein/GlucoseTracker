@@ -1,7 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.archive
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +38,6 @@ class ArchiveFragment: LogListFragment() {
         }
 
         archiveViewModel.yearsData().observe(viewLifecycleOwner, { years ->
-            Log.d("TAG", "years $years")
             if (years.isEmpty()) {
                 inputLayoutYear?.hide()
                 textEmpty?.show()
@@ -53,7 +51,6 @@ class ArchiveFragment: LogListFragment() {
         })
 
         archiveViewModel.selectedYearData().observe(viewLifecycleOwner, { position ->
-            Log.d("TAG", "selectedYearData $position")
             spinnerYear?.listSelection = position
             val item = spinnerYear?.adapter?.getItem(position)
             if (item != null) {
@@ -74,7 +71,6 @@ class ArchiveFragment: LogListFragment() {
         }
 
         archiveViewModel.monthsData().observe(viewLifecycleOwner, { months ->
-            Log.d("TAG", "months $months")
             if (months.isEmpty()) {
                 inputLayoutMonth?.hide()
             } else {
@@ -90,7 +86,6 @@ class ArchiveFragment: LogListFragment() {
             }
         })
         archiveViewModel.selectedMonthData().observe(viewLifecycleOwner, { position ->
-            Log.d("TAG", "selectedMonthData $position")
             spinnerMonth?.listSelection = position
             val item = spinnerMonth?.adapter?.getItem(position)
             if (item != null) {
@@ -99,7 +94,6 @@ class ArchiveFragment: LogListFragment() {
         })
 
         archiveViewModel.loadItemsByYearMonthData().observe(viewLifecycleOwner, {
-            Log.e("TAG", "loadItemsByYearMonthData $this")
             viewModel.loadItemsByYearMonth(it)
         })
         return root
