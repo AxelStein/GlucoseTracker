@@ -14,7 +14,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
-import java.text.DecimalFormat
 import javax.inject.Inject
 
 class EditGlucoseViewModel(
@@ -97,11 +96,7 @@ class EditGlucoseViewModel(
         if (s.isNullOrEmpty()) {
             return 0f
         }
-        var mmol = roundFloat(s.toFloat())
-        if (mmol < 0) {
-            mmol *= -1f
-        }
-        return mmol
+        return s.toFloat()
     }
 
     private fun getGlucoseValueMg(): Int {
@@ -187,13 +182,16 @@ class EditGlucoseViewModel(
     }
 
     private fun intoMmol(mg: Int?): Float {
-        return roundFloat(mg?.div(18f) ?: 0f)
+        return mg?.div(18f) ?: 0f
     }
 
+    /*
+    Xiaomi bug
     private fun roundFloat(f: Float): Float {
         val df = DecimalFormat("#.#")
         return df.format(f).toFloat()
     }
+    */
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
         dateTime.postValue(dateTime.value.apply {
