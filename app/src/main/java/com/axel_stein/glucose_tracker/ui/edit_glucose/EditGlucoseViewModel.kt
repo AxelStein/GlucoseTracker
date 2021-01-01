@@ -16,9 +16,15 @@ import org.joda.time.MutableDateTime
 import java.text.DecimalFormat
 import javax.inject.Inject
 
-class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
-                           glucose: String = "", measured: Int = 0,
-                           dateTime: String? = null) : ViewModel() {
+class EditGlucoseViewModel(
+    private var id: Long = 0L,
+    load: Boolean = true,
+    glucose: String = "",
+    measured: Int = 0,
+    dateTime: String? = null,
+    dao: GlucoseLogDao? = null,
+    appSettings: AppSettings? = null
+) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val glucose = MutableLiveData<String>()
     private val measured = MutableLiveData<Int>()
@@ -35,8 +41,16 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
     lateinit var appSettings: AppSettings
 
     init {
-        App.appComponent.inject(this)
-        useMmolAsGlucoseUnits = appSettings.useMmolAsGlucoseUnits()
+        if (dao == null) {
+            App.appComponent.inject(this)
+        } else {
+            this.dao = dao
+            if (appSettings != null) {
+                this.appSettings = appSettings
+            }
+        }
+
+        useMmolAsGlucoseUnits = this.appSettings.useMmolAsGlucoseUnits()
 
         if (load) {
             loadData()
@@ -88,7 +102,11 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
         if (s.isNullOrEmpty()) {
             return 0f
         }
-        return roundFloat(s.toFloat())
+        var mmol = roundFloat(s.toFloat())
+        if (mmol < 0) {
+            mmol *= -1f
+        }
+        return mmol
     }
 
     private fun getGlucoseValueMg(): Int {
@@ -96,7 +114,11 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
         if (s.isNullOrEmpty()) {
             return 0
         }
-        return s.toInt()
+        var mg = s.toInt()
+        if (mg < 0) {
+            mg *= -1
+        }
+        return mg
     }
 
     fun getMeasured(): Int = measured.value ?: 0
@@ -151,12 +173,17 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
     }
 
     private fun createLog(): GlucoseLog {
-        val mmol = if (useMmolAsGlucoseUnits) getGlucoseValueMmol() else intoMmol(getGlucoseValueMg())
-        val mg = if (useMmolAsGlucoseUnits) intoMgDl(getGlucoseValueMmol()) else getGlucoseValueMg()
-        return GlucoseLog(mmol, mg,
-                getMeasured(),
-                getCurrentDateTime()
-        ).also { it.id = id }
+        val mmol = if (useMmolAsGlucoseUnits) {
+            getGlucoseValueMmol()
+        } else {
+            intoMmol(getGlucoseValueMg())
+        }
+        val mg = if (useMmolAsGlucoseUnits) {
+            intoMgDl(getGlucoseValueMmol())
+        } else {
+            getGlucoseValueMg()
+        }
+        return GlucoseLog(mmol, mg, getMeasured(), getCurrentDateTime()).also { it.id = id }
     }
 
     private fun intoMgDl(mmolL: Float?): Int {
