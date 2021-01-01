@@ -20,29 +20,29 @@ interface LogDao {
 
     @Query("""
         select id, value_mmol, value_mg, measured, date_time, 0 as item_type, null as note, null as foods, null as a1c from glucose_log
-        where strftime('%Y-%m', date_time) = :yearMonth union
+        where substr(date_time, 1, 7) = :yearMonth union
         select id, null as value_mmol, null as value_mg, null as measured, date_time, 2 as item_type, null as note, null as foods, value as a1c from a1c_log 
-        where strftime('%Y-%m', date_time) = :yearMonth union
+        where substr(date_time, 1, 7) = :yearMonth union
         select id, null as value_mmol, null as value_mg, null as measured, date_time, 1 as item_type, note, null as foods, null as a1c from note_log
-        where strftime('%Y-%m', date_time) = :yearMonth
+        where substr(date_time, 1, 7) = :yearMonth
     """)
     fun getItems(yearMonth: String): Flowable<List<LogItem>>
 
     @Query("""
-        select strftime('%m', date_time) as month from glucose_log
-        where strftime('%Y', date_time) = :year union
-        select strftime('%m', date_time) as month from a1c_log 
-        where strftime('%Y', date_time) = :year union
-        select strftime('%m', date_time) as month from note_log
-        where strftime('%Y', date_time) = :year
+        select substr(date_time, 6, 2) as month from glucose_log
+        where substr(date_time, 1, 4) = :year union
+        select substr(date_time, 6, 2) as month from a1c_log 
+        where substr(date_time, 1, 4) = :year union
+        select substr(date_time, 6, 2) as month from note_log
+        where substr(date_time, 1, 4) = :year
         group by month order by month desc
     """)
     fun getMonths(year: String): Single<List<String>>
 
     @Query("""
-        select strftime('%Y', date_time) as year from glucose_log union
-        select strftime('%Y', date_time) as year from a1c_log union
-        select strftime('%Y', date_time) as year from note_log
+        select substr(date_time, 1, 4) as year from glucose_log union
+        select substr(date_time, 1, 4) as year from a1c_log union
+        select substr(date_time, 1, 4) as year from note_log
         group by year order by year desc
     """)
     fun getYears(): Flowable<List<String>>

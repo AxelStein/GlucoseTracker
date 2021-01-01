@@ -5,6 +5,7 @@
       <w>gson</w>
       <w>mmol</w>
       <w>strftime</w>
+      <w>substr</w>
     </words>
   </dictionary>
 </component>
