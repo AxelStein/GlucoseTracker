@@ -1,11 +1,11 @@
 package com.axel_stein.glucose_tracker.data.dagger
 
+import android.content.Context
 import androidx.room.Room
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
-import com.axel_stein.glucose_tracker.ui.App
 import com.google.gson.*
 import dagger.Module
 import dagger.Provides
@@ -14,11 +14,11 @@ import java.lang.reflect.Type
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val app: App) {
+class AppModule(private val ctx: Context) {
     @Provides
     @Singleton
     fun provideDB(): AppDatabase {
-        return Room.databaseBuilder(app, AppDatabase::class.java, app.packageName).build()
+        return Room.databaseBuilder(ctx, AppDatabase::class.java, ctx.packageName).build()
     }
 
     @Provides
@@ -73,13 +73,13 @@ class AppModule(private val app: App) {
     @Provides
     @Singleton
     fun provideAppSettings(): AppSettings {
-        return AppSettings(app)
+        return AppSettings(ctx)
     }
 
     @Provides
     @Singleton
     fun provideAppResources(settings: AppSettings): AppResources {
-        return AppResources(app, settings)
+        return AppResources(ctx, settings)
     }
 
     @Provides

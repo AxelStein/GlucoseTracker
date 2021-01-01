@@ -1,11 +1,11 @@
 package com.axel_stein.glucose_tracker.data.settings
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.axel_stein.glucose_tracker.ui.App
 
-class AppSettings(val app: App) {
-    private val prefs = PreferenceManager.getDefaultSharedPreferences(app)
+class AppSettings(val ctx: Context) {
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
 
     init {
         enableNightMode(prefs.getBoolean("night_mode", false))

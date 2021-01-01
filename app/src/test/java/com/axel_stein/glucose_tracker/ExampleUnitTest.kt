@@ -1,7 +1,8 @@
 package com.axel_stein.glucose_tracker
 
+import junit.framework.Assert.assertTrue
+import org.joda.time.DateTime
 import org.junit.Test
-import java.text.DecimalFormat
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,7 +12,7 @@ import java.text.DecimalFormat
 class ExampleUnitTest {
     @Test
     fun test() {
-        val df = DecimalFormat("#.#")
-        println(df.format("3.415"))
+        println(DateTime())
+        assertTrue(4 == 2+2)
     }
 }

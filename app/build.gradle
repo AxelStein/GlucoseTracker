@@ -15,6 +15,11 @@ android {
         versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.axel_stein.glucose_tracker.test"
+        testHandleProfiling true
+        // If set to 'true', indicates that the Android system should run the instrumentation
+        // class as a functional test. The default value is 'false'
+        testFunctionalTest true
     }
 
     buildTypes {
@@ -72,7 +77,13 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+
     testImplementation 'junit:junit:4.13.1'
+
+    androidTestImplementation 'android.arch.core:core-testing:1.1.1'
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
