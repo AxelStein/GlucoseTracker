@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class EditGlucoseViewModel(
     private var id: Long = 0L,
@@ -121,8 +122,8 @@ class EditGlucoseViewModel(
                 override fun onSuccess(l: GlucoseLog) {
                     dateTime.postValue(l.dateTime.toMutableDateTime())
                     glucose.postValue(
-                            if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
-                            else l.valueMg.toString()
+                        if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
+                        else l.valueMg.toString()
                     )
                     measured.postValue(l.measured)
                 }
@@ -164,11 +165,13 @@ class EditGlucoseViewModel(
     }
 
     private fun createLog(): GlucoseLog {
-        val mmol = if (useMmolAsGlucoseUnits) {
+        var mmol = if (useMmolAsGlucoseUnits) {
             getGlucoseValueMmol()
         } else {
             intoMmol(getGlucoseValueMg())
         }
+        mmol = roundFloat(mmol)
+
         val mg = if (useMmolAsGlucoseUnits) {
             intoMgDl(getGlucoseValueMmol())
         } else {
@@ -185,13 +188,9 @@ class EditGlucoseViewModel(
         return mg?.div(18f) ?: 0f
     }
 
-    /*
-    Xiaomi bug
-    private fun roundFloat(f: Float): Float {
-        val df = DecimalFormat("#.#")
-        return df.format(f).toFloat()
+    private fun roundFloat(num: Float): Float {
+        return (num * 10.0f).roundToInt().toFloat() / 10.0f
     }
-    */
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
         dateTime.postValue(dateTime.value.apply {
