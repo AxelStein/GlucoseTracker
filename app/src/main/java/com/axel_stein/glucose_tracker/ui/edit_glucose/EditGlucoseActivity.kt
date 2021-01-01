@@ -182,6 +182,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             inputLayoutMeasured.clearFocus()
             viewModel.setMeasured(position)
         }
+        measuredDropdown.setOnDismissListener { inputLayoutMeasured.clearFocus() }
 
         viewModel.measuredObserver().observe(this, { value ->
             if (value != measuredDropdown.listSelection) {

@@ -13,6 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
@@ -87,7 +88,7 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
         if (s.isNullOrEmpty()) {
             return 0f
         }
-        return s.toFloat()
+        return roundFloat(s.toFloat())
     }
 
     private fun getGlucoseValueMg(): Int {
@@ -163,7 +164,12 @@ class EditGlucoseViewModel(private var id: Long = 0L, load: Boolean = true,
     }
 
     private fun intoMmol(mg: Int?): Float {
-        return mg?.div(18f) ?: 0f
+        return roundFloat(mg?.div(18f) ?: 0f)
+    }
+
+    private fun roundFloat(f: Float): Float {
+        val df = DecimalFormat("#.#")
+        return df.format(f).toFloat()
     }
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
