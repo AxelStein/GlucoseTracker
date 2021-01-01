@@ -70,7 +70,7 @@ class ArchiveFragment: LogListFragment() {
             archiveViewModel.setCurrentMonth(position)
         }
         spinnerMonth?.setOnDismissListener {
-            inputLayoutYear?.clearFocus()
+            inputLayoutMonth?.clearFocus()
         }
 
         archiveViewModel.monthsData().observe(viewLifecycleOwner, { months ->
