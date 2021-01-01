@@ -74,4 +74,5 @@
     <string name="month_oct">October</string>
     <string name="month_nov">November</string>
     <string name="month_dec">December</string>
+    <string name="error_opening_log">Error opening log</string>
 </resources>

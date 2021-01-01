@@ -9,6 +9,8 @@ import android.text.InputType.TYPE_CLASS_NUMBER
 import android.text.InputType.TYPE_NUMBER_VARIATION_NORMAL
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.TYPE_NUMBER_FLAG_DECIMAL
 import android.widget.AutoCompleteTextView
@@ -159,6 +161,9 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             if (it) {
                 Snackbar.make(toolbar, R.string.error_deleting_log, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
             }
+        })
+        viewModel.errorLoadingObserver().observe(this, {
+            if (it) findViewById<View>(R.id.error_loading).visibility = VISIBLE
         })
 
         val adapter = CArrayAdapter(

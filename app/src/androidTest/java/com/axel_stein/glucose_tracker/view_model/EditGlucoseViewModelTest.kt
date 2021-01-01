@@ -102,6 +102,7 @@ class EditGlucoseViewModelTest {
         assertFalse(items.isEmpty())
 
         val vm = createVieModel(items[0].id)
+        assertNull(vm.errorLoadingObserver().value)
         assertEquals("5.0", vm.getGlucoseValue())
         assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
@@ -109,6 +110,16 @@ class EditGlucoseViewModelTest {
         assertEquals(15, vm.getCurrentDateTime().toLocalTime().hourOfDay)
         assertEquals(30, vm.getCurrentDateTime().toLocalTime().minuteOfHour)
         assertEquals(2, vm.getMeasured())
+    }
+
+    @Test
+    fun testLoad_error() {
+        appSettings.setGlucoseUnits("mmol_l")
+
+        dao.insert(createLog(2, "2021", "01", "10", "15", "30")).subscribe()
+        val vm = createVieModel(2L)
+        assertNotNull(vm.errorLoadingObserver().value)
+        assertTrue(vm.errorLoadingObserver().value ?: false)
     }
 
     @Test

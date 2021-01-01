@@ -115,4 +115,25 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/error_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/windowBackground"
+        android:visibility="gone"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="8dp"
+            android:text="@string/error_opening_log"
+            android:textColor="?attr/colorError"
+            android:textSize="16sp"
+            app:drawableTint="?attr/colorError"
+            app:drawableTopCompat="@drawable/outline_error_outline_black_24dp" />
+
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

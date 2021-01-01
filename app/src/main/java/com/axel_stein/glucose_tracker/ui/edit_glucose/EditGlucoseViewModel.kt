@@ -30,6 +30,7 @@ class EditGlucoseViewModel(
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val glucose = MutableLiveData<String>()
     private val measured = MutableLiveData<Int>()
+    private val errorLoading = MutableLiveData<Boolean>()
     private val errorGlucoseEmpty = MutableLiveData<Boolean>()
     private val errorSave = MutableLiveData<Boolean>()
     private val errorDelete = MutableLiveData<Boolean>()
@@ -69,41 +70,27 @@ class EditGlucoseViewModel(
         }
     }
 
-    fun dateTimeObserver(): LiveData<MutableDateTime> {
-        return dateTime
-    }
+    fun dateTimeObserver(): LiveData<MutableDateTime> = dateTime
 
-    fun glucoseObserver(): LiveData<String> {
-        return glucose
-    }
+    fun glucoseObserver(): LiveData<String> = glucose
 
-    fun measuredObserver(): LiveData<Int> {
-        return measured
-    }
+    fun measuredObserver(): LiveData<Int> = measured
 
-    fun errorGlucoseEmptyObserver(): LiveData<Boolean> {
-        return errorGlucoseEmpty
-    }
+    fun errorLoadingObserver(): LiveData<Boolean> = errorLoading
 
-    fun errorSaveObserver(): LiveData<Boolean> {
-        return errorSave
-    }
+    fun errorGlucoseEmptyObserver(): LiveData<Boolean> = errorGlucoseEmpty
 
-    fun errorDeleteObserver(): LiveData<Boolean> {
-        return errorDelete
-    }
+    fun errorSaveObserver(): LiveData<Boolean> = errorSave
 
-    fun actionFinishObserver(): LiveData<Boolean> {
-        return actionFinish
-    }
+    fun errorDeleteObserver(): LiveData<Boolean> = errorDelete
+
+    fun actionFinishObserver(): LiveData<Boolean> = actionFinish
 
     fun getId(): Long = id
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 
-    fun getGlucoseValue(): String {
-        return glucose.value ?: ""
-    }
+    fun getGlucoseValue(): String = glucose.value ?: ""
 
     private fun getGlucoseValueMmol(): Float {
         val s = glucose.value
@@ -147,6 +134,7 @@ class EditGlucoseViewModel(
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    errorLoading.postValue(true)
                 }
             })
         } else {
