@@ -14,8 +14,13 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditNoteViewModel(private var id: Long = 0L, load: Boolean = true,
-                        note: String = "", _dateTime: String? = null) : ViewModel() {
+class EditNoteViewModel(
+    private var id: Long = 0L,
+    load: Boolean = true,
+    note: String = "",
+    _dateTime: String? = null,
+    dao: NoteLogDao? = null
+) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val noteData = MutableLiveData<String>()
     private val errorNoteEmpty = MutableLiveData<Boolean>()
@@ -27,7 +32,11 @@ class EditNoteViewModel(private var id: Long = 0L, load: Boolean = true,
     lateinit var dao: NoteLogDao
 
     init {
-        App.appComponent.inject(this)
+        if (dao == null) {
+            App.appComponent.inject(this)
+        } else {
+            this.dao = dao
+        }
 
         if (load) {
             loadData()
