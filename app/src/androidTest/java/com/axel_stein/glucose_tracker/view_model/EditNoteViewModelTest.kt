@@ -35,6 +35,7 @@ class EditNoteViewModelTest {
 
     @After
     fun closeDb() {
+        dao.deleteAll()
         db.close()
     }
 
@@ -74,7 +75,7 @@ class EditNoteViewModelTest {
         Assert.assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         Assert.assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
         Assert.assertEquals(10, vm.getCurrentDateTime().toLocalDate().dayOfMonth)
-        Assert.assertEquals(15, vm.getCurrentDateTime().toLocalTime().hourOfDay)
+        Assert.assertEquals(13, vm.getCurrentDateTime().toLocalTime().hourOfDay)
         Assert.assertEquals(30, vm.getCurrentDateTime().toLocalTime().minuteOfHour)
     }
 

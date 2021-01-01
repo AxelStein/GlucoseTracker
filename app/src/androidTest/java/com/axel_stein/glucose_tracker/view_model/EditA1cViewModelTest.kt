@@ -10,8 +10,11 @@ import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cViewModel
 import org.joda.time.DateTime
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -36,6 +39,7 @@ class EditA1cViewModelTest {
 
     @After
     fun closeDb() {
+        dao.deleteAll()
         db.close()
     }
 
@@ -68,14 +72,14 @@ class EditA1cViewModelTest {
         dao.insert(createLog("2021", "01", "10", "15", "30")).subscribe()
 
         val items = dao.get()
-        Assert.assertFalse(items.isEmpty())
+        assertFalse(items.isEmpty())
 
         val vm = createViewModel(items[0].id)
         assertEquals("5.2", vm.getValue())
         assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
         assertEquals(10, vm.getCurrentDateTime().toLocalDate().dayOfMonth)
-        assertEquals(15, vm.getCurrentDateTime().toLocalTime().hourOfDay)
+        assertEquals(13, vm.getCurrentDateTime().toLocalTime().hourOfDay)
         assertEquals(30, vm.getCurrentDateTime().toLocalTime().minuteOfHour)
     }
 
