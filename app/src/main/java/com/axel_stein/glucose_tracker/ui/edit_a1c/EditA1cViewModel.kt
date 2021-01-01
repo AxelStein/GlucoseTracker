@@ -14,8 +14,13 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditA1cViewModel(private var id: Long = 0L, load: Boolean = true,
-                       _a1c: String = "", _dateTime: String? = null) : ViewModel() {
+class EditA1cViewModel(
+    private var id: Long = 0L,
+    load: Boolean = true,
+    _a1c: String = "",
+    _dateTime: String? = null,
+    dao: A1cLogDao? = null
+) : ViewModel() {
     private val dateTime = MutableLiveData<MutableDateTime>()
     private val a1c = MutableLiveData<String>()
     private val errorValueEmpty = MutableLiveData<Boolean>()
@@ -27,7 +32,11 @@ class EditA1cViewModel(private var id: Long = 0L, load: Boolean = true,
     lateinit var dao: A1cLogDao
 
     init {
-        App.appComponent.inject(this)
+        if (dao == null) {
+            App.appComponent.inject(this)
+        } else {
+            this.dao = dao
+        }
 
         if (load) {
             loadData()
@@ -88,8 +97,7 @@ class EditA1cViewModel(private var id: Long = 0L, load: Boolean = true,
     }
 
     fun save() {
-        val note = getValue()
-        if (note.isEmpty()) {
+        if (getValue().isEmpty()) {
             errorValueEmpty.value = true
         } else {
             val log = createLog()
