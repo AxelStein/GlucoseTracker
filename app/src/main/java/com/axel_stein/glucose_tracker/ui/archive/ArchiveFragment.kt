@@ -7,16 +7,23 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.settings.AppResources
+import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.log_list.LogListFragment
 import com.axel_stein.glucose_tracker.utils.CArrayAdapter
 import com.axel_stein.glucose_tracker.utils.hide
 import com.axel_stein.glucose_tracker.utils.show
+import javax.inject.Inject
 
 
 class ArchiveFragment: LogListFragment() {
     private val archiveViewModel: ArchiveViewModel by viewModels()
 
+    @Inject
+    lateinit var appResources: AppResources
+
     init {
+        App.appComponent.inject(this)
         layoutResourceId = R.layout.fragment_archive
     }
 
@@ -51,10 +58,12 @@ class ArchiveFragment: LogListFragment() {
         })
 
         archiveViewModel.selectedYearData().observe(viewLifecycleOwner, { position ->
-            spinnerYear?.listSelection = position
-            val item = spinnerYear?.adapter?.getItem(position)
-            if (item != null) {
-                spinnerYear.setText(item as String, false)
+            if (position != -1) {
+                spinnerYear?.listSelection = position
+                val item = spinnerYear?.adapter?.getItem(position)
+                if (item != null) {
+                    spinnerYear.setText(item as String, false)
+                }
             }
         })
 
@@ -76,7 +85,7 @@ class ArchiveFragment: LogListFragment() {
             } else {
                 inputLayoutMonth?.show()
 
-                val monthTitles = resources.getStringArray(R.array.months)
+                val monthTitles = appResources.monthsArray()
                 val selectedMonthTitles = mutableListOf<String>()
                 months.forEach {
                     selectedMonthTitles.add(monthTitles[it-1])
@@ -86,10 +95,12 @@ class ArchiveFragment: LogListFragment() {
             }
         })
         archiveViewModel.selectedMonthData().observe(viewLifecycleOwner, { position ->
-            spinnerMonth?.listSelection = position
-            val item = spinnerMonth?.adapter?.getItem(position)
-            if (item != null) {
-                spinnerMonth.setText(item as String, false)
+            if (position != -1) {
+                spinnerMonth?.listSelection = position
+                val item = spinnerMonth?.adapter?.getItem(position)
+                if (item != null) {
+                    spinnerMonth.setText(item as String, false)
+                }
             }
         })
 

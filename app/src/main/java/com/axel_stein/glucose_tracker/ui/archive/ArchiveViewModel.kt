@@ -5,26 +5,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.room.dao.LogDao
-import com.axel_stein.glucose_tracker.data.settings.AppResources
-import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
-class ArchiveViewModel: ViewModel() {
+class ArchiveViewModel(
+    dao: LogDao? = null
+): ViewModel() {
     private val yearsData = MutableLiveData<List<String>>()
     private var years = listOf<String>()
 
     private val selectedYearData = MutableLiveData<Int>()
-    private var selectedYear = 0
+    private var selectedYear = -1
 
     private val monthsData = MutableLiveData<List<Int>>()
     private var months = listOf<Int>()
 
     private val selectedMonthData = MutableLiveData<Int>()
-    private var selectedMonth = 0
+    private var selectedMonth = -1
 
     private val loadItemsByYearMonth = MutableLiveData<String>()
     private val disposables = CompositeDisposable()
@@ -32,24 +32,25 @@ class ArchiveViewModel: ViewModel() {
     @Inject
     lateinit var dao: LogDao
 
-    @Inject
-    lateinit var appSettings: AppSettings
-
-    @Inject
-    lateinit var appResources: AppResources
-
     init {
-        App.appComponent.inject(this)
-        disposables.add(dao.getYears().subscribeOn(io()).subscribe { newList ->
-            var index = 0
-            if (this.years.isNotEmpty()) {
-                val currentYear = this.years[selectedYear]
-                index = if (newList.contains(currentYear)) {
-                    newList.indexOf(currentYear)
-                } else {
-                    0
+        if (dao == null) {
+            App.appComponent.inject(this)
+        } else {
+            this.dao = dao
+        }
+
+        disposables.add(this.dao.getYears().subscribeOn(io()).subscribe { newList ->
+            var index = selectedYear
+            if (this.years.isNotEmpty()) {  // update years
+                if (newList.isEmpty()) {
+                    index = -1
+                } else if (index >= newList.size) {
+                    index = 0
                 }
+            } else if (newList.isNotEmpty()) {  // load years
+                index = 0
             }
+
             setYears(newList)
             setCurrentYear(index)
         })
@@ -88,6 +89,10 @@ class ArchiveViewModel: ViewModel() {
         selectedMonthData.postValue(position)
     }
 
+    fun getSelectedMonth(): Int = selectedMonth
+
+    fun getCurrentMonth(): Int = if (months.isEmpty()) -1 else months[selectedMonth]
+
     fun selectedYearData(): LiveData<Int> {
         return selectedYearData
     }
@@ -97,24 +102,30 @@ class ArchiveViewModel: ViewModel() {
         selectedYearData.postValue(position)
     }
 
+    fun getSelectedYear(): Int = selectedYear
+
+    fun getCurrentYear(): String = if (years.isEmpty()) "" else years[selectedYear]
+
     fun loadItemsByYearMonthData(): LiveData<String> {
         return loadItemsByYearMonth
     }
 
     fun setCurrentMonth(position: Int) {
+        setSelectedMonth(position)
         if (months.isNotEmpty()) {
-            setSelectedMonth(position)
             loadItems()
         }
     }
 
     fun setCurrentYear(position: Int) {
+        setSelectedYear(position)
         if (years.isNotEmpty()) {
-            setSelectedYear(position)
             loadMonths(years[position])
         } else {
             setYears(emptyList())
+
             setMonths(emptyList())
+            setSelectedMonth(-1)
         }
     }
 
@@ -123,18 +134,22 @@ class ArchiveViewModel: ViewModel() {
             val months = mutableListOf<Int>()
             newList.forEach { months.add(it.toInt()) }
 
-            var index = 0
-            if (this.months.isNotEmpty()) {
-                val currentMonth = this.months[selectedMonth]
-                index = if (months.contains(currentMonth)) {
-                    months.indexOf(currentMonth)
-                } else {
-                    0
+            var index = selectedMonth
+            if (this.months.isNotEmpty()) {  // update months
+                if (newList.isNotEmpty()) {
+                    val currentMonth = getCurrentMonth()
+                    index = if (months.contains(currentMonth)) {
+                        months.indexOf(currentMonth)
+                    } else {
+                        0
+                    }
                 }
+            } else if (newList.isNotEmpty()) {  // load months
+                index = 0
             }
+
             setMonths(months)
-            setSelectedMonth(index)
-            loadItems()
+            setCurrentMonth(index)
         })
     }
 

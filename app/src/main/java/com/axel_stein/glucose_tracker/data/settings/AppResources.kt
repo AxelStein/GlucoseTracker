@@ -16,4 +16,6 @@ class AppResources(val ctx: Context, val settings: AppSettings) {
 
     fun measuredArray(): Array<String> = ctx.resources.getStringArray(R.array.measured)
 
+    fun monthsArray(): Array<String> = ctx.resources.getStringArray(R.array.months)
+
 }
