@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -90,6 +92,14 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         val editA1c = findViewById<TextInputEditText>(R.id.edit_a1c)
         editA1c.doAfterTextChanged {
             viewModel.setValue(it.toString())
+        }
+        editA1c.setOnEditorActionListener { v, actionId, _ ->
+            var consumed = false
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                (v as EditText).hideKeyboard()
+                consumed = true
+            }
+            consumed
         }
 
         var focusEdit = true
