@@ -65,7 +65,7 @@ class EditNoteViewModelTest {
 
     @Test
     fun testLoad() {
-        dao.insert(createLog("2021", "01", "10", "15", "30")).subscribe()
+        dao.insert(createLog("2021", "01", "10")).subscribe()
 
         val items = dao.get()
         Assert.assertFalse(items.isEmpty())
@@ -75,8 +75,6 @@ class EditNoteViewModelTest {
         Assert.assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         Assert.assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
         Assert.assertEquals(10, vm.getCurrentDateTime().toLocalDate().dayOfMonth)
-        Assert.assertEquals(13, vm.getCurrentDateTime().toLocalTime().hourOfDay)
-        Assert.assertEquals(30, vm.getCurrentDateTime().toLocalTime().minuteOfHour)
     }
 
     @Test

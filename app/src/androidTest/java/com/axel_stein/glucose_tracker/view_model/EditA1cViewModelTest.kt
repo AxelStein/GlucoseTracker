@@ -69,7 +69,7 @@ class EditA1cViewModelTest {
 
     @Test
     fun testLoad() {
-        dao.insert(createLog("2021", "01", "10", "15", "30")).subscribe()
+        dao.insert(createLog("2021", "01", "10")).subscribe()
 
         val items = dao.get()
         assertFalse(items.isEmpty())
@@ -79,8 +79,6 @@ class EditA1cViewModelTest {
         assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
         assertEquals(10, vm.getCurrentDateTime().toLocalDate().dayOfMonth)
-        assertEquals(13, vm.getCurrentDateTime().toLocalTime().hourOfDay)
-        assertEquals(30, vm.getCurrentDateTime().toLocalTime().minuteOfHour)
     }
 
     @Test
