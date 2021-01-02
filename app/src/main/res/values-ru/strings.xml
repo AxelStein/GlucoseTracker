@@ -49,7 +49,7 @@
     <string name="stats_a1c">HbA1c расчетное значение</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
-    <string name="diabetes_control_average">Умеренный контроль диабета</string>
+    <string name="diabetes_control_average">Относительный контроль диабета</string>
     <string name="msg_delete_a1c">Запись будет удалена навсегда.</string>
     <string name="bottom_nav_archive">Архив</string>
 

@@ -59,8 +59,8 @@
     <string name="stats_avg">Average value</string>
     <string name="stats_a1c">HbA1c estimated value</string>
     <string name="diabetes_control_good">Good diabetes control</string>
-    <string name="diabetes_control_average">Average diabetes control</string>
-    <string name="diabetes_control_bad">Bad diabetes control</string>
+    <string name="diabetes_control_average">Relative diabetes control</string>
+    <string name="diabetes_control_bad">Poor diabetes control</string>
     <string name="hint_a1c" translatable="false">HbA1c</string>
     <string name="bottom_nav_archive">Archive</string>
 
