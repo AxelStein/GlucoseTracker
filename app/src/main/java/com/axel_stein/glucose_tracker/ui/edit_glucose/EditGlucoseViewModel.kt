@@ -94,22 +94,16 @@ class EditGlucoseViewModel(
 
     private fun getGlucoseValueMmol(): Float {
         val s = glucose.value
-        if (s.isNullOrEmpty()) {
-            return 0f
-        }
-        return s.toFloat()
+        if (s.isNullOrEmpty()) return 0f
+        val num = s.toFloat()
+        return if (num < 0) num * -1.0f else num
     }
 
     private fun getGlucoseValueMg(): Int {
         val s = glucose.value
-        if (s.isNullOrEmpty()) {
-            return 0
-        }
-        var mg = s.toInt()
-        if (mg < 0) {
-            mg *= -1
-        }
-        return mg
+        if (s.isNullOrEmpty()) return 0
+        val num = s.toInt()
+        return if (num < 0) num * -1 else num
     }
 
     fun getMeasured(): Int = measured.value ?: 0
@@ -208,7 +202,7 @@ class EditGlucoseViewModel(
     }
 
     fun setGlucose(value: String) {
-        glucose.value = value
+        glucose.value = value.replace(',', '.')
         if (value.isNotEmpty()) {
             errorGlucoseEmpty.value = false
         }

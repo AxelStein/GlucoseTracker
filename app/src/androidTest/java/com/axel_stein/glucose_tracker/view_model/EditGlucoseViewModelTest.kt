@@ -66,6 +66,38 @@ class EditGlucoseViewModelTest {
     }
 
     @Test
+    fun testSave_glucoseInvalid() {
+        appSettings.setGlucoseUnits("mmol_l")
+
+        val vm = createVieModel()
+        vm.setDate(2021, 1, 1)
+        vm.setTime(20, 0)
+        vm.setGlucose("3,5")
+        vm.setMeasured(0)
+        vm.save()
+
+        assertFalse(vm.errorGlucoseEmptyObserver().value ?: false)
+        assertNull(vm.errorSaveObserver().value)
+        assertTrue(vm.actionFinishObserver().value ?: false)
+    }
+
+    @Test
+    fun testSave_glucoseNegative() {
+        appSettings.setGlucoseUnits("mmol_l")
+
+        val vm = createVieModel()
+        vm.setDate(2021, 1, 1)
+        vm.setTime(20, 0)
+        vm.setGlucose("-3,5")
+        vm.setMeasured(0)
+        vm.save()
+
+        assertFalse(vm.errorGlucoseEmptyObserver().value ?: false)
+        assertNull(vm.errorSaveObserver().value)
+        assertTrue(vm.actionFinishObserver().value ?: false)
+    }
+
+    @Test
     fun testSave_glucoseEmpty() {
         appSettings.setGlucoseUnits("mmol_l")
 
