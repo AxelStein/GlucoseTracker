@@ -6,6 +6,14 @@ import android.text.format.DateUtils.*
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 
+fun formatDateTime(context: Context, dateTime: DateTime?, showWeekDay: Boolean = true): String {
+    if (dateTime == null) return ""
+    var flags = FORMAT_SHOW_DATE or FORMAT_SHOW_TIME or FORMAT_ABBREV_TIME
+    if (showWeekDay) {
+        flags = flags or (FORMAT_SHOW_WEEKDAY or FORMAT_ABBREV_WEEKDAY)
+    }
+    return formatDateTime(context, dateTime.millis, flags)
+}
 
 fun formatDate(context: Context, dateTime: MutableDateTime?, showWeekDay: Boolean = true): String {
     return formatDate(context, dateTime?.toDateTime(), showWeekDay)
