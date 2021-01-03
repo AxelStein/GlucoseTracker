@@ -16,7 +16,7 @@
 * Fix archive bug
 * Other minor bug fixes
 
-### 1.0.2 (February 28, 2020)
+### 1.0.2 (December 28, 2020)
 
 * Add archive
 * Set picker dialog date limit
