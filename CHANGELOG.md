@@ -5,6 +5,7 @@
 * Add uk, fr translations
 * Refactor tests
 * Add Google Drive backup
+* Refactor statistics view model
 
 ### 1.0.4 (January 2, 2021)
 

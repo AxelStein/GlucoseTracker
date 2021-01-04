@@ -90,4 +90,5 @@
     <string name="msg_backup_created">Backup created successfully</string>
     <string name="error_import">Import error</string>
     <string name="error_import_backup">Import error</string>
+    <string name="error_statistics">Error loading statistics</string>
 </resources>
