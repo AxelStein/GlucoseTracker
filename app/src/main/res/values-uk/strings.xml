@@ -69,4 +69,13 @@
     <string name="pref_about_app">Про додаток</string>
     <string name="pref_rate_app">Оцінити додаток</string>
     <string name="app_version_title">Версія додатку</string>
+    <string name="error_create_backup">Помилка створення резервної копії</string>
+    <string name="msg_backup_created">Резервна копія створена успішно</string>
+    <string name="error_import">Помилка імпортування</string>
+    <string name="error_import_backup">Помилка імпортування</string>
+    <string name="pref_auto_sync_summary">Автоматичне створення резервної копії кожен день</string>
+    <string name="pref_auto_sync">Автосинхрониізація</string>
+    <string name="pref_export_drive">Створити резервну копію</string>
+    <string name="pref_import_drive">Імпортувати резервну копію</string>
+    <string name="pref_last_synced">Востаннє синхронізовано</string>
 </resources>

@@ -1,5 +1,7 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <SwitchPreference
         app:key="night_mode"
@@ -30,6 +32,41 @@
             app:iconSpaceReserved="false"
             app:key="import_backup"
             app:title="@string/pref_import_backup"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:allowDividerBelow="false"
+        app:allowDividerAbove="false"
+        app:title="@string/pref_category_google_drive"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            tools:isPreferenceVisible="true"
+            app:isPreferenceVisible="false"
+            app:key="drive_auto_sync"
+            app:title="@string/pref_auto_sync"
+            app:summary="@string/pref_auto_sync_summary"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="drive_create_backup"
+            app:title="@string/pref_export_drive" />
+
+        <Preference
+            app:allowDividerBelow="true"
+            app:iconSpaceReserved="false"
+            app:key="drive_import"
+            app:title="@string/pref_import_drive"/>
+
+        <Preference
+            tools:summary="May 24, 13:45"
+            tools:isPreferenceVisible="true"
+            app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false"
+            app:key="drive_last_synced"
+            app:title="@string/pref_last_synced"/>
 
     </PreferenceCategory>
 

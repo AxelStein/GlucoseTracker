@@ -75,4 +75,13 @@
     <string name="pref_about_app">À propos de l\'application</string>
     <string name="pref_rate_app">Évaluer l\'application</string>
     <string name="app_version_title">Version de l\'application</string>
+    <string name="pref_export_drive">Créer une sauvegarde</string>
+    <string name="pref_import_drive">Importer une sauvegarde</string>
+    <string name="pref_auto_sync">Synchronisation automatique</string>
+    <string name="pref_last_synced">Dernière synchronisation</string>
+    <string name="pref_auto_sync_summary">Sauvegarde automatique tous les jours</string>
+    <string name="error_create_backup">Erreur lors de la création de la sauvegarde</string>
+    <string name="error_import">Erreur lors de l\'importation</string>
+    <string name="error_import_backup">Erreur lors de l\'importation</string>
+    <string name="msg_backup_created">Sauvegarde créée avec succès</string>
 </resources>

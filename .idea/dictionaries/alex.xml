@@ -4,6 +4,7 @@
       <w>fileprovider</w>
       <w>gson</w>
       <w>mmol</w>
+      <w>snackbar</w>
       <w>strftime</w>
       <w>substr</w>
     </words>

@@ -6,7 +6,6 @@ import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.writeStr
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -33,7 +32,7 @@ class BackupHelper {
     @Inject
     lateinit var appSettings: AppSettings
 
-    private val backupFileName = "backup.json"
+    val backupFileName = "backup.json"
 
     init {
         App.appComponent.inject(this)
@@ -41,17 +40,22 @@ class BackupHelper {
 
     fun createBackup(): Single<File> {
         return Single.fromCallable {
-            val backup = Backup(
-                    1,
-                    glucoseLogDao.get(),
-                    noteLogDao.get(),
-                    a1cLogDao.get(),
-                    appSettings.getGlucoseUnits()
-            )
-            val data = gson.toJson(backup, Backup::class.java)
-            val backupFile = File(appResources.appDir(), backupFileName)
-            backupFile.writeStr(data)
+            _createBackup()
         }.subscribeOn(io())
+    }
+
+    fun _createBackup(): File {
+        val backup = Backup(
+            1,
+            glucoseLogDao.get(),
+            noteLogDao.get(),
+            a1cLogDao.get(),
+            appSettings.getGlucoseUnits()
+        )
+        val data = gson.toJson(backup, Backup::class.java)
+        val backupFile = File(appResources.appDir(), backupFileName)
+        backupFile.writeText(data)
+        return backupFile
     }
 
     fun importBackup(data: String): Completable {

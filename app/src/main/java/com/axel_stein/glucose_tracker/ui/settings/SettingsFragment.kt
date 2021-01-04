@@ -1,40 +1,39 @@
 package com.axel_stein.glucose_tracker.ui.settings
 
-import android.app.Activity
 import android.content.Intent
-import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
-import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.backup.BackupHelper
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.readStrFromFileUri
-import io.reactivex.CompletableObserver
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
-import io.reactivex.disposables.Disposable
-import java.io.File
+import com.axel_stein.glucose_tracker.ui.ProgressListener
+import com.axel_stein.glucose_tracker.utils.formatDateTime
+import org.joda.time.DateTime
 import javax.inject.Inject
 
-
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val backupHelper = BackupHelper()
-    private val codePickFile = 1
+    private lateinit var viewModel: SettingsViewModel
+    private var lastSynced: Preference? = null
+    private var autoSync: SwitchPreference? = null
 
     @Inject
     lateinit var appSettings: AppSettings
 
     init {
         App.appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val app = requireContext().applicationContext as App
+        viewModel = ViewModelProvider(this, SettingsFactory(app))
+            .get(SettingsViewModel::class.java)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -52,68 +51,76 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val exportBackup = preferenceManager.findPreference<Preference>("export_backup")
         exportBackup?.setOnPreferenceClickListener {
-            backupHelper.createBackup().observeOn(mainThread()).subscribe(object : SingleObserver<File> {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onSuccess(file: File) {
-                    val uri = getUriForFile(file)
-
-                    val intent = Intent(Intent.ACTION_SEND).apply {
-                        type = "application/zip"
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        flags = FLAG_GRANT_WRITE_URI_PERMISSION or
-                                FLAG_GRANT_READ_URI_PERMISSION
-                    }
-                    startActivity(Intent.createChooser(intent, null))
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    Toast.makeText(requireContext(), R.string.error_export_file, LENGTH_SHORT).show()
-                }
-            })
+            viewModel.startExportToFile()
+                .subscribe({
+                    startActivity(Intent.createChooser(it, null))
+                }, {
+                    it.printStackTrace()
+                    showSnackbar(R.string.error_export_file)
+                })
             true
         }
 
         val importBackup = preferenceManager.findPreference<Preference>("import_backup")
         importBackup?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-                flags = FLAG_GRANT_WRITE_URI_PERMISSION or
-                        FLAG_GRANT_READ_URI_PERMISSION
-            }
-            startActivityForResult(intent, codePickFile)
+            startActivityForResult(viewModel.startImportFromFile(), viewModel.codePickFile)
             true
         }
+
+        val driveCreateBackup = preferenceManager.findPreference<Preference>("drive_create_backup")
+        driveCreateBackup?.setOnPreferenceClickListener {
+            viewModel.driveCreateBackup(this)
+            true
+        }
+
+        val driveImport = preferenceManager.findPreference<Preference>("drive_import")
+        driveImport?.setOnPreferenceClickListener {
+            viewModel.driveImportBackup(this)
+            true
+        }
+
+        lastSynced = preferenceManager.findPreference("drive_last_synced")
+
+        autoSync = preferenceManager.findPreference("drive_auto_sync")
+        autoSync?.setOnPreferenceChangeListener { _, enable ->
+            viewModel.enableAutoSync(enable as Boolean)
+            true
+        }
+
+        viewModel.showAutoSyncLiveData().observe(viewLifecycleOwner, {
+            autoSync?.isVisible = it
+        })
+
+        viewModel.lastSyncTimeLiveData().observe(viewLifecycleOwner, { time ->
+            if (time > 0) {
+                lastSynced?.summary = formatDateTime(requireContext(), DateTime(time), false)
+                lastSynced?.isVisible = true
+            }
+        })
+
+        viewModel.messageLiveData().observe(viewLifecycleOwner, { message ->
+            showSnackbar(message)
+        })
+
+        viewModel.showProgressBarLiveData().observe(viewLifecycleOwner, {
+            if (activity is ProgressListener) {
+                (activity as ProgressListener).showProgress(it)
+            }
+        })
     }
 
-    private fun getUriForFile(file: File): Uri {
-        return FileProvider.getUriForFile(
-                requireContext(),
-                "com.axel_stein.glucose_tracker.fileprovider",
-                file
-        )
+    private fun showSnackbar(message: Int) {
+        if (message != -1) {
+            val c = context
+            if (c != null) {
+                Toast.makeText(c, message, LENGTH_SHORT).show()
+            }
+            viewModel.notifyMessageReceived()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == codePickFile && resultCode == Activity.RESULT_OK) {
-            readStrFromFileUri(requireContext().contentResolver, data?.data)
-                .flatMapCompletable { backupHelper.importBackup(it) }
-                .observeOn(mainThread())
-                .subscribe(object : CompletableObserver {
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onComplete() {
-                        Toast.makeText(requireContext(), R.string.msg_import_completed, LENGTH_SHORT).show()
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                        Toast.makeText(requireContext(), R.string.error_import_file, LENGTH_SHORT).show()
-                    }
-                })
-        }
+        viewModel.onActivityResult(requestCode, resultCode, data)
     }
 }
