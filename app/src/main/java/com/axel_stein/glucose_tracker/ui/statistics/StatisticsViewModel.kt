@@ -1,26 +1,36 @@
 package com.axel_stein.glucose_tracker.ui.statistics
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.StatsDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.data.stats.Stats
 import com.axel_stein.glucose_tracker.ui.App
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers.io
+import io.reactivex.Maybe
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class StatisticsViewModel: ViewModel() {
+class StatisticsViewModel(
+    dao: StatsDao?= null,
+    glucoseDao: GlucoseLogDao?= null,
+    appSettings: AppSettings?= null,
+    appResources: AppResources?= null
+): ViewModel() {
     private val data = MutableLiveData<Stats>()
     private val control = MutableLiveData<Int>()
     private var period = -1
+    private val showError = MutableLiveData(false)
 
     @Inject
     lateinit var dao: StatsDao
+
+    @Inject
+    lateinit var glucoseDao: GlucoseLogDao
 
     @Inject
     lateinit var appSettings: AppSettings
@@ -29,45 +39,63 @@ class StatisticsViewModel: ViewModel() {
     lateinit var appResources: AppResources
 
     init {
-        App.appComponent.inject(this)
+        if (dao == null) {
+            App.appComponent.inject(this)
+        } else {
+            this.dao = dao
+            if (glucoseDao != null) {
+                this.glucoseDao = glucoseDao
+            }
+            if (appSettings != null) {
+                this.appSettings = appSettings
+            }
+            if (appResources != null) {
+                this.appResources = appResources
+            }
+        }
+        setPeriod(0)
     }
 
+    fun statsLiveData(): LiveData<Stats> = data
+
+    fun diabetesControlLiveData(): LiveData<Int> = control
+
+    fun showErrorLiveData(): LiveData<Boolean> = showError
+
+    @SuppressLint("CheckResult")
     fun setPeriod(p: Int) {
         if (period == p) {
             return
         }
         period = p
-        val s = when(period) {
-            0 -> dao.twoWeeks()
-            1 -> dao.month()
-            2 -> dao.threeMonths()
-            else -> TODO("Not implemented")
-        }
-        s.subscribeOn(io()).subscribe(object : SingleObserver<Stats> {
-            override fun onSubscribe(d: Disposable) {}
 
-            override fun onSuccess(stats: Stats) {
-                Log.d("TAG", "onSuccess $stats")
+        Single.fromCallable { glucoseDao.get() }
+            .flatMapMaybe {
+                if (it.isNullOrEmpty()) {
+                    Maybe.empty()
+                } else {
+                    Maybe.fromSingle(when (period) {
+                        0 -> dao.twoWeeks()
+                        1 -> dao.month()
+                        else -> dao.threeMonths()
+                    })
+                }
+            }
+            .subscribeOn(Schedulers.io())
+            .subscribe({ stats ->
                 stats.minFormatted = formatMin(stats)
                 stats.maxFormatted = formatMax(stats)
                 stats.avgFormatted = formatAvg(stats)
                 stats.a1cFormatted = formatA1C(stats)
                 data.postValue(stats)
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()  // todo
-            }
-
-        })
-    }
-
-    fun getStatsObserver(): LiveData<Stats> {
-        return data
-    }
-
-    fun getDiabetesControlObserver(): LiveData<Int> {
-        return control
+                showError.postValue(false)
+            }, {
+                it.printStackTrace()
+                showError.postValue(true)
+            }, {
+                data.postValue(null)
+                showError.postValue(false)
+            })
     }
 
     private fun formatMin(stats: Stats): String {
