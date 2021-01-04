@@ -6,6 +6,7 @@
     <attr name="logListBackgroundColor" format="color|reference"/>
     <attr name="logItemBackgroundColor" format="color|reference"/>
     <attr name="toolbarBackgroundColor" format="color|reference"/>
+    <attr name="progressBarColor" format="color|reference"/>
     <attr name="diabetesControlGoodColor" format="color|reference"/>
     <attr name="diabetesControlAvgColor" format="color|reference"/>
     <attr name="diabetesControlBadColor" format="color|reference"/>

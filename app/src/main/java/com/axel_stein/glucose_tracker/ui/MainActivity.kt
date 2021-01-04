@@ -15,11 +15,12 @@ import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
 import com.axel_stein.glucose_tracker.utils.setShown
+import com.axel_stein.glucose_tracker.utils.setViewVisible
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProgressListener {
     private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
     private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
 
@@ -136,5 +137,9 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putBoolean(extraShowFab, fab.isShown)
         outState.putBoolean(extraShowFabMenu, fabMenu.isShown)
+    }
+
+    override fun showProgress(show: Boolean) {
+        setViewVisible(show, findViewById(R.id.progress_bar))
     }
 }

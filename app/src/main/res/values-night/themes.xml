@@ -11,6 +11,7 @@
         <item name="bottomNavItemIconColor">@drawable/bottom_nav_item_icon_night</item>
         <item name="bottomNavBackgroundColor">@color/color_primary_night</item>
         <item name="toolbarBackgroundColor">@color/toolbar_bg_color_night</item>
+        <item name="progressBarColor">@color/color_progress_bar_night</item>
         <item name="diabetesControlGoodColor">@color/color_good_diabetes_control_night</item>
         <item name="diabetesControlAvgColor">@color/color_avg_diabetes_control_night</item>
         <item name="diabetesControlBadColor">@color/color_bad_diabetes_control_night</item>
