@@ -1,15 +1,20 @@
 package com.axel_stein.glucose_tracker.ui.settings
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.Intent.*
 import android.net.Uri
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
 import com.axel_stein.glucose_tracker.data.google_drive.DriveWorker
 import com.axel_stein.glucose_tracker.data.google_drive.GoogleDriveService
@@ -20,9 +25,39 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class SettingsViewModel(app: App) : AndroidViewModel(app) {
+    val codePickFile = 1
+    private val codeRequestPermissions = 2
+
     private val driveService = GoogleDriveService(app)
     private val backupHelper = BackupHelper()
-    var lastAction = ""
+    private var lastAction = ""
+    private val showProgressBar = MutableLiveData(false)
+    private val showAutoSync = MutableLiveData(false)
+    private val lastSyncTime = MutableLiveData(0L)
+    private val message = MutableLiveData(-1)
+
+    init {
+        if (driveService.hasPermissions()) {
+            showAutoSync.value = true
+        }
+        updateLastSyncTime()
+    }
+
+    fun notifyMessageReceived() {
+        message.value = -1
+    }
+
+    fun messageLiveData(): LiveData<Int> = message
+
+    fun showAutoSyncLiveData(): LiveData<Boolean> = showAutoSync
+
+    fun lastSyncTimeLiveData(): LiveData<Long> = lastSyncTime
+
+    fun showProgressBarLiveData(): LiveData<Boolean> = showProgressBar
+
+    private fun showProgressBar(show: Boolean) {
+        showProgressBar.value = show
+    }
 
     fun startExportToFile() = backupHelper.createBackup()
         .map { file ->
@@ -33,6 +68,8 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             }
         }
         .observeOn(mainThread())
+        .doOnSubscribe { showProgressBar(true) }
+        .doFinally { showProgressBar(false) }
 
     private fun getUriForFile(file: File) = FileProvider.getUriForFile(
         getApplication(),
@@ -47,31 +84,102 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             flags = FLAG_GRANT_WRITE_URI_PERMISSION or FLAG_GRANT_READ_URI_PERMISSION
         }
 
-    fun importFromFile(uri: Uri?) = readStrFromFileUri(getApplication<App>().contentResolver, uri)
-        .flatMapCompletable { backup -> backupHelper.importBackup(backup) }
-        .observeOn(mainThread())
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK) return
 
-    fun hasPermissions() = driveService.hasPermissions()
+        when (requestCode) {
+            codePickFile -> {
+                importFromFile(data?.data)
+                    .subscribe({
+                        message.value = R.string.msg_import_completed
+                    }, {
+                        it.printStackTrace()
+                        message.value = R.string.error_import_file
+                    })
+            }
 
-    fun requestPermissions(fragment: Fragment, requestCode: Int, action: String): Boolean {
-        if (!driveService.hasPermissions()) {
-            lastAction = action
-            driveService.requestPermissions(fragment, requestCode)
-            return false
+            codeRequestPermissions -> {
+                showAutoSync.value = true
+                updateLastSyncTime()
+
+                when (lastAction) {
+                    "create" -> driveCreateBackup()
+                    "import" -> driveImportBackup()
+                }
+            }
         }
-        return true
     }
 
-    fun driveCreateBackup() = backupHelper.createBackup()
-        .flatMapCompletable { file -> driveService.uploadFile(backupHelper.backupFileName, file) }
+    private fun importFromFile(uri: Uri?) = readStrFromFileUri(getApplication<App>().contentResolver, uri)
+        .flatMapCompletable { backup -> backupHelper.importBackup(backup) }
         .observeOn(mainThread())
+        .doOnSubscribe { showProgressBar(true) }
+        .doFinally { showProgressBar(false) }
 
-    fun driveImportBackup() = driveService.downloadFile(backupHelper.backupFileName)
-        .flatMapCompletable { data -> backupHelper.importBackup(data) }
-        .observeOn(mainThread())
+    @SuppressLint("CheckResult")
+    fun driveCreateBackup(fragment: Fragment) {
+        if (!driveService.hasPermissions()) {
+            lastAction = "create"
+            driveService.requestPermissions(fragment, codeRequestPermissions)
+        } else {
+            driveCreateBackup()
+        }
+    }
 
-    fun getLastSyncTime() = driveService.getLastSyncTime(backupHelper.backupFileName)
-        .observeOn(mainThread())
+    @SuppressLint("CheckResult")
+    private fun driveCreateBackup() {
+        backupHelper.createBackup()
+            .flatMapCompletable { file -> driveService.uploadFile(backupHelper.backupFileName, file) }
+            .observeOn(mainThread())
+            .doOnSubscribe { showProgressBar(true) }
+            .doOnComplete { updateLastSyncTime() }
+            .doFinally { showProgressBar(false) }
+            .subscribe({
+                message.value = R.string.msg_backup_created
+            }, {
+                it.printStackTrace()
+                message.value = R.string.error_create_backup
+            })
+    }
+
+    fun driveImportBackup(fragment: Fragment) {
+        if (!driveService.hasPermissions()) {
+            lastAction = "import"
+            driveService.requestPermissions(fragment, codeRequestPermissions)
+        } else {
+            driveImportBackup()
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun driveImportBackup() {
+        driveService.downloadFile(backupHelper.backupFileName)
+            .flatMapCompletable { data -> backupHelper.importBackup(data) }
+            .observeOn(mainThread())
+            .doOnSubscribe { showProgressBar(true) }
+            .doFinally { showProgressBar(false) }
+            .subscribe({
+                message.value = R.string.msg_import_completed
+            }, {
+                it.printStackTrace()
+                message.value = R.string.error_import_backup
+            })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun updateLastSyncTime() {
+        if (driveService.hasPermissions()) {
+            driveService.getLastSyncTime(backupHelper.backupFileName)
+                .observeOn(mainThread())
+                .doOnSubscribe { showProgressBar(true) }
+                .doFinally { showProgressBar(false) }
+                .subscribe({
+                    lastSyncTime.postValue(it)
+                }, {
+                    it.printStackTrace()
+                })
+        }
+    }
 
     fun enableAutoSync(enable: Boolean) {
         val tag = "com.axel_stein.drive_worker"

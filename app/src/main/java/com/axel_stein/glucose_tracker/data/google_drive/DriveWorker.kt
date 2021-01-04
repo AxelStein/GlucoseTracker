@@ -11,7 +11,7 @@ class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, 
     private val backupHelper = BackupHelper()
 
     override fun doWork(): Result {
-        val time = driveService._getLastSyncTime(backupHelper.backupFileName)
+        val time = driveService.getLastSyncTimeImpl(backupHelper.backupFileName)
         if (time != -1L) {
             val date = LocalDate(time)
             val today = LocalDate()
@@ -23,7 +23,7 @@ class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, 
     private fun createBackup(): Result {
         return try {
             val backupFile = backupHelper._createBackup()
-            driveService._uploadFile(backupHelper.backupFileName, backupFile)
+            driveService.uploadFileImpl(backupHelper.backupFileName, backupFile)
             Result.success()
         } catch (e: Exception) {
             e.printStackTrace()

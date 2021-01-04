@@ -1,7 +1,5 @@
 package com.axel_stein.glucose_tracker.ui.settings
 
-import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,15 +12,13 @@ import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
+import com.axel_stein.glucose_tracker.ui.ProgressListener
 import com.axel_stein.glucose_tracker.utils.formatDateTime
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var viewModel: SettingsViewModel
-    private val codePickFile = 1
-    private val codeRequestPermissions = 2
-
     private var lastSynced: Preference? = null
     private var autoSync: SwitchPreference? = null
 
@@ -60,104 +56,71 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     startActivity(Intent.createChooser(it, null))
                 }, {
                     it.printStackTrace()
-                    Toast.makeText(requireContext(), R.string.error_export_file, LENGTH_SHORT).show()
+                    showSnackbar(R.string.error_export_file)
                 })
             true
         }
 
         val importBackup = preferenceManager.findPreference<Preference>("import_backup")
         importBackup?.setOnPreferenceClickListener {
-            startActivityForResult(viewModel.startImportFromFile(), codePickFile)
+            startActivityForResult(viewModel.startImportFromFile(), viewModel.codePickFile)
             true
         }
 
         val driveCreateBackup = preferenceManager.findPreference<Preference>("drive_create_backup")
         driveCreateBackup?.setOnPreferenceClickListener {
-            driveCreateBackup()
+            viewModel.driveCreateBackup(this)
+            true
         }
 
         val driveImport = preferenceManager.findPreference<Preference>("drive_import")
         driveImport?.setOnPreferenceClickListener {
-            driveImportBackup()
+            viewModel.driveImportBackup(this)
+            true
         }
 
         lastSynced = preferenceManager.findPreference("drive_last_synced")
-        updateLastSyncTime()
 
         autoSync = preferenceManager.findPreference("drive_auto_sync")
-        autoSync?.isVisible = viewModel.hasPermissions()
         autoSync?.setOnPreferenceChangeListener { _, enable ->
             viewModel.enableAutoSync(enable as Boolean)
             true
         }
+
+        viewModel.showAutoSyncLiveData().observe(viewLifecycleOwner, {
+            autoSync?.isVisible = it
+        })
+
+        viewModel.lastSyncTimeLiveData().observe(viewLifecycleOwner, { time ->
+            if (time > 0) {
+                lastSynced?.summary = formatDateTime(requireContext(), DateTime(time), false)
+                lastSynced?.isVisible = true
+            }
+        })
+
+        viewModel.messageLiveData().observe(viewLifecycleOwner, { message ->
+            showSnackbar(message)
+        })
+
+        viewModel.showProgressBarLiveData().observe(viewLifecycleOwner, {
+            if (activity is ProgressListener) {
+                (activity as ProgressListener).showProgress(it)
+            }
+        })
     }
 
-    @SuppressLint("CheckResult")
-    private fun driveCreateBackup(): Boolean {
-        if (viewModel.requestPermissions(this, codeRequestPermissions, "create")) {
-            viewModel.driveCreateBackup()
-                .doOnComplete { updateLastSyncTime() }
-                .subscribe({
-                    Toast.makeText(requireContext(), R.string.msg_backup_created, LENGTH_SHORT).show()
-                }, {
-                    it.printStackTrace()
-                    Toast.makeText(requireContext(), R.string.error_create_backup, LENGTH_SHORT).show()
-                })
+    private fun showSnackbar(message: Int) {
+        if (message != -1) {
+            val c = context
+            if (c != null) {
+                Toast.makeText(c, message, LENGTH_SHORT).show()
+            }
+            viewModel.notifyMessageReceived()
         }
-        return true
-    }
-
-    @SuppressLint("CheckResult")
-    private fun driveImportBackup(): Boolean {
-        if (viewModel.requestPermissions(this, codeRequestPermissions, "import")) {
-            viewModel.driveImportBackup()
-                .subscribe({
-                    Toast.makeText(requireContext(), R.string.msg_import_completed, LENGTH_SHORT).show()
-                }, {
-                    it.printStackTrace()
-                    Toast.makeText(requireContext(), R.string.error_import_backup, LENGTH_SHORT).show()
-                })
-        }
-        return true
-    }
-
-    @SuppressLint("CheckResult")
-    private fun updateLastSyncTime() {
-        viewModel.getLastSyncTime()
-            .subscribe({ time ->
-                if (time != -1L) {
-                    lastSynced?.summary = formatDateTime(requireContext(), DateTime(time), false)
-                    lastSynced?.isVisible = true
-                }
-            }, {
-                it.printStackTrace()
-            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                codePickFile -> {
-                    viewModel.importFromFile(data?.data)
-                        .subscribe({
-                            Toast.makeText(requireContext(), R.string.msg_import_completed, LENGTH_SHORT).show()
-                        }, {
-                            it.printStackTrace()
-                            Toast.makeText(requireContext(), R.string.error_import_file, LENGTH_SHORT).show()
-                        })
-                }
-
-                codeRequestPermissions -> {
-                    autoSync?.isVisible = true
-                    updateLastSyncTime()
-
-                    when (viewModel.lastAction) {
-                        "create" -> driveCreateBackup()
-                        "import" -> driveImportBackup()
-                    }
-                }
-            }
-        }
+        viewModel.onActivityResult(requestCode, resultCode, data)
     }
 }

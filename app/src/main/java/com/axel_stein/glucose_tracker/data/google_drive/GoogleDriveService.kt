@@ -43,27 +43,11 @@ class GoogleDriveService(private val context: Context) {
         )
     }
 
-    private fun setupDriveService(): Boolean {
-        if (service == null) {
-            val account = getLastSignedInAccount(context)
-            if (account != null) {
-                val credential = GoogleAccountCredential.usingOAuth2(context,
-                    listOf(DRIVE_APPDATA, DRIVE_FILE)
-                )
-                credential.selectedAccount = account.account
-                service = Drive.Builder(NetHttpTransport(), GsonFactory(), credential)
-                    .setApplicationName(context.getString(R.string.app_name))
-                    .build()
-            }
-        }
-        return true
-    }
-
     fun uploadFile(fileName: String, file: java.io.File): Completable {
-        return Completable.fromAction { _uploadFile(fileName, file) }.subscribeOn(io())
+        return Completable.fromAction { uploadFileImpl(fileName, file) }.subscribeOn(io())
     }
 
-    fun _uploadFile(fileName: String, file: java.io.File) {
+    fun uploadFileImpl(fileName: String, file: java.io.File) {
         val metadata = File().setName(fileName)
         val contentStream = ByteArrayContent.fromString("text/plain", file.readText())
 
@@ -91,10 +75,10 @@ class GoogleDriveService(private val context: Context) {
     }
 
     fun getLastSyncTime(fileName: String): Single<Long> {
-        return Single.fromCallable { _getLastSyncTime(fileName) }.subscribeOn(io())
+        return Single.fromCallable { getLastSyncTimeImpl(fileName) }.subscribeOn(io())
     }
     
-    fun _getLastSyncTime(fileName: String): Long {
+    fun getLastSyncTimeImpl(fileName: String): Long {
         val id = getFileId(fileName)
         if (!id.isNullOrEmpty() && setupDriveService()) {
             try {
@@ -124,5 +108,21 @@ class GoogleDriveService(private val context: Context) {
             e.printStackTrace()
         }
         return null
+    }
+
+    private fun setupDriveService(): Boolean {
+        if (service == null) {
+            val account = getLastSignedInAccount(context)
+            if (account != null) {
+                val credential = GoogleAccountCredential.usingOAuth2(
+                    context, listOf(DRIVE_APPDATA, DRIVE_FILE)
+                )
+                credential.selectedAccount = account.account
+                service = Drive.Builder(NetHttpTransport(), GsonFactory(), credential)
+                    .setApplicationName(context.getString(R.string.app_name))
+                    .build()
+            }
+        }
+        return true
     }
 }
