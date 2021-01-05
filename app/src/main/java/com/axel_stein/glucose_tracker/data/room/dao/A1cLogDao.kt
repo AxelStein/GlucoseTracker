@@ -31,6 +31,9 @@ interface A1cLogDao {
     @Query("select * from a1c_log")
     fun get(): List<A1cLog>
 
+    @Query("select * from a1c_log where date_time > date('now', '-1 year')")
+    fun getThisYear(): List<A1cLog>
+
     @Transaction
     fun importBackup(backup: List<A1cLog>) {
         deleteAll()

@@ -31,6 +31,15 @@ interface GlucoseLogDao {
     @Query("select * from glucose_log")
     fun get(): List<GlucoseLog>
 
+    @Query("select * from glucose_log where date_time > date('now', '-14 day')")
+    fun getLastTwoWeeks(): Single<List<GlucoseLog>>
+
+    @Query("select * from glucose_log where date_time > date('now', '-1 month')")
+    fun getLastMonth(): Single<List<GlucoseLog>>
+
+    @Query("select * from glucose_log where date_time > date('now', '-3 month')")
+    fun getLastThreeMonths(): Single<List<GlucoseLog>>
+
     @Transaction
     fun importBackup(backup: List<GlucoseLog>) {
         deleteAll()

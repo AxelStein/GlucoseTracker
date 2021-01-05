@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
+import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.StatsDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
@@ -30,6 +31,7 @@ class StatisticsViewModelTest {
     private lateinit var db: AppDatabase
     private lateinit var dao: StatsDao
     private lateinit var glucoseDao: GlucoseLogDao
+    private lateinit var a1cDao: A1cLogDao
     private lateinit var appSettings: AppSettings
     private lateinit var appResources: AppResources
 
@@ -40,6 +42,7 @@ class StatisticsViewModelTest {
 
         dao = db.statsDao()
         glucoseDao = db.glucoseLogDao()
+        a1cDao = db.a1cDao()
 
         appSettings = AppSettings(context)
         appResources = AppResources(context, appSettings)
@@ -53,7 +56,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun testNoData() {
-        val vm = StatisticsViewModel(dao, glucoseDao, appSettings, appResources)
+        val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNull(vm.statsLiveData().value)
         assertNull(vm.diabetesControlLiveData().value)
         assertFalse(vm.showErrorLiveData().value ?: true)
@@ -63,7 +66,7 @@ class StatisticsViewModelTest {
     fun testControlGood() {
         glucoseDao.insert(createLog(4f)).subscribe()
 
-        val vm = StatisticsViewModel(dao, glucoseDao, appSettings, appResources)
+        val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)
         assertNotNull(vm.diabetesControlLiveData().value)
         assertEquals(0, vm.diabetesControlLiveData().value)
@@ -74,7 +77,7 @@ class StatisticsViewModelTest {
     fun testControlAvg() {
         glucoseDao.insert(createLog(8f)).subscribe()
 
-        val vm = StatisticsViewModel(dao, glucoseDao, appSettings, appResources)
+        val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)
         assertNotNull(vm.diabetesControlLiveData().value)
         assertFalse(vm.showErrorLiveData().value ?: true)
@@ -84,7 +87,7 @@ class StatisticsViewModelTest {
     fun testControlBad() {
         glucoseDao.insert(createLog(10f)).subscribe()
 
-        val vm = StatisticsViewModel(dao, glucoseDao, appSettings, appResources)
+        val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)
         assertNotNull(vm.diabetesControlLiveData().value)
         assertFalse(vm.showErrorLiveData().value ?: true)

@@ -28,6 +28,12 @@ fun formatDate(context: Context, dateTime: DateTime?, showWeekDay: Boolean = tru
     return formatDateTime(context, dateTime.millis, flags)
 }
 
+fun formatDateMonth(context: Context, dateTime: DateTime?): String {
+    if (dateTime == null) return ""
+    val flags = FORMAT_SHOW_DATE or FORMAT_ABBREV_MONTH or FORMAT_NO_YEAR
+    return formatDateTime(context, dateTime.millis, flags)
+}
+
 fun formatTime(context: Context, dateTime: MutableDateTime?): String {
     return formatTime(context, dateTime?.toDateTime())
 }

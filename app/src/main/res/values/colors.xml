@@ -12,6 +12,7 @@
     <color name="color_good_diabetes_control_day">#388E3C</color>
     <color name="color_avg_diabetes_control_day">#F57C00</color>
     <color name="color_bad_diabetes_control_day">#B00020</color>
+    <color name="color_chart_fill">#CE93D8</color>
 
     <!--night theme colors-->
     <color name="color_bg_night">#303030</color>

@@ -9,7 +9,6 @@
 
     <ScrollView
         android:id="@+id/content"
-        android:background="?attr/logItemBackgroundColor"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,208 +23,336 @@
             <Spinner
                 android:id="@+id/spinner_period"
                 android:entries="@array/stats_period"
-                android:layout_marginStart="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <View
+                android:visibility="gone"
                 android:background="?android:attr/dividerHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp" />
 
-            <TableLayout
-                android:id="@+id/table"
-                android:layout_marginTop="8dp"
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TableRow
+                <LinearLayout
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <TableLayout
+                        android:background="?attr/logItemBackgroundColor"
+                        android:id="@+id/table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@string/stats_min"
+                                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"/>
+
+                            <TextView
+                                android:id="@+id/text_min"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center_vertical"
+                                tools:text="4.2 mmol/L"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@string/stats_max"
+                                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"/>
+
+                            <TextView
+                                android:id="@+id/text_max"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center_vertical"
+                                tools:text="7.4 mmol/L"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@string/stats_avg"
+                                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"/>
+
+                            <TextView
+                                android:id="@+id/text_avg"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center_vertical"
+                                tools:text="5.6 mmol/L"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@string/stats_a1c"
+                                app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"/>
+
+                            <TextView
+                                android:id="@+id/text_a1c"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center_vertical"
+                                tools:text="5.3%"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/text_min" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
                     <TextView
-                        android:text="@string/stats_min"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                        android:background="?attr/logItemBackgroundColor"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/table"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:textSize="16sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"/>
-
-                    <TextView
-                        android:id="@+id/text_min"
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="4.2 mmol/L"
-                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/text_min" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        android:visibility="gone"
+                        android:drawablePadding="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="16sp"
+                        android:id="@+id/text_a1c_control_good"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textColor="?attr/diabetesControlGoodColor"
+                        android:text="@string/diabetes_control_good"
+                        app:drawableTint="?attr/diabetesControlGoodColor"
+                        app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
 
                     <TextView
-                        android:text="@string/stats_max"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                        app:layout_constraintTop_toBottomOf="@+id/table"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:textSize="16sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"/>
-
-                    <TextView
-                        android:id="@+id/text_max"
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="7.4 mmol/L"
-                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/text_min" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:background="?attr/logItemBackgroundColor"
+                        android:drawablePadding="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="16sp"
+                        android:id="@+id/text_a1c_control_avg"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textColor="?attr/diabetesControlAvgColor"
+                        android:text="@string/diabetes_control_average"
+                        app:drawableTint="?attr/diabetesControlAvgColor"
+                        app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
 
                     <TextView
-                        android:text="@string/stats_avg"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
+                        app:layout_constraintTop_toBottomOf="@+id/table"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:textSize="16sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"/>
-
-                    <TextView
-                        android:id="@+id/text_avg"
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="5.6 mmol/L"
-                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/text_min" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/stats_a1c"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_period"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        android:background="?attr/logItemBackgroundColor"
+                        android:drawablePadding="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:textSize="16sp"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:id="@+id/text_a1c_control_bad"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"/>
-
-                    <TextView
-                        android:id="@+id/text_a1c"
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="5.3%"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/text_min" />
+                        android:textColor="?attr/diabetesControlBadColor"
+                        android:text="@string/diabetes_control_bad"
+                        app:drawableTint="?attr/diabetesControlBadColor"
+                        app:drawableStartCompat="@drawable/outline_error_outline_black_24dp" />
 
-                </TableRow>
+                </LinearLayout>
 
-            </TableLayout>
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/table"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
-                android:drawablePadding="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textSize="16sp"
-                android:id="@+id/text_a1c_control_good"
-                android:gravity="center_vertical"
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColor="?attr/diabetesControlGoodColor"
-                android:text="@string/diabetes_control_good"
-                app:drawableTint="?attr/diabetesControlGoodColor"
-                app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/table"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
-                android:drawablePadding="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textSize="16sp"
-                android:id="@+id/text_a1c_control_avg"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColor="?attr/diabetesControlAvgColor"
-                android:text="@string/diabetes_control_average"
-                app:drawableTint="?attr/diabetesControlAvgColor"
-                app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/table"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
-                android:drawablePadding="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textSize="16sp"
-                android:id="@+id/text_a1c_control_bad"
-                android:gravity="center_vertical"
+                    <TextView
+                        android:id="@+id/text_glucose_chart_before_meal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="12dp"
+                        android:text="Before meal"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/glucose_chart_before_meal"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/text_glucose_chart_before_meal"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColor="?attr/diabetesControlBadColor"
-                android:text="@string/diabetes_control_bad"
-                app:drawableTint="?attr/diabetesControlBadColor"
-                app:drawableStartCompat="@drawable/outline_error_outline_black_24dp" />
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_glucose_chart_after_meal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="12dp"
+                        android:text="After meal"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/glucose_chart_after_meal"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/text_glucose_chart_after_meal"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_a1c_chart"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="12dp"
+                        android:text="HbA1c"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_alignParentEnd="true"
+                        android:text="This year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/a1c_chart"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/text_a1c_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
