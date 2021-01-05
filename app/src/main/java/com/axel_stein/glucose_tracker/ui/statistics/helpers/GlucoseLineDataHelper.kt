@@ -19,12 +19,9 @@ class GlucoseLineDataHelper(
     private var hypoCount = 0
     private var hyperCount = 0
     private val entries = ArrayList<Entry>()
-    private val labels = Array(logs.size) { "" }
+    private val dateLabelInflater = DateLabelInflater(logs.size, months)
 
     init {
-        var currentMonth = -1
-        var currentDay = -1
-
         logs.filter { item -> item.measured in measureFilter }
         .forEachIndexed { i, log ->
             val value = if (useMmol) log.valueMmol else log.valueMg.toFloat()
@@ -37,21 +34,7 @@ class GlucoseLineDataHelper(
             if (value > hyperThreshold) {
                 hyperCount++
             }
-
-            val month = log.dateTime.monthOfYear-1
-            val day = log.dateTime.dayOfMonth
-            if (currentMonth != month) {
-                currentMonth = month
-                currentDay = day
-                labels[i] = "${months[month]} $day"
-            } else {
-                if (currentDay != day) {
-                    currentDay = day
-                    labels[i] = log.dateTime.dayOfMonth.toString()
-                } else {
-                    labels[i] = "-"
-                }
-            }
+            dateLabelInflater.add(i, log.dateTime)
             entries.add(Entry(i.toFloat(), value))
         }
         limits.forEachIndexed { index, v ->
@@ -61,7 +44,7 @@ class GlucoseLineDataHelper(
 
     private fun intoMgDl(mmolL: Float) = mmolL * 18f
 
-    fun labels() = labels
+    fun labels() = dateLabelInflater.labels()
 
     fun limits() = limits
 

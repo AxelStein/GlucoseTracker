@@ -12,20 +12,19 @@ class A1cLineDataHelper(
 ) {
     private var maxValue = 0f
     private val entries = ArrayList<Entry>()
-    private val labels = Array(logs.size) { "" }
+    private val dateLabelInflater = DateLabelInflater(logs.size, months)
 
     init {
         logs.forEachIndexed { i, log ->
             if (log.value > maxValue) {
                 maxValue = log.value
             }
-            val currentMonth = log.dateTime.monthOfYear-1
-            labels[i] = months[currentMonth]
+            dateLabelInflater.add(i, log.dateTime)
             entries.add(Entry(i.toFloat(), log.value))
         }
     }
 
-    fun labels() = labels
+    fun labels() = dateLabelInflater.labels()
 
     fun maxValue() = maxValue
 
