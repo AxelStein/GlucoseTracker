@@ -10,7 +10,9 @@ class GlucoseLineDataHelper(
     private val hyperThreshold: Float,
     private var measureFilter: IntArray = intArrayOf(),
     private var lineColor: Int = Color.BLACK,
-    private var fillColor: Int = lineColor
+    private var fillColor: Int = lineColor,
+    private val useMmol: Boolean = true,
+    private val limits: ArrayList<Float>
 ) {
     private var maxValue = 0f
     private var hypoCount = 0
@@ -20,18 +22,28 @@ class GlucoseLineDataHelper(
     init {
         logs.filter { item -> item.measured in measureFilter }
         .forEachIndexed { i, log ->
-            if (log.valueMmol > maxValue) {
-                maxValue = log.valueMmol
+            val value = if (useMmol) log.valueMmol else log.valueMg.toFloat()
+            if (value > maxValue) {
+                maxValue = value
             }
-            if (log.valueMmol < hypoThreshold) {
+            if (value < hypoThreshold) {
                 hypoCount++
             }
-            if (log.valueMmol > hyperThreshold) {
+            if (value > hyperThreshold) {
                 hyperCount++
             }
-            entries.add(Entry(i.toFloat(), log.valueMmol))
+            entries.add(Entry(i.toFloat(), value))
+        }
+        limits.forEachIndexed { index, v ->
+            limits[index] = if (useMmol) v else intoMgDl(v)
         }
     }
+
+    private fun intoMgDl(mmolL: Float) = mmolL * 18f
+
+    fun limits() = limits
+
+    fun isNotEmpty() = entries.isNotEmpty()
 
     fun maxValue() = maxValue
 

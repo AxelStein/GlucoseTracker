@@ -8,12 +8,9 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/content"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -26,18 +23,17 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:minHeight="48dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <View
-                android:visibility="gone"
-                android:background="?android:attr/dividerHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp" />
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_stats"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -250,8 +246,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_before_meal"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -263,7 +262,7 @@
                     <TextView
                         android:id="@+id/text_glucose_chart_before_meal"
                         android:layout_marginTop="16dp"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="Before meal"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="16sp"
@@ -272,6 +271,7 @@
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/glucose_chart_before_meal"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_below="@+id/text_glucose_chart_before_meal"
                         android:layout_width="match_parent"
@@ -282,9 +282,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_after_meal"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 app:cardUseCompatPadding="true"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -295,7 +298,7 @@
                     <TextView
                         android:id="@+id/text_glucose_chart_after_meal"
                         android:layout_marginTop="16dp"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="After meal"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="16sp"
@@ -304,6 +307,7 @@
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/glucose_chart_after_meal"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_below="@+id/text_glucose_chart_after_meal"
                         android:layout_width="match_parent"
@@ -314,10 +318,13 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_a1c"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
                 app:cardUseCompatPadding="true"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -328,7 +335,7 @@
                     <TextView
                         android:id="@+id/text_a1c_chart"
                         android:layout_marginTop="16dp"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="HbA1c"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="16sp"
@@ -336,6 +343,9 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:layout_toEndOf="@+id/text_a1c_chart"
+                        android:layout_alignBaseline="@+id/text_a1c_chart"
+                        android:gravity="end"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="12dp"
                         android:layout_alignParentEnd="true"
@@ -345,6 +355,7 @@
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/a1c_chart"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_below="@+id/text_a1c_chart"
                         android:layout_width="match_parent"
@@ -362,9 +373,9 @@
         android:id="@+id/text_no_data"
         android:text="@string/no_data"
         android:layout_centerInParent="true"
+        tools:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/text_error"
