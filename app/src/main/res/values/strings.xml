@@ -53,6 +53,7 @@
     <string name="period_two_weeks">Last 2 weeks</string>
     <string name="period_month">Last month</string>
     <string name="period_three_months">Last 3 months</string>
+    <string name="period_year">Last year</string>
 
     <string name="stats_min">Minimum value</string>
     <string name="stats_max">Maximum value</string>
@@ -91,4 +92,6 @@
     <string name="error_import">Import error</string>
     <string name="error_import_backup">Import error</string>
     <string name="error_statistics">Error loading statistics</string>
+    <string name="before_meal">Before meal</string>
+    <string name="after_meal">After meal</string>
 </resources>

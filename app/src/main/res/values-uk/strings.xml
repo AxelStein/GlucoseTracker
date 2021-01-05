@@ -78,4 +78,8 @@
     <string name="pref_export_drive">Створити резервну копію</string>
     <string name="pref_import_drive">Імпортувати резервну копію</string>
     <string name="pref_last_synced">Востаннє синхронізовано</string>
+    <string name="error_statistics">Помилка завантаження статистики</string>
+    <string name="period_year">За останній рік</string>
+    <string name="before_meal">До їжі</string>
+    <string name="after_meal">Після їжі</string>
 </resources>

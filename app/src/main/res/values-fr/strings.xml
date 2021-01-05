@@ -46,9 +46,9 @@
     <string name="error_export_file">Erreur lors de l\'exportation du fichier</string>
     <string name="pref_night_mode">Mode nuit</string>
 
-    <string name="period_two_weeks">2 dernières semaines</string>
-    <string name="period_month">mois dernier</string>
-    <string name="period_three_months">3 derniers mois</string>
+    <string name="period_two_weeks">Depuis 2 semaines</string>
+    <string name="period_month">Depuis le mois dernier</string>
+    <string name="period_three_months">Depuis 3 mois</string>
 
     <string name="stats_min">Valeur minimum</string>
     <string name="stats_max">Valeur maximum</string>
@@ -84,4 +84,8 @@
     <string name="error_import">Erreur lors de l\'importation</string>
     <string name="error_import_backup">Erreur lors de l\'importation</string>
     <string name="msg_backup_created">Sauvegarde créée avec succès</string>
+    <string name="error_statistics">Erreur lord du chargement des statistiques</string>
+    <string name="period_year">La dernière année</string>
+    <string name="before_meal">Avant de manger</string>
+    <string name="after_meal">Après manger</string>
 </resources>
