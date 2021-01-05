@@ -12,6 +12,9 @@ import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.data.stats.Stats
 import com.axel_stein.glucose_tracker.ui.App
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.A1cLineDataHelper
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartColors
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.GlucoseLineDataHelper
 import com.github.mikephil.charting.data.LineData
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -19,11 +22,12 @@ import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
 class StatisticsViewModel(
-    dao: StatsDao?= null,
-    glucoseDao: GlucoseLogDao?= null,
-    a1cDao: A1cLogDao?= null,
-    appSettings: AppSettings?= null,
-    appResources: AppResources?= null
+    dao: StatsDao? = null,
+    glucoseDao: GlucoseLogDao? = null,
+    a1cDao: A1cLogDao? = null,
+    appSettings: AppSettings? = null,
+    appResources: AppResources? = null,
+    private val chartColors: ChartColors? = null
 ): ViewModel() {
     private val data = MutableLiveData<Stats>()
     private val control = MutableLiveData<Int>()
@@ -140,13 +144,17 @@ class StatisticsViewModel(
                 }
             }
             .subscribeOn(io())
-            .doOnSuccess { loadCharts(period) }
             .subscribe({ stats ->
-                stats.minFormatted = formatMin(stats)
-                stats.maxFormatted = formatMax(stats)
-                stats.avgFormatted = formatAvg(stats)
-                stats.a1cFormatted = formatA1C(stats)
-                data.postValue(stats)
+                if (stats.min_mmol == null) {
+                    data.postValue(null)
+                } else {
+                    stats.minFormatted = formatMin(stats)
+                    stats.maxFormatted = formatMax(stats)
+                    stats.avgFormatted = formatAvg(stats)
+                    stats.a1cFormatted = formatA1C(stats)
+                    data.postValue(stats)
+                }
+                loadCharts(period)
                 showError.postValue(false)
             }, {
                 it.printStackTrace()
@@ -169,8 +177,8 @@ class StatisticsViewModel(
             val beforeMealData = GlucoseLineDataHelper(
                 logs, 3.8f, 7f,
                 intArrayOf(0, 2, 4, 6),
-                Color.parseColor("#00796B"),
-                Color.parseColor("#80CBC4"),
+                chartColors?.beforeMealLineColor ?: Color.BLACK,
+                chartColors?.beforeMealFillColor ?: Color.BLACK,
                 appSettings.useMmolAsGlucoseUnits(),
                 arrayListOf(5.5f, 7f, 3.5f),
                 appResources.monthsAbbrArray()
@@ -180,13 +188,15 @@ class StatisticsViewModel(
                 beforeMealMax.postValue(beforeMealData.maxValue())
                 beforeMealLimits.postValue(beforeMealData.limits())
                 beforeMealLabels.postValue(beforeMealData.labels())
+            } else {
+                beforeMealChart.postValue(null)
             }
 
             val afterMealData = GlucoseLineDataHelper(
                 logs, 3.8f, 11f,
                 intArrayOf(1, 3, 5),
-                Color.parseColor("#1976D2"),
-                Color.parseColor("#90CAF9"),
+                chartColors?.afterMealLineColor ?: Color.BLACK,
+                chartColors?.afterMealFillColor ?: Color.BLACK,
                 appSettings.useMmolAsGlucoseUnits(),
                 arrayListOf(7.8f, 11f, 3.5f),
                 appResources.monthsAbbrArray()
@@ -196,6 +206,8 @@ class StatisticsViewModel(
                 afterMealMax.postValue(afterMealData.maxValue())
                 afterMealLimits.postValue(afterMealData.limits())
                 afterMealLabels.postValue(afterMealData.labels())
+            } else {
+                afterMealChart.postValue(null)
             }
         }, {
             it.printStackTrace()
@@ -216,8 +228,8 @@ class StatisticsViewModel(
             .subscribe({ logs ->
                 val data = A1cLineDataHelper(
                     logs.sortedBy { it.dateTime },
-                    Color.parseColor("#7B1FA2"),
-                    Color.parseColor("#CE93D8"),
+                    chartColors?.a1cLineColor ?: Color.BLACK,
+                    chartColors?.a1cFillColor ?: Color.BLACK,
                     appResources.monthsAbbrArray()
                 )
                 a1cChart.postValue(data.createLineData())
@@ -239,7 +251,7 @@ class StatisticsViewModel(
     }
 
     private fun formatAvg(stats: Stats): String {
-        val value = if (appSettings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg
+        val value = (if (appSettings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg) ?: return ""
         return "${String.format("%.1f", value.toFloat())} ${appResources.currentSuffix()}"
                 .replace(',', '.')
     }
@@ -249,7 +261,8 @@ class StatisticsViewModel(
 
     private fun calcA1C(stats: Stats): Float {
         val useMmol = appSettings.useMmolAsGlucoseUnits()
-        val avg = if (useMmol) stats.avg_mmol.toFloat() else stats.avg_mg.toFloat()
+        val value = (if (appSettings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg) ?: return 0f
+        val avg = value.toFloat()
         val a1c = if (useMmol) {
             (avg + 2.59f) / 1.59f
         } else {

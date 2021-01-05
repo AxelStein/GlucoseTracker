@@ -99,7 +99,7 @@
     <string name="error_import_backup">Erreur lors de l\'importation</string>
     <string name="msg_backup_created">Sauvegarde créée avec succès</string>
     <string name="error_statistics">Erreur lord du chargement des statistiques</string>
-    <string name="period_year">La dernière année</string>
+    <string name="period_year">Depuis un an</string>
     <string name="before_meal">Avant de manger</string>
     <string name="after_meal">Après manger</string>
 </resources>

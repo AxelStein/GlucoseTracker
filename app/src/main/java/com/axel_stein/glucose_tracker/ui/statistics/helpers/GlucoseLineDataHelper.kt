@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker.ui.statistics
+package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
 import android.graphics.Color
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog

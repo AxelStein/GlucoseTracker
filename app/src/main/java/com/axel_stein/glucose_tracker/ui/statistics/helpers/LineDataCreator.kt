@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker.ui.statistics
+package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData

@@ -3,11 +3,24 @@
     <attr name="bottomNavItemTextColor" format="color|reference"/>
     <attr name="bottomNavItemIconColor" format="color|reference"/>
     <attr name="bottomNavBackgroundColor" format="color|reference"/>
+
     <attr name="logListBackgroundColor" format="color|reference"/>
     <attr name="logItemBackgroundColor" format="color|reference"/>
+
     <attr name="toolbarBackgroundColor" format="color|reference"/>
+
     <attr name="progressBarColor" format="color|reference"/>
+
     <attr name="diabetesControlGoodColor" format="color|reference"/>
     <attr name="diabetesControlAvgColor" format="color|reference"/>
     <attr name="diabetesControlBadColor" format="color|reference"/>
+
+    <attr name="beforeMealLineColor" format="color|reference"/>
+    <attr name="beforeMealFillColor" format="color|reference"/>
+
+    <attr name="afterMealLineColor" format="color|reference"/>
+    <attr name="afterMealFillColor" format="color|reference"/>
+
+    <attr name="a1cLineColor" format="color|reference"/>
+    <attr name="a1cFillColor" format="color|reference"/>
 </resources>

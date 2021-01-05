@@ -8,19 +8,22 @@ import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartColors
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.LabelValueFormatter
 import com.axel_stein.glucose_tracker.utils.hide
 import com.axel_stein.glucose_tracker.utils.hideView
 import com.axel_stein.glucose_tracker.utils.setItemSelectedListener
 import com.axel_stein.glucose_tracker.utils.show
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 
 
 class StatisticsFragment: Fragment() {
-    private val viewModel: StatisticsViewModel by viewModels()
+    private lateinit var viewModel: StatisticsViewModel
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,6 +41,9 @@ class StatisticsFragment: Fragment() {
 
         val beforeMealChart = root.findViewById<LineChart>(R.id.glucose_chart_before_meal)
         setupChartView(beforeMealChart)
+
+        viewModel = ViewModelProvider(this, StatisticsFactory(ChartColors(requireActivity())))
+                .get(StatisticsViewModel::class.java)
 
         viewModel.beforeMealChartLiveData().observe(viewLifecycleOwner, {
             setChartLineData(beforeMealChart, it)
@@ -98,9 +104,11 @@ class StatisticsFragment: Fragment() {
                 textAvg.text = stats.avgFormatted
                 textA1C.text = stats.a1cFormatted
 
-                root.findViewById<View>(R.id.spinner_period).show()
                 root.findViewById<View>(R.id.card_view_stats).show()
                 textNoData.hide()
+            } else {
+                root.findViewById<View>(R.id.card_view_stats).hide()
+                textNoData.show()
             }
         })
 
@@ -133,16 +141,21 @@ class StatisticsFragment: Fragment() {
         chart.legend.isEnabled = false
         chart.setDrawGridBackground(false)
         // chart.xAxis.setDrawLabels(false)
-        chart.xAxis.setDrawGridLines(false)
+        // chart.xAxis.setDrawGridLines(false)
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chart.axisLeft.axisMinimum = 0f
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
     }
 
-    private fun setChartLineData(chart: LineChart, data: LineData) {
+    private fun setChartLineData(chart: LineChart, data: LineData?) {
         chart.data = data
         chart.notifyDataSetChanged()
-        chart.setVisibleXRangeMaximum(20f)
+        chart.setVisibleXRangeMaximum(10f)
+        if (data != null) {
+            chart.xAxis.granularity = 1f
+            chart.xAxis.labelCount = data.entryCount
+        }
         chart.invalidate()
     }
 
