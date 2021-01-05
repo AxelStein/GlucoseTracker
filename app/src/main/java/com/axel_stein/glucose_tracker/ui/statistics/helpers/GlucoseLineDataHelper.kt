@@ -23,6 +23,7 @@ class GlucoseLineDataHelper(
 
     init {
         var currentMonth = -1
+        var currentDay = -1
 
         logs.filter { item -> item.measured in measureFilter }
         .forEachIndexed { i, log ->
@@ -38,11 +39,18 @@ class GlucoseLineDataHelper(
             }
 
             val month = log.dateTime.monthOfYear-1
+            val day = log.dateTime.dayOfMonth
             if (currentMonth != month) {
                 currentMonth = month
-                labels[i] = months[month]
+                currentDay = day
+                labels[i] = "${months[month]} $day"
             } else {
-                labels[i] = log.dateTime.dayOfMonth.toString()
+                if (currentDay != day) {
+                    currentDay = day
+                    labels[i] = log.dateTime.dayOfMonth.toString()
+                } else {
+                    labels[i] = "-"
+                }
             }
             entries.add(Entry(i.toFloat(), value))
         }
