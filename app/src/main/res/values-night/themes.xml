@@ -29,6 +29,8 @@
 
         <item name="a1cLineColor">@color/color_a1c_line_night</item>
         <item name="a1cFillColor">@color/color_a1c_fill_night</item>
+
+        <item name="chartTextColor">@color/color_chart_text_night</item>
     </style>
 
     <style name="Theme.GlucoseTracker.NoActionBar">

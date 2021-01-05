@@ -1,6 +1,7 @@
 package com.axel_stein.glucose_tracker.ui.statistics
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
+import com.google.android.material.color.MaterialColors
 
 
 class StatisticsFragment: Fragment() {
@@ -142,8 +144,10 @@ class StatisticsFragment: Fragment() {
         chart.setDrawGridBackground(false)
         // chart.xAxis.setDrawLabels(false)
         // chart.xAxis.setDrawGridLines(false)
+        chart.xAxis.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chart.axisLeft.axisMinimum = 0f
+        chart.axisLeft.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
     }

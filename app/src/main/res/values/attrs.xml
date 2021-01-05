@@ -23,4 +23,6 @@
 
     <attr name="a1cLineColor" format="color|reference"/>
     <attr name="a1cFillColor" format="color|reference"/>
+
+    <attr name="chartTextColor" format="color|reference"/>
 </resources>
