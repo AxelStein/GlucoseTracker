@@ -7,19 +7,25 @@ import com.github.mikephil.charting.data.Entry
 class A1cLineDataHelper(
     logs: List<A1cLog>,
     private var lineColor: Int = Color.BLACK,
-    private var fillColor: Int = lineColor
+    private var fillColor: Int = lineColor,
+    private val months: Array<String>
 ) {
     private var maxValue = 0f
     private val entries = ArrayList<Entry>()
+    private val labels = Array(logs.size) { "" }
 
     init {
         logs.forEachIndexed { i, log ->
             if (log.value > maxValue) {
                 maxValue = log.value
             }
+            val currentMonth = log.dateTime.monthOfYear-1
+            labels[i] = months[currentMonth]
             entries.add(Entry(i.toFloat(), log.value))
         }
     }
+
+    fun labels() = labels
 
     fun maxValue() = maxValue
 

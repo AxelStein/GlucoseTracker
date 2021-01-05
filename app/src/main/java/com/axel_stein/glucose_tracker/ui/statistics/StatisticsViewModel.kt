@@ -33,13 +33,16 @@ class StatisticsViewModel(
     private val beforeMealChart = MutableLiveData<LineData>()
     private val beforeMealMax = MutableLiveData<Float>()
     private val beforeMealLimits = MutableLiveData<ArrayList<Float>>()
+    private val beforeMealLabels = MutableLiveData<Array<String>>()
 
     private val afterMealChart = MutableLiveData<LineData>()
     private val afterMealMax = MutableLiveData<Float>()
     private val afterMealLimits = MutableLiveData<ArrayList<Float>>()
+    private val afterMealLabels = MutableLiveData<Array<String>>()
 
     private val a1cChart = MutableLiveData<LineData>()
     private val a1cMax = MutableLiveData<Float>()
+    private val a1cLabels = MutableLiveData<Array<String>>()
 
     @Inject
     lateinit var dao: StatsDao
@@ -90,15 +93,21 @@ class StatisticsViewModel(
 
     fun beforeMealLimitsLiveData(): LiveData<ArrayList<Float>> = beforeMealLimits
 
+    fun beforeMealLabelsLiveData(): LiveData<Array<String>> = beforeMealLabels
+
     fun afterMealChartLiveData(): LiveData<LineData> = afterMealChart
 
     fun afterMealMaxLiveData(): LiveData<Float> = afterMealMax
 
     fun afterMealLimitsLiveData(): LiveData<ArrayList<Float>> = afterMealLimits
 
+    fun afterMealLabelsLiveData(): LiveData<Array<String>> = afterMealLabels
+
     fun a1cChartLiveData(): LiveData<LineData> = a1cChart
 
     fun a1cMaxLiveData(): LiveData<Float> = a1cMax
+
+    fun a1cLabelsLiveData(): LiveData<Array<String>> = a1cLabels
 
     fun axisMaximum(v: Float): Float {
         return if(appSettings.useMmolAsGlucoseUnits()) {
@@ -163,12 +172,14 @@ class StatisticsViewModel(
                 Color.parseColor("#00796B"),
                 Color.parseColor("#80CBC4"),
                 appSettings.useMmolAsGlucoseUnits(),
-                arrayListOf(5.5f, 7f, 3.5f)
+                arrayListOf(5.5f, 7f, 3.5f),
+                appResources.monthsAbbrArray()
             )
             if (beforeMealData.isNotEmpty()) {
                 beforeMealChart.postValue(beforeMealData.createLineData())
                 beforeMealMax.postValue(beforeMealData.maxValue())
                 beforeMealLimits.postValue(beforeMealData.limits())
+                beforeMealLabels.postValue(beforeMealData.labels())
             }
 
             val afterMealData = GlucoseLineDataHelper(
@@ -177,12 +188,14 @@ class StatisticsViewModel(
                 Color.parseColor("#1976D2"),
                 Color.parseColor("#90CAF9"),
                 appSettings.useMmolAsGlucoseUnits(),
-                arrayListOf(7.8f, 11f, 3.5f)
+                arrayListOf(7.8f, 11f, 3.5f),
+                appResources.monthsAbbrArray()
             )
             if (afterMealData.isNotEmpty()) {
                 afterMealChart.postValue(afterMealData.createLineData())
                 afterMealMax.postValue(afterMealData.maxValue())
                 afterMealLimits.postValue(afterMealData.limits())
+                afterMealLabels.postValue(afterMealData.labels())
             }
         }, {
             it.printStackTrace()
@@ -204,10 +217,12 @@ class StatisticsViewModel(
                 val data = A1cLineDataHelper(
                     logs.sortedBy { it.dateTime },
                     Color.parseColor("#7B1FA2"),
-                    Color.parseColor("#CE93D8")
+                    Color.parseColor("#CE93D8"),
+                    appResources.monthsAbbrArray()
                 )
                 a1cChart.postValue(data.createLineData())
                 a1cMax.postValue(data.maxValue())
+                a1cLabels.postValue(data.labels())
             }, {
                 it.printStackTrace()
             })

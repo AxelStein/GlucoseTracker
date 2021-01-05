@@ -51,6 +51,9 @@ class StatisticsFragment: Fragment() {
         viewModel.beforeMealLimitsLiveData().observe(viewLifecycleOwner, {
             addChartLimitLines(beforeMealChart, it)
         })
+        viewModel.beforeMealLabelsLiveData().observe(viewLifecycleOwner, {
+            beforeMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
+        })
 
         val afterMealChart = root.findViewById<LineChart>(R.id.glucose_chart_after_meal)
         setupChartView(afterMealChart)
@@ -67,6 +70,9 @@ class StatisticsFragment: Fragment() {
         viewModel.afterMealLimitsLiveData().observe(viewLifecycleOwner, {
             addChartLimitLines(afterMealChart, it)
         })
+        viewModel.afterMealLabelsLiveData().observe(viewLifecycleOwner, {
+            afterMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
+        })
 
         val a1cChart = root.findViewById<LineChart>(R.id.a1c_chart)
         setupChartView(a1cChart)
@@ -80,6 +86,9 @@ class StatisticsFragment: Fragment() {
         })
         viewModel.a1cMaxLiveData().observe(viewLifecycleOwner, {
             a1cChart.axisLeft.axisMaximum = if (it < 10f) 10f else it + 2f
+        })
+        viewModel.a1cLabelsLiveData().observe(viewLifecycleOwner, {
+            a1cChart.xAxis.valueFormatter = LabelValueFormatter(it)
         })
 
         viewModel.statsLiveData().observe(viewLifecycleOwner, { stats ->
@@ -123,12 +132,11 @@ class StatisticsFragment: Fragment() {
         chart.description.isEnabled = false
         chart.legend.isEnabled = false
         chart.setDrawGridBackground(false)
-        chart.xAxis.setDrawLabels(false)
+        // chart.xAxis.setDrawLabels(false)
         chart.xAxis.setDrawGridLines(false)
         chart.axisLeft.axisMinimum = 0f
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
-        chart.setPinchZoom(false)
     }
 
     private fun setChartLineData(chart: LineChart, data: LineData) {

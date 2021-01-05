@@ -18,4 +18,6 @@ class AppResources(val ctx: Context, val settings: AppSettings) {
 
     fun monthsArray(): Array<String> = ctx.resources.getStringArray(R.array.months)
 
+    fun monthsAbbrArray(): Array<String> = ctx.resources.getStringArray(R.array.months_a)
+
 }

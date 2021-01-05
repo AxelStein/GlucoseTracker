@@ -65,6 +65,20 @@
     <string name="month_oct">Октябрь</string>
     <string name="month_nov">Ноябрь</string>
     <string name="month_dec">Декабрь</string>
+
+    <string name="month_jan_a">Янв</string>
+    <string name="month_feb_a">Фев</string>
+    <string name="month_mar_a">Мар</string>
+    <string name="month_apr_a">Апр</string>
+    <string name="month_may_a">Май</string>
+    <string name="month_jun_a">Июн</string>
+    <string name="month_jul_a">Июл</string>
+    <string name="month_aug_a">Авг</string>
+    <string name="month_sep_a">Сен</string>
+    <string name="month_oct_a">Окт</string>
+    <string name="month_nov_a">Ноя</string>
+    <string name="month_dec_a">Дек</string>
+
     <string name="error_opening_log">Ошибка открытия записи</string>
     <string name="pref_about_app">О приложении</string>
     <string name="pref_rate_app">Оценить приложение</string>
