@@ -38,7 +38,6 @@ class StatisticsFragment: Fragment() {
         val textControlGood = root.findViewById<TextView>(R.id.text_a1c_control_good)
         val textControlAvg = root.findViewById<TextView>(R.id.text_a1c_control_avg)
         val textControlBad = root.findViewById<TextView>(R.id.text_a1c_control_bad)
-        val textNoData = root.findViewById<TextView>(R.id.text_no_data)  // todo
         val textError = root.findViewById<TextView>(R.id.text_error)
 
         val beforeMealChart = root.findViewById<LineChart>(R.id.glucose_chart_before_meal)
@@ -51,7 +50,6 @@ class StatisticsFragment: Fragment() {
             setChartLineData(beforeMealChart, it)
 
             root.findViewById<View>(R.id.card_view_before_meal).show()
-            textNoData.hide()
         })
         viewModel.beforeMealMaxLiveData().observe(viewLifecycleOwner, {
             beforeMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
@@ -70,7 +68,6 @@ class StatisticsFragment: Fragment() {
             setChartLineData(afterMealChart, it)
 
             root.findViewById<View>(R.id.card_view_after_meal).show()
-            textNoData.hide()
         })
         viewModel.afterMealMaxLiveData().observe(viewLifecycleOwner, {
             afterMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
@@ -90,7 +87,6 @@ class StatisticsFragment: Fragment() {
             setChartLineData(a1cChart, it)
 
             root.findViewById<View>(R.id.card_view_a1c).show()
-            textNoData.hide()
         })
         viewModel.a1cMaxLiveData().observe(viewLifecycleOwner, {
             a1cChart.axisLeft.axisMaximum = if (it < 10f) 10f else it + 2f
@@ -107,18 +103,18 @@ class StatisticsFragment: Fragment() {
                 textA1C.text = stats.a1cFormatted
 
                 root.findViewById<View>(R.id.card_view_stats).show()
-                textNoData.hide()
             } else {
                 root.findViewById<View>(R.id.card_view_stats).hide()
-                textNoData.show()
             }
         })
 
         viewModel.showErrorLiveData().observe(viewLifecycleOwner, {
+            val content = root.findViewById<View>(R.id.content)
             if (it) {
+                content.hide()
                 textError.show()
-                textNoData.hide()
             } else {
+                content.show()
                 textError.hide()
             }
         })
