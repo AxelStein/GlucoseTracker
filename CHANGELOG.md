@@ -1,11 +1,12 @@
 # Changelog
 
-### 1.0.5 (dev)
+### 1.0.5 (January 6, 2021)
 * Fix round float func
 * Add uk, fr translations
 * Refactor tests
 * Add Google Drive backup
 * Refactor statistics view model
+* Add charts (glucose levels before/after meal, HbA1c)
 
 ### 1.0.4 (January 2, 2021)
 
