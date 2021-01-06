@@ -46,9 +46,9 @@
     <string name="error_export_file">Erreur lors de l\'exportation du fichier</string>
     <string name="pref_night_mode">Mode nuit</string>
 
-    <string name="period_two_weeks">2 dernières semaines</string>
-    <string name="period_month">mois dernier</string>
-    <string name="period_three_months">3 derniers mois</string>
+    <string name="period_two_weeks">Depuis 2 semaines</string>
+    <string name="period_month">Depuis le mois dernier</string>
+    <string name="period_three_months">Depuis 3 mois</string>
 
     <string name="stats_min">Valeur minimum</string>
     <string name="stats_max">Valeur maximum</string>
@@ -71,6 +71,20 @@
     <string name="month_oct">Octobre</string>
     <string name="month_nov">Novembre</string>
     <string name="month_dec">Décembre</string>
+
+    <string name="month_jan_a">Janv</string>
+    <string name="month_feb_a">Févr</string>
+    <string name="month_mar_a">Mars</string>
+    <string name="month_apr_a">Avr</string>
+    <string name="month_may_a">Mai</string>
+    <string name="month_jun_a">Juin</string>
+    <string name="month_jul_a">Juill</string>
+    <string name="month_aug_a">Août</string>
+    <string name="month_sep_a">Sept</string>
+    <string name="month_oct_a">Oct</string>
+    <string name="month_nov_a">Nov</string>
+    <string name="month_dec_a">Déc</string>
+
     <string name="error_opening_log">Erreur lors de l\'ouverture</string>
     <string name="pref_about_app">À propos de l\'application</string>
     <string name="pref_rate_app">Évaluer l\'application</string>
@@ -84,4 +98,8 @@
     <string name="error_import">Erreur lors de l\'importation</string>
     <string name="error_import_backup">Erreur lors de l\'importation</string>
     <string name="msg_backup_created">Sauvegarde créée avec succès</string>
+    <string name="error_statistics">Erreur lord du chargement des statistiques</string>
+    <string name="period_year">Depuis un an</string>
+    <string name="before_meal">Avant de manger</string>
+    <string name="after_meal">Après manger</string>
 </resources>

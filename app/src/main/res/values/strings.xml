@@ -53,6 +53,7 @@
     <string name="period_two_weeks">Last 2 weeks</string>
     <string name="period_month">Last month</string>
     <string name="period_three_months">Last 3 months</string>
+    <string name="period_year">Last year</string>
 
     <string name="stats_min">Minimum value</string>
     <string name="stats_max">Maximum value</string>
@@ -76,6 +77,20 @@
     <string name="month_oct">October</string>
     <string name="month_nov">November</string>
     <string name="month_dec">December</string>
+
+    <string name="month_jan_a">Jan</string>
+    <string name="month_feb_a">Feb</string>
+    <string name="month_mar_a">Mar</string>
+    <string name="month_apr_a">Apr</string>
+    <string name="month_may_a">May</string>
+    <string name="month_jun_a">Jun</string>
+    <string name="month_jul_a">Jul</string>
+    <string name="month_aug_a">Aug</string>
+    <string name="month_sep_a">Sep</string>
+    <string name="month_oct_a">Oct</string>
+    <string name="month_nov_a">Nov</string>
+    <string name="month_dec_a">Dec</string>
+
     <string name="error_opening_log">Error opening log</string>
     <string name="pref_about_app">About app</string>
     <string name="pref_rate_app">Rate app</string>
@@ -91,4 +106,6 @@
     <string name="error_import">Import error</string>
     <string name="error_import_backup">Import error</string>
     <string name="error_statistics">Error loading statistics</string>
+    <string name="before_meal">Before meal</string>
+    <string name="after_meal">After meal</string>
 </resources>

@@ -5,19 +5,37 @@
         <item name="colorPrimaryDark">@color/color_primary_dark_day</item>
         <item name="colorSecondary">@color/color_secondary_day</item>
         <item name="colorAccent">@color/color_primary_day</item>
+
         <item name="logListBackgroundColor">@color/log_list_bg_color_day</item>
         <item name="logItemBackgroundColor">@color/log_item_bg_color_day</item>
+
         <item name="bottomNavItemTextColor">@drawable/bottom_nav_item_text_day</item>
         <item name="bottomNavItemIconColor">@drawable/bottom_nav_item_icon_day</item>
         <item name="bottomNavBackgroundColor">@color/color_bg_day</item>
+
         <item name="android:windowBackground">@color/color_bg_day</item>
         <item name="android:navigationBarColor">@color/color_bg_day</item>
+
         <item name="toolbarBackgroundColor">@color/toolbar_bg_color_day</item>
-        <item name="android:windowLightNavigationBar">true</item>
+
         <item name="progressBarColor">@color/color_progress_bar_day</item>
+
         <item name="diabetesControlGoodColor">@color/color_good_diabetes_control_day</item>
         <item name="diabetesControlAvgColor">@color/color_avg_diabetes_control_day</item>
         <item name="diabetesControlBadColor">@color/color_bad_diabetes_control_day</item>
+
+        <item name="beforeMealLineColor">@color/color_before_meal_line_day</item>
+        <item name="beforeMealFillColor">@color/color_before_meal_fill_day</item>
+
+        <item name="afterMealLineColor">@color/color_after_meal_line_day</item>
+        <item name="afterMealFillColor">@color/color_after_meal_fill_day</item>
+
+        <item name="a1cLineColor">@color/color_a1c_line_day</item>
+        <item name="a1cFillColor">@color/color_a1c_fill_day</item>
+
+        <item name="chartTextColor">@color/color_chart_text_day</item>
+
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="Theme.GlucoseTracker.NoActionBar">

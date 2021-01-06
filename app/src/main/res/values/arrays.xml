@@ -42,4 +42,19 @@
         <item>@string/month_nov</item>
         <item>@string/month_dec</item>
     </string-array>
+
+    <string-array name="months_a">
+        <item>@string/month_jan_a</item>
+        <item>@string/month_feb_a</item>
+        <item>@string/month_mar_a</item>
+        <item>@string/month_apr_a</item>
+        <item>@string/month_may_a</item>
+        <item>@string/month_jun_a</item>
+        <item>@string/month_jul_a</item>
+        <item>@string/month_aug_a</item>
+        <item>@string/month_sep_a</item>
+        <item>@string/month_oct_a</item>
+        <item>@string/month_nov_a</item>
+        <item>@string/month_dec_a</item>
+    </string-array>
 </resources>

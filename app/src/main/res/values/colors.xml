@@ -13,6 +13,17 @@
     <color name="color_avg_diabetes_control_day">#F57C00</color>
     <color name="color_bad_diabetes_control_day">#B00020</color>
 
+    <color name="color_before_meal_line_day">#00796B</color>
+    <color name="color_before_meal_fill_day">#80CBC4</color>
+
+    <color name="color_after_meal_line_day">#1976D2</color>
+    <color name="color_after_meal_fill_day">#90CAF9</color>
+
+    <color name="color_a1c_line_day">#7B1FA2</color>
+    <color name="color_a1c_fill_day">#CE93D8</color>
+
+    <color name="color_chart_text_day">#000</color>
+
     <!--night theme colors-->
     <color name="color_bg_night">#303030</color>
     <color name="color_primary_night">#202020</color>
@@ -25,4 +36,15 @@
     <color name="color_good_diabetes_control_night">#A5D6A7</color>
     <color name="color_avg_diabetes_control_night">#FFCC80</color>
     <color name="color_bad_diabetes_control_night">#cf6679</color>
+
+    <color name="color_before_meal_line_night">#1DE9B6</color>  <!--a400-->
+    <color name="color_before_meal_fill_night">#64FFDA</color>  <!--a200-->
+
+    <color name="color_after_meal_line_night">#536DFE</color>  <!--a200-->
+    <color name="color_after_meal_fill_night">#8C9EFF</color>  <!--a100-->
+
+    <color name="color_a1c_line_night">#E040FB</color>  <!--a200-->
+    <color name="color_a1c_fill_night">#EA80FC</color>  <!--a100-->
+
+    <color name="color_chart_text_night">#fff</color>
 </resources>
