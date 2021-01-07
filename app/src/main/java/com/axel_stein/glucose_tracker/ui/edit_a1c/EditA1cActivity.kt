@@ -9,20 +9,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
+import com.axel_stein.glucose_tracker.databinding.ActivityEditA1cBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.*
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import org.joda.time.MutableDateTime
 
 class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
@@ -43,24 +40,44 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     }
 
     private lateinit var viewModel: EditA1cViewModel
+    private lateinit var binding: ActivityEditA1cBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_a1c)
 
         val id = intent.getLongExtra(EXTRA_ID, 0L)
         viewModel = ViewModelProvider(this, EditA1cFactory(id, savedInstanceState))
-                .get(EditA1cViewModel::class.java)
+            .get(EditA1cViewModel::class.java)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityEditA1cBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        setupToolbar()
+        setupDateTime()
+        setupEditor()
+
+        viewModel.errorSaveObserver().observe(this, {
+            if (it) {
+                Snackbar.make(binding.toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
+            }
+        })
+        viewModel.errorDeleteObserver().observe(this, {
+            if (it) {
+                Snackbar.make(binding.toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
+            }
+        })
+        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
+    }
 
-        val btnDate = findViewById<TextView>(R.id.btn_date)
-        btnDate.setOnClickListener {
+    private fun setupDateTime() {
+        binding.btnDate.setOnClickListener {
             val date = viewModel.getCurrentDateTime()
             val dialog = DatePickerDialog(
                 this,
@@ -73,8 +90,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             dialog.show()
         }
 
-        val btnTime = findViewById<TextView>(R.id.btn_time)
-        btnTime.setOnClickListener {
+        binding.btnTime.setOnClickListener {
             val time = viewModel.getCurrentDateTime()
             TimePickerDialog(this,
                 { _, hourOfDay, minuteOfHour ->
@@ -85,15 +101,16 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         }
 
         viewModel.dateTimeObserver().observe(this, {
-            btnDate.text = formatDate(this, it)
-            btnTime.text = formatTime(this, it)
+            binding.btnDate.text = formatDate(this, it)
+            binding.btnTime.text = formatTime(this, it)
         })
+    }
 
-        val editA1c = findViewById<TextInputEditText>(R.id.edit_a1c)
-        editA1c.doAfterTextChanged {
+    private fun setupEditor() {
+        binding.editA1c.doAfterTextChanged {
             viewModel.setValue(it.toString())
         }
-        editA1c.setOnEditorActionListener { v, actionId, _ ->
+        binding.editA1c.setOnEditorActionListener { v, actionId, _ ->
             var consumed = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 (v as EditText).hideKeyboard()
@@ -104,38 +121,26 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
 
         var focusEdit = true
         viewModel.valueObserver().observe(this, { value ->
-            if (value != editA1c.text.toString()) {
-                editA1c.setText(value.toString())
-                editA1c.setSelection(editA1c.length())
+            if (value != binding.editA1c.text.toString()) {
+                binding.editA1c.setText(value.toString())
+                binding.editA1c.setSelection(binding.editA1c.length())
             }
             if (focusEdit) {
                 focusEdit = false
                 if (value.isNullOrEmpty()) {
-                    editA1c.showKeyboard()
+                    binding.editA1c.showKeyboard()
                 } else {
-                    editA1c.hideKeyboard()
+                    binding.editA1c.hideKeyboard()
                 }
             }
         })
 
-        val inputLayout = findViewById<TextInputLayout>(R.id.input_layout)
-        viewModel.errorValueEmptyObserver().observe(this, {
-            if (it) {
-                inputLayout.error = getString(R.string.no_value)
-                editA1c.showKeyboard()
+        viewModel.errorValueEmptyObserver().observe(this, { error ->
+            if (error) {
+                binding.inputLayout.error = getString(R.string.no_value)
+                binding.editA1c.showKeyboard()
             }
-            inputLayout.isErrorEnabled = it
-        })
-        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
-        viewModel.errorSaveObserver().observe(this, {
-            if (it) {
-                Snackbar.make(toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
-            }
-        })
-        viewModel.errorDeleteObserver().observe(this, {
-            if (it) {
-                Snackbar.make(toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
-            }
+            binding.inputLayout.isErrorEnabled = error
         })
     }
 
@@ -159,11 +164,11 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                        .title(R.string.title_confirm)
-                        .message(R.string.msg_delete_a1c)
-                        .positiveBtnText(R.string.action_delete)
-                        .negativeBtnText(R.string.action_cancel)
-                        .show()
+                    .title(R.string.title_confirm)
+                    .message(R.string.msg_delete_a1c)
+                    .positiveBtnText(R.string.action_delete)
+                    .negativeBtnText(R.string.action_cancel)
+                    .show()
             }
         }
         return super.onOptionsItemSelected(item)

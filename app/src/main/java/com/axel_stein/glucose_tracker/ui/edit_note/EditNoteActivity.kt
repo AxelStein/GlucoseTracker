@@ -43,12 +43,12 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityEditNoteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         val id = intent.getLongExtra(EXTRA_ID, 0L)
         viewModel = ViewModelProvider(this, EditNoteFactory(id, savedInstanceState))
-                .get(EditNoteViewModel::class.java)
+            .get(EditNoteViewModel::class.java)
+
+        binding = ActivityEditNoteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupToolbar()
         setupDateTime()
@@ -154,11 +154,11 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                        .title(R.string.title_confirm)
-                        .message(R.string.msg_delete_note)
-                        .positiveBtnText(R.string.action_delete)
-                        .negativeBtnText(R.string.action_cancel)
-                        .show()
+                    .title(R.string.title_confirm)
+                    .message(R.string.msg_delete_note)
+                    .positiveBtnText(R.string.action_delete)
+                    .negativeBtnText(R.string.action_cancel)
+                    .show()
             }
         }
         return super.onOptionsItemSelected(item)
