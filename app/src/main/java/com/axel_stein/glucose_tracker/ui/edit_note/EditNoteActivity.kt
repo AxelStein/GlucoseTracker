@@ -7,20 +7,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
+import com.axel_stein.glucose_tracker.databinding.ActivityEditNoteBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.*
-import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import org.joda.time.MutableDateTime
 
 class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
@@ -41,24 +38,44 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
     }
 
     private lateinit var viewModel: EditNoteViewModel
+    private lateinit var binding: ActivityEditNoteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_note)
 
         val id = intent.getLongExtra(EXTRA_ID, 0L)
         viewModel = ViewModelProvider(this, EditNoteFactory(id, savedInstanceState))
-                .get(EditNoteViewModel::class.java)
+            .get(EditNoteViewModel::class.java)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityEditNoteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        setupToolbar()
+        setupDateTime()
+        setupEditNote()
+
+        viewModel.errorSaveObserver().observe(this, { error ->
+            if (error) {
+                Snackbar.make(binding.toolbar, R.string.error_saving_note, LENGTH_INDEFINITE).show()
+            }
+        })
+        viewModel.errorDeleteObserver().observe(this, { error ->
+            if (error) {
+                Snackbar.make(binding.toolbar, R.string.error_deleting_note, LENGTH_INDEFINITE).show()
+            }
+        })
+        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
+    }
 
-        val btnDate = findViewById<TextView>(R.id.btn_date)
-        btnDate.setOnClickListener {
+    private fun setupDateTime() {
+        binding.btnDate.setOnClickListener {
             val date = viewModel.getCurrentDateTime()
             val dialog = DatePickerDialog(
                 this,
@@ -71,8 +88,7 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             dialog.show()
         }
 
-        val btnTime = findViewById<TextView>(R.id.btn_time)
-        btnTime.setOnClickListener {
+        binding.btnTime.setOnClickListener {
             val time = viewModel.getCurrentDateTime()
             TimePickerDialog(this,
                 { _, hourOfDay, minuteOfHour ->
@@ -83,49 +99,38 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         }
 
         viewModel.dateTimeObserver().observe(this, {
-            btnDate.text = formatDate(this, it)
-            btnTime.text = formatTime(this, it)
+            binding.btnDate.text = formatDate(this, it)
+            binding.btnTime.text = formatTime(this, it)
         })
+    }
 
-        val editNote = findViewById<TextInputEditText>(R.id.edit_note)
-        editNote.doAfterTextChanged {
+    private fun setupEditNote() {
+        binding.editNote.doAfterTextChanged {
             viewModel.setNote(it.toString())
         }
 
         var focusEdit = true
         viewModel.noteObserver().observe(this, { value ->
-            if (value != editNote.text.toString()) {
-                editNote.setText(value.toString())
-                editNote.setSelection(editNote.length())
+            if (value != binding.editNote.text.toString()) {
+                binding.editNote.setText(value.toString())
+                binding.editNote.setSelection(binding.editNote.length())
             }
             if (focusEdit) {
                 focusEdit = false
                 if (value.isNullOrEmpty()) {
-                    editNote.showKeyboard()
+                    binding.editNote.showKeyboard()
                 } else {
-                    editNote.hideKeyboard()
+                    binding.editNote.hideKeyboard()
                 }
             }
         })
 
-        val inputLayoutNote = findViewById<TextInputLayout>(R.id.input_layout_note)
-        viewModel.errorNoteEmptyObserver().observe(this, {
-            if (it) {
-                inputLayoutNote.error = getString(R.string.no_value)
-                editNote.showKeyboard()
+        viewModel.errorNoteEmptyObserver().observe(this, { error ->
+            if (error) {
+                binding.inputLayoutNote.error = getString(R.string.no_value)
+                binding.editNote.showKeyboard()
             }
-            inputLayoutNote.isErrorEnabled = it
-        })
-        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
-        viewModel.errorSaveObserver().observe(this, {
-            if (it) {
-                Snackbar.make(toolbar, R.string.error_saving_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
-            }
-        })
-        viewModel.errorDeleteObserver().observe(this, {
-            if (it) {
-                Snackbar.make(toolbar, R.string.error_deleting_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
-            }
+            binding.inputLayoutNote.isErrorEnabled = error
         })
     }
 
@@ -149,11 +154,11 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                        .title(R.string.title_confirm)
-                        .message(R.string.msg_delete_note)
-                        .positiveBtnText(R.string.action_delete)
-                        .negativeBtnText(R.string.action_cancel)
-                        .show()
+                    .title(R.string.title_confirm)
+                    .message(R.string.msg_delete_note)
+                    .positiveBtnText(R.string.action_delete)
+                    .negativeBtnText(R.string.action_cancel)
+                    .show()
             }
         }
         return super.onOptionsItemSelected(item)
