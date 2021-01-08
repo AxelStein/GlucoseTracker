@@ -69,20 +69,20 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         setupGlucoseEditor()
         setupMeasured()
 
-        viewModel.errorLoadingObserver().observe(this, { error ->
+        viewModel.errorLoadingLiveData().observe(this, { error ->
             if (error) binding.errorLoading.visibility = View.VISIBLE
         })
-        viewModel.errorSaveObserver().observe(this, { error ->
+        viewModel.errorSaveLiveData().observe(this, { error ->
             if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.errorDeleteObserver().observe(this, { error ->
+        viewModel.errorDeleteLiveData().observe(this, { error ->
             if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupToolbar() {
@@ -116,7 +116,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
             ).show()
         }
 
-        viewModel.dateTimeObserver().observe(this, {
+        viewModel.dateTimeLiveData().observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -147,7 +147,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         }
 
         var focusEdit = true
-        viewModel.glucoseObserver().observe(this, { value ->
+        viewModel.glucoseLiveData().observe(this, { value ->
             if (value != editor.text.toString()) {
                 editor.setText(value.toString())
                 editor.setSelection(editor.length())
@@ -165,7 +165,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         val inputLayout = getInputLayout()
         inputLayout.show()
 
-        viewModel.errorGlucoseEmptyObserver().observe(this, { error ->
+        viewModel.errorGlucoseEmptyLiveData().observe(this, { error ->
             if (error) {
                 inputLayout.error = getString(R.string.no_value)
                 editor.showKeyboard()
@@ -196,7 +196,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         }
         binding.measuredDropdown.setOnDismissListener { binding.inputLayoutMeasured.clearFocus() }
 
-        viewModel.measuredObserver().observe(this, { value ->
+        viewModel.measuredLiveData().observe(this, { value ->
             if (value != binding.measuredDropdown.listSelection) {
                 binding.measuredDropdown.listSelection = value
                 binding.measuredDropdown.setText(adapter.getItem(value), false)

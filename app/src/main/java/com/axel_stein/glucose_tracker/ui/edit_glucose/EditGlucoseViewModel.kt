@@ -70,21 +70,21 @@ class EditGlucoseViewModel(
         }
     }
 
-    fun dateTimeObserver(): LiveData<MutableDateTime> = dateTime
+    fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
 
-    fun glucoseObserver(): LiveData<String> = glucose
+    fun glucoseLiveData(): LiveData<String> = glucose
 
-    fun measuredObserver(): LiveData<Int> = measured
+    fun measuredLiveData(): LiveData<Int> = measured
 
-    fun errorLoadingObserver(): LiveData<Boolean> = errorLoading
+    fun errorLoadingLiveData(): LiveData<Boolean> = errorLoading
 
-    fun errorGlucoseEmptyObserver(): LiveData<Boolean> = errorGlucoseEmpty
+    fun errorGlucoseEmptyLiveData(): LiveData<Boolean> = errorGlucoseEmpty
 
-    fun errorSaveObserver(): LiveData<Boolean> = errorSave
+    fun errorSaveLiveData(): LiveData<Boolean> = errorSave
 
-    fun errorDeleteObserver(): LiveData<Boolean> = errorDelete
+    fun errorDeleteLiveData(): LiveData<Boolean> = errorDelete
 
-    fun actionFinishObserver(): LiveData<Boolean> = actionFinish
+    fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
     fun getId(): Long = id
 
@@ -174,17 +174,11 @@ class EditGlucoseViewModel(
         return GlucoseLog(mmol, mg, getMeasured(), getCurrentDateTime()).also { it.id = id }
     }
 
-    private fun intoMgDl(mmolL: Float?): Int {
-        return ((mmolL ?: 0f) * 18f).toInt()
-    }
+    private fun intoMgDl(mmolL: Float?): Int = ((mmolL ?: 0f) * 18f).toInt()
 
-    private fun intoMmol(mg: Int?): Float {
-        return mg?.div(18f) ?: 0f
-    }
+    private fun intoMmol(mg: Int?): Float = mg?.div(18f) ?: 0f
 
-    private fun roundFloat(num: Float): Float {
-        return (num * 10.0f).roundToInt().toFloat() / 10.0f
-    }
+    private fun roundFloat(num: Float): Float = (num * 10.0f).roundToInt().toFloat() / 10.0f
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
         dateTime.postValue(dateTime.value.apply {

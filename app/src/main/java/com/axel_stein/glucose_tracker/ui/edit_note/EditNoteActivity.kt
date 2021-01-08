@@ -54,17 +54,17 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         setupDateTime()
         setupEditNote()
 
-        viewModel.errorSaveObserver().observe(this, { error ->
+        viewModel.errorSaveLiveData().observe(this, { error ->
             if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_saving_note, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.errorDeleteObserver().observe(this, { error ->
+        viewModel.errorDeleteLiveData().observe(this, { error ->
             if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_deleting_note, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupToolbar() {
@@ -98,7 +98,7 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             ).show()
         }
 
-        viewModel.dateTimeObserver().observe(this, {
+        viewModel.dateTimeLiveData().observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -110,7 +110,7 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         }
 
         var focusEdit = true
-        viewModel.noteObserver().observe(this, { value ->
+        viewModel.noteLiveData().observe(this, { value ->
             if (value != binding.editNote.text.toString()) {
                 binding.editNote.setText(value.toString())
                 binding.editNote.setSelection(binding.editNote.length())
@@ -125,7 +125,7 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             }
         })
 
-        viewModel.errorNoteEmptyObserver().observe(this, { error ->
+        viewModel.errorNoteEmptyLiveData().observe(this, { error ->
             if (error) {
                 binding.inputLayoutNote.error = getString(R.string.no_value)
                 binding.editNote.showKeyboard()

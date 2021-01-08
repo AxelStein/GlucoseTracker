@@ -55,7 +55,7 @@ open class LogListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getItemsData().observe(viewLifecycleOwner, { list ->
+        viewModel.itemsLiveData().observe(viewLifecycleOwner, { list ->
             updateHeaders(list)
             adapter.submitList(list)
             textEmpty().setShown(list.isEmpty())

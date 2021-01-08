@@ -46,29 +46,17 @@ class EditNoteViewModel(
         }
     }
 
-    fun dateTimeObserver(): LiveData<MutableDateTime> {
-        return dateTime
-    }
+    fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
 
-    fun noteObserver(): LiveData<String> {
-        return noteData
-    }
+    fun noteLiveData(): LiveData<String> = noteData
 
-    fun errorNoteEmptyObserver(): LiveData<Boolean> {
-        return errorNoteEmpty
-    }
+    fun errorNoteEmptyLiveData(): LiveData<Boolean> = errorNoteEmpty
 
-    fun errorSaveObserver(): LiveData<Boolean> {
-        return errorSave
-    }
+    fun errorSaveLiveData(): LiveData<Boolean> = errorSave
 
-    fun errorDeleteObserver(): LiveData<Boolean> {
-        return errorDelete
-    }
+    fun errorDeleteLiveData(): LiveData<Boolean> = errorDelete
 
-    fun actionFinishObserver(): LiveData<Boolean> {
-        return actionFinish
-    }
+    fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
     fun getId(): Long = id
 

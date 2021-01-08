@@ -60,9 +60,9 @@ class EditGlucoseViewModelTest {
         vm.setMeasured(0)
         vm.save()
 
-        assertFalse(vm.errorGlucoseEmptyObserver().value ?: false)
-        assertNull(vm.errorSaveObserver().value)
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertFalse(vm.errorGlucoseEmptyLiveData().value ?: false)
+        assertNull(vm.errorSaveLiveData().value)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -76,9 +76,9 @@ class EditGlucoseViewModelTest {
         vm.setMeasured(0)
         vm.save()
 
-        assertFalse(vm.errorGlucoseEmptyObserver().value ?: false)
-        assertNull(vm.errorSaveObserver().value)
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertFalse(vm.errorGlucoseEmptyLiveData().value ?: false)
+        assertNull(vm.errorSaveLiveData().value)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -92,9 +92,9 @@ class EditGlucoseViewModelTest {
         vm.setMeasured(0)
         vm.save()
 
-        assertFalse(vm.errorGlucoseEmptyObserver().value ?: false)
-        assertNull(vm.errorSaveObserver().value)
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertFalse(vm.errorGlucoseEmptyLiveData().value ?: false)
+        assertNull(vm.errorSaveLiveData().value)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -107,8 +107,8 @@ class EditGlucoseViewModelTest {
         vm.setMeasured(0)
         vm.save()
 
-        assertTrue(vm.errorGlucoseEmptyObserver().value ?: false)
-        assertNull(vm.actionFinishObserver().value)
+        assertTrue(vm.errorGlucoseEmptyLiveData().value ?: false)
+        assertNull(vm.actionFinishLiveData().value)
     }
 
     @Test
@@ -136,7 +136,7 @@ class EditGlucoseViewModelTest {
         assertFalse(items.isEmpty())
 
         val vm = createVieModel(items[0].id)
-        assertNull(vm.errorLoadingObserver().value)
+        assertNull(vm.errorLoadingLiveData().value)
         assertEquals("5.0", vm.getGlucoseValue())
         assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
         assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
@@ -150,8 +150,8 @@ class EditGlucoseViewModelTest {
 
         dao.insert(createLog(2, "2021", "01", "10", "15", "30")).subscribe()
         val vm = createVieModel(2L)
-        assertNotNull(vm.errorLoadingObserver().value)
-        assertTrue(vm.errorLoadingObserver().value ?: false)
+        assertNotNull(vm.errorLoadingLiveData().value)
+        assertTrue(vm.errorLoadingLiveData().value ?: false)
     }
 
     @Test
@@ -164,7 +164,7 @@ class EditGlucoseViewModelTest {
         val vm = createVieModel(log.id)
         vm.delete()
 
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
         assertTrue(dao.get().isEmpty())
     }
 

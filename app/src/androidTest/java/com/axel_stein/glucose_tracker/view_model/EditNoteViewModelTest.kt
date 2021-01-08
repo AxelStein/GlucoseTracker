@@ -47,9 +47,9 @@ class EditNoteViewModelTest {
         vm.setNote("Test")
         vm.save()
 
-        Assert.assertFalse(vm.errorNoteEmptyObserver().value ?: false)
-        Assert.assertNull(vm.errorSaveObserver().value)
-        Assert.assertTrue(vm.actionFinishObserver().value ?: false)
+        Assert.assertFalse(vm.errorNoteEmptyLiveData().value ?: false)
+        Assert.assertNull(vm.errorSaveLiveData().value)
+        Assert.assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -59,8 +59,8 @@ class EditNoteViewModelTest {
         vm.setTime(20, 0)
         vm.save()
 
-        Assert.assertTrue(vm.errorNoteEmptyObserver().value ?: false)
-        Assert.assertNull(vm.actionFinishObserver().value)
+        Assert.assertTrue(vm.errorNoteEmptyLiveData().value ?: false)
+        Assert.assertNull(vm.actionFinishLiveData().value)
     }
 
     @Test
@@ -85,7 +85,7 @@ class EditNoteViewModelTest {
         val vm = createViewModel(log.id)
         vm.delete()
 
-        Assert.assertTrue(vm.actionFinishObserver().value ?: false)
+        Assert.assertTrue(vm.actionFinishLiveData().value ?: false)
         Assert.assertTrue(dao.get().isEmpty())
     }
 

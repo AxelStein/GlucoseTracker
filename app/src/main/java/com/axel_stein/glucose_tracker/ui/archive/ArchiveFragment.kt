@@ -36,7 +36,7 @@ class ArchiveFragment: LogListFragment() {
         setupYearSection()
         setupMonthSection()
 
-        archiveViewModel.loadItemsByYearMonthData().observe(viewLifecycleOwner, {
+        archiveViewModel.loadItemsByYearMonthLiveData().observe(viewLifecycleOwner, {
             viewModel.loadItemsByYearMonth(it)
         })
         return binding.root
@@ -47,11 +47,11 @@ class ArchiveFragment: LogListFragment() {
             archiveViewModel.setCurrentYear(position)
         }
 
-        archiveViewModel.yearsData().observe(viewLifecycleOwner, { years ->
+        archiveViewModel.yearsLiveData().observe(viewLifecycleOwner, { years ->
             setSpinnerItems(binding.spinnerYear, binding.inputLayoutYear, years)
         })
 
-        archiveViewModel.selectedYearData().observe(viewLifecycleOwner, { position ->
+        archiveViewModel.selectedYearLiveData().observe(viewLifecycleOwner, { position ->
             setSpinnerSelection(binding.spinnerYear, position)
         })
     }
@@ -61,13 +61,13 @@ class ArchiveFragment: LogListFragment() {
             archiveViewModel.setCurrentMonth(position)
         }
 
-        archiveViewModel.monthsData().observe(viewLifecycleOwner, { months ->
+        archiveViewModel.monthsLiveData().observe(viewLifecycleOwner, { months ->
             val titles = appResources.monthsArray()
             setSpinnerItems(binding.spinnerMonth, binding.inputLayoutMonth,
                 months.map { titles[it-1] }
             )
         })
-        archiveViewModel.selectedMonthData().observe(viewLifecycleOwner, { position ->
+        archiveViewModel.selectedMonthLiveData().observe(viewLifecycleOwner, { position ->
             setSpinnerSelection(binding.spinnerMonth, position)
         })
     }

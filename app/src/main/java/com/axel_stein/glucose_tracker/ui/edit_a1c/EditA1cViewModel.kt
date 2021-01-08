@@ -46,29 +46,17 @@ class EditA1cViewModel(
         }
     }
 
-    fun dateTimeObserver(): LiveData<MutableDateTime> {
-        return dateTime
-    }
+    fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
 
-    fun valueObserver(): LiveData<String> {
-        return a1c
-    }
+    fun valueLiveData(): LiveData<String> = a1c
 
-    fun errorValueEmptyObserver(): LiveData<Boolean> {
-        return errorValueEmpty
-    }
+    fun errorValueEmptyLiveData(): LiveData<Boolean> = errorValueEmpty
 
-    fun errorSaveObserver(): LiveData<Boolean> {
-        return errorSave
-    }
+    fun errorSaveLiveData(): LiveData<Boolean> = errorSave
 
-    fun errorDeleteObserver(): LiveData<Boolean> {
-        return errorDelete
-    }
+    fun errorDeleteLiveData(): LiveData<Boolean> = errorDelete
 
-    fun actionFinishObserver(): LiveData<Boolean> {
-        return actionFinish
-    }
+    fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
     fun getId(): Long = id
 

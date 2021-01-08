@@ -56,17 +56,17 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         setupDateTime()
         setupEditor()
 
-        viewModel.errorSaveObserver().observe(this, {
+        viewModel.errorSaveLiveData().observe(this, {
             if (it) {
                 Snackbar.make(binding.toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.errorDeleteObserver().observe(this, {
+        viewModel.errorDeleteLiveData().observe(this, {
             if (it) {
                 Snackbar.make(binding.toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.actionFinishObserver().observe(this, { if (it) finish() })
+        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupToolbar() {
@@ -100,7 +100,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             ).show()
         }
 
-        viewModel.dateTimeObserver().observe(this, {
+        viewModel.dateTimeLiveData().observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -120,7 +120,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         }
 
         var focusEdit = true
-        viewModel.valueObserver().observe(this, { value ->
+        viewModel.valueLiveData().observe(this, { value ->
             if (value != binding.editA1c.text.toString()) {
                 binding.editA1c.setText(value.toString())
                 binding.editA1c.setSelection(binding.editA1c.length())
@@ -135,7 +135,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             }
         })
 
-        viewModel.errorValueEmptyObserver().observe(this, { error ->
+        viewModel.errorValueEmptyLiveData().observe(this, { error ->
             if (error) {
                 binding.inputLayout.error = getString(R.string.no_value)
                 binding.editA1c.showKeyboard()
