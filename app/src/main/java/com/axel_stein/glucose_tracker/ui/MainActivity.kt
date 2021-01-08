@@ -14,7 +14,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditA1c
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
 import com.axel_stein.glucose_tracker.utils.setShown
 import com.axel_stein.glucose_tracker.utils.setViewVisible
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), ProgressListener {
         }
 
         binding.btnAddNote.setOnClickListener {
-            EditNoteActivity.launch(this)
+            findNavController(R.id.nav_host_fragment).navigate(launchEditNote())
             binding.dim.performClick()
         }
         binding.btnAddA1c.setOnClickListener {

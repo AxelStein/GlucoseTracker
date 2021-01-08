@@ -37,6 +37,15 @@
             android:defaultValue="0L" />
     </activity>
 
+    <action
+        android:id="@+id/launch_edit_note"
+        app:destination="@+id/edit_note">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </action>
+
     <activity
         android:id="@+id/edit_a1c"
         android:name="com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity" >

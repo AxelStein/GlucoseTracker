@@ -2,16 +2,14 @@ package com.axel_stein.glucose_tracker.ui.edit_note
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.databinding.ActivityEditNoteBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
@@ -21,31 +19,12 @@ import com.google.android.material.snackbar.Snackbar
 import org.joda.time.MutableDateTime
 
 class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
-    companion object {
-        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_ID"
-        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_DATE_TIME"
-        const val EXTRA_NOTE = "com.axel_stein.glucose_tracker.ui.edit_note.EXTRA_NOTE"
-
-        fun launch(context: Context) {
-            context.startActivity(Intent(context, EditNoteActivity::class.java))
-        }
-
-        fun launch(context: Context, item: LogItem) {
-            val intent = Intent(context, EditNoteActivity::class.java)
-            intent.putExtra(EXTRA_ID, item.id)
-            context.startActivity(intent)
-        }
-    }
-
-    private lateinit var viewModel: EditNoteViewModel
+    private val args: EditNoteActivityArgs by navArgs()
+    private val viewModel: EditNoteViewModel by viewModels { EditNoteFactory(this, args.id) }
     private lateinit var binding: ActivityEditNoteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        viewModel = ViewModelProvider(this, EditNoteFactory(id, savedInstanceState))
-            .get(EditNoteViewModel::class.java)
 
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -134,18 +113,9 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         })
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putLong(EXTRA_ID, viewModel.getId())
-        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
-        outState.putString(EXTRA_NOTE, viewModel.getNote())
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_note, menu)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        menu?.findItem(R.id.menu_delete)?.isVisible = id != 0L
+        menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }
 
