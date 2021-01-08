@@ -7,12 +7,12 @@ import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditA1c
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
 import com.axel_stein.glucose_tracker.utils.setShown
@@ -60,18 +60,17 @@ class MainActivity : AppCompatActivity(), ProgressListener {
             binding.dim.performClick()
         }
         binding.btnAddA1c.setOnClickListener {
-            EditA1cActivity.launch(this)
+            findNavController(R.id.nav_host_fragment).navigate(launchEditA1c())
             binding.dim.performClick()
         }
 
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        binding.bottomNavView.setupWithNavController(navController)
+        binding.bottomNavView.setupWithNavController(findNavController(R.id.nav_host_fragment))
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.menu_home -> binding.fab.show()
                 else -> binding.fab.hide()
             }
-            NavigationUI.onNavDestinationSelected(item, navController)
+            NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host_fragment))
         }
     }
 

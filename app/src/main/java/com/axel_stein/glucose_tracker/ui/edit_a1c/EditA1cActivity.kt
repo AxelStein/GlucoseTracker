@@ -2,18 +2,16 @@ package com.axel_stein.glucose_tracker.ui.edit_a1c
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.databinding.ActivityEditA1cBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
@@ -23,31 +21,12 @@ import com.google.android.material.snackbar.Snackbar
 import org.joda.time.MutableDateTime
 
 class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
-    companion object {
-        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_ID"
-        const val EXTRA_A1C = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_A1C"
-        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_a1c.EXTRA_DATE_TIME"
-
-        fun launch(context: Context) {
-            context.startActivity(Intent(context, EditA1cActivity::class.java))
-        }
-
-        fun launch(context: Context, item: LogItem) {
-            val intent = Intent(context, EditA1cActivity::class.java)
-            intent.putExtra(EXTRA_ID, item.id)
-            context.startActivity(intent)
-        }
-    }
-
-    private lateinit var viewModel: EditA1cViewModel
+    private val args: EditA1cActivityArgs by navArgs()
+    private val viewModel: EditA1cViewModel by viewModels { EditA1cFactory(this, args.id) }
     private lateinit var binding: ActivityEditA1cBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        viewModel = ViewModelProvider(this, EditA1cFactory(id, savedInstanceState))
-            .get(EditA1cViewModel::class.java)
 
         binding = ActivityEditA1cBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -144,19 +123,10 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         })
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putLong(EXTRA_ID, viewModel.getId())
-        outState.putString(EXTRA_A1C, viewModel.getValue())
-        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_a1c, menu)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        menu?.findItem(R.id.menu_delete)?.isVisible = id != 0L
-        return super.onCreateOptionsMenu(menu)
+        menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

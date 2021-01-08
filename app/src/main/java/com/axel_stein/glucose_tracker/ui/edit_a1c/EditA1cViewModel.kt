@@ -2,6 +2,7 @@ package com.axel_stein.glucose_tracker.ui.edit_a1c
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.A1cLog
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
@@ -9,40 +10,27 @@ import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
 
-class EditA1cViewModel(
-    private var id: Long = 0L,
-    load: Boolean = true,
-    _a1c: String = "",
-    _dateTime: String? = null,
-    dao: A1cLogDao? = null
-) : ViewModel() {
-    private val dateTime = MutableLiveData<MutableDateTime>()
-    private val a1c = MutableLiveData<String>()
-    private val errorValueEmpty = MutableLiveData<Boolean>()
-    private val errorSave = MutableLiveData<Boolean>()
-    private val errorDelete = MutableLiveData<Boolean>()
-    private val actionFinish = MutableLiveData<Boolean>()
+class EditA1cViewModel(private val id: Long = 0L, state: SavedStateHandle) : ViewModel() {
+    private val dateTime : MutableLiveData<MutableDateTime> = state.getLiveData("date_time")
+    private val a1c : MutableLiveData<String> = state.getLiveData("a1c")
+    private val errorValueEmpty : MutableLiveData<Boolean> = state.getLiveData("error_value_empty")
+    private val errorSave : MutableLiveData<Boolean> = state.getLiveData("error_save")
+    private val errorDelete : MutableLiveData<Boolean> = state.getLiveData("error_delete")
+    private val actionFinish : MutableLiveData<Boolean> = state.getLiveData("action_finish")
 
     @Inject
     lateinit var dao: A1cLogDao
 
     init {
-        if (dao == null) {
-            App.appComponent.inject(this)
-        } else {
-            this.dao = dao
-        }
-
-        if (load) {
+        App.appComponent.inject(this)
+        if (!state.contains("id")) {
+            state["id"] = id
             loadData()
-        } else {
-            this.a1c.value = _a1c
-            this.dateTime.value = MutableDateTime(_dateTime)
         }
     }
 
@@ -58,15 +46,13 @@ class EditA1cViewModel(
 
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
-    fun getId(): Long = id
-
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 
     fun getValue() = a1c.value ?: ""
 
     private fun loadData() {
         if (id != 0L) {
-            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<A1cLog> {
+            dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<A1cLog> {
                 override fun onSubscribe(d: Disposable) {}
 
                 override fun onSuccess(l: A1cLog) {
@@ -93,7 +79,7 @@ class EditA1cViewModel(
             if (log.id != 0L) {
                 completable = dao.update(log)
             }
-            completable.subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
+            completable.subscribeOn(io()).subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {}
 
                 override fun onComplete() {
@@ -136,7 +122,7 @@ class EditA1cViewModel(
 
     fun delete() {
         if (id != 0L) {
-            dao.deleteById(id).subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
+            dao.deleteById(id).subscribeOn(io()).subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {}
 
                 override fun onComplete() {

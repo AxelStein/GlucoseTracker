@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditA1c
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
 import com.axel_stein.glucose_tracker.utils.LinearLayoutManagerWrapper
@@ -45,7 +46,7 @@ open class LogListFragment: Fragment() {
             when (item.itemType) {
                 0 -> EditGlucoseActivity.launch(requireContext(), item)
                 1 -> EditNoteActivity.launch(requireContext(), item)
-                2 -> EditA1cActivity.launch(requireContext(), item)
+                2 -> findNavController().navigate(launchEditA1c(item.id))
             }
         }
         recyclerView.adapter = adapter
