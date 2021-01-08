@@ -2,6 +2,7 @@ package com.axel_stein.glucose_tracker.ui.edit_glucose
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
@@ -17,24 +18,15 @@ import org.joda.time.MutableDateTime
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class EditGlucoseViewModel(
-    private var id: Long = 0L,
-    load: Boolean = true,
-    glucose: String = "",
-    measured: Int = 0,
-    dateTime: String? = null,
-    dao: GlucoseLogDao? = null,
-    appSettings: AppSettings? = null,
-    appResources: AppResources? = null
-) : ViewModel() {
-    private val dateTime = MutableLiveData<MutableDateTime>()
-    private val glucose = MutableLiveData<String>()
-    private val measured = MutableLiveData<Int>()
-    private val errorLoading = MutableLiveData<Boolean>()
-    private val errorGlucoseEmpty = MutableLiveData<Boolean>()
-    private val errorSave = MutableLiveData<Boolean>()
-    private val errorDelete = MutableLiveData<Boolean>()
-    private val actionFinish = MutableLiveData<Boolean>()
+class EditGlucoseViewModel(private var id: Long = 0L, state: SavedStateHandle) : ViewModel() {
+    private val dateTime : MutableLiveData<MutableDateTime> = state.getLiveData("date_time")
+    private val glucose : MutableLiveData<String> = state.getLiveData("glucose")
+    private val measured : MutableLiveData<Int> = state.getLiveData("measured")
+    private val errorLoading : MutableLiveData<Boolean> = state.getLiveData("error_loading")
+    private val errorGlucoseEmpty : MutableLiveData<Boolean> = state.getLiveData("error_glucose_empty")
+    private val errorSave : MutableLiveData<Boolean> = state.getLiveData("error_save")
+    private val errorDelete : MutableLiveData<Boolean> = state.getLiveData("error_delete")
+    private val actionFinish : MutableLiveData<Boolean> = state.getLiveData("action_finish")
     private var useMmolAsGlucoseUnits = true
 
     @Inject
@@ -47,26 +39,11 @@ class EditGlucoseViewModel(
     lateinit var appResources: AppResources
 
     init {
-        if (dao == null) {
-            App.appComponent.inject(this)
-        } else {
-            this.dao = dao
-            if (appSettings != null) {
-                this.appSettings = appSettings
-            }
-            if (appResources != null) {
-                this.appResources = appResources
-            }
-        }
-
+        App.appComponent.inject(this)
         useMmolAsGlucoseUnits = this.appSettings.useMmolAsGlucoseUnits()
-
-        if (load) {
+        if (!state.contains("id")) {
+            state["id"] = id
             loadData()
-        } else {
-            this.dateTime.value = MutableDateTime(dateTime)
-            this.glucose.value = glucose
-            this.measured.value = measured
         }
     }
 
@@ -85,8 +62,6 @@ class EditGlucoseViewModel(
     fun errorDeleteLiveData(): LiveData<Boolean> = errorDelete
 
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
-
-    fun getId(): Long = id
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
 

@@ -2,19 +2,17 @@ package com.axel_stein.glucose_tracker.ui.edit_glucose
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.databinding.ActivityEditGlucoseBinding
 import com.axel_stein.glucose_tracker.ui.App
@@ -30,24 +28,8 @@ import javax.inject.Inject
 
 
 class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
-    companion object {
-        const val EXTRA_ID = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_ID"
-        const val EXTRA_DATE_TIME = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_DATE_TIME"
-        const val EXTRA_GLUCOSE = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_GLUCOSE"
-        const val EXTRA_MEASURED = "com.axel_stein.glucose_tracker.ui.edit_glucose.EXTRA_MEASURED"
-
-        fun launch(context: Context) {
-            context.startActivity(Intent(context, EditGlucoseActivity::class.java))
-        }
-
-        fun launch(context: Context, item: LogItem) {
-            val intent = Intent(context, EditGlucoseActivity::class.java)
-            intent.putExtra(EXTRA_ID, item.id)
-            context.startActivity(intent)
-        }
-    }
-
-    private lateinit var viewModel: EditGlucoseViewModel
+    private val args: EditGlucoseActivityArgs by navArgs()
+    private val viewModel: EditGlucoseViewModel by viewModels { EditGlucoseFactory(this, args.id) }
     private lateinit var binding: ActivityEditGlucoseBinding
 
     @Inject
@@ -56,10 +38,6 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.appComponent.inject(this)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        viewModel = ViewModelProvider(this, EditGlucoseFactory(id, savedInstanceState))
-            .get(EditGlucoseViewModel::class.java)
 
         binding = ActivityEditGlucoseBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -204,19 +182,9 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         })
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putLong(EXTRA_ID, viewModel.getId())
-        outState.putString(EXTRA_DATE_TIME, viewModel.getCurrentDateTime().toString())
-        outState.putString(EXTRA_GLUCOSE, viewModel.getGlucoseValue())
-        outState.putInt(EXTRA_MEASURED, viewModel.getMeasured())
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_glucose, menu)
-
-        val id = intent.getLongExtra(EXTRA_ID, 0L)
-        menu?.findItem(R.id.menu_delete)?.isVisible = id != 0L
+        menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -28,6 +28,15 @@
             android:defaultValue="0L" />
     </activity>
 
+    <action
+        android:id="@+id/launch_edit_glucose"
+        app:destination="@+id/edit_glucose">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </action>
+
     <activity
         android:id="@+id/edit_note"
         android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity" >
