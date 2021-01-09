@@ -8,7 +8,7 @@ import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
 import com.axel_stein.glucose_tracker.data.model.NoteLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModel
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModelImpl
 import org.joda.time.DateTime
 import org.junit.*
 import org.junit.runner.RunWith
@@ -89,8 +89,11 @@ class EditNoteViewModelTest {
         Assert.assertTrue(dao.get().isEmpty())
     }
 
-    private fun createViewModel(id: Long = 0L): EditNoteViewModel {
-        return EditNoteViewModel(id = id, dao = dao)
+    private fun createViewModel(id: Long = 0L): EditNoteViewModelImpl {
+        return EditNoteViewModelImpl(id = id).apply {
+            setDao(dao)
+            loadData()
+        }
     }
 
     private fun createLog(
