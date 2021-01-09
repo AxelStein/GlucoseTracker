@@ -7,96 +7,87 @@ import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity
-import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
+import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditA1c
+import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirections.Companion.launchEditGlucose
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
 import com.axel_stein.glucose_tracker.utils.setShown
 import com.axel_stein.glucose_tracker.utils.setViewVisible
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MainActivity : AppCompatActivity(), ProgressListener {
     private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
     private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
-
-    private lateinit var dim: View
-    private lateinit var fab: FloatingActionButton
-    private lateinit var fabMenu: View
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
-
-        fab = findViewById(R.id.fab)
-        fabMenu = findViewById(R.id.fab_menu)
-        dim = findViewById(R.id.dim)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         if (savedInstanceState != null) {
-            fab.setShown(savedInstanceState.getBoolean(extraShowFab, true))
+            binding.fab.setShown(savedInstanceState.getBoolean(extraShowFab, true))
 
             val showFabMenu = savedInstanceState.getBoolean(extraShowFabMenu, true)
-            fabMenu.visibility = if (showFabMenu) VISIBLE else INVISIBLE
-            dim.visibility = if (showFabMenu) VISIBLE else INVISIBLE
+            binding.fabMenu.visibility = if (showFabMenu) VISIBLE else INVISIBLE
+            binding.dim.visibility = if (showFabMenu) VISIBLE else INVISIBLE
         }
 
-        dim.setOnClickListener {
+        binding.dim.setOnClickListener {
             unRevealDim()
             unRevealFabMenu()
-            fab.show()
+            binding.fab.show()
         }
 
-        fab.setOnClickListener {
-            fab.hide()
+        binding.fab.setOnClickListener {
+            binding.fab.hide()
             revealFabMenu()
             revealDim()
         }
 
-        findViewById<View>(R.id.btn_add_glucose).setOnClickListener {
-            EditGlucoseActivity.launch(this)
-            dim.performClick()
+        binding.btnAddGlucose.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigate(launchEditGlucose())
+            binding.dim.performClick()
         }
 
-        findViewById<View>(R.id.btn_add_note).setOnClickListener {
-            EditNoteActivity.launch(this)
-            dim.performClick()
+        binding.btnAddNote.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigate(launchEditNote())
+            binding.dim.performClick()
         }
-        findViewById<View>(R.id.btn_add_a1c).setOnClickListener {
-            EditA1cActivity.launch(this)
-            dim.performClick()
+        binding.btnAddA1c.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigate(launchEditA1c())
+            binding.dim.performClick()
         }
 
-        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        bottomNavView.setupWithNavController(navController)
-        bottomNavView.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavView.setupWithNavController(findNavController(R.id.nav_host_fragment))
+        binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.menu_home -> fab.show()
-                else -> fab.hide()
+                R.id.menu_home -> binding.fab.show()
+                else -> binding.fab.hide()
             }
-            NavigationUI.onNavDestinationSelected(item, navController)
+            NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host_fragment))
         }
     }
 
     private fun revealFabMenu() {
-        revealView(fabMenu, fabMenu.width, fabMenu.height)
+        revealView(binding.fabMenu, binding.fabMenu.width, binding.fabMenu.height)
     }
 
     private fun unRevealFabMenu() {
-        unRevealView(fabMenu, fabMenu.width, fabMenu.height)
+        unRevealView(binding.fabMenu, binding.fabMenu.width, binding.fabMenu.height)
     }
 
     private fun revealDim() {
-        revealView(dim, fab.centerX(), fab.centerY())
+        revealView(binding.dim, binding.fab.centerX(), binding.fab.centerY())
     }
 
     private fun unRevealDim() {
-        unRevealView(dim, fab.centerX(), fab.centerY())
+        unRevealView(binding.dim, binding.fab.centerX(), binding.fab.centerY())
     }
 
     private fun revealView(view: View, x: Int, y: Int) {
@@ -126,8 +117,8 @@ class MainActivity : AppCompatActivity(), ProgressListener {
     }
 
     override fun onBackPressed() {
-        if (dim.isShown) {
-            dim.performClick()
+        if (binding.dim.isShown) {
+            binding.dim.performClick()
         } else {
             super.onBackPressed()
         }
@@ -135,11 +126,11 @@ class MainActivity : AppCompatActivity(), ProgressListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(extraShowFab, fab.isShown)
-        outState.putBoolean(extraShowFabMenu, fabMenu.isShown)
+        outState.putBoolean(extraShowFab, binding.fab.isShown)
+        outState.putBoolean(extraShowFabMenu, binding.fabMenu.isShown)
     }
 
     override fun showProgress(show: Boolean) {
-        setViewVisible(show, findViewById(R.id.progress_bar))
+        setViewVisible(show, binding.progressBar)
     }
 }

@@ -62,27 +62,21 @@ class ArchiveViewModel(
         disposables.dispose()
     }
 
-    fun monthsData(): LiveData<List<Int>> {
-        return monthsData
-    }
+    fun monthsLiveData(): LiveData<List<Int>> = monthsData
 
     private fun setMonths(list: List<Int>) {
         months = list
         monthsData.postValue(list)
     }
 
-    fun yearsData(): LiveData<List<String>> {
-        return yearsData
-    }
+    fun yearsLiveData(): LiveData<List<String>> = yearsData
 
     private fun setYears(list: List<String>) {
         years = list
         yearsData.postValue(list)
     }
 
-    fun selectedMonthData(): LiveData<Int> {
-        return selectedMonthData
-    }
+    fun selectedMonthLiveData(): LiveData<Int> = selectedMonthData
 
     private fun setSelectedMonth(position: Int) {
         selectedMonth = position
@@ -93,9 +87,7 @@ class ArchiveViewModel(
 
     fun getCurrentMonth(): Int = if (months.isEmpty()) -1 else months[selectedMonth]
 
-    fun selectedYearData(): LiveData<Int> {
-        return selectedYearData
-    }
+    fun selectedYearLiveData(): LiveData<Int> = selectedYearData
 
     private fun setSelectedYear(position: Int) {
         selectedYear = position
@@ -106,9 +98,7 @@ class ArchiveViewModel(
 
     fun getCurrentYear(): String = if (years.isEmpty()) "" else years[selectedYear]
 
-    fun loadItemsByYearMonthData(): LiveData<String> {
-        return loadItemsByYearMonth
-    }
+    fun loadItemsByYearMonthLiveData(): LiveData<String> = loadItemsByYearMonth
 
     fun setCurrentMonth(position: Int) {
         setSelectedMonth(position)

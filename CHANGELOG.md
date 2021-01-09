@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.0.6 (January 9, 2021)
+* Fix glucose editor
+* Add view binding
+* Add saved state handle for view model
+* Add safe args
+* Add de, es, it translations
+
 ### 1.0.5 (January 6, 2021)
 * Fix round float func
 * Add uk, fr translations

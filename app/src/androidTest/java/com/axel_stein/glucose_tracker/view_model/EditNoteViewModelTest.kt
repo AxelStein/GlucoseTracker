@@ -8,7 +8,7 @@ import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
 import com.axel_stein.glucose_tracker.data.model.NoteLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModel
+import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModelImpl
 import org.joda.time.DateTime
 import org.junit.*
 import org.junit.runner.RunWith
@@ -47,9 +47,9 @@ class EditNoteViewModelTest {
         vm.setNote("Test")
         vm.save()
 
-        Assert.assertFalse(vm.errorNoteEmptyObserver().value ?: false)
-        Assert.assertNull(vm.errorSaveObserver().value)
-        Assert.assertTrue(vm.actionFinishObserver().value ?: false)
+        Assert.assertFalse(vm.errorNoteEmptyLiveData().value ?: false)
+        Assert.assertNull(vm.errorSaveLiveData().value)
+        Assert.assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -59,8 +59,8 @@ class EditNoteViewModelTest {
         vm.setTime(20, 0)
         vm.save()
 
-        Assert.assertTrue(vm.errorNoteEmptyObserver().value ?: false)
-        Assert.assertNull(vm.actionFinishObserver().value)
+        Assert.assertTrue(vm.errorNoteEmptyLiveData().value ?: false)
+        Assert.assertNull(vm.actionFinishLiveData().value)
     }
 
     @Test
@@ -85,12 +85,15 @@ class EditNoteViewModelTest {
         val vm = createViewModel(log.id)
         vm.delete()
 
-        Assert.assertTrue(vm.actionFinishObserver().value ?: false)
+        Assert.assertTrue(vm.actionFinishLiveData().value ?: false)
         Assert.assertTrue(dao.get().isEmpty())
     }
 
-    private fun createViewModel(id: Long = 0L): EditNoteViewModel {
-        return EditNoteViewModel(id = id, dao = dao)
+    private fun createViewModel(id: Long = 0L): EditNoteViewModelImpl {
+        return EditNoteViewModelImpl(id = id).apply {
+            setDao(dao)
+            loadData()
+        }
     }
 
     private fun createLog(

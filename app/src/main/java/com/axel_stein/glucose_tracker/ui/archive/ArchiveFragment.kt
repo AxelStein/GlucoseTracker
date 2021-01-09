@@ -8,105 +8,109 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppResources
+import com.axel_stein.glucose_tracker.databinding.FragmentArchiveBinding
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.log_list.LogListFragment
 import com.axel_stein.glucose_tracker.utils.CArrayAdapter
 import com.axel_stein.glucose_tracker.utils.hide
 import com.axel_stein.glucose_tracker.utils.show
+import com.google.android.material.textfield.TextInputLayout
 import javax.inject.Inject
 
 
 class ArchiveFragment: LogListFragment() {
     private val archiveViewModel: ArchiveViewModel by viewModels()
+    private var _binding: FragmentArchiveBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var appResources: AppResources
 
     init {
         App.appComponent.inject(this)
-        layoutResourceId = R.layout.fragment_archive
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentArchiveBinding.inflate(inflater, container, false)
+        setupRecyclerView(binding.recyclerView)
+        setupYearSection()
+        setupMonthSection()
 
-        val textEmpty = root?.findViewById<View>(R.id.text_empty)
-
-        val inputLayoutYear = root?.findViewById<View>(R.id.input_layout_year)
-        val spinnerYear = root?.findViewById<AutoCompleteTextView>(R.id.spinner_year)
-        spinnerYear?.inputType = 0  // disable ime input
-        spinnerYear?.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
-        spinnerYear?.setOnItemClickListener { _, _, position, _ ->
-            inputLayoutYear?.clearFocus()
-            archiveViewModel.setCurrentYear(position)
-        }
-        spinnerYear?.setOnDismissListener {
-            inputLayoutYear?.clearFocus()
-        }
-
-        archiveViewModel.yearsData().observe(viewLifecycleOwner, { years ->
-            if (years.isEmpty()) {
-                inputLayoutYear?.hide()
-                textEmpty?.show()
-            } else {
-                inputLayoutYear?.show()
-                textEmpty?.hide()
-
-                val adapter = CArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, years.toTypedArray())
-                spinnerYear?.setAdapter(adapter)
-            }
-        })
-
-        archiveViewModel.selectedYearData().observe(viewLifecycleOwner, { position ->
-            if (position != -1) {
-                spinnerYear?.listSelection = position
-                val item = spinnerYear?.adapter?.getItem(position)
-                if (item != null) {
-                    spinnerYear.setText(item as String, false)
-                }
-            }
-        })
-
-        val inputLayoutMonth = root?.findViewById<View>(R.id.input_layout_month)
-        val spinnerMonth = root?.findViewById<AutoCompleteTextView>(R.id.spinner_month)
-        spinnerMonth?.inputType = 0  // disable ime input
-        spinnerMonth?.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
-        spinnerMonth?.setOnItemClickListener { _, _, position, _ ->
-            inputLayoutMonth?.clearFocus()
-            archiveViewModel.setCurrentMonth(position)
-        }
-        spinnerMonth?.setOnDismissListener {
-            inputLayoutMonth?.clearFocus()
-        }
-
-        archiveViewModel.monthsData().observe(viewLifecycleOwner, { months ->
-            if (months.isEmpty()) {
-                inputLayoutMonth?.hide()
-            } else {
-                inputLayoutMonth?.show()
-
-                val monthTitles = appResources.monthsArray()
-                val selectedMonthTitles = mutableListOf<String>()
-                months.forEach {
-                    selectedMonthTitles.add(monthTitles[it-1])
-                }
-                val adapter = CArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, selectedMonthTitles.toTypedArray())
-                spinnerMonth?.setAdapter(adapter)
-            }
-        })
-        archiveViewModel.selectedMonthData().observe(viewLifecycleOwner, { position ->
-            if (position != -1) {
-                spinnerMonth?.listSelection = position
-                val item = spinnerMonth?.adapter?.getItem(position)
-                if (item != null) {
-                    spinnerMonth.setText(item as String, false)
-                }
-            }
-        })
-
-        archiveViewModel.loadItemsByYearMonthData().observe(viewLifecycleOwner, {
+        archiveViewModel.loadItemsByYearMonthLiveData().observe(viewLifecycleOwner, {
             viewModel.loadItemsByYearMonth(it)
         })
-        return root
+        return binding.root
+    }
+
+    private fun setupYearSection() {
+        setupSpinner(binding.spinnerYear, binding.inputLayoutYear) { position ->
+            archiveViewModel.setCurrentYear(position)
+        }
+
+        archiveViewModel.yearsLiveData().observe(viewLifecycleOwner, { years ->
+            setSpinnerItems(binding.spinnerYear, binding.inputLayoutYear, years)
+        })
+
+        archiveViewModel.selectedYearLiveData().observe(viewLifecycleOwner, { position ->
+            setSpinnerSelection(binding.spinnerYear, position)
+        })
+    }
+
+    private fun setupMonthSection() {
+        setupSpinner(binding.spinnerMonth, binding.inputLayoutMonth) { position ->
+            archiveViewModel.setCurrentMonth(position)
+        }
+
+        archiveViewModel.monthsLiveData().observe(viewLifecycleOwner, { months ->
+            val titles = appResources.monthsArray()
+            setSpinnerItems(binding.spinnerMonth, binding.inputLayoutMonth,
+                months.map { titles[it-1] }
+            )
+        })
+        archiveViewModel.selectedMonthLiveData().observe(viewLifecycleOwner, { position ->
+            setSpinnerSelection(binding.spinnerMonth, position)
+        })
+    }
+
+    private fun setupSpinner(spinner: AutoCompleteTextView, inputLayout: TextInputLayout, onItemClick: (position: Int) -> Unit) {
+        spinner.inputType = 0  // disable ime input
+        spinner.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
+        spinner.setOnItemClickListener { _, _, position, _ ->
+            inputLayout.clearFocus()
+            onItemClick(position)
+        }
+        spinner.setOnDismissListener {
+            inputLayout.clearFocus()
+        }
+    }
+
+    private fun setSpinnerItems(spinner: AutoCompleteTextView, inputLayout: TextInputLayout, items: List<String>) {
+        if (items.isEmpty()) {
+            textEmpty().show()
+            inputLayout.hide()
+        } else {
+            textEmpty().hide()
+            inputLayout.show()
+            spinner.setAdapter(
+                CArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, items.toTypedArray())
+            )
+        }
+    }
+
+    private fun setSpinnerSelection(spinner: AutoCompleteTextView, position: Int) {
+        if (position != -1) {
+            spinner.listSelection = position
+            val item = spinner.adapter.getItem(position)
+            if (item != null) {
+                spinner.setText(item as String, false)
+            }
+        }
+    }
+
+    override fun textEmpty() = binding.textEmpty
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

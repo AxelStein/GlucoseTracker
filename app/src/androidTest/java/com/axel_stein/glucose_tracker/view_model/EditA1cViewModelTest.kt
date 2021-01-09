@@ -8,7 +8,7 @@ import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
 import com.axel_stein.glucose_tracker.data.model.A1cLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cViewModel
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cViewModelImpl
 import org.joda.time.DateTime
 import org.junit.After
 import org.junit.Assert.*
@@ -51,9 +51,9 @@ class EditA1cViewModelTest {
         vm.setValue("3.2")
         vm.save()
 
-        assertFalse(vm.errorValueEmptyObserver().value ?: false)
-        assertNull(vm.errorSaveObserver().value)
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertFalse(vm.errorValueEmptyLiveData().value ?: false)
+        assertNull(vm.errorSaveLiveData().value)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
     }
 
     @Test
@@ -63,8 +63,8 @@ class EditA1cViewModelTest {
         vm.setTime(20, 0)
         vm.save()
 
-        assertTrue(vm.errorValueEmptyObserver().value ?: false)
-        assertNull(vm.actionFinishObserver().value)
+        assertTrue(vm.errorValueEmptyLiveData().value ?: false)
+        assertNull(vm.actionFinishLiveData().value)
     }
 
     @Test
@@ -89,12 +89,15 @@ class EditA1cViewModelTest {
         val vm = createViewModel(log.id)
         vm.delete()
 
-        assertTrue(vm.actionFinishObserver().value ?: false)
+        assertTrue(vm.actionFinishLiveData().value ?: false)
         assertTrue(dao.get().isEmpty())
     }
 
-    private fun createViewModel(id: Long = 0L): EditA1cViewModel {
-        return EditA1cViewModel(id = id, dao = dao)
+    private fun createViewModel(id: Long = 0L): EditA1cViewModelImpl {
+        return EditA1cViewModelImpl(id = id).apply {
+            setDao(dao)
+            loadData()
+        }
     }
 
     private fun createLog(

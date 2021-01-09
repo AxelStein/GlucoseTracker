@@ -56,7 +56,7 @@ class LogListViewModel: ViewModel() {
         disposables.dispose()
     }
 
-    fun getItemsData(): LiveData<List<LogItem>> {
+    fun itemsLiveData(): LiveData<List<LogItem>> {
         return items
     }
 

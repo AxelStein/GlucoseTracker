@@ -73,7 +73,7 @@ class ArchiveViewModelTest {
 
         val vm = ArchiveViewModel(dao = dao)
         assertEquals("2012", vm.getCurrentYear())
-        assertEquals(2, vm.yearsData().value?.size)
+        assertEquals(2, vm.yearsLiveData().value?.size)
     }
 
     @Test
@@ -138,7 +138,7 @@ class ArchiveViewModelTest {
         val vm = ArchiveViewModel(dao = dao)
         assertEquals(2, vm.getCurrentMonth())
         assertEquals(0, vm.getSelectedMonth())
-        assertEquals(2, vm.monthsData().value?.size)
+        assertEquals(2, vm.monthsLiveData().value?.size)
     }
 
     @Test
@@ -149,7 +149,7 @@ class ArchiveViewModelTest {
         val vm = ArchiveViewModel(dao = dao)
         assertEquals(2, vm.getCurrentMonth())
         assertEquals(0, vm.getSelectedMonth())
-        assertEquals(2, vm.monthsData().value?.size)
+        assertEquals(2, vm.monthsLiveData().value?.size)
 
         vm.setCurrentMonth(1)
         assertEquals(1, vm.getCurrentMonth())

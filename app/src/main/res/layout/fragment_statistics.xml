@@ -46,7 +46,6 @@
 
                     <TableLayout
                         android:background="?attr/logItemBackgroundColor"
-                        android:id="@+id/table"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -268,7 +267,7 @@
                         android:layout_height="wrap_content"/>
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/glucose_chart_before_meal"
+                        android:id="@+id/before_meal_chart"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_below="@+id/text_glucose_chart_before_meal"
@@ -302,7 +301,7 @@
                         android:layout_height="wrap_content"/>
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/glucose_chart_after_meal"
+                        android:id="@+id/after_meal_chart"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_below="@+id/text_glucose_chart_after_meal"

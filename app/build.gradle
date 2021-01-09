@@ -11,8 +11,8 @@ android {
         applicationId "com.axel_stein.glucose_tracker"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 6
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testApplicationId "com.axel_stein.glucose_tracker.test"
@@ -48,9 +48,14 @@ android {
             exclude group: 'org.apache.httpcomponents'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 def room_version = "2.2.6"
 def dagger_version = "2.29.1"
@@ -99,8 +104,8 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:2.4.0"
     implementation "androidx.work:work-rxjava2:2.4.0"
 
-    // implementation 'im.dacer:AndroidCharts:1.0.4'
-    // implementation 'com.robinhood.spark:spark:1.2.0'
+    implementation "androidx.savedstate:savedstate-ktx:1.1.0-rc01"
+
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     testImplementation 'junit:junit:4.13.1'
