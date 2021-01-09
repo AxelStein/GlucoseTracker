@@ -10,7 +10,7 @@ import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
-import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModel
+import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModelImpl
 import org.joda.time.DateTime
 import org.junit.After
 import org.junit.Assert.*
@@ -168,13 +168,13 @@ class EditGlucoseViewModelTest {
         assertTrue(dao.get().isEmpty())
     }
 
-    private fun createVieModel(id: Long = 0L): EditGlucoseViewModel {
-        return EditGlucoseViewModel(
-            id = id,
-            dao = dao,
-            appSettings = appSettings,
-            appResources = appResources
-        )
+    private fun createVieModel(id: Long = 0L): EditGlucoseViewModelImpl {
+        return EditGlucoseViewModelImpl(id).apply {
+            setDao(dao)
+            setAppResources(appResources)
+            setAppSettings(appSettings)
+            loadData()
+        }
     }
 
     private fun createLog(
