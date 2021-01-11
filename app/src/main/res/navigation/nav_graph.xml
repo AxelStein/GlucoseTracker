@@ -96,9 +96,9 @@
     </action>
 
     <activity
-        android:id="@+id/edit_insulin"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinActivity"
-        tools:layout="@layout/activity_edit_insulin">
+        android:id="@+id/edit_insulin_log"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivity"
+        tools:layout="@layout/activity_edit_insulin_log">
         <argument
             android:name="id"
             app:argType="long"

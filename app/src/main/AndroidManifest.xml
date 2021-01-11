@@ -27,7 +27,7 @@
 
         <activity android:name=".ui.edit_a1c.EditA1cActivity" />
 
-        <activity android:name=".ui.edit_insulin.EditInsulinActivity" />
+        <activity android:name=".ui.edit_insulin_log.EditInsulinLogActivity" />
 
         <activity
             android:name=".ui.settings.SettingsActivity"
