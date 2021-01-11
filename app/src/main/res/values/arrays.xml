@@ -69,7 +69,11 @@
         <item>@string/month_nov_a</item>
         <item>@string/month_dec_a</item>
     </string-array>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_system">Follow system</string>
+
+    <string-array name="insulin_types">
+        <item>@string/type_rapid</item>
+        <item>@string/type_short</item>
+        <item>@string/type_intermediate</item>
+        <item>@string/type_long</item>
+    </string-array>
 </resources>

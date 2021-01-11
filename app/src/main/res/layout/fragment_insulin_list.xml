@@ -10,6 +10,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         tools:listitem="@layout/item_insulin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

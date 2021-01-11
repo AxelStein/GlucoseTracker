@@ -94,6 +94,8 @@
             android:focusable="true"
             android:paddingStart="0dp"
             android:paddingEnd="16dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

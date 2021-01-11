@@ -115,4 +115,14 @@
     <string name="action_add">Add</string>
     <string name="insulin_list">Insulin</string>
     <string name="action_edit">Edit</string>
+    <string name="hint_insulin_type">Insulin type</string>
+    <string name="hint_title">Title</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">Follow system</string>
+    <string name="type_rapid">Rapid</string>
+    <string name="type_short">Short</string>
+    <string name="type_intermediate">Intermediate</string>
+    <string name="type_long">Long</string>
+    <string name="msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
 </resources>

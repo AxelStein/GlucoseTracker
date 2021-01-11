@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="56dp">
 
@@ -14,10 +17,11 @@
         android:textSize="16sp"
         android:textColor="?android:attr/textColorPrimary"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:lines="1"
         android:ellipsize="end"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintEnd_toStartOf="@+id/menu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,19 +37,4 @@
         android:text="Rapid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
-
-    <ImageView
-        android:id="@+id/menu"
-        android:layout_width="48dp"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:scaleType="centerInside"
-        android:src="@drawable/icon_more_vert"
-        app:tint="?android:attr/textColorSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

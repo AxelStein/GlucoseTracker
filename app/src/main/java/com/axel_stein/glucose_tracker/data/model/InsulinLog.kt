@@ -7,10 +7,9 @@ import org.joda.time.DateTime
 
 @Entity(tableName = "insulin_log")
 data class InsulinLog(
-    @ColumnInfo
-    val title: String,
+    @ColumnInfo(name = "insulin_id")
+    val insulinId: Long,
 
-    @ColumnInfo(name = "units")
     val units: Int,
 
     val measured: Int,

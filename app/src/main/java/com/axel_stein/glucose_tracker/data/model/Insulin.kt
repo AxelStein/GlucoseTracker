@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "insulin_list")
 data class Insulin(
     val title: String,
-    val type: Int = 0,
-    val onset: Int = 0,
-    val peak: Int = 0,
-    val action: Int = 0
+    val type: Int = 0,  // rapid, short, intermediate, long
+    val onset: Int = -1,  // min
+    val peak: Int = -1,  // min
+    val duration: Int = -1  // min
 ) {
     @PrimaryKey(autoGenerate = true)
     var id = 0L
