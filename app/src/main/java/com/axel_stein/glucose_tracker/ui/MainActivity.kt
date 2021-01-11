@@ -18,11 +18,10 @@ import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirecti
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
 import com.axel_stein.glucose_tracker.ui.settings.SettingsActivityDirections.Companion.launchSettings
 import com.axel_stein.glucose_tracker.utils.setShown
-import com.axel_stein.glucose_tracker.utils.setViewVisible
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), ProgressListener {
+class MainActivity : AppCompatActivity() {
     private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
     private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
     private lateinit var binding: ActivityMainBinding
@@ -117,10 +116,6 @@ class MainActivity : AppCompatActivity(), ProgressListener {
         super.onSaveInstanceState(outState)
         outState.putBoolean(extraShowFab, binding.fab.isShown)
         outState.putBoolean(extraShowFabMenu, binding.fabMenu.isShown)
-    }
-
-    override fun showProgress(show: Boolean) {
-        setViewVisible(show, binding.progressBar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
