@@ -96,4 +96,5 @@
     <string name="period_year">За последний год</string>
     <string name="before_meal">До еды</string>
     <string name="after_meal">После еды</string>
+    <string name="fab_menu_insulin">Инсулин</string>
 </resources>

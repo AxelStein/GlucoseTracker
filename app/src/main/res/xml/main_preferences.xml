@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SwitchPreference
-        app:key="night_mode"
-        app:title="@string/pref_night_mode"
-        app:iconSpaceReserved="false" />
+    <ListPreference
+        app:key="theme"
+        android:entries="@array/theme_entries"
+        app:entryValues="@array/theme_values"
+        app:title="@string/pref_theme"
+        app:summary="%s"
+        app:defaultValue="system"
+        app:iconSpaceReserved="false"/>
 
     <ListPreference
         app:key="glucose_units"
@@ -18,8 +22,6 @@
         app:title="@string/pref_list_glucose_units" />
 
     <PreferenceCategory
-        app:allowDividerBelow="false"
-        app:allowDividerAbove="false"
         app:title="@string/pref_category_backup"
         app:iconSpaceReserved="false">
 
@@ -36,8 +38,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:allowDividerBelow="false"
-        app:allowDividerAbove="false"
         app:title="@string/pref_category_google_drive"
         app:iconSpaceReserved="false">
 
@@ -55,7 +55,6 @@
             app:title="@string/pref_export_drive" />
 
         <Preference
-            app:allowDividerBelow="true"
             app:iconSpaceReserved="false"
             app:key="drive_import"
             app:title="@string/pref_import_drive"/>
@@ -72,8 +71,6 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:allowDividerBelow="false"
-        app:allowDividerAbove="false"
         app:title="@string/pref_about_app">
 
         <Preference

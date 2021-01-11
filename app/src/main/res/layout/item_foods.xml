@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
-            android:src="@drawable/baseline_restaurant_black_24dp"
+            android:src="@drawable/icon_foods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tint="?android:attr/textColorSecondary" />

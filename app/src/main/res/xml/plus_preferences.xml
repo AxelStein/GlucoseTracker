@@ -1,0 +1,49 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="insulin"
+        app:title="@string/insulin_list"/>
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="insulin"
+        app:title="Medications"/>
+
+    <PreferenceCategory
+        app:title="Measurements"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="a1c"
+            app:title="@string/hint_a1c" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="weight"
+            app:title="Weight"/>
+
+        <!--
+        <Preference
+            app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false"
+            app:key="ap"
+            app:title="Arterial pressure"/>
+
+        <Preference
+            app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false"
+            app:key="pulse"
+            app:title="Pulse"/>
+
+        <Preference
+            app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false"
+            app:key="foods"
+            app:title="Foods"/>
+        -->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

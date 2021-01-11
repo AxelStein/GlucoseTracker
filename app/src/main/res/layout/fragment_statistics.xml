@@ -198,7 +198,7 @@
                         android:textColor="?attr/diabetesControlGoodColor"
                         android:text="@string/diabetes_control_good"
                         app:drawableTint="?attr/diabetesControlGoodColor"
-                        app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
+                        app:drawableStartCompat="@drawable/icon_checked" />
 
                     <TextView
                         app:layout_constraintTop_toBottomOf="@+id/table"
@@ -218,7 +218,7 @@
                         android:textColor="?attr/diabetesControlAvgColor"
                         android:text="@string/diabetes_control_average"
                         app:drawableTint="?attr/diabetesControlAvgColor"
-                        app:drawableStartCompat="@drawable/baseline_check_circle_outline_black_24dp" />
+                        app:drawableStartCompat="@drawable/icon_checked" />
 
                     <TextView
                         app:layout_constraintTop_toBottomOf="@+id/table"
@@ -238,7 +238,7 @@
                         android:textColor="?attr/diabetesControlBadColor"
                         android:text="@string/diabetes_control_bad"
                         app:drawableTint="?attr/diabetesControlBadColor"
-                        app:drawableStartCompat="@drawable/outline_error_outline_black_24dp" />
+                        app:drawableStartCompat="@drawable/icon_error" />
 
                 </LinearLayout>
 
@@ -383,6 +383,6 @@
         android:textSize="16sp"
         android:drawablePadding="8dp"
         app:drawableTint="?attr/colorError"
-        app:drawableTopCompat="@drawable/outline_error_outline_black_24dp" />
+        app:drawableTopCompat="@drawable/icon_error" />
 
 </RelativeLayout>

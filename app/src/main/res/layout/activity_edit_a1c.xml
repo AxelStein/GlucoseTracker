@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/toolbarBackgroundColor"
-            app:navigationIcon="@drawable/baseline_clear_white_24dp"
+            app:navigationIcon="@drawable/icon_clear"
             app:popupTheme="@style/Theme.GlucoseTracker.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -52,7 +52,7 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_date_range_black_24dp" />
+                app:drawableStartCompat="@drawable/icon_date" />
 
             <TextView
                 android:id="@+id/btn_time"
@@ -69,7 +69,7 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_access_time_black_24dp" />
+                app:drawableStartCompat="@drawable/icon_time" />
 
         </LinearLayout>
 

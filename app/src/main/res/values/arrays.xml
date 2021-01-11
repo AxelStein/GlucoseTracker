@@ -22,6 +22,18 @@
         <item>@string/mg_dl</item>
     </string-array>
 
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+
     <string-array name="stats_period">
         <item>@string/period_two_weeks</item>
         <item>@string/period_month</item>
@@ -57,4 +69,7 @@
         <item>@string/month_nov_a</item>
         <item>@string/month_dec_a</item>
     </string-array>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">Follow system</string>
 </resources>

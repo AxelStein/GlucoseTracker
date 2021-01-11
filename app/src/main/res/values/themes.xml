@@ -46,4 +46,8 @@
     <style name="Theme.GlucoseTracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GlucoseTracker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:dropDownHorizontalOffset">-4dp</item>
+    </style>
 </resources>

@@ -63,7 +63,7 @@ open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     fun save() {
         val note = getNote()
-        if (note.isEmpty()) {
+        if (note.isBlank()) {
             errorNoteEmpty.value = true
         } else {
             val log = createLog()

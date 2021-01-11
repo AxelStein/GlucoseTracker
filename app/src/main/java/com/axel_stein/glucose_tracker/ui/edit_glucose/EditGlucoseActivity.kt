@@ -155,7 +155,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     private fun setupMeasured() {
         val adapter = CArrayAdapter(
             this,
-            R.layout.dropdown_menu_popup_item,
+            R.layout.popup_item,
             resources.getStringArray(R.array.measured)
         )
 

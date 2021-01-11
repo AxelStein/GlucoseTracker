@@ -1,16 +1,18 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
+import com.axel_stein.glucose_tracker.databinding.ItemA1cBinding
+import com.axel_stein.glucose_tracker.databinding.ItemGlucoseBinding
+import com.axel_stein.glucose_tracker.databinding.ItemNoteBinding
 import com.axel_stein.glucose_tracker.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
+import com.axel_stein.glucose_tracker.utils.inflate
 
 class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
 
@@ -70,42 +72,32 @@ class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion
         abstract fun bind(item: LogItem)
     }
 
-    class GlucoseViewHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_glucose, parent, false)
-    ) {
-        private val textValue = itemView.findViewById<TextView>(R.id.text_value)
-        private val textTime = itemView.findViewById<TextView>(R.id.text_time)
-        private val textMeasured = itemView.findViewById<TextView>(R.id.text_measured)
+    class GlucoseViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_glucose)) {
+        private val binding = ItemGlucoseBinding.bind(itemView)
         private val measuredArr = itemView.resources.getStringArray(R.array.measured)
 
         override fun bind(item: LogItem) {
-            textValue.text = if (item.useMmol) item.valueMmol else item.valueMg
-            textTime.text = item.timeFormatted
-            textMeasured.text = measuredArr[item.measured ?: 0]
+            binding.textValue.text = if (item.useMmol) item.valueMmol else item.valueMg
+            binding.textTime.text = item.timeFormatted
+            binding.textMeasured.text = measuredArr[item.measured ?: 0]
         }
     }
 
-    class NoteViewHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
-    ) {
-        private val textNote = itemView.findViewById<TextView>(R.id.text_note)
-        private val textTime = itemView.findViewById<TextView>(R.id.text_time)
+    class NoteViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_note)) {
+        private val binding = ItemNoteBinding.bind(itemView)
 
         override fun bind(item: LogItem) {
-            textNote.text = item.note
-            textTime.text = item.timeFormatted
+            binding.textNote.text = item.note
+            binding.textTime.text = item.timeFormatted
         }
     }
 
-    class A1cViewHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_a1c, parent, false)
-    ) {
-        private val textValue = itemView.findViewById<TextView>(R.id.text_value)
-        private val textTime = itemView.findViewById<TextView>(R.id.text_time)
+    class A1cViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_a1c)) {
+        private val binding = ItemA1cBinding.bind(itemView)
 
         override fun bind(item: LogItem) {
-            textValue.text = item.a1c
-            textTime.text = item.timeFormatted
+            binding.textValue.text = item.a1c
+            binding.textTime.text = item.timeFormatted
         }
     }
 }

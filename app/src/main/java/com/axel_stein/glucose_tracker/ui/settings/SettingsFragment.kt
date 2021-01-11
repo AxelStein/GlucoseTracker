@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -37,15 +38,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        setPreferencesFromResource(R.xml.main_preferences, rootKey)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val nightMode = preferenceManager.findPreference<SwitchPreference>("night_mode")
-        nightMode?.setOnPreferenceChangeListener { _, mode ->
-            appSettings.enableNightMode(mode as Boolean)
+        val theme = preferenceManager.findPreference<ListPreference>("theme")
+        theme?.setOnPreferenceChangeListener { _, value ->
+            appSettings.applyTheme(value as String)
             true
         }
 

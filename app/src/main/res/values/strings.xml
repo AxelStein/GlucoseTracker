@@ -108,4 +108,11 @@
     <string name="error_statistics">Error loading statistics</string>
     <string name="before_meal">Before meal</string>
     <string name="after_meal">After meal</string>
+    <string name="hint_units">Number of units</string>
+    <string name="fab_menu_insulin">Insulin</string>
+    <string name="fab_menu_medication">Medication</string>
+    <string name="pref_theme">Theme</string>
+    <string name="action_add">Add</string>
+    <string name="insulin_list">Insulin</string>
+    <string name="action_edit">Edit</string>
 </resources>

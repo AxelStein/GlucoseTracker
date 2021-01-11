@@ -1,6 +1,7 @@
 package com.axel_stein.glucose_tracker.data.dagger
 
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
+import com.axel_stein.glucose_tracker.ui.MainActivity
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveFragment
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveViewModel
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cViewModel
@@ -26,4 +27,5 @@ interface AppComponent {
     fun inject(vm: EditA1cViewModel)
     fun inject(vm: ArchiveViewModel)
     fun inject(fragment: ArchiveFragment)
+    fun inject(activity: MainActivity)
 }

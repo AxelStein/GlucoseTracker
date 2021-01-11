@@ -1,8 +1,10 @@
 package com.axel_stein.glucose_tracker.utils
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 
 fun setViewVisible(visible: Boolean, vararg views: View?) {
     for (v in views) {
@@ -35,4 +37,8 @@ fun View.show() {
 
 fun View.hide() {
     visibility = GONE
+}
+
+fun ViewGroup.inflate(layoutRes: Int): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }
