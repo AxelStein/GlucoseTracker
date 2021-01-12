@@ -18,6 +18,11 @@ interface LogDao {
     """)
     fun getRecentItems(): Flowable<List<LogItem>>
 
+    @Query(""" 
+        select id, null as value_mmol, null as value_mg, null as measured, date_time, 2 as item_type, null as note, null as foods, value as a1c from a1c_log
+    """)
+    fun getA1cList(): Flowable<List<LogItem>>
+
     @Query("""
         select id, value_mmol, value_mg, measured, date_time, 0 as item_type, null as note, null as foods, null as a1c from glucose_log
         where substr(date_time, 1, 7) = :yearMonth union

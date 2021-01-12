@@ -2,7 +2,7 @@
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="insulin"
+        app:key="insulin_list"
         app:title="@string/insulin_list"/>
 
     <Preference
@@ -16,25 +16,14 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="glucose"
-            app:title="@string/blood_sugar" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="a1c"
+            app:key="a1c_list"
             app:title="@string/a1c" />
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="weight"
+            app:key="weight_list"
             app:title="@string/weight"/>
 
     </PreferenceCategory>
-
-    <Preference
-        app:allowDividerAbove="true"
-        app:iconSpaceReserved="false"
-        app:key="notes"
-        app:title="@string/notes" />
 
 </PreferenceScreen>

@@ -54,6 +54,10 @@ open class LogListFragment: Fragment() {
         recyclerView.adapter = adapter
     }
 
+    protected open fun setRecyclerViewBottomPadding(paddingBottom: Int) {
+        binding.recyclerView.setPadding(0, 0, 0, paddingBottom)
+    }
+
     protected open fun textEmpty() = binding.textEmpty
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -6,6 +6,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionMenuPlusToA1cList
+import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionMenuPlusToInsulinList
 
 class PlusFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -14,9 +16,15 @@ class PlusFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val insulinPref = preferenceManager.findPreference<Preference>("insulin")
+        val insulinPref = preferenceManager.findPreference<Preference>("insulin_list")
         insulinPref?.setOnPreferenceClickListener {
-            findNavController().navigate(R.id.action_menu_plus_to_insulin_list)
+            findNavController().navigate(actionMenuPlusToInsulinList())
+            true
+        }
+
+        val a1cListPref = preferenceManager.findPreference<Preference>("a1c_list")
+        a1cListPref?.setOnPreferenceClickListener {
+            findNavController().navigate(actionMenuPlusToA1cList())
             true
         }
     }

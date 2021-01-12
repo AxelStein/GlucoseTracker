@@ -40,6 +40,15 @@ class LogListViewModel: ViewModel() {
         }
     }
 
+    fun loadA1cList() {
+        if (items.value.isNullOrEmpty()) {
+            disposables.clear()
+            disposables.add(dao.getA1cList().subscribe {
+                items.postValue(sort(it.toMutableList()))
+            })
+        }
+    }
+
     fun loadItemsByYearMonth(yearMonth: String) {
         if (yearMonth != this.yearMonth) {
             disposables.clear()
