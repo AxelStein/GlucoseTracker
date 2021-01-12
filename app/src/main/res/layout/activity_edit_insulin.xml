@@ -23,8 +23,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -35,6 +33,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp">
 
@@ -60,78 +59,13 @@
             android:orientation="horizontal">
 
             <AutoCompleteTextView
-                android:id="@+id/type_dropdown"
+                android:id="@+id/type_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_insulin_type"
                 android:inputType="none"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:helperText="Optional"
-            app:suffixText="min">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Onset of insulin action"
-                tools:text="15"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="3" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:suffixText="min"
-            app:helperText="Optional">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Peak of insulin action"
-                tools:text="90"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="3" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:suffixText="hours"
-            app:helperText="Optional">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Duration of insulin action"
-                tools:text="20"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal"
-                android:maxLength="4" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        -->
 
     </LinearLayout>
 

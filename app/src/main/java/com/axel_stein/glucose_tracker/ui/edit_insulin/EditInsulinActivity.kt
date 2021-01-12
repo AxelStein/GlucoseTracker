@@ -3,20 +3,14 @@ package com.axel_stein.glucose_tracker.ui.edit_insulin
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityEditInsulinBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivityArgs
-import com.axel_stein.glucose_tracker.utils.CArrayAdapter
-import com.axel_stein.glucose_tracker.utils.hideKeyboard
-import com.axel_stein.glucose_tracker.utils.show
-import com.axel_stein.glucose_tracker.utils.showKeyboard
+import com.axel_stein.glucose_tracker.utils.*
 
 class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener {
     private val args: EditInsulinLogActivityArgs by navArgs()
@@ -30,7 +24,7 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
 
         setupToolbar()
         setupEditor()
-        setupType()
+        setupTypeSpinner()
 
         viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
@@ -43,72 +37,27 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
     }
 
     private fun setupEditor() {
-        binding.editTitle.doAfterTextChanged {
-            viewModel.setTitle(it.toString())
-        }
-        binding.editTitle.setOnEditorActionListener { v, actionId, _ ->
-            var consumed = false
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                (v as EditText).hideKeyboard()
-                consumed = true
-            }
-            consumed
+        binding.editTitle.setupEditor { text ->
+            viewModel.setTitle(text)
         }
 
-        var focusEdit = true
-        viewModel.titleLiveData().observe(this, { value ->
-            if (value != binding.editTitle.text.toString()) {
-                binding.editTitle.setText(value.toString())
-                binding.editTitle.setSelection(binding.editTitle.length())
-            }
-            if (focusEdit) {
-                focusEdit = false
-                if (value.isNullOrEmpty()) {
-                    binding.editTitle.showKeyboard()
-                } else {
-                    binding.editTitle.hideKeyboard()
-                }
-            }
+        viewModel.titleLiveData().observe(this, { text ->
+            binding.editTitle.setEditorText(text)
         })
 
-        binding.inputLayoutTitle.show()
-
         viewModel.errorEmptyTitleLiveData().observe(this, { error ->
-            if (error) {
-                binding.inputLayoutTitle.error = getString(R.string.no_value)
-                binding.editTitle.showKeyboard()
-            }
-            binding.inputLayoutTitle.isErrorEnabled = error
+            binding.inputLayoutTitle.showEmptyFieldError(binding.editTitle, error)
         })
     }
 
-    private fun setupType() {
-        val adapter = CArrayAdapter(
-            this,
-            R.layout.popup_item,
-            resources.getStringArray(R.array.insulin_types)
-        )
-
-        binding.typeDropdown.inputType = 0  // disable ime input
-        binding.typeDropdown.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
-        binding.typeDropdown.setAdapter(adapter)
-        binding.typeDropdown.setOnClickListener { binding.editTitle.hideKeyboard() }
-
-        binding.inputLayoutType.setEndIconOnClickListener {
-            // override default behavior in order to close ime
-            binding.typeDropdown.performClick()
-        }
-        binding.typeDropdown.setOnItemClickListener { _, _, position, _ ->
-            binding.inputLayoutType.clearFocus()
+    private fun setupTypeSpinner() {
+        binding.typeSpinner.setupSpinner(binding.inputLayoutType) { position ->
             viewModel.setType(position)
         }
-        binding.typeDropdown.setOnDismissListener { binding.inputLayoutType.clearFocus() }
+        binding.typeSpinner.setSpinnerItems(resources.getStringArray(R.array.insulin_types))
 
-        viewModel.typeLiveData().observe(this, { value ->
-            if (value != binding.typeDropdown.listSelection) {
-                binding.typeDropdown.listSelection = value
-                binding.typeDropdown.setText(adapter.getItem(value), false)
-            }
+        viewModel.typeLiveData().observe(this, { type ->
+            binding.typeSpinner.setSpinnerSelection(type)
         })
     }
 

@@ -92,7 +92,7 @@ class ArchiveFragment: LogListFragment() {
             textEmpty().hide()
             inputLayout.show()
             spinner.setAdapter(
-                CArrayAdapter(requireContext(), R.layout.popup_item, items.toTypedArray())
+                CArrayAdapter(requireContext(), R.layout.item_popup, items.toTypedArray())
             )
         }
     }

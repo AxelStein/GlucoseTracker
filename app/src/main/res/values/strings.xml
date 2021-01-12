@@ -125,4 +125,5 @@
     <string name="type_intermediate">Intermediate</string>
     <string name="type_long">Long</string>
     <string name="msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
+    <string name="msg_delete_insulin_log">Log will be permanently deleted.</string>
 </resources>

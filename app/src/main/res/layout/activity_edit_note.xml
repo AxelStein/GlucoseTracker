@@ -24,14 +24,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -79,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="140">

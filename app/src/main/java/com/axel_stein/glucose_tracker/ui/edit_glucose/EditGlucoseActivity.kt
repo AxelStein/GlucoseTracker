@@ -155,7 +155,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     private fun setupMeasured() {
         val adapter = CArrayAdapter(
             this,
-            R.layout.popup_item,
+            R.layout.item_popup,
             resources.getStringArray(R.array.measured)
         )
 
