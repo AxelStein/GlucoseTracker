@@ -20,6 +20,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.utils.Utils
 import com.google.android.material.color.MaterialColors
 
 
@@ -32,6 +33,7 @@ class StatisticsFragment: Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, StatisticsFactory(ChartColors(requireActivity())))
             .get(StatisticsViewModel::class.java)
+        Utils.init(context)
     }
 
     @SuppressLint("CheckResult")
