@@ -113,7 +113,7 @@
     <string name="fab_menu_medication">Medication</string>
     <string name="pref_theme">Theme</string>
     <string name="action_add">Add</string>
-    <string name="insulin_list">Insulin</string>
+    <string name="insulin_list">Insulin list</string>
     <string name="action_edit">Edit</string>
     <string name="hint_insulin_type">Insulin type</string>
     <string name="hint_title">Title</string>
@@ -126,4 +126,10 @@
     <string name="type_long">Long</string>
     <string name="msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
     <string name="msg_delete_insulin_log">Log will be permanently deleted.</string>
+    <string name="medications">Medications</string>
+    <string name="notes">Notes</string>
+    <string name="weight">Weight and BMI</string>
+    <string name="a1c">HbA1c</string>
+    <string name="blood_sugar">Blood sugar</string>
+    <string name="pref_list_weight_units">Weight units</string>
 </resources>

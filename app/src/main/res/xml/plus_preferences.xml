@@ -7,8 +7,8 @@
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="insulin"
-        app:title="Medications"/>
+        app:key="medications"
+        app:title="@string/medications"/>
 
     <PreferenceCategory
         app:title="Measurements"
@@ -16,34 +16,25 @@
 
         <Preference
             app:iconSpaceReserved="false"
+            app:key="glucose"
+            app:title="@string/blood_sugar" />
+
+        <Preference
+            app:iconSpaceReserved="false"
             app:key="a1c"
-            app:title="@string/hint_a1c" />
+            app:title="@string/a1c" />
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="weight"
-            app:title="Weight"/>
-
-        <!--
-        <Preference
-            app:isPreferenceVisible="false"
-            app:iconSpaceReserved="false"
-            app:key="ap"
-            app:title="Arterial pressure"/>
-
-        <Preference
-            app:isPreferenceVisible="false"
-            app:iconSpaceReserved="false"
-            app:key="pulse"
-            app:title="Pulse"/>
-
-        <Preference
-            app:isPreferenceVisible="false"
-            app:iconSpaceReserved="false"
-            app:key="foods"
-            app:title="Foods"/>
-        -->
+            app:title="@string/weight"/>
 
     </PreferenceCategory>
+
+    <Preference
+        app:allowDividerAbove="true"
+        app:iconSpaceReserved="false"
+        app:key="notes"
+        app:title="@string/notes" />
 
 </PreferenceScreen>

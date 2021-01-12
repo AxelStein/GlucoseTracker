@@ -21,6 +21,15 @@
         app:defaultValue="mmol_l"
         app:title="@string/pref_list_glucose_units" />
 
+    <ListPreference
+        app:key="weight_units"
+        app:summary="%s"
+        app:iconSpaceReserved="false"
+        app:entryValues="@array/weight_units_values"
+        app:entries="@array/weight_units_entries"
+        app:defaultValue="kg"
+        app:title="@string/pref_list_weight_units" />
+
     <PreferenceCategory
         app:title="@string/pref_category_backup"
         app:iconSpaceReserved="false">

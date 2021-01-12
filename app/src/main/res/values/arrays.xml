@@ -22,6 +22,16 @@
         <item>@string/mg_dl</item>
     </string-array>
 
+    <string-array name="weight_units_values">
+        <item>kg</item>
+        <item>lb</item>
+    </string-array>
+
+    <string-array name="weight_units_entries">
+        <item>@string/kg</item>
+        <item>@string/lb</item>
+    </string-array>
+
     <string-array name="theme_values">
         <item>light</item>
         <item>dark</item>
@@ -76,4 +86,6 @@
         <item>@string/type_intermediate</item>
         <item>@string/type_long</item>
     </string-array>
+    <string name="kg">kg</string>
+    <string name="lb">lb</string>
 </resources>
