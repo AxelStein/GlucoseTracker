@@ -35,7 +35,12 @@
         android:label="@string/insulin_list" >
         <action
             android:id="@+id/action_insulin_list_to_edit_insulin"
-            app:destination="@id/edit_insulin" />
+            app:destination="@id/edit_insulin">
+            <argument
+                android:name="id"
+                app:argType="long"
+                android:defaultValue="0L"/>
+        </action>
     </fragment>
 
     <activity

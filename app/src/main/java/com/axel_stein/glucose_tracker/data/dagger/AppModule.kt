@@ -93,4 +93,10 @@ class AppModule(private val ctx: Context) {
     fun provideA1cDao(db: AppDatabase): A1cLogDao {
         return db.a1cDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideInsulinDao(): InsulinDao {
+        return InsulinDao()
+    }
 }

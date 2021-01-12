@@ -20,6 +20,7 @@ class InsulinListAdapter : ListAdapter<Insulin, InsulinListAdapter.ViewHolder>(C
         override fun areContentsTheSame(oldItem: Insulin, newItem: Insulin): Boolean {
             return CompareBuilder().append(oldItem.id, newItem.id)
                 .append(oldItem.title, newItem.title)
+                .append(oldItem.type, newItem.type)
                 .areEqual()
         }
     }

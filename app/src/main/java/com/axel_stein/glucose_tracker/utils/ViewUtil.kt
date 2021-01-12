@@ -67,6 +67,9 @@ fun TextInputEditText.setupEditor(onTextChanged: (String) -> Unit) {
         }
         consumed
     }
+    setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) hideKeyboard()
+    }
 }
 
 fun TextInputEditText.setEditorText(text: String) {

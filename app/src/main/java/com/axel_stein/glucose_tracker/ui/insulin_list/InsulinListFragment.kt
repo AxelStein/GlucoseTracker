@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentInsulinListBinding
+import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionInsulinListToEditInsulin
 import com.axel_stein.glucose_tracker.utils.setShown
 
 class InsulinListFragment : Fragment() {
@@ -23,8 +24,8 @@ class InsulinListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentInsulinListBinding.inflate(inflater, container, false)
         adapter = InsulinListAdapter()
-        adapter.setOnItemClickListener { _, _ ->
-            findNavController().navigate(R.id.action_insulin_list_to_edit_insulin)
+        adapter.setOnItemClickListener { _, item ->
+            findNavController().navigate(actionInsulinListToEditInsulin(item.id))
         }
         binding.recyclerView.adapter = adapter
         return binding.root
