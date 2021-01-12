@@ -62,11 +62,13 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         binding.insulinSpinner.setupSpinner(binding.inputLayoutInsulin) { position ->
             viewModel.selectInsulin(position)
         }
-        viewModel.insulinLiveData().observe(this, {
-            binding.insulinSpinner.setSpinnerItems(it)
+        viewModel.insulinLiveData().observe(this, { items ->
+            binding.insulinSpinner.setSpinnerItems(items.map { item -> item.title })
         })
         viewModel.insulinSelectedLiveData().observe(this, { position ->
-            binding.insulinSpinner.setSpinnerSelection(position)
+            binding.insulinSpinner.apply {
+                post { setSpinnerSelection(position) }
+            }
         })
     }
 
@@ -95,6 +97,7 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_insulin_log, menu)
+        menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }
 

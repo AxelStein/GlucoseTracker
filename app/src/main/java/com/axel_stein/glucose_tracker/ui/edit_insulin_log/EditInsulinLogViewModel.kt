@@ -1,9 +1,24 @@
 package com.axel_stein.glucose_tracker.ui.edit_insulin_log
 
 import androidx.lifecycle.SavedStateHandle
+import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
+import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
+import com.axel_stein.glucose_tracker.ui.App
+import javax.inject.Inject
 
-open class EditInsulinLogViewModel(id: Long = 0L, private val state: SavedStateHandle) : EditInsulinLogViewModelImpl(id) {
+class EditInsulinLogViewModel(id: Long = 0L, state: SavedStateHandle) : EditInsulinLogViewModelImpl(id) {
+
+    @Inject
+    lateinit var _logDao: InsulinLogDao
+
+    @Inject
+    lateinit var _listDao: InsulinDao
+
     init {
+        App.appComponent.inject(this)
+        logDao = _logDao
+        listDao = _listDao
+
         dateTime = state.getLiveData("date_time")
         insulinSelected = state.getLiveData("insulin_selected")
         insulinList = state.getLiveData("insulin_list")

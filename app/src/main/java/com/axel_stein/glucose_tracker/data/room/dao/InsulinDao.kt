@@ -6,12 +6,10 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 class InsulinDao {
-    private var id = 4L
+    private var id = 2L
 
     private val items: MutableList<Insulin> = mutableListOf(
-        Insulin("Actrapide", 2).apply { id = 1 },
-        Insulin("Humalog").apply { id = 2 },
-        Insulin("Lantus", 1).apply { id = 3 },
+        Insulin("Humalog").apply { id = 1 },
     )
 
     fun insert(item: Insulin): Completable {
@@ -59,4 +57,6 @@ class InsulinDao {
     fun get(): Flowable<List<Insulin>> {
         return Flowable.fromCallable { items }
     }
+
+    fun getItems() = Single.fromCallable { items }
 }

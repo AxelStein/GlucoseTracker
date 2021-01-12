@@ -10,7 +10,7 @@ data class InsulinLog(
     @ColumnInfo(name = "insulin_id")
     val insulinId: Long,
 
-    val units: Int,
+    val units: Float,
 
     val measured: Int,
 
