@@ -39,21 +39,24 @@ class ArchiveViewModel(
             this.dao = dao
         }
 
-        disposables.add(this.dao.getYears().subscribeOn(io()).subscribe { newList ->
-            var index = selectedYear
-            if (this.years.isNotEmpty()) {  // update years
-                if (newList.isEmpty()) {
-                    index = -1
-                } else if (index >= newList.size) {
+        disposables.add(
+            this.dao.getYears().subscribeOn(io()).subscribe({ newList ->
+                var index = selectedYear
+                if (this.years.isNotEmpty()) {  // update years
+                    if (newList.isEmpty()) {
+                        index = -1
+                    } else if (index >= newList.size) {
+                        index = 0
+                    }
+                } else if (newList.isNotEmpty()) {  // load years
                     index = 0
                 }
-            } else if (newList.isNotEmpty()) {  // load years
-                index = 0
-            }
-
-            setYears(newList)
-            setCurrentYear(index)
-        })
+                setYears(newList)
+                setCurrentYear(index)
+            }, {
+                it.printStackTrace()
+            })
+        )
     }
 
     override fun onCleared() {
@@ -120,27 +123,31 @@ class ArchiveViewModel(
     }
 
     private fun loadMonths(year: String) {
-        disposables.add(dao.getMonths(year).subscribeOn(io()).subscribe { newList ->
-            val months = mutableListOf<Int>()
-            newList.forEach { months.add(it.toInt()) }
+        disposables.add(
+            dao.getMonths(year).subscribeOn(io()).subscribe({ newList ->
+                val months = mutableListOf<Int>()
+                newList.forEach { months.add(it.toInt()) }
 
-            var index = selectedMonth
-            if (this.months.isNotEmpty()) {  // update months
-                if (newList.isNotEmpty()) {
-                    val currentMonth = getCurrentMonth()
-                    index = if (months.contains(currentMonth)) {
-                        months.indexOf(currentMonth)
-                    } else {
-                        0
+                var index = selectedMonth
+                if (this.months.isNotEmpty()) {  // update months
+                    if (newList.isNotEmpty()) {
+                        val currentMonth = getCurrentMonth()
+                        index = if (months.contains(currentMonth)) {
+                            months.indexOf(currentMonth)
+                        } else {
+                            0
+                        }
                     }
+                } else if (newList.isNotEmpty()) {  // load months
+                    index = 0
                 }
-            } else if (newList.isNotEmpty()) {  // load months
-                index = 0
-            }
 
-            setMonths(months)
-            setCurrentMonth(index)
-        })
+                setMonths(months)
+                setCurrentMonth(index)
+            }, {
+                it.printStackTrace()
+            })
+        )
     }
 
     private fun loadItems() {
