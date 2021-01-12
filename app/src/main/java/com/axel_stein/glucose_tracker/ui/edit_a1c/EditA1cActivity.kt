@@ -5,11 +5,8 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityEditA1cBinding
@@ -35,13 +32,13 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         setupDateTime()
         setupEditor()
 
-        viewModel.errorSaveLiveData().observe(this, {
-            if (it) {
+        viewModel.errorSaveLiveData().observe(this, { error ->
+            if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
             }
         })
-        viewModel.errorDeleteLiveData().observe(this, {
-            if (it) {
+        viewModel.errorDeleteLiveData().observe(this, { error ->
+            if (error) {
                 Snackbar.make(binding.toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
             }
         })
@@ -86,40 +83,16 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     }
 
     private fun setupEditor() {
-        binding.editA1c.doAfterTextChanged {
-            viewModel.setValue(it.toString())
-        }
-        binding.editA1c.setOnEditorActionListener { v, actionId, _ ->
-            var consumed = false
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                (v as EditText).hideKeyboard()
-                consumed = true
-            }
-            consumed
+        binding.editA1c.setupEditor { text ->
+            viewModel.setValue(text)
         }
 
-        var focusEdit = true
         viewModel.valueLiveData().observe(this, { value ->
-            if (value != binding.editA1c.text.toString()) {
-                binding.editA1c.setText(value.toString())
-                binding.editA1c.setSelection(binding.editA1c.length())
-            }
-            if (focusEdit) {
-                focusEdit = false
-                if (value.isNullOrEmpty()) {
-                    binding.editA1c.showKeyboard()
-                } else {
-                    binding.editA1c.hideKeyboard()
-                }
-            }
+            binding.editA1c.setEditorText(value)
         })
 
         viewModel.errorValueEmptyLiveData().observe(this, { error ->
-            if (error) {
-                binding.inputLayout.error = getString(R.string.no_value)
-                binding.editA1c.showKeyboard()
-            }
-            binding.inputLayout.isErrorEnabled = error
+            binding.inputLayout.showEmptyFieldError(binding.editA1c, error)
         })
     }
 
