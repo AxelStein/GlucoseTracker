@@ -89,13 +89,13 @@
 
     <string-array name="dosage_units">
         <item>@string/mg</item>
-        <item>@string/ml</item>
         <item>@string/g</item>
+        <item>@string/ml</item>
+        <item>@string/mg_ml</item>
+        <item>%</item>
         <item>@string/IU</item>
         <item>µg</item>
         <item>@string/mcg_ml</item>
-        <item>@string/mg_ml</item>
-        <item>%</item>
     </string-array>
 
     <string-array name="dosage_forms">
