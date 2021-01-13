@@ -173,4 +173,17 @@
             android:defaultValue="0L"/>
     </activity>
 
+    <activity
+        android:id="@+id/edit_medication_log"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_medication_log.EditMedicationLogActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L"/>
+    </activity>
+
+    <action
+        android:id="@+id/action_add_medication_log"
+        app:destination="@+id/edit_medication_log"/>
+
 </navigation>

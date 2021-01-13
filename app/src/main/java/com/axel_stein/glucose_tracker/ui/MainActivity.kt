@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
+import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.actionAddMedicationLog
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditInsulinLog
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirections.Companion.launchEditGlucose
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.btn_add_glucose -> launchEditGlucose()
                     R.id.btn_add_note -> launchEditNote()
                     R.id.btn_add_insulin -> launchEditInsulinLog()
+                    R.id.btn_add_medication -> actionAddMedicationLog()
                     else -> TODO("Not implemented")
                 }
                 navController.navigate(dest)

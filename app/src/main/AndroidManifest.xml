@@ -37,6 +37,8 @@
 
         <activity android:name=".ui.edit_medication.EditMedicationActivity" />
 
+        <activity android:name=".ui.edit_medication_log.EditMedicationLogActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.axel_stein.glucose_tracker.fileprovider"

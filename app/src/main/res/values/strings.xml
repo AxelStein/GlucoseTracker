@@ -144,4 +144,5 @@
     <string name="IU">IU</string>
     <string name="no_insulin">No insulin</string>
     <string name="no_medication">No medication</string>
+    <string name="error_medication_list_empty">Add medication first</string>
 </resources>
