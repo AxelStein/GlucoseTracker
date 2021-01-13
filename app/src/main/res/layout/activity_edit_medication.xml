@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_amount"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLength="10" />
 
             </com.google.android.material.textfield.TextInputLayout>

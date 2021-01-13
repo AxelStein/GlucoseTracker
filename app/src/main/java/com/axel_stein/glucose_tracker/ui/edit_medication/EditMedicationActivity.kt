@@ -25,6 +25,9 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         setupTitleEditor()
         setupAmountEditor()
         setupDosageSpinner()
+        viewModel.actionFinishLiveData().observe(this, {
+            if (it) finish()
+        })
     }
 
     private fun setupToolbar() {
@@ -54,7 +57,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         }
 
         viewModel.amountLiveData().observe(this, {
-            binding.editTitle.setEditorText(it)
+            binding.editAmount.setEditorText(it, false)
         })
 
         viewModel.errorEmptyAmountLiveData().observe(this, {

@@ -83,16 +83,18 @@ fun TextInputEditText.setupEditor(onTextChanged: (String) -> Unit) {
     }
 }
 
-fun TextInputEditText.setEditorText(text: String) {
+fun TextInputEditText.setEditorText(text: String, handleKeyboard: Boolean = true) {
     val current = this.text.toString()
     if (current != text) {
         setText(text)
         setSelection(length())
     }
-    if (text.isBlank()) {
-        showKeyboard()
-    } else if (!isFocused) {
-        hideKeyboard()
+    if (handleKeyboard) {
+        if (text.isBlank()) {
+            showKeyboard()
+        } else if (!isFocused) {
+            hideKeyboard()
+        }
     }
 }
 

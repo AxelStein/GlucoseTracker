@@ -13,6 +13,7 @@ import com.axel_stein.glucose_tracker.ui.edit_medication.EditMedicationViewModel
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModel
 import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListViewModel
 import com.axel_stein.glucose_tracker.ui.log_list.LogListViewModel
+import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListViewModel
 import com.axel_stein.glucose_tracker.ui.settings.SettingsFragment
 import com.axel_stein.glucose_tracker.ui.statistics.StatisticsViewModel
 import dagger.Component
@@ -36,4 +37,5 @@ interface AppComponent {
     fun inject(vm: EditInsulinViewModel)
     fun inject(vm: EditInsulinLogViewModel)
     fun inject(vm: EditMedicationViewModel)
+    fun inject(vm: MedicationListViewModel)
 }

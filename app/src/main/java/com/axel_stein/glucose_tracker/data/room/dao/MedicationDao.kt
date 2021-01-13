@@ -10,7 +10,7 @@ class MedicationDao {
     private var id = 2L
 
     private val items: MutableList<Medication> = mutableListOf(
-        Medication("Glucophage", 500, 0).apply { id = 1 },
+        Medication("Glucophage", 500f, 0).apply { id = 1 },
     )
 
     fun insert(item: Medication): Completable {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@+id/menu_home">
 
@@ -30,6 +29,26 @@
         <action
             android:id="@+id/action_menu_plus_to_a1c_list"
             app:destination="@id/a1c_list" />
+        <action
+            android:id="@+id/action_menu_plus_to_medication_list"
+            app:destination="@id/medication_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/medication_list"
+        android:name="com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragment"
+        android:label="@string/medications">
+        <action
+            android:id="@+id/action_medication_list_add"
+            app:destination="@id/edit_medication" />
+        <action
+            android:id="@+id/action_medication_list_edit"
+            app:destination="@id/edit_medication">
+            <argument
+                android:name="id"
+                app:argType="long"
+                android:defaultValue="0L"/>
+        </action>
     </fragment>
 
     <fragment

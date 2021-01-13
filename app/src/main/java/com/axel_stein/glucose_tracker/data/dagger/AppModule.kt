@@ -95,16 +95,19 @@ class AppModule(private val ctx: Context) {
     }
 
     @Provides
+    @Singleton
     fun provideInsulinDao(): InsulinDao {
         return InsulinDao()
     }
 
     @Provides
+    @Singleton
     fun provideInsulinLogDao(): InsulinLogDao {
         return InsulinLogDao()
     }
 
     @Provides
+    @Singleton
     fun provideMedicationDao(): MedicationDao {
         return MedicationDao()
     }

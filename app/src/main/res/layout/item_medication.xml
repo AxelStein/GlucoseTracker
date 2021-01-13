@@ -13,7 +13,7 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Humalog"
+        tools:text="Glucophage"
         android:textSize="16sp"
         android:textColor="?android:attr/textColorPrimary"
         android:layout_marginStart="16dp"
@@ -22,19 +22,20 @@
         android:ellipsize="end"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/type"
+        app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
-        android:id="@+id/type"
+        android:id="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        tools:text="Rapid"
+        tools:text="500 mg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

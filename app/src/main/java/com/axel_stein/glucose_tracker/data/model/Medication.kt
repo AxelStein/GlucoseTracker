@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "medication_list")
 data class Medication(
     var title: String,
-    var amount: Int = 0,
+    var amount: Float = 0f,
 
     @ColumnInfo(name = "dosage_units")
     var dosageUnits: Int = 0

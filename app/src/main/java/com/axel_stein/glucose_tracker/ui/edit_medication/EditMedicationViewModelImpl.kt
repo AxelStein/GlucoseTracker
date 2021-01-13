@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
+import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
+import com.axel_stein.glucose_tracker.utils.round
 import io.reactivex.schedulers.Schedulers.io
 
 open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel() {
@@ -32,7 +34,7 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
             .subscribe({ medication ->
                 postData(
                     medication.title,
-                    medication.amount.toString(),
+                    medication.amount.formatIfInt(),
                     medication.dosageUnits
                 )
             }, {
@@ -56,6 +58,9 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
 
     fun setAmount(amount: String) {
         this.amount.value = amount
+        if (amount.isNotBlank()) {
+            errorEmptyAmount.value = false
+        }
     }
 
     fun setDosageUnits(dosageUnits: Int) {
@@ -80,7 +85,7 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
     private fun createMedication() =
         Medication(
             title.getOrDefault(""),
-            amount.getOrDefault("0").toInt(),
+            amount.getOrDefault("0").toFloat().round(),
             dosageUnits.getOrDefault(0)
         ).also { it.id = id }
 
