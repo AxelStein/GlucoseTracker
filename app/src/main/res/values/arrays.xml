@@ -28,8 +28,8 @@
     </string-array>
 
     <string-array name="weight_units_entries">
-        <item>@string/kg</item>
-        <item>@string/lb</item>
+        <item>@string/pref_kg</item>
+        <item>@string/pref_lb</item>
     </string-array>
 
     <string-array name="theme_values">

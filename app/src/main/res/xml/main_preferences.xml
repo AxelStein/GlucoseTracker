@@ -30,6 +30,15 @@
         app:defaultValue="kg"
         app:title="@string/pref_list_weight_units" />
 
+    <EditTextPreference
+        app:dialogLayout="@layout/layout_edit_height"
+        app:dialogTitle="@null"
+        android:inputType="number"
+        app:iconSpaceReserved="false"
+        app:key="height"
+        app:summary="Indicate your height for calculating body mass index"
+        app:title="@string/height"/>
+
     <PreferenceCategory
         app:title="@string/pref_category_backup"
         app:iconSpaceReserved="false">

@@ -136,8 +136,10 @@
     <string name="error_insulin_list_empty">Add insulin first</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_amount">Amount</string>
-    <string name="kg">Kilograms (kg)</string>
-    <string name="lb">Pounds (lb)</string>
+    <string name="kg">kg</string>
+    <string name="lb">lb</string>
+    <string name="pref_kg">Kilograms (kg)</string>
+    <string name="pref_lb">Pounds (lb)</string>
     <string name="mg">mg</string>
     <string name="ml">ml</string>
     <string name="g">g</string>
@@ -163,4 +165,7 @@
     <string name="resume">resume</string>
     <string name="active_medications">Active medications</string>
     <string name="suspended_medications">Suspended medications</string>
+    <string name="hint_weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="cm">cm</string>
 </resources>
