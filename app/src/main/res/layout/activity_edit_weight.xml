@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.GlucoseTracker.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/toolbarBackgroundColor"
+            app:navigationIcon="@drawable/icon_clear"
+            app:popupTheme="@style/Theme.GlucoseTracker.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/btn_date"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="3"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="0dp"
+                tools:text="Thu, December 10"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:drawableTint="?android:attr/textColorSecondary"
+                app:drawableStartCompat="@drawable/icon_date" />
+
+            <TextView
+                android:id="@+id/btn_time"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical|end"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                tools:text="12:30"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:drawableTint="?android:attr/textColorSecondary"
+                app:drawableStartCompat="@drawable/icon_time" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_weight"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:suffixText="@string/kg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_weight"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                tools:text="55" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_bmi_normal"
+            android:drawablePadding="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?attr/diabetesControlGoodColor"
+            app:drawableTint="?attr/diabetesControlGoodColor"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="BMI: 18.7 (Normal)"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/icon_checked" />
+
+        <TextView
+            android:id="@+id/text_bmi_avg"
+            android:drawablePadding="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?attr/diabetesControlAvgColor"
+            app:drawableTint="?attr/diabetesControlAvgColor"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="BMI: 27.4 (Overweight)"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/icon_checked" />
+
+        <TextView
+            android:id="@+id/text_bmi_bad"
+            android:drawablePadding="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?attr/diabetesControlBadColor"
+            app:drawableTint="?attr/diabetesControlBadColor"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="BMI: 34.5 (Obese Class I)"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/icon_checked" />
+
+        <TextView
+            android:id="@+id/text_indicate_height"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            tools:text="@string/hint_indicate_height"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

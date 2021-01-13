@@ -168,4 +168,14 @@
     <string name="hint_weight">Weight</string>
     <string name="height">Height</string>
     <string name="cm">cm</string>
+    <string name="thinness_3">Severe thinness</string>
+    <string name="thinness_2">Moderate thinness</string>
+    <string name="thinness_1">Mild thinness</string>
+    <string name="normal_weight">Normal</string>
+    <string name="overweight">Overweight</string>
+    <string name="obese_1">Obese Class I</string>
+    <string name="obese_2">Obese Class II</string>
+    <string name="obese_3">Obese Class III</string>
+    <string name="pref_height_summary">Indicate your height for calculating body mass index</string>
+    <string name="hint_indicate_height">Tap here to set your height for calculating BMI</string>
 </resources>

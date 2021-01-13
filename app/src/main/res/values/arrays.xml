@@ -111,4 +111,25 @@
         <item>@string/form_iu</item>
         <item>@string/form_suppository</item>
     </string-array>
+
+    <!--
+    Severe Thinness	< 16
+    Moderate Thinness	16 - 17
+    Mild Thinness	17 - 18.5
+    Normal	18.5 - 25
+    Overweight	25 - 30
+    Obese Class I	30 - 35
+    Obese Class II	35 - 40
+    Obese Class III > 40
+    -->
+    <string-array name="bmi_categories">
+        <item>@string/thinness_3</item>
+        <item>@string/thinness_2</item>
+        <item>@string/thinness_1</item>
+        <item>@string/normal_weight</item>
+        <item>@string/overweight</item>
+        <item>@string/obese_1</item>
+        <item>@string/obese_2</item>
+        <item>@string/obese_3</item>
+    </string-array>
 </resources>

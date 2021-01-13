@@ -36,7 +36,7 @@
         android:inputType="number"
         app:iconSpaceReserved="false"
         app:key="height"
-        app:summary="Indicate your height for calculating body mass index"
+        app:summary="@string/pref_height_summary"
         app:title="@string/height"/>
 
     <PreferenceCategory
