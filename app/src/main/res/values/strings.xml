@@ -159,4 +159,6 @@
     <string name="form_iu">IU</string>
     <string name="form_suppository">Suppository</string>
     <string name="hint_dosage_form">Dosage form</string>
+    <string name="suspend">suspend</string>
+    <string name="resume">resume</string>
 </resources>

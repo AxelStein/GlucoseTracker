@@ -31,6 +31,7 @@ class MedicationDao {
                 dosageForm = item.dosageForm
                 dosage = item.dosage
                 dosageUnit = item.dosageUnit
+                active = item.active
             }
         }
     }
@@ -62,4 +63,12 @@ class MedicationDao {
     }
 
     fun getItems() = Single.fromCallable { items }
+
+    fun setActive(id: Long, active: Boolean): Completable {
+        return Completable.fromAction {
+            items.find { it.id == id }?.apply {
+                this.active = active
+            }
+        }
+    }
 }

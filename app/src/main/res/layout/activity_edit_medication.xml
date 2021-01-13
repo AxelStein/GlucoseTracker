@@ -143,4 +143,25 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/btn_toggle_active"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="16sp"
+        android:text="@string/suspend"
+        android:textAllCaps="true"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <View
+        android:layout_marginBottom="48dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerHorizontal"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

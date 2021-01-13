@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.get
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.notBlankOrDefault
 import io.reactivex.schedulers.Schedulers.io
@@ -17,6 +18,7 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
     protected var dosageForm = MutableLiveData<Int>()
     protected var dosage = MutableLiveData<String>()
     protected var dosageUnit = MutableLiveData<Int>()
+    protected var active = MutableLiveData<Boolean>()
     protected var errorEmptyTitle = MutableLiveData<Boolean>()
     protected var actionFinish = MutableLiveData<Boolean>()
     protected lateinit var dao: MedicationDao
@@ -25,6 +27,7 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
     fun dosageFormLiveData(): LiveData<Int> = dosageForm
     fun dosageLiveData(): LiveData<String> = dosage
     fun dosageUnitLiveData(): LiveData<Int> = dosageUnit
+    fun activeLiveData(): LiveData<Boolean> = active
     fun errorEmptyTitleLiveData(): LiveData<Boolean> = errorEmptyTitle
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
@@ -36,11 +39,14 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
                 var dosage = medication.dosage.formatIfInt()
                 if (dosage == "0") dosage = ""
 
+                Log.e("TAG", "loadData=$medication")
+
                 postData(
                     medication.title,
                     medication.dosageForm,
                     dosage,
-                    medication.dosageUnit
+                    medication.dosageUnit,
+                    medication.active
                 )
             }, {
                 it.printStackTrace()
@@ -48,11 +54,18 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         else postData()
     }
 
-    private fun postData(title: String = "", dosageForm: Int = 0, dosage: String = "", dosageUnits: Int = -1) {
+    private fun postData(
+        title: String = "",
+        dosageForm: Int = 0,
+        dosage: String = "",
+        dosageUnits: Int = -1,
+        active: Boolean = true
+    ) {
         this.title.postValue(title)
         this.dosageForm.postValue(dosageForm)
         this.dosage.postValue(dosage)
         this.dosageUnit.postValue(dosageUnits)
+        this.active.postValue(active)
     }
 
     fun setTitle(title: String) {
@@ -72,6 +85,14 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
 
     fun setDosageUnit(dosageUnit: Int) {
         this.dosageUnit.value = dosageUnit
+    }
+
+    @SuppressLint("CheckResult")
+    fun toggleActive() {
+        active.value = !active.getOrDefault(true)
+        dao.setActive(id, active.get())
+            .subscribeOn(io())
+            .subscribe({}, { it.printStackTrace() })
     }
 
     fun save() {
@@ -94,7 +115,8 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
             title.getOrDefault(""),
             dosageForm.getOrDefault(0),
             dosage.notBlankOrDefault("0").toFloat(),
-            dosageUnit.getOrDefault(-1)
+            dosageUnit.getOrDefault(-1),
+            active.getOrDefault(true)
         ).also { it.id = id }
 
         if (medication.dosage == 0f) {
