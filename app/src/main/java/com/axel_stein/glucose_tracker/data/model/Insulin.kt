@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Insulin(
     var title: String,
     var type: Int = 0,  // rapid, short, intermediate, long
+    var active: Boolean = true
 ) {
     @PrimaryKey(autoGenerate = true)
     var id = 0L

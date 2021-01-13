@@ -145,4 +145,18 @@
     <string name="no_insulin">No insulin</string>
     <string name="no_medication">No medication</string>
     <string name="error_medication_list_empty">Add medication first</string>
+    <string name="mg_ml">mg/ml</string>
+    <string name="mcg_ml">µg/ml</string>
+    <string name="form_tablet">Tablet</string>
+    <string name="form_capsule">Capsule</string>
+    <string name="form_ampule">Ampule</string>
+    <string name="form_injection">Injection</string>
+    <string name="form_packet">Packet</string>
+    <string name="form_drop">Drop</string>
+    <string name="form_dose">Dose</string>
+    <string name="form_ml">ml</string>
+    <string name="form_g">Gram</string>
+    <string name="form_iu">IU</string>
+    <string name="form_suppository">Suppository</string>
+    <string name="hint_dosage_form">Dosage form</string>
 </resources>

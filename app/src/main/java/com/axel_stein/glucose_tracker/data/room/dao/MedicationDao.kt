@@ -10,7 +10,7 @@ class MedicationDao {
     private var id = 2L
 
     private val items: MutableList<Medication> = mutableListOf(
-        Medication("Glucophage", 500f, 0).apply { id = 1L },
+        Medication("Glucophage", 0, 500f, 0).apply { id = 1L },
     )
 
     fun insert(item: Medication): Completable {
@@ -28,8 +28,9 @@ class MedicationDao {
         return Completable.fromAction {
             items.find { it.id == item.id }?.apply {
                 title = item.title
+                dosageForm = item.dosageForm
                 dosage = item.dosage
-                units = item.units
+                dosageUnit = item.dosageUnit
             }
         }
     }

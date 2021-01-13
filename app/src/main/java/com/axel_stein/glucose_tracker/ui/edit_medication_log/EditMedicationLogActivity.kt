@@ -28,6 +28,8 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         setupMedicationSpinner()
         setupAmountEditor()
         setupMeasuredSpinner()
+
+        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupToolbar() {
@@ -65,7 +67,11 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         viewModel.medicationListLiveData().observe(this, {
             binding.inputLayoutMedication.isEnabled = it.isNotEmpty()
             binding.medicationSpinner.setSpinnerItems(it.map { item ->
-                "${item.title} (${item.dosage.formatIfInt()} ${dosageUnits[item.units]})"
+                if (item.dosageUnit >= 0) {
+                    "${item.title} (${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]})"
+                } else {
+                    item.title
+                }
             })
         })
         viewModel.medicationSelectedLiveData().observe(this, {
@@ -82,6 +88,11 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         }
         viewModel.amountLiveData().observe(this, {
             binding.editAmount.setEditorText(it)
+        })
+
+        val dosageForms = resources.getStringArray(R.array.dosage_forms)
+        viewModel.dosageFormLiveData().observe(this, {
+            if (it >= 0) binding.inputLayoutAmount.suffixText = dosageForms[it]
         })
         viewModel.errorAmountEmptyLiveData().observe(this, {
             binding.inputLayoutAmount.showEmptyFieldError(it)

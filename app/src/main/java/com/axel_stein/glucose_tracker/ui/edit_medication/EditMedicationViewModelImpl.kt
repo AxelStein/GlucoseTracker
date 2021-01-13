@@ -1,6 +1,7 @@
 package com.axel_stein.glucose_tracker.ui.edit_medication
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,23 +9,23 @@ import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
-import com.axel_stein.glucose_tracker.utils.round
+import com.axel_stein.glucose_tracker.utils.notBlankOrDefault
 import io.reactivex.schedulers.Schedulers.io
 
 open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel() {
     protected var title = MutableLiveData<String>()
+    protected var dosageForm = MutableLiveData<Int>()
     protected var dosage = MutableLiveData<String>()
-    protected var units = MutableLiveData<Int>()
+    protected var dosageUnit = MutableLiveData<Int>()
     protected var errorEmptyTitle = MutableLiveData<Boolean>()
-    protected var errorEmptyDosage = MutableLiveData<Boolean>()
     protected var actionFinish = MutableLiveData<Boolean>()
     protected lateinit var dao: MedicationDao
 
     fun titleLiveData(): LiveData<String> = title
+    fun dosageFormLiveData(): LiveData<Int> = dosageForm
     fun dosageLiveData(): LiveData<String> = dosage
-    fun unitsLiveData(): LiveData<Int> = units
+    fun dosageUnitLiveData(): LiveData<Int> = dosageUnit
     fun errorEmptyTitleLiveData(): LiveData<Boolean> = errorEmptyTitle
-    fun errorEmptyDosageLiveData(): LiveData<Boolean> = errorEmptyDosage
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
     @SuppressLint("CheckResult")
@@ -32,10 +33,14 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         if (id != 0L) dao.get(id)
             .subscribeOn(io())
             .subscribe({ medication ->
+                var dosage = medication.dosage.formatIfInt()
+                if (dosage == "0") dosage = ""
+
                 postData(
                     medication.title,
-                    medication.dosage.formatIfInt(),
-                    medication.units
+                    medication.dosageForm,
+                    dosage,
+                    medication.dosageUnit
                 )
             }, {
                 it.printStackTrace()
@@ -43,10 +48,11 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         else postData()
     }
 
-    private fun postData(title: String = "", amount: String = "", dosageUnits: Int = 0) {
+    private fun postData(title: String = "", dosageForm: Int = 0, dosage: String = "", dosageUnits: Int = -1) {
         this.title.postValue(title)
-        this.dosage.postValue(amount)
-        this.units.postValue(dosageUnits)
+        this.dosageForm.postValue(dosageForm)
+        this.dosage.postValue(dosage)
+        this.dosageUnit.postValue(dosageUnits)
     }
 
     fun setTitle(title: String) {
@@ -56,23 +62,24 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         }
     }
 
-    fun setAmount(amount: String) {
-        this.dosage.value = amount
-        if (amount.isNotBlank()) {
-            errorEmptyDosage.value = false
-        }
+    fun setDosageForm(form: Int) {
+        this.dosageForm.value = form
     }
 
-    fun setDosageUnits(dosageUnits: Int) {
-        this.units.value = dosageUnits
+    fun setDosage(dosage: String) {
+        this.dosage.value = dosage
+    }
+
+    fun setDosageUnit(dosageUnit: Int) {
+        this.dosageUnit.value = dosageUnit
     }
 
     fun save() {
         when {
             title.value.isNullOrBlank() -> errorEmptyTitle.value = true
-            dosage.value.isNullOrBlank() -> errorEmptyDosage.value = true
             else -> {
                 val medication = createMedication()
+                Log.e("TAG", "$medication")
                 val task = if (id != 0L) dao.update(medication) else dao.insert(medication)
                 task.subscribeOn(io()).subscribe(
                     { actionFinish.postValue(true) },
@@ -82,12 +89,22 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         }
     }
 
-    private fun createMedication() =
-        Medication(
+    private fun createMedication(): Medication {
+        val medication = Medication(
             title.getOrDefault(""),
-            dosage.getOrDefault("0").toFloat().round(),
-            units.getOrDefault(0)
+            dosageForm.getOrDefault(0),
+            dosage.notBlankOrDefault("0").toFloat(),
+            dosageUnit.getOrDefault(-1)
         ).also { it.id = id }
+
+        if (medication.dosage == 0f) {
+            medication.dosageUnit = -1
+        }
+        if (medication.dosageUnit == -1) {
+            medication.dosage = 0f
+        }
+        return medication
+    }
 
     fun delete() {
         if (id != 0L) dao.deleteById(id)

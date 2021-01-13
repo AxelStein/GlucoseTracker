@@ -16,9 +16,8 @@ class EditMedicationViewModel(id: Long, state: SavedStateHandle) : EditMedicatio
 
         title = state.getLiveData("title")
         dosage = state.getLiveData("dosage")
-        units = state.getLiveData("units")
+        dosageUnit = state.getLiveData("units")
         errorEmptyTitle = state.getLiveData("error_empty_title")
-        errorEmptyDosage = state.getLiveData("error_empty_dosage")
         actionFinish = state.getLiveData("action_finish")
 
         if (!state.contains("id")) {

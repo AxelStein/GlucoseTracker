@@ -45,7 +45,29 @@
                 android:hint="@string/hint_title"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
-                android:maxLength="140" />
+                android:maxLength="140"
+                tools:text="Paracetamol"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_form"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/form_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="@string/hint_dosage_form"
+                tools:text="Capsule"
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +94,8 @@
                     android:hint="@string/hint_dosage"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
-                    android:maxLength="10" />
+                    android:maxLength="10"
+                    tools:text="500"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,6 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    tools:text="mg"
                     tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -93,5 +93,22 @@
         <item>@string/g</item>
         <item>@string/IU</item>
         <item>µg</item>
+        <item>@string/mcg_ml</item>
+        <item>@string/mg_ml</item>
+        <item>%</item>
+    </string-array>
+
+    <string-array name="dosage_forms">
+        <item>@string/form_tablet</item>
+        <item>@string/form_capsule</item>
+        <item>@string/form_ampule</item>
+        <item>@string/form_injection</item>
+        <item>@string/form_packet</item>
+        <item>@string/form_drop</item>
+        <item>@string/form_dose</item>
+        <item>@string/form_ml</item>
+        <item>@string/form_g</item>
+        <item>@string/form_iu</item>
+        <item>@string/form_suppository</item>
     </string-array>
 </resources>

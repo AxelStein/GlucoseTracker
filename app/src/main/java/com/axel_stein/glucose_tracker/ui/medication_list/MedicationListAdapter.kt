@@ -23,7 +23,7 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
             return CompareBuilder().append(oldItem.id, newItem.id)
                 .append(oldItem.title, newItem.title)
                 .append(oldItem.dosage, oldItem.dosage)
-                .append(oldItem.units, oldItem.units)
+                .append(oldItem.dosageUnit, oldItem.dosageUnit)
                 .areEqual()
         }
     }
@@ -53,12 +53,17 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
 
     class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_medication)) {
         private val binding = ItemMedicationBinding.bind(itemView)
+        private val dosageForms = itemView.resources.getStringArray(R.array.dosage_forms)
         private val dosageUnits = itemView.resources.getStringArray(R.array.dosage_units)
 
         @SuppressLint("SetTextI18n")
         fun setItem(item: Medication) {
-            binding.title.text = item.title
-            binding.description.text = "${item.dosage.formatIfInt()} ${dosageUnits[item.units]}"
+            if (item.dosageUnit >= 0) {
+                binding.title.text = "${item.title} (${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]})"
+            } else {
+                binding.title.text = item.title
+            }
+            binding.description.text = dosageForms[item.dosageForm]
         }
     }
 }

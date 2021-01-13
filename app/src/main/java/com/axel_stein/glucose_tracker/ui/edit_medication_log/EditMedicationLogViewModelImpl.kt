@@ -8,6 +8,7 @@ import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.model.MedicationLog
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationLogDao
+import com.axel_stein.glucose_tracker.utils.get
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
@@ -21,6 +22,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     protected var medicationList = MutableLiveData<List<Medication>>()
     protected var medicationSelected = MutableLiveData<Int>()
     protected var amount = MutableLiveData<String>()
+    protected var dosageForm = MutableLiveData<Int>()
     protected var measured = MutableLiveData<Int>()
     protected var errorLoading = MutableLiveData<Boolean>()
     protected var errorMedicationListEmpty = MutableLiveData<Boolean>()
@@ -36,6 +38,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     fun medicationListLiveData(): LiveData<List<Medication>> = medicationList
     fun medicationSelectedLiveData(): LiveData<Int> = medicationSelected
     fun amountLiveData(): LiveData<String> = amount
+    fun dosageFormLiveData(): LiveData<Int> = dosageForm
     fun measuredLiveData(): LiveData<Int> = measured
     fun errorLoadingLiveData(): LiveData<Boolean> = errorLoading
     fun errorAmountEmptyLiveData(): LiveData<Boolean> = errorAmountEmpty
@@ -62,6 +65,12 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
 
     open fun selectMedication(position: Int) {
         medicationSelected.value = position
+        if (!medicationList.value.isNullOrEmpty()) {
+            if (position >= 0) {
+                val medication = medicationList.get()[position]
+                dosageForm.postValue(medication.dosageForm)
+            }
+        }
     }
 
     fun setAmount(amount: String) {
@@ -104,16 +113,14 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     @SuppressLint("CheckResult")
     fun loadData() {
         loadMedicationList { medications ->
-            if (id == 0L) setData(selected = if (medications.isNotEmpty()) 0 else -1)
+            if (id == 0L) setData(selectedMedication = if (medications.isNotEmpty()) 0 else -1)
             else logDao.get(id)
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe({ log ->
                     val selected = if (medications.isNullOrEmpty()) -1 else {
                         medications.indexOf(
-                            medications.find { item ->
-                                item.id == log.id
-                            }
+                            medications.find { item -> item.id == log.id }
                         )
                     }
                     setData(
@@ -132,14 +139,12 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
         dateTime: MutableDateTime = MutableDateTime.now(),
         amount: String = "1",
         measured: Int = 0,
-        selected: Int = -1
+        selectedMedication: Int = -1
     ) {
         this.dateTime.value = dateTime
         this.amount.value = amount
         this.measured.value = measured
-        if (selected > -1) {
-            this.medicationSelected.value = selected
-        }
+        selectMedication(selectedMedication)
     }
 
     @SuppressLint("CheckResult")
@@ -169,7 +174,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     private fun createLog() = Single.fromCallable {
         val items = medicationList.getOrDefault(emptyList())
         if (items.isEmpty()) {
-            throw IllegalStateException("Insulin list is empty")
+            throw IllegalStateException("Medication list is empty")
         }
         val insulin = items[medicationSelected.getOrDefault(0)]
         MedicationLog(
