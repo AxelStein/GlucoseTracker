@@ -28,8 +28,8 @@ class MedicationDao {
         return Completable.fromAction {
             items.find { it.id == item.id }?.apply {
                 title = item.title
-                amount = item.amount
-                dosageUnits = item.dosageUnits
+                dosage = item.dosage
+                units = item.units
             }
         }
     }

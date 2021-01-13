@@ -22,8 +22,8 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
         override fun areContentsTheSame(oldItem: Medication, newItem: Medication): Boolean {
             return CompareBuilder().append(oldItem.id, newItem.id)
                 .append(oldItem.title, newItem.title)
-                .append(oldItem.amount, oldItem.amount)
-                .append(oldItem.dosageUnits, oldItem.dosageUnits)
+                .append(oldItem.dosage, oldItem.dosage)
+                .append(oldItem.units, oldItem.units)
                 .areEqual()
         }
     }
@@ -58,7 +58,7 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
         @SuppressLint("SetTextI18n")
         fun setItem(item: Medication) {
             binding.title.text = item.title
-            binding.description.text = "${item.amount.formatIfInt()} ${dosageUnits[item.dosageUnits]}"
+            binding.description.text = "${item.dosage.formatIfInt()} ${dosageUnits[item.units]}"
         }
     }
 }

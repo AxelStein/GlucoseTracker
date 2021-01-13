@@ -23,8 +23,8 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         setContentView(binding.root)
         setupToolbar()
         setupTitleEditor()
-        setupAmountEditor()
-        setupDosageSpinner()
+        setupDosageEditor()
+        setupUnitsSpinner()
         viewModel.actionFinishLiveData().observe(this, {
             if (it) finish()
         })
@@ -51,29 +51,29 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         })
     }
 
-    private fun setupAmountEditor() {
-        binding.editAmount.setupEditor {
+    private fun setupDosageEditor() {
+        binding.editDosage.setupEditor {
             viewModel.setAmount(it)
         }
 
-        viewModel.amountLiveData().observe(this, {
-            binding.editAmount.setEditorText(it, false)
+        viewModel.dosageLiveData().observe(this, {
+            binding.editDosage.setEditorText(it, false)
         })
 
-        viewModel.errorEmptyAmountLiveData().observe(this, {
-            binding.inputLayoutAmount.showEmptyFieldError(it)
+        viewModel.errorEmptyDosageLiveData().observe(this, {
+            binding.inputLayoutDosage.showEmptyFieldError(it)
         })
     }
 
-    private fun setupDosageSpinner() {
-        binding.dosageSpinner.setupSpinner(binding.inputLayoutDosage) {
+    private fun setupUnitsSpinner() {
+        binding.unitsSpinner.setupSpinner(binding.inputLayoutUnits) {
             viewModel.setDosageUnits(it)
         }
 
-        binding.dosageSpinner.setSpinnerItems(resources.getStringArray(R.array.dosage_units))
+        binding.unitsSpinner.setSpinnerItems(resources.getStringArray(R.array.dosage_units))
 
-        viewModel.dosageLiveData().observe(this, {
-            binding.dosageSpinner.setSpinnerSelection(it)
+        viewModel.unitsLiveData().observe(this, {
+            binding.unitsSpinner.setSpinnerSelection(it)
         })
     }
 

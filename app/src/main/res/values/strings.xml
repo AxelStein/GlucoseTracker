@@ -142,4 +142,6 @@
     <string name="ml">ml</string>
     <string name="g">g</string>
     <string name="IU">IU</string>
+    <string name="no_insulin">No insulin</string>
+    <string name="no_medication">No medication</string>
 </resources>

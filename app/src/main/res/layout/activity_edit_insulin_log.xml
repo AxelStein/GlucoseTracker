@@ -87,7 +87,7 @@
                 android:id="@+id/insulin_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No insulin"
+                android:hint="@string/no_insulin"
                 tools:text="Humalog"
                 android:inputType="none"/>
 
@@ -128,7 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/before_breakfast"
-                android:inputType="none"/>
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
