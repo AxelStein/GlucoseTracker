@@ -62,6 +62,10 @@ class MedicationDao {
         return Flowable.fromCallable { items }
     }
 
+    fun observeActiveItems(): Flowable<List<Medication>> {
+        return Flowable.fromCallable { items.filter { it.active } }
+    }
+
     fun getItems() = Single.fromCallable { items }
 
     fun setActive(id: Long, active: Boolean): Completable {

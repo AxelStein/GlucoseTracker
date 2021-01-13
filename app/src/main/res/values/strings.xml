@@ -161,4 +161,6 @@
     <string name="hint_dosage_form">Dosage form</string>
     <string name="suspend">suspend</string>
     <string name="resume">resume</string>
+    <string name="active_medications">Active medications</string>
+    <string name="suspended_medications">Suspended medications</string>
 </resources>

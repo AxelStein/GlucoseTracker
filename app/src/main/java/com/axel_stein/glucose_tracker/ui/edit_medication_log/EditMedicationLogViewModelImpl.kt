@@ -93,7 +93,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     @SuppressLint("CheckResult")
     private fun loadMedicationList(loadLogCallback: (List<Medication>) -> Unit) {
         disposables.add(
-            listDao.observeItems()
+            listDao.observeActiveItems()
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe({ items ->

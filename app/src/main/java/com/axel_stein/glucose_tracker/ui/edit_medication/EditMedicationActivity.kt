@@ -27,6 +27,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         setupDosageEditor()
         setupUnitsSpinner()
 
+        setViewVisible(args.id != 0L, binding.btnToggleActive)
         binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
         viewModel.activeLiveData().observe(this, {
             binding.btnToggleActive.setText(if (it) R.string.suspend else R.string.resume)
