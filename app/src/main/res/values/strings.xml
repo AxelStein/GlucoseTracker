@@ -125,6 +125,7 @@
     <string name="type_intermediate">Intermediate</string>
     <string name="type_long">Long</string>
     <string name="msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
+    <string name="msg_delete_medication">Medication and all the associated records will be permanently deleted.</string>
     <string name="msg_delete_insulin_log">Log will be permanently deleted.</string>
     <string name="medications">Medications</string>
     <string name="notes">Notes</string>
@@ -133,4 +134,12 @@
     <string name="blood_sugar">Blood sugar</string>
     <string name="pref_list_weight_units">Weight units</string>
     <string name="error_insulin_list_empty">Add insulin first</string>
+    <string name="hint_dosage">Dosage</string>
+    <string name="hint_amount">Amount</string>
+    <string name="kg">Kilograms (kg)</string>
+    <string name="lb">Pounds (lb)</string>
+    <string name="mg">mg</string>
+    <string name="ml">ml</string>
+    <string name="g">g</string>
+    <string name="IU">IU</string>
 </resources>

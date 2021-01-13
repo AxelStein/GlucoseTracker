@@ -145,4 +145,13 @@
             android:defaultValue="0L" />
     </activity>
 
+    <activity
+        android:id="@+id/edit_medication"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_medication.EditMedicationActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L"/>
+    </activity>
+
 </navigation>

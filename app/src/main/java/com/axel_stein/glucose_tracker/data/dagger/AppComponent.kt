@@ -9,6 +9,7 @@ import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModel
 import com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinViewModel
 import com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogViewModel
+import com.axel_stein.glucose_tracker.ui.edit_medication.EditMedicationViewModel
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModel
 import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListViewModel
 import com.axel_stein.glucose_tracker.ui.log_list.LogListViewModel
@@ -34,4 +35,5 @@ interface AppComponent {
     fun inject(vm: InsulinListViewModel)
     fun inject(vm: EditInsulinViewModel)
     fun inject(vm: EditInsulinLogViewModel)
+    fun inject(vm: EditMedicationViewModel)
 }
