@@ -83,6 +83,7 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
                 )
             }, {
                 it.printStackTrace()
+                errorLoading.postValue(true)
             })
     }
 
