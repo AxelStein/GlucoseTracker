@@ -106,7 +106,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
         inputLayout.show()
 
         viewModel.errorGlucoseEmptyLiveData().observe(this, { error ->
-            inputLayout.showEmptyFieldError(editor, error)
+            inputLayout.showEmptyFieldError(error)
         })
     }
 

@@ -26,7 +26,7 @@ class InsulinListViewModel : ViewModel() {
 
     fun loadData() {
         disposables.add(
-            dao.get().subscribeOn(io()).subscribe(
+            dao.observeItems().subscribeOn(io()).subscribe(
                 { items.postValue(it) },
                 { it.printStackTrace() }
             )

@@ -62,13 +62,17 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         binding.insulinSpinner.setupSpinner(binding.inputLayoutInsulin) { position ->
             viewModel.selectInsulin(position)
         }
+
+        val insulinTypes = resources.getStringArray(R.array.insulin_types)
         viewModel.insulinLiveData().observe(this, { items ->
-            binding.insulinSpinner.setSpinnerItems(items.map { item -> item.title })
+            binding.inputLayoutInsulin.isEnabled = items.isNotEmpty()
+            binding.insulinSpinner.setSpinnerItems(items.map { item -> "${item.title} (${insulinTypes[item.type]})"})
         })
         viewModel.insulinSelectedLiveData().observe(this, { position ->
-            binding.insulinSpinner.apply {
-                post { setSpinnerSelection(position) }
-            }
+            binding.insulinSpinner.setSpinnerSelection(position)
+        })
+        viewModel.errorInsulinListEmptyLiveData().observe(this, { error ->
+            binding.inputLayoutInsulin.showError(error, R.string.error_insulin_list_empty)
         })
     }
 
@@ -80,7 +84,7 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
             binding.editUnits.setEditorText(units)
         })
         viewModel.errorUnitsEmptyLiveData().observe(this, { error ->
-            binding.inputLayoutUnits.showEmptyFieldError(binding.editUnits, error)
+            binding.inputLayoutUnits.showEmptyFieldError(error)
         })
     }
 

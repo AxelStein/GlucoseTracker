@@ -46,7 +46,7 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
         })
 
         viewModel.errorEmptyTitleLiveData().observe(this, { error ->
-            binding.inputLayoutTitle.showEmptyFieldError(binding.editTitle, error)
+            binding.inputLayoutTitle.showEmptyFieldError(error)
         })
     }
 

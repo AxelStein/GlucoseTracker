@@ -78,7 +78,7 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         })
 
         viewModel.errorNoteEmptyLiveData().observe(this, { error ->
-            binding.inputLayoutNote.showEmptyFieldError(binding.editNote, error)
+            binding.inputLayoutNote.showEmptyFieldError(error)
         })
     }
 

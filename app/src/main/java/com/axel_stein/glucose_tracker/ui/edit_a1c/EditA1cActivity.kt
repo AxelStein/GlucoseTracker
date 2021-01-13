@@ -78,7 +78,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         })
 
         viewModel.errorValueEmptyLiveData().observe(this, { error ->
-            binding.inputLayout.showEmptyFieldError(binding.editA1c, error)
+            binding.inputLayout.showEmptyFieldError(error)
         })
     }
 

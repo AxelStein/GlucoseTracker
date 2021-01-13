@@ -14,10 +14,13 @@ import com.google.android.material.textfield.TextInputLayout
 
 fun setViewVisible(visible: Boolean, vararg views: View?) {
     for (v in views) {
-        v?.visibility = when(visible) {
-            true -> VISIBLE
-            else -> GONE
-        }
+        v?.visibility = if (visible) VISIBLE else GONE
+    }
+}
+
+fun setViewEnabled(enabled: Boolean, vararg views: View?) {
+    for (v in views) {
+        v?.isEnabled = enabled
     }
 }
 
@@ -49,10 +52,18 @@ fun ViewGroup.inflate(layoutRes: Int): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }
 
-fun TextInputLayout.showEmptyFieldError(editText: TextInputEditText, error: Boolean) {
+fun TextInputLayout.showError(error: Boolean, msg: Int) {
+    if (error) {
+        setError(context.getString(msg))
+        editText?.showKeyboard()
+    }
+    isErrorEnabled = error
+}
+
+fun TextInputLayout.showEmptyFieldError(error: Boolean) {
     if (error) {
         this.error = context.getString(R.string.no_value)
-        editText.showKeyboard()
+        editText?.showKeyboard()
     }
     this.isErrorEnabled = error
 }

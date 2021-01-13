@@ -10,6 +10,8 @@ import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
@@ -21,12 +23,14 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     protected var units = MutableLiveData<String>()
     protected var measured = MutableLiveData<Int>()
     protected var errorLoading = MutableLiveData<Boolean>()
+    protected var errorInsulinListEmpty = MutableLiveData<Boolean>()
     protected var errorUnitsEmpty = MutableLiveData<Boolean>()
     protected var errorSave = MutableLiveData<Boolean>()
     protected var errorDelete = MutableLiveData<Boolean>()
     protected var actionFinish = MutableLiveData<Boolean>()
     protected lateinit var logDao: InsulinLogDao
     protected lateinit var listDao: InsulinDao
+    private val disposables = CompositeDisposable()
 
     fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
     fun insulinLiveData(): LiveData<List<Insulin>> = insulinList
@@ -35,6 +39,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     fun measuredLiveData(): LiveData<Int> = measured
     fun errorLoadingLiveData(): LiveData<Boolean> = errorLoading
     fun errorUnitsEmptyLiveData(): LiveData<Boolean> = errorUnitsEmpty
+    fun errorInsulinListEmptyLiveData(): LiveData<Boolean> = errorInsulinListEmpty
     fun errorSaveLiveData(): LiveData<Boolean> = errorSave
     fun errorDeleteLiveData(): LiveData<Boolean> = errorDelete
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
@@ -70,70 +75,94 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
         this.measured.value = position
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+        disposables.dispose()
+    }
+
     @SuppressLint("CheckResult")
-    private fun loadInsulinList(callback: (List<Insulin>) -> Unit) {
-        listDao.getItems().subscribeOn(io()).doOnSuccess { callback(it) }.subscribe({ items ->
-            insulinList.postValue(items)
-        }, {
-            it.printStackTrace()
-        })
+    private fun loadInsulinList(loadLogCallback: (List<Insulin>) -> Unit) {
+        disposables.add(
+            listDao.observeItems()
+                .subscribeOn(io())
+                .observeOn(mainThread())
+                .subscribe({ items ->
+                    insulinList.value = items
+                    if (items.isNotEmpty()) {
+                        errorInsulinListEmpty.value = false
+                    }
+                    if (dateTime.value == null) {
+                        loadLogCallback(items)
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 
     @SuppressLint("CheckResult")
     fun loadData() {
         loadInsulinList { insulinItems ->
-            if (id != 0L) {
-                logDao.get(id).subscribe({ log ->
-                    postData(
+            if (id == 0L) setData(insulinSelected = if (insulinItems.isNotEmpty()) 0 else -1)
+            else logDao.get(id)
+                .subscribeOn(io())
+                .observeOn(mainThread())
+                .subscribe({ log ->
+                    val selected = if (insulinItems.isNullOrEmpty()) -1 else {
+                        insulinItems.indexOf(
+                            insulinItems.find { item ->
+                                item.id == log.id
+                            }
+                        )
+                    }
+                    setData(
                         log.dateTime.toMutableDateTime(),
                         log.units.toString(),
                         log.measured,
-                        if (insulinItems.isNotEmpty()) {
-                            insulinItems.indexOf(
-                                insulinItems.find { item -> item.id == log.id }
-                            )
-                        } else {
-                            -1
-                        }
+                        selected
                     )
                 }, {
                     it.printStackTrace()
                 })
-            } else {
-                postData(insulinSelected = if (insulinItems.isNotEmpty()) 0 else -1)
-            }
         }
     }
 
-    private fun postData(
+    private fun setData(
         dateTime: MutableDateTime = MutableDateTime.now(),
         units: String = "",
         measured: Int = 0,
         insulinSelected: Int = -1
     ) {
-        this.dateTime.postValue(dateTime)
-        this.units.postValue(units)
-        this.measured.postValue(measured)
+        this.dateTime.value = dateTime
+        this.units.value = units
+        this.measured.value = measured
         if (insulinSelected > -1) {
-            this.insulinSelected.postValue(insulinSelected)
+            this.insulinSelected.value = insulinSelected
         }
     }
 
     @SuppressLint("CheckResult")
     fun save() {
-        if (units.value.isNullOrBlank()) {
-            errorUnitsEmpty.value = true
-        } else {
-            createLog()
-                .subscribeOn(io())
-                .map { log ->
-                    if (id != 0L) logDao.update(log)
-                    else logDao.insert(log)
-                }
-                .subscribe(
-                    { actionFinish.postValue(true) },
-                    { it.printStackTrace() }
-                )
+        when {
+            insulinList.value.isNullOrEmpty() -> {
+                errorInsulinListEmpty.value = true
+            }
+            units.value.isNullOrBlank() -> {
+                errorUnitsEmpty.value = true
+            }
+            else -> {
+                createLog()
+                    .subscribeOn(io())
+                    .map { log ->
+                        if (id != 0L) logDao.update(log)
+                        else logDao.insert(log)
+                    }
+                    .subscribe(
+                        { actionFinish.postValue(true) },
+                        { it.printStackTrace() }
+                    )
+            }
         }
     }
 

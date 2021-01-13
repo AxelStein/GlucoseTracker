@@ -54,7 +54,7 @@ class InsulinDao {
         }
     }
 
-    fun get(): Flowable<List<Insulin>> {
+    fun observeItems(): Flowable<List<Insulin>> {
         return Flowable.fromCallable { items }
     }
 
