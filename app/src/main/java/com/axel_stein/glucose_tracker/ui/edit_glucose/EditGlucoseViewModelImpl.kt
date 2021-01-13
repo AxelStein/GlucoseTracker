@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.edit_glucose
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,13 +8,14 @@ import com.axel_stein.glucose_tracker.data.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
-import io.reactivex.CompletableObserver
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.axel_stein.glucose_tracker.utils.getOrDefault
+import com.axel_stein.glucose_tracker.utils.intoMgDl
+import com.axel_stein.glucose_tracker.utils.intoMmol
+import com.axel_stein.glucose_tracker.utils.round
+import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
-import kotlin.math.roundToInt
+import kotlin.math.absoluteValue
 
 open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
     protected var dateTime = MutableLiveData<MutableDateTime>()
@@ -24,7 +26,7 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
     protected var errorSave = MutableLiveData<Boolean>()
     protected var errorDelete = MutableLiveData<Boolean>()
     protected var actionFinish = MutableLiveData<Boolean>()
-    private var useMmolAsGlucoseUnits = true
+    private var useMmol = true
     private lateinit var dao: GlucoseLogDao
     private lateinit var appSettings: AppSettings
     private lateinit var appResources: AppResources
@@ -35,7 +37,7 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     fun setAppSettings(appSettings: AppSettings) {
         this.appSettings = appSettings
-        useMmolAsGlucoseUnits = this.appSettings.useMmolAsGlucoseUnits()
+        useMmol = this.appSettings.useMmolAsGlucoseUnits()
     }
 
     fun setAppResources(appResources: AppResources) {
@@ -58,97 +60,60 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
-    fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
+    fun getCurrentDateTime(): DateTime = dateTime.getOrDefault(MutableDateTime()).toDateTime()
 
-    fun getGlucoseValue(): String = glucose.value ?: ""
+    fun getGlucoseValue(): String = glucose.getOrDefault("")
 
-    private fun getGlucoseValueMmol(): Float {
-        val s = glucose.value
-        if (s.isNullOrEmpty()) return 0f
-        val num = s.toFloat()
-        return if (num < 0) num * -1.0f else num
-    }
+    private fun glucoseValueMmol() = glucose.getOrDefault("0").toFloat().absoluteValue
 
-    private fun getGlucoseValueMg(): Int {
-        val s = glucose.value
-        if (s.isNullOrEmpty()) return 0
-        val num = s.toInt()
-        return if (num < 0) num * -1 else num
-    }
+    private fun glucoseValueMg() = glucose.getOrDefault("0").toInt().absoluteValue
 
-    fun getMeasured(): Int = measured.value ?: 0
+    fun getMeasured(): Int = measured.getOrDefault(0)
 
     fun loadData() {
-        if (id != 0L) {
-            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<GlucoseLog> {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onSuccess(l: GlucoseLog) {
-                    dateTime.postValue(l.dateTime.toMutableDateTime())
-                    glucose.postValue(
-                        if (appSettings.useMmolAsGlucoseUnits()) l.valueMmol.toString()
-                        else l.valueMg.toString()
-                    )
-                    measured.postValue(l.measured)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    errorLoading.postValue(true)
-                }
+        if (id == 0L) postData()
+        else dao.get(id)
+            .subscribeOn(io())
+            .subscribe({ log ->
+                val logGlucose = if (useMmol) log.valueMmol else log.valueMg
+                postData(
+                    log.dateTime.toMutableDateTime(),
+                    logGlucose.toString(),
+                    log.measured
+                )
+            }, {
+                it.printStackTrace()
             })
-        } else {
-            dateTime.postValue(MutableDateTime())
-            glucose.postValue("")
-            measured.postValue(0)
-        }
     }
 
+    private fun postData(dateTime: MutableDateTime = MutableDateTime(), glucose: String = "", measured: Int = 0) {
+        this.dateTime.postValue(dateTime)
+        this.glucose.postValue(glucose)
+        this.measured.postValue(measured)
+    }
+
+    @SuppressLint("CheckResult")
     fun save() {
         if (glucose.value.isNullOrEmpty()) {
             errorGlucoseEmpty.value = true
         } else {
             val log = createLog()
-            var completable = dao.insert(log)
-            if (log.id != 0L) {
-                completable = dao.update(log)
-            }
-            completable.subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
+            val task = if (id != 0L) dao.update(log) else dao.insert(log)
+            task.subscribeOn(io()).subscribe(
+                { actionFinish.postValue(true) },
+                {
+                    it.printStackTrace()
                     errorSave.postValue(true)
                 }
-            })
+            )
         }
     }
 
     private fun createLog(): GlucoseLog {
-        var mmol = if (useMmolAsGlucoseUnits) {
-            getGlucoseValueMmol()
-        } else {
-            intoMmol(getGlucoseValueMg())
-        }
-        mmol = roundFloat(mmol)
-
-        val mg = if (useMmolAsGlucoseUnits) {
-            intoMgDl(getGlucoseValueMmol())
-        } else {
-            getGlucoseValueMg()
-        }
+        val mmol = (if (useMmol) glucoseValueMmol() else glucoseValueMg().intoMmol()).round()
+        val mg = if (useMmol) glucoseValueMmol().intoMgDl() else glucoseValueMg()
         return GlucoseLog(mmol, mg, getMeasured(), getCurrentDateTime()).also { it.id = id }
     }
-
-    private fun intoMgDl(mmolL: Float?): Int = ((mmolL ?: 0f) * 18f).toInt()
-
-    private fun intoMmol(mg: Int?): Float = mg?.div(18f) ?: 0f
-
-    private fun roundFloat(num: Float): Float = (num * 10.0f).roundToInt().toFloat() / 10.0f
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
         dateTime.postValue(dateTime.value.apply {
@@ -182,20 +147,16 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
         }
     }
 
+    @SuppressLint("CheckResult")
     fun delete() {
-        if (id != 0L) {
-            dao.deleteById(id).subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
+        if (id != 0L) dao.deleteById(id)
+            .subscribeOn(io())
+            .subscribe(
+                { actionFinish.postValue(true) },
+                {
+                    it.printStackTrace()
                     errorDelete.postValue(true)
                 }
-            })
-        }
+            )
     }
 }
