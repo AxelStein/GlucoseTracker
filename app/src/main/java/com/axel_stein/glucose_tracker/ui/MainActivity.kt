@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupActionBarWithNavController(this, navController,
             AppBarConfiguration(
-                    setOf(R.id.menu_home_fragment, R.id.menu_statistics_fragment, R.id.menu_archive_fragment, R.id.menu_plus_fragment)
+                setOf(R.id.menu_home_fragment, R.id.menu_statistics_fragment, R.id.menu_archive_fragment, R.id.menu_plus_fragment)
             )
         )
 
