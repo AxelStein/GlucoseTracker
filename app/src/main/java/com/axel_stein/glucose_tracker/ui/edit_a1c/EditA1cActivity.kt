@@ -83,7 +83,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_edit_a1c, menu)
+        menuInflater.inflate(R.menu.activity_edit_a1c, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return true
     }

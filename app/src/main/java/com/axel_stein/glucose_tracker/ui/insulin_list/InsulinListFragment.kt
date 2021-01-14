@@ -41,7 +41,7 @@ class InsulinListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_insulin_list, menu)
+        inflater.inflate(R.menu.fragment_insulin_list, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

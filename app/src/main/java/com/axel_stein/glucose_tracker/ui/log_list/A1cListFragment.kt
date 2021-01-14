@@ -23,7 +23,7 @@ class A1cListFragment : LogListFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_a1c_list, menu)
+        inflater.inflate(R.menu.fragment_a1c_list, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

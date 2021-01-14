@@ -63,7 +63,7 @@ class MedicationListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.medication_list, menu)
+        inflater.inflate(R.menu.fragment_medication_list, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

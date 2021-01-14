@@ -44,7 +44,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
             android:background="?attr/bottomNavBackgroundColor"
-            app:menu="@menu/menu_bottom_nav"
+            app:menu="@menu/bottom_nav"
             app:itemIconTint="?attr/bottomNavItemIconColor"
             app:itemTextColor="?attr/bottomNavItemTextColor"
             app:labelVisibilityMode="labeled"

@@ -62,7 +62,7 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_edit_insulin, menu)
+        menuInflater.inflate(R.menu.activity_edit_insulin, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }
