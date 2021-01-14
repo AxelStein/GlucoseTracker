@@ -16,7 +16,7 @@ import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
-import com.axel_stein.glucose_tracker.utils.inflate
+import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 
 class TextHeaderDecor(private val headerResourceId: Int) : ItemDecoration() {

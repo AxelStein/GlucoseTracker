@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker.utils
+package com.axel_stein.glucose_tracker.utils.ui
 
 import android.view.View
 import android.widget.AdapterView

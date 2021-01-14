@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.databinding.ItemMedicationBinding
-import com.axel_stein.glucose_tracker.ui.OnItemClickListener
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
 import com.axel_stein.glucose_tracker.utils.formatIfInt
-import com.axel_stein.glucose_tracker.utils.inflate
+import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.ViewHolder>(Companion) {
     companion object : DiffUtil.ItemCallback<Medication>() {

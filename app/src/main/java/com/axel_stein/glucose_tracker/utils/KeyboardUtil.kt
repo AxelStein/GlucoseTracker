@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import android.widget.EditText
 
-
 fun EditText.showKeyboard() {
     post(KeyboardRunnable(this))
 }

@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentInsulinListBinding
 import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionInsulinListEditInsulin
-import com.axel_stein.glucose_tracker.utils.setShown
+import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class InsulinListFragment : Fragment() {
     private val viewModel: InsulinListViewModel by viewModels()

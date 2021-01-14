@@ -13,7 +13,7 @@ import com.axel_stein.glucose_tracker.databinding.FragmentMedicationListBinding
 import com.axel_stein.glucose_tracker.ui.log_list.TextHeaderDecor
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionMedicationListAdd
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionMedicationListEdit
-import com.axel_stein.glucose_tracker.utils.setShown
+import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class MedicationListFragment : Fragment() {
     private val viewModel: MedicationListViewModel by viewModels()

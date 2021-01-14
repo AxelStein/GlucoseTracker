@@ -9,10 +9,10 @@ import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.databinding.FragmentArchiveBinding
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.log_list.LogListFragment
-import com.axel_stein.glucose_tracker.utils.setSpinnerItems
-import com.axel_stein.glucose_tracker.utils.setSpinnerSelection
-import com.axel_stein.glucose_tracker.utils.setViewVisible
-import com.axel_stein.glucose_tracker.utils.setupSpinner
+import com.axel_stein.glucose_tracker.utils.ui.setSpinnerItems
+import com.axel_stein.glucose_tracker.utils.ui.setSpinnerSelection
+import com.axel_stein.glucose_tracker.utils.ui.setViewVisible
+import com.axel_stein.glucose_tracker.utils.ui.setupSpinner
 import javax.inject.Inject
 
 

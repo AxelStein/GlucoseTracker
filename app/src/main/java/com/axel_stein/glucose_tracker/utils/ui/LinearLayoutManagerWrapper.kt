@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker.utils
+package com.axel_stein.glucose_tracker.utils.ui
 
 import android.content.Context
 import android.util.AttributeSet

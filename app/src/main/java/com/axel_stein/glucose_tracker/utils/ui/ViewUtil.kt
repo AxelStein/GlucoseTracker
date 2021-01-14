@@ -1,4 +1,4 @@
-package com.axel_stein.glucose_tracker.utils
+package com.axel_stein.glucose_tracker.utils.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.doAfterTextChanged
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.utils.hideKeyboard
+import com.axel_stein.glucose_tracker.utils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 

@@ -12,10 +12,10 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentStatisticsBinding
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartColors
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.LabelValueFormatter
-import com.axel_stein.glucose_tracker.utils.hide
-import com.axel_stein.glucose_tracker.utils.hideView
-import com.axel_stein.glucose_tracker.utils.setItemSelectedListener
-import com.axel_stein.glucose_tracker.utils.show
+import com.axel_stein.glucose_tracker.utils.ui.hide
+import com.axel_stein.glucose_tracker.utils.ui.hideView
+import com.axel_stein.glucose_tracker.utils.ui.setItemSelectedListener
+import com.axel_stein.glucose_tracker.utils.ui.show
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis

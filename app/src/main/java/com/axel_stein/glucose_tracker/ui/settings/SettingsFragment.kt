@@ -13,7 +13,7 @@ import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.ui.ProgressListener
+import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
 import com.axel_stein.glucose_tracker.utils.formatDateTime
 import org.joda.time.DateTime
 import javax.inject.Inject

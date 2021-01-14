@@ -18,7 +18,8 @@ import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Comp
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirections.Companion.launchEditGlucose
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
 import com.axel_stein.glucose_tracker.ui.settings.SettingsActivityDirections.Companion.launchSettings
-import com.axel_stein.glucose_tracker.utils.setShown
+import com.axel_stein.glucose_tracker.utils.ui.setShown
+import com.axel_stein.glucose_tracker.utils.ui.AnimationHelper
 import javax.inject.Inject
 
 

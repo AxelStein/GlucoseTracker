@@ -1,8 +1,9 @@
-package com.axel_stein.glucose_tracker.utils
+package com.axel_stein.glucose_tracker.utils.ui
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import com.axel_stein.glucose_tracker.utils.is24HourFormat
 import org.joda.time.DateTime
 
 fun showDatePicker(context: Context, dateTime: DateTime, callback: (year: Int, month: Int, dayOfMonth: Int) -> Unit) {

@@ -10,7 +10,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityEditInsulinBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivityArgs
-import com.axel_stein.glucose_tracker.utils.*
+import com.axel_stein.glucose_tracker.utils.ui.*
 
 class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener {
     private val args: EditInsulinLogActivityArgs by navArgs()

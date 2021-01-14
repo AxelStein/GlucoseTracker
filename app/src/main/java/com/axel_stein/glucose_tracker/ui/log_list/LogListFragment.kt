@@ -14,8 +14,8 @@ import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditA1c
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditNote
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirections.Companion.launchEditGlucose
-import com.axel_stein.glucose_tracker.utils.LinearLayoutManagerWrapper
-import com.axel_stein.glucose_tracker.utils.setShown
+import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
+import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 open class LogListFragment: Fragment() {
     protected val viewModel: LogListViewModel by viewModels { LogListViewModelFactory(requireActivity().application) }

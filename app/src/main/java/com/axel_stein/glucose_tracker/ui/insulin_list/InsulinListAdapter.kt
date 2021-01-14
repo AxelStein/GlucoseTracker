@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Insulin
 import com.axel_stein.glucose_tracker.databinding.ItemInsulinBinding
-import com.axel_stein.glucose_tracker.ui.OnItemClickListener
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
-import com.axel_stein.glucose_tracker.utils.inflate
+import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 class InsulinListAdapter : ListAdapter<Insulin, InsulinListAdapter.ViewHolder>(Companion) {
     companion object : DiffUtil.ItemCallback<Insulin>() {

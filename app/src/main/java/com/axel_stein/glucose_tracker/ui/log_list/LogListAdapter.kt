@@ -10,9 +10,9 @@ import com.axel_stein.glucose_tracker.data.model.LogItem
 import com.axel_stein.glucose_tracker.databinding.ItemA1cBinding
 import com.axel_stein.glucose_tracker.databinding.ItemGlucoseBinding
 import com.axel_stein.glucose_tracker.databinding.ItemNoteBinding
-import com.axel_stein.glucose_tracker.ui.OnItemClickListener
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
-import com.axel_stein.glucose_tracker.utils.inflate
+import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
 
