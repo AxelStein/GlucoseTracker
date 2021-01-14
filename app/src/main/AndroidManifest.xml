@@ -39,6 +39,8 @@
 
         <activity android:name=".ui.edit_medication_log.EditMedicationLogActivity" />
 
+        <activity android:name=".ui.edit_weight.EditWeightActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.axel_stein.glucose_tracker.fileprovider"

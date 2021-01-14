@@ -9,6 +9,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenA1cList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenInsulinList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenMedicationList
+import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenWeightList
 
 class PlusFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -33,6 +34,12 @@ class PlusFragment : PreferenceFragmentCompat() {
         val a1cListPref = preferenceManager.findPreference<Preference>("a1c_list")
         a1cListPref?.setOnPreferenceClickListener {
             findNavController().navigate(actionOpenA1cList())
+            true
+        }
+
+        val weightListPref = preferenceManager.findPreference<Preference>("weight_list")
+        weightListPref?.setOnPreferenceClickListener {
+        findNavController().navigate(actionOpenWeightList())
             true
         }
     }

@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_open_medication_list"
             app:destination="@id/medication_list_fragment" />
+        <action
+            android:id="@+id/action_open_weight_list"
+            app:destination="@id/weight_list_fragment"/>
     </fragment>
 
     <fragment
@@ -166,5 +169,26 @@
     <action
         android:id="@+id/action_edit_medication_log"
         app:destination="@+id/edit_medication_log_activity"/>
+
+    <fragment
+        android:id="@+id/weight_list_fragment"
+        android:name="com.axel_stein.glucose_tracker.ui.log_list.WeightListFragment"
+        android:label="@string/plus_pref_weight">
+        <action
+            android:id="@+id/action_add_weight"
+            app:destination="@+id/edit_weight_activity"/>
+        <action
+            android:id="@+id/action_edit_weight"
+            app:destination="@id/edit_weight_activity"/>
+    </fragment>
+
+    <activity
+        android:id="@+id/edit_weight_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_weight.EditWeightActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L"/>
+    </activity>
 
 </navigation>
