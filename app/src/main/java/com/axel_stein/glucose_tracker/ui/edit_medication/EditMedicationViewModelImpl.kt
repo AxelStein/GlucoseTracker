@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.utils.formatIfInt
-import com.axel_stein.glucose_tracker.utils.get
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.notBlankOrDefault
 import io.reactivex.schedulers.Schedulers.io
@@ -38,9 +37,6 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
             .subscribe({ medication ->
                 var dosage = medication.dosage.formatIfInt()
                 if (dosage == "0") dosage = ""
-
-                Log.e("TAG", "loadData=$medication")
-
                 postData(
                     medication.title,
                     medication.dosageForm,
@@ -89,10 +85,15 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
 
     @SuppressLint("CheckResult")
     fun toggleActive() {
-        active.value = !active.getOrDefault(true)
-        dao.setActive(id, active.get())
+        val updatedValue = !active.getOrDefault(true)
+        dao.setActive(id, updatedValue)
             .subscribeOn(io())
-            .subscribe({}, { it.printStackTrace() })
+            .subscribe({
+                active.postValue(updatedValue)
+                actionFinish.postValue(true)
+            }, {
+                it.printStackTrace()
+            })
     }
 
     fun save() {
