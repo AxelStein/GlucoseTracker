@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.ui.log_list.A1cListFragmentDirections.Companion.actionA1cListAddA1c
+import com.axel_stein.glucose_tracker.ui.log_list.A1cListFragmentDirections.Companion.actionAddA1c
 
 class A1cListFragment : LogListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class A1cListFragment : LogListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_add ->
-                findNavController().navigate(actionA1cListAddA1c())
+                findNavController().navigate(actionAddA1c())
         }
         return super.onOptionsItemSelected(item)
     }

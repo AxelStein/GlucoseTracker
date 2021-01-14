@@ -10,16 +10,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddGlucose
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddInsulinLog
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddMedicationLog
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddNote
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionOpenSettings
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.actionAddMedicationLog
-import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivityDirections.Companion.launchEditInsulinLog
-import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivityDirections.Companion.launchEditGlucose
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivityDirections.Companion.launchEditNote
-import com.axel_stein.glucose_tracker.ui.settings.SettingsActivityDirections.Companion.launchSettings
-import com.axel_stein.glucose_tracker.utils.ui.setShown
 import com.axel_stein.glucose_tracker.utils.ui.AnimationHelper
+import com.axel_stein.glucose_tracker.utils.ui.setShown
 import javax.inject.Inject
 
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupActionBarWithNavController(this, navController,
             AppBarConfiguration(
-                    setOf(R.id.menu_home, R.id.menu_stats, R.id.menu_archive, R.id.menu_plus)
+                    setOf(R.id.menu_home_fragment, R.id.menu_statistics_fragment, R.id.menu_archive_fragment, R.id.menu_plus_fragment)
             )
         )
 
@@ -62,9 +62,9 @@ class MainActivity : AppCompatActivity() {
         binding.fabMenu.forEach { child ->
             child.setOnClickListener {
                 val dest = when (it.id) {
-                    R.id.btn_add_glucose -> launchEditGlucose()
-                    R.id.btn_add_note -> launchEditNote()
-                    R.id.btn_add_insulin -> launchEditInsulinLog()
+                    R.id.btn_add_glucose -> actionAddGlucose()
+                    R.id.btn_add_note -> actionAddNote()
+                    R.id.btn_add_insulin -> actionAddInsulinLog()
                     R.id.btn_add_medication -> actionAddMedicationLog()
                     else -> TODO("Not implemented")
                 }
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.menu_home -> binding.fab.show()
+                R.id.menu_home_fragment -> binding.fab.show()
                 else -> binding.fab.hide()
             }
             NavigationUI.onNavDestinationSelected(item, navController)
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> navController.navigate(launchSettings())
+            R.id.menu_settings -> navController.navigate(actionOpenSettings())
         }
         return super.onOptionsItemSelected(item)
     }

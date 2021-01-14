@@ -11,8 +11,8 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.databinding.FragmentMedicationListBinding
 import com.axel_stein.glucose_tracker.ui.log_list.TextHeaderDecor
-import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionMedicationListAdd
-import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionMedicationListEdit
+import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionAddMedication
+import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionEditMedication
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class MedicationListFragment : Fragment() {
@@ -31,7 +31,7 @@ class MedicationListFragment : Fragment() {
         _binding = FragmentMedicationListBinding.inflate(inflater, container, false)
         adapter = MedicationListAdapter()
         adapter.setOnItemClickListener { _, item ->
-            findNavController().navigate(actionMedicationListEdit(item.id))
+            findNavController().navigate(actionEditMedication(item.id))
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.setHasFixedSize(true)
@@ -68,7 +68,7 @@ class MedicationListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_add -> findNavController().navigate(actionMedicationListAdd())
+            R.id.menu_add -> findNavController().navigate(actionAddMedication())
         }
         return super.onOptionsItemSelected(item)
     }

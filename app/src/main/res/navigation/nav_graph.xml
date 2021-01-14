@@ -2,170 +2,52 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@+id/menu_home">
+    app:startDestination="@+id/menu_home_fragment">
 
     <fragment
-        android:id="@+id/menu_home"
+        android:id="@+id/menu_home_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.log_list.HomeFragment"
         android:label="@string/app_name" />
 
     <fragment
-        android:id="@+id/menu_stats"
+        android:id="@+id/menu_statistics_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.statistics.StatisticsFragment"
         android:label="@string/app_name" />
 
     <fragment
-        android:id="@+id/menu_archive"
+        android:id="@+id/menu_archive_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.archive.ArchiveFragment"
         android:label="@string/app_name" />
 
     <fragment
-        android:id="@+id/menu_plus"
+        android:id="@+id/menu_plus_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.plus.PlusFragment"
         android:label="@string/app_name">
         <action
-            android:id="@+id/action_menu_plus_to_insulin_list"
-            app:destination="@id/insulin_list" />
+            android:id="@+id/action_open_insulin_list"
+            app:destination="@id/insulin_list_fragment" />
         <action
-            android:id="@+id/action_menu_plus_to_a1c_list"
-            app:destination="@id/a1c_list" />
+            android:id="@+id/action_open_a1c_list"
+            app:destination="@id/a1c_list_fragment" />
         <action
-            android:id="@+id/action_menu_plus_to_medication_list"
-            app:destination="@id/medication_list" />
+            android:id="@+id/action_open_medication_list"
+            app:destination="@id/medication_list_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/medication_list"
+        android:id="@+id/medication_list_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragment"
         android:label="@string/plus_pref_medications">
         <action
-            android:id="@+id/action_medication_list_add"
-            app:destination="@id/edit_medication" />
+            android:id="@+id/action_add_medication"
+            app:destination="@id/edit_medication_activity" />
         <action
-            android:id="@+id/action_medication_list_edit"
-            app:destination="@id/edit_medication">
-            <argument
-                android:name="id"
-                app:argType="long"
-                android:defaultValue="0L"/>
-        </action>
-    </fragment>
-
-    <fragment
-        android:id="@+id/a1c_list"
-        android:name="com.axel_stein.glucose_tracker.ui.log_list.A1cListFragment"
-        android:label="@string/plus_pref_a1c">
-        <action
-            android:id="@+id/action_a1c_list_add_a1c"
-            app:destination="@id/edit_a1c" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/insulin_list"
-        android:name="com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragment"
-        android:label="@string/plus_pref_insulin_list" >
-        <action
-            android:id="@+id/action_insulin_list_edit_insulin"
-            app:destination="@id/edit_insulin">
-            <argument
-                android:name="id"
-                app:argType="long"
-                android:defaultValue="0L"/>
-        </action>
+            android:id="@+id/action_edit_medication"
+            app:destination="@id/edit_medication_activity"/>
     </fragment>
 
     <activity
-        android:id="@+id/edit_glucose"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </activity>
-
-    <action
-        android:id="@+id/launch_edit_glucose"
-        app:destination="@+id/edit_glucose">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </action>
-
-    <activity
-        android:id="@+id/edit_note"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </activity>
-
-    <action
-        android:id="@+id/launch_edit_note"
-        app:destination="@+id/edit_note">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </action>
-
-    <activity
-        android:id="@+id/edit_a1c"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </activity>
-
-    <action
-        android:id="@+id/launch_edit_a1c"
-        app:destination="@+id/edit_a1c">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </action>
-
-    <activity
-        android:id="@+id/edit_insulin_log"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivity">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </activity>
-
-    <action
-        android:id="@+id/launch_edit_insulin_log"
-        app:destination="@+id/edit_insulin_log">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </action>
-
-    <activity
-        android:id="@+id/settings"
-        android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsActivity" />
-
-    <action
-        android:id="@+id/launch_settings"
-        app:destination="@id/settings"/>
-
-    <activity
-        android:id="@+id/edit_insulin"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinActivity"
-        android:label="EditInsulinActivity">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
-    </activity>
-
-    <activity
-        android:id="@+id/edit_medication"
+        android:id="@+id/edit_medication_activity"
         android:name="com.axel_stein.glucose_tracker.ui.edit_medication.EditMedicationActivity">
         <argument
             android:name="id"
@@ -173,17 +55,116 @@
             android:defaultValue="0L"/>
     </activity>
 
+    <fragment
+        android:id="@+id/insulin_list_fragment"
+        android:name="com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragment"
+        android:label="@string/plus_pref_insulin_list" >
+        <action
+            android:id="@+id/action_add_insulin"
+            app:destination="@id/edit_insulin_activity"/>
+        <action
+            android:id="@+id/action_edit_insulin"
+            app:destination="@id/edit_insulin_activity"/>
+    </fragment>
+
     <activity
-        android:id="@+id/edit_medication_log"
+        android:id="@+id/edit_insulin_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinActivity">
+        <argument
+            android:name="id"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </activity>
+
+    <fragment
+        android:id="@+id/a1c_list_fragment"
+        android:name="com.axel_stein.glucose_tracker.ui.log_list.A1cListFragment"
+        android:label="@string/plus_pref_a1c">
+        <action
+            android:id="@+id/action_add_a1c"
+            app:destination="@id/edit_a1c_activity" />
+        <action
+            android:id="@+id/action_edit_a1c"
+            app:destination="@id/edit_a1c_activity"/>
+    </fragment>
+
+    <activity
+        android:id="@+id/edit_glucose_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </activity>
+    <action
+        android:id="@+id/action_add_glucose"
+        app:destination="@+id/edit_glucose_activity"/>
+    <action
+        android:id="@+id/action_edit_glucose"
+        app:destination="@+id/edit_glucose_activity"/>
+
+    <activity
+        android:id="@+id/edit_note_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </activity>
+    <action
+        android:id="@+id/action_add_note"
+        app:destination="@+id/edit_note_activity"/>
+    <action
+        android:id="@+id/action_edit_note"
+        app:destination="@+id/edit_note_activity"/>
+
+    <activity
+        android:id="@+id/edit_a1c_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </activity>
+    <action
+        android:id="@+id/action_edit_a1c"
+        app:destination="@id/edit_a1c_activity"/>
+
+    <activity
+        android:id="@+id/edit_insulin_log_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivity">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </activity>
+    <action
+        android:id="@+id/action_add_insulin_log"
+        app:destination="@+id/edit_insulin_log_activity"/>
+    <action
+        android:id="@+id/action_edit_insulin_log"
+        app:destination="@+id/edit_insulin_log_activity"/>
+
+    <activity
+        android:id="@+id/settings_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsActivity" />
+    <action
+        android:id="@+id/action_open_settings"
+        app:destination="@id/settings_activity"/>
+
+    <activity
+        android:id="@+id/edit_medication_log_activity"
         android:name="com.axel_stein.glucose_tracker.ui.edit_medication_log.EditMedicationLogActivity">
         <argument
             android:name="id"
             app:argType="long"
             android:defaultValue="0L"/>
     </activity>
-
     <action
         android:id="@+id/action_add_medication_log"
-        app:destination="@+id/edit_medication_log"/>
+        app:destination="@+id/edit_medication_log_activity"/>
+    <action
+        android:id="@+id/action_edit_medication_log"
+        app:destination="@+id/edit_medication_log_activity"/>
 
 </navigation>

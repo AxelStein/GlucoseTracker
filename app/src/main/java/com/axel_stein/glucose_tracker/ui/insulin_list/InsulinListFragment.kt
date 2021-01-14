@@ -7,7 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentInsulinListBinding
-import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionInsulinListEditInsulin
+import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionAddInsulin
+import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionEditInsulin
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class InsulinListFragment : Fragment() {
@@ -25,7 +26,7 @@ class InsulinListFragment : Fragment() {
         _binding = FragmentInsulinListBinding.inflate(inflater, container, false)
         adapter = InsulinListAdapter()
         adapter.setOnItemClickListener { _, item ->
-            findNavController().navigate(actionInsulinListEditInsulin(item.id))
+            findNavController().navigate(actionEditInsulin(item.id))
         }
         binding.recyclerView.adapter = adapter
         return binding.root
@@ -46,7 +47,7 @@ class InsulinListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_add -> findNavController().navigate(actionInsulinListEditInsulin())
+            R.id.menu_add -> findNavController().navigate(actionAddInsulin())
         }
         return super.onOptionsItemSelected(item)
     }
