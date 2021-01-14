@@ -46,7 +46,7 @@
     <string name="stats_a1c">HbA1c розрахункове значення</string>
     <string name="diabetes_control_good">Хороший контроль діабету</string>
     <string name="diabetes_control_bad">Поганий контроль діабету</string>
-    <string name="diabetes_control_average">Відносний контроль діабету</string>
+    <string name="diabetes_control_relative">Відносний контроль діабету</string>
     <string name="dialog_msg_delete_a1c">Запис буде видалено назавжди.</string>
     <string name="bottom_nav_archive">Архів</string>
 

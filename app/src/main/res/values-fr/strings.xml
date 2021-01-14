@@ -52,7 +52,7 @@
     <string name="stats_avg">Valeur moyenne</string>
     <string name="stats_a1c">HbA1c valeur estimée</string>
     <string name="diabetes_control_good">Bon contrôle du diabète</string>
-    <string name="diabetes_control_average">Contrôle relatif du diabète</string>
+    <string name="diabetes_control_relative">Contrôle relatif du diabète</string>
     <string name="diabetes_control_bad">Mauvais contrôle du diabète</string>
     <string name="bottom_nav_archive">Archives</string>
 

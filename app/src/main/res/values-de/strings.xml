@@ -54,7 +54,7 @@
     <string name="stats_avg">Durchschnittswert</string>
     <string name="stats_a1c">HbA1c geschätzter Wert</string>
     <string name="diabetes_control_good">Gute Diabetes-Kontrolle</string>
-    <string name="diabetes_control_average">Relative Diabetes-Kontrolle</string>
+    <string name="diabetes_control_relative">Relative Diabetes-Kontrolle</string>
     <string name="diabetes_control_bad">Schlechte Diabetes-Kontrolle</string>
     <string name="bottom_nav_archive">Archiv</string>
 

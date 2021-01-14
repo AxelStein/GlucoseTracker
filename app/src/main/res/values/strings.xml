@@ -9,8 +9,8 @@
     <string name="action_save">Save</string>
     <string name="action_add">Add</string>
     <string name="action_edit">Edit</string>
-    <string name="action_suspend">Suspend</string>
-    <string name="action_resume">Resume</string>
+    <string name="action_suspend_medication_taking">Suspend taking</string>
+    <string name="action_resume_medication_taking">Resume taking</string>
 
     <!--fab menu-->
     <string name="fab_menu_blood_sugar">Blood sugar</string>
@@ -79,7 +79,7 @@
 
     <!--diabetes control-->
     <string name="diabetes_control_good">Good diabetes control</string>
-    <string name="diabetes_control_average">Relative diabetes control</string>
+    <string name="diabetes_control_relative">Relative diabetes control</string>
     <string name="diabetes_control_bad">Poor diabetes control</string>
 
     <!--error-->

@@ -216,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:textColor="?attr/diabetesControlAvgColor"
-                        android:text="@string/diabetes_control_average"
+                        android:text="@string/diabetes_control_relative"
                         app:drawableTint="?attr/diabetesControlAvgColor"
                         app:drawableStartCompat="@drawable/icon_checked" />
 

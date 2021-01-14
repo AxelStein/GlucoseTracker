@@ -146,7 +146,7 @@
     <Button
         android:id="@+id/btn_toggle_active"
         android:layout_gravity="bottom"
-        android:text="@string/action_suspend"
+        tools:text="@string/action_suspend_medication_taking"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

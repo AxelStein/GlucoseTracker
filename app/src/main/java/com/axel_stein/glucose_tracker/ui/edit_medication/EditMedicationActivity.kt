@@ -30,7 +30,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         setViewVisible(args.id != 0L, binding.btnToggleActive)
         binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
         viewModel.activeLiveData().observe(this, {
-            binding.btnToggleActive.setText(if (it) R.string.action_suspend else R.string.action_resume)
+            binding.btnToggleActive.setText(if (it) R.string.action_suspend_medication_taking else R.string.action_resume_medication_taking)
         })
 
         viewModel.actionFinishLiveData().observe(this, {

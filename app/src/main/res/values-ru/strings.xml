@@ -46,7 +46,7 @@
     <string name="stats_a1c">HbA1c расчетное значение</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
-    <string name="diabetes_control_average">Относительный контроль диабета</string>
+    <string name="diabetes_control_relative">Относительный контроль диабета</string>
     <string name="dialog_msg_delete_a1c">Запись будет удалена навсегда.</string>
     <string name="bottom_nav_archive">Архив</string>
 
@@ -96,8 +96,8 @@
     <string name="fab_menu_insulin">Прием инсулина</string>
     <string name="action_add">Добавить</string>
     <string name="action_edit">Редактировать</string>
-    <string name="action_suspend">Приостановить</string>
-    <string name="action_resume">Продолжить</string>
+    <string name="action_suspend_medication_taking">Приостановить прием</string>
+    <string name="action_resume_medication_taking">Продолжить прием</string>
     <string name="fab_menu_medication">Прием лекарства</string>
     <string name="dialog_msg_delete_insulin">Препарат инсулина и его записи будут удалены навсегда.</string>
     <string name="dialog_msg_delete_medication">Лекарство и его записи будут удалены навсегда.</string>
