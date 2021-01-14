@@ -79,8 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:suffixText="@string/kg">
+            android:layout_marginEnd="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_weight"
@@ -103,11 +102,12 @@
             app:drawableTint="?attr/diabetesControlGoodColor"
             android:textSize="16sp"
             android:gravity="center_vertical"
-            android:lines="1"
             android:ellipsize="end"
             tools:text="BMI: 18.7 (Normal)"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:lines="2"
             tools:visibility="visible"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/icon_checked" />
@@ -121,11 +121,12 @@
             app:drawableTint="?attr/diabetesControlAvgColor"
             android:textSize="16sp"
             android:gravity="center_vertical"
-            android:lines="1"
             android:ellipsize="end"
             tools:text="BMI: 27.4 (Overweight)"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:lines="2"
             tools:visibility="visible"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/icon_checked" />
@@ -139,11 +140,12 @@
             app:drawableTint="?attr/diabetesControlBadColor"
             android:textSize="16sp"
             android:gravity="center_vertical"
-            android:lines="1"
             android:ellipsize="end"
-            tools:text="BMI: 34.5 (Obese Class I)"
+            tools:text="ИМТ: 34.5 (Выраженный дефицит массы тела)"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:lines="2"
             tools:visibility="visible"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/icon_checked" />
@@ -158,8 +160,9 @@
             tools:text="@string/hint_indicate_height"
             tools:visibility="visible"
             android:visibility="gone"
+            android:minHeight="48dp"
             android:layout_width="match_parent"
-            android:layout_height="48dp"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
