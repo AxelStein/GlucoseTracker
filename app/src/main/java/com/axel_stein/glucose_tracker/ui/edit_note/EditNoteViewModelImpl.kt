@@ -5,14 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.NoteLog
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
-import io.reactivex.CompletableObserver
+import com.axel_stein.glucose_tracker.utils.DateTimeProvider
+import com.axel_stein.glucose_tracker.utils.getOrDateTime
+import com.axel_stein.glucose_tracker.utils.getOrDefault
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import org.joda.time.DateTime
+import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.MutableDateTime
 
-open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel() {
+open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel(), DateTimeProvider {
     protected var dateTime = MutableLiveData<MutableDateTime>()
     protected var note = MutableLiveData<String>()
     protected var errorNoteEmpty = MutableLiveData<Boolean>()
@@ -25,8 +26,6 @@ open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel() {
         this.dao = dao
     }
 
-    fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
-
     fun noteLiveData(): LiveData<String> = note
 
     fun errorNoteEmptyLiveData(): LiveData<Boolean> = errorNoteEmpty
@@ -37,13 +36,32 @@ open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     fun actionFinishLiveData(): LiveData<Boolean> = actionFinish
 
-    fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
+    override fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
 
-    fun getNote() = note.value ?: ""
+    override fun onDateSet(year: Int, month: Int, dayOfMonth: Int) {
+        val dt = dateTime.getOrDefault()
+        dateTime.postValue(
+            dt.apply {
+                this.year = year
+                this.monthOfYear = month
+                this.dayOfMonth = dayOfMonth
+            }
+        )
+    }
+
+    override fun onTimeSet(hourOfDay: Int, minuteOfHour: Int) {
+        val dt = dateTime.getOrDefault()
+        dateTime.postValue(
+            dt.apply {
+                this.hourOfDay = hourOfDay
+                this.minuteOfHour= minuteOfHour
+            }
+        )
+    }
 
     fun loadData() {
         if (id != 0L) {
-            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<NoteLog> {
+            dao.get(id).subscribeOn(io()).subscribe(object : SingleObserver<NoteLog> {
                 override fun onSubscribe(d: Disposable) {}
 
                 override fun onSuccess(l: NoteLog) {
@@ -62,71 +80,46 @@ open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel() {
     }
 
     fun save() {
-        val note = getNote()
-        if (note.isBlank()) {
-            errorNoteEmpty.value = true
-        } else {
-            val log = createLog()
-            var completable = dao.insert(log)
-            if (log.id != 0L) {
-                completable = dao.update(log)
+        when {
+            note.getOrDefault("").isBlank() -> errorNoteEmpty.value = true
+            else -> {
+                val log = createLog()
+                val task = if (id != 0L) dao.update(log) else dao.insert(log)
+                task.subscribeOn(io())
+                    .subscribe(
+                        { actionFinish.postValue(true) },
+                        {
+                            it.printStackTrace()
+                            errorSave.postValue(true)
+                        }
+                    )
             }
-            completable.subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    errorSave.postValue(true)
-                }
-            })
         }
     }
 
-    private fun createLog(): NoteLog {
-        val note = getNote()
-        return NoteLog(note, getCurrentDateTime()).also { it.id = id }
-    }
-
-    fun setDate(year: Int, month: Int, dayOfMonth: Int) {
-        dateTime.postValue(dateTime.value.apply {
-            this?.year = year
-            this?.monthOfYear = month
-            this?.dayOfMonth = dayOfMonth
-        })
-    }
-
-    fun setTime(hourOfDay: Int, minuteOfHour: Int) {
-        dateTime.postValue(dateTime.value.apply {
-            this?.hourOfDay = hourOfDay
-            this?.minuteOfHour = minuteOfHour
-        })
+    private fun createLog() = NoteLog(
+        note.getOrDefault(""),
+        dateTime.getOrDateTime()
+    ).also {
+        it.id = id
     }
 
     fun setNote(value: String) {
         note.value = value
-        if (value.isNotEmpty()) {
+        if (value.isNotBlank()) {
             errorNoteEmpty.value = false
         }
     }
 
     fun delete() {
-        if (id != 0L) {
-            dao.deleteById(id).subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
+        if (id != 0L) dao.deleteById(id)
+            .subscribeOn(io())
+            .subscribe(
+                { actionFinish.postValue(true) },
+                {
+                    it.printStackTrace()
                     errorDelete.postValue(true)
                 }
-            })
-        }
+            )
     }
 }
