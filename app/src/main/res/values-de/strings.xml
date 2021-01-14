@@ -2,29 +2,28 @@
 <resources>
     <string name="action_settings">Einstellungen</string>
 
-    <string name="before_breakfast">Vor dem Frühstück</string>
-    <string name="after_breakfast">Nach dem Frühstück</string>
+    <string name="measured_before_breakfast">Vor dem Frühstück</string>
+    <string name="measured_after_breakfast">Nach dem Frühstück</string>
 
-    <string name="before_lunch">Vor dem Mittagessen</string>
-    <string name="after_lunch">Nach dem Mittagessen</string>
+    <string name="measured_before_lunch">Vor dem Mittagessen</string>
+    <string name="measured_after_lunch">Nach dem Mittagessen</string>
 
-    <string name="before_dinner">Vor dem Abendessen</string>
-    <string name="after_dinner">Nach dem Abendessen</string>
+    <string name="measured_before_dinner">Vor dem Abendessen</string>
+    <string name="measured_after_dinner">Nach dem Abendessen</string>
 
-    <string name="other">Andere</string>
+    <string name="measured_other">Andere</string>
 
-    <string name="title_confirm">Sind Sie sicher?</string>
-    <string name="msg_delete_note">Hinweis wird dauerhaft gelöscht.</string>
-    <string name="msg_delete_glucose">Das Protokoll wird dauerhaft gelöscht.</string>
-    <string name="msg_delete_a1c">Das Protokoll wird dauerhaft gelöscht.</string>
+    <string name="dialog_title_confirm">Sind Sie sicher?</string>
+    <string name="dialog_msg_delete_note">Hinweis wird dauerhaft gelöscht.</string>
+    <string name="dialog_msg_delete_glucose">Das Protokoll wird dauerhaft gelöscht.</string>
+    <string name="dialog_msg_delete_a1c">Das Protokoll wird dauerhaft gelöscht.</string>
     <string name="action_delete">Löschen</string>
     <string name="action_cancel">Stornieren</string>
-    <string name="fab_add_log">Protokoll hinzufügen</string>
     <string name="fab_menu_blood_sugar">Blutzucker</string>
     <string name="fab_menu_note">Hinweis</string>
     <string name="hint_sugar_level">Zuckergehalt</string>
-    <string name="mmol_l">mmol/L</string>
-    <string name="mg_dl">mg/dL</string>
+    <string name="glucose_unit_mmol_l">mmol/L</string>
+    <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="hint_note">Hinweis</string>
     <string name="no_data">Keine Daten</string>
     <string name="action_save">Sparen</string>
@@ -37,19 +36,17 @@
     <string name="bottom_nav_home">Zuhause</string>
     <string name="bottom_nav_statistics">Statistiken</string>
     <string name="bottom_nav_more">Mehr</string>
-    <string name="bottom_nav_settings">Einstellungen</string>
-    <string name="pref_list_glucose_units">Glukoseeinheiten</string>
-    <string name="pref_category_backup">Sichern und importieren</string>
-    <string name="pref_export_backup">In Datei exportieren</string>
-    <string name="pref_import_backup">Aus Datei importieren</string>
-    <string name="msg_import_completed">Import abgeschlossen</string>
+    <string name="main_pref_glucose_units">Glukoseeinheiten</string>
+    <string name="main_pref_category_backup">Sichern und importieren</string>
+    <string name="main_pref_export_backup">In Datei exportieren</string>
+    <string name="main_pref_import_backup">Aus Datei importieren</string>
+    <string name="dialog_msg_import_completed">Import abgeschlossen</string>
     <string name="error_import_file">Dateiimportfehler</string>
     <string name="error_export_file">Fehler beim Exportieren der Datei</string>
-    <string name="pref_night_mode">Nacht-Modus</string>
 
-    <string name="period_two_weeks">Letzte 2 Wochen</string>
-    <string name="period_month">Letzten Monat</string>
-    <string name="period_three_months">Letzte 3 Monate</string>
+    <string name="stats_period_two_weeks">Letzte 2 Wochen</string>
+    <string name="stats_period_month">Letzten Monat</string>
+    <string name="stats_period_three_months">Letzte 3 Monate</string>
     <string name="period_year">Vergangenes Jahr</string>
 
     <string name="stats_min">Mindestwert</string>
@@ -88,19 +85,19 @@
     <string name="month_dec_a">Dez</string>
 
     <string name="error_opening_log">Fehler beim Öffnen des Protokolls</string>
-    <string name="pref_about_app">Über App</string>
-    <string name="pref_rate_app">Bewertungs App</string>
-    <string name="app_version_title">App Version</string>
-    <string name="pref_export_drive">Ein Backup erstellen</string>
-    <string name="pref_import_drive">Backup importieren</string>
-    <string name="pref_auto_sync">Automatische Synchronisation</string>
-    <string name="pref_last_synced">Letzte Synchronisierung</string>
-    <string name="pref_auto_sync_summary">Erstellen Sie jeden Tag automatisch ein Backup</string>
+    <string name="main_pref_category_about_app">Über App</string>
+    <string name="main_pref_rate_app">Bewertungs App</string>
+    <string name="main_pref_app_version_title">App Version</string>
+    <string name="main_pref_export_drive">Ein Backup erstellen</string>
+    <string name="main_pref_import_drive">Backup importieren</string>
+    <string name="main_pref_auto_sync">Automatische Synchronisation</string>
+    <string name="main_pref_last_synced">Letzte Synchronisierung</string>
+    <string name="main_pref_auto_sync_summary">Erstellen Sie jeden Tag automatisch ein Backup</string>
     <string name="error_create_backup">Fehler beim Erstellen des Backups</string>
-    <string name="msg_backup_created">Backup erfolgreich erstellt</string>
+    <string name="dialog_msg_backup_created">Backup erfolgreich erstellt</string>
     <string name="error_import">Importfehler</string>
     <string name="error_import_backup">Importfehler</string>
     <string name="error_statistics">Fehler beim Laden der Statistik</string>
-    <string name="before_meal">Vor dem Essen</string>
-    <string name="after_meal">Nach dem Essen</string>
+    <string name="stats_before_meal">Vor dem Essen</string>
+    <string name="stats_after_meal">Nach dem Essen</string>
 </resources>

@@ -54,7 +54,7 @@ class MedicationListFragment : Fragment() {
         list.forEachIndexed { index, item ->
             val itemActive = item.active
             if (active == null || active != itemActive) {
-                headers[index] = getString(if (itemActive) R.string.active_medications else R.string.suspended_medications)
+                headers[index] = getString(if (itemActive) R.string.hint_active_medications else R.string.hint_suspended_medications)
                 active = itemActive
             }
         }

@@ -1,29 +1,28 @@
 <resources>
     <string name="action_settings">Paramètres</string>
 
-    <string name="before_breakfast">Avant le petit-déjeuner</string>
-    <string name="after_breakfast">Après le petit-déjeuner</string>
+    <string name="measured_before_breakfast">Avant le petit-déjeuner</string>
+    <string name="measured_after_breakfast">Après le petit-déjeuner</string>
 
-    <string name="before_lunch">Avant le déjeuner</string>
-    <string name="after_lunch">Après le déjeuner</string>
+    <string name="measured_before_lunch">Avant le déjeuner</string>
+    <string name="measured_after_lunch">Après le déjeuner</string>
 
-    <string name="before_dinner">Avant le dîner</string>
-    <string name="after_dinner">Après le dîner</string>
+    <string name="measured_before_dinner">Avant le dîner</string>
+    <string name="measured_after_dinner">Après le dîner</string>
 
-    <string name="other">Autre</string>
+    <string name="measured_other">Autre</string>
 
-    <string name="title_confirm">Êtes-vous sûr?</string>
-    <string name="msg_delete_note">Note sera supprimée définitivement.</string>
-    <string name="msg_delete_glucose">L\'enregistrement sera supprimée définitivement.</string>
-    <string name="msg_delete_a1c">L\'enregistrement sera supprimée définitivement.</string>
+    <string name="dialog_title_confirm">Êtes-vous sûr?</string>
+    <string name="dialog_msg_delete_note">Note sera supprimée définitivement.</string>
+    <string name="dialog_msg_delete_glucose">L\'enregistrement sera supprimée définitivement.</string>
+    <string name="dialog_msg_delete_a1c">L\'enregistrement sera supprimée définitivement.</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_cancel">Annuler</string>
-    <string name="fab_add_log">Ajouter l\'enregistrement</string>
     <string name="fab_menu_blood_sugar">Glycémie</string>
     <string name="fab_menu_note">Note</string>
     <string name="hint_sugar_level">Niveau de sucre</string>
-    <string name="mmol_l">mmol/L</string>
-    <string name="mg_dl">mg/dL</string>
+    <string name="glucose_unit_mmol_l">mmol/L</string>
+    <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="hint_note">Note</string>
     <string name="no_data">Pas de données</string>
     <string name="action_save">Sauvegarder</string>
@@ -36,19 +35,17 @@
     <string name="bottom_nav_home">Accueil</string>
     <string name="bottom_nav_statistics">Statistiques</string>
     <string name="bottom_nav_more">Plus</string>
-    <string name="bottom_nav_settings">Paramètres</string>
-    <string name="pref_list_glucose_units">Unités de mesure</string>
-    <string name="pref_category_backup">Sauvegarde et importation</string>
-    <string name="pref_export_backup">Exporter vers un fichier</string>
-    <string name="pref_import_backup">Importer depuis un fichier</string>
-    <string name="msg_import_completed">Importation est terminée</string>
+    <string name="main_pref_glucose_units">Unités de glucose</string>
+    <string name="main_pref_category_backup">Sauvegarde et importation</string>
+    <string name="main_pref_export_backup">Exporter vers un fichier</string>
+    <string name="main_pref_import_backup">Importer depuis un fichier</string>
+    <string name="dialog_msg_import_completed">Importation est terminée</string>
     <string name="error_import_file">Erreur lors de l\'importation du fichier</string>
     <string name="error_export_file">Erreur lors de l\'exportation du fichier</string>
-    <string name="pref_night_mode">Mode nuit</string>
 
-    <string name="period_two_weeks">Depuis 2 semaines</string>
-    <string name="period_month">Depuis le mois dernier</string>
-    <string name="period_three_months">Depuis 3 mois</string>
+    <string name="stats_period_two_weeks">Depuis 2 semaines</string>
+    <string name="stats_period_month">Depuis le mois dernier</string>
+    <string name="stats_period_three_months">Depuis 3 mois</string>
 
     <string name="stats_min">Valeur minimum</string>
     <string name="stats_max">Valeur maximum</string>
@@ -86,20 +83,20 @@
     <string name="month_dec_a">Déc</string>
 
     <string name="error_opening_log">Erreur lors de l\'ouverture</string>
-    <string name="pref_about_app">À propos de l\'application</string>
-    <string name="pref_rate_app">Évaluer l\'application</string>
-    <string name="app_version_title">Version de l\'application</string>
-    <string name="pref_export_drive">Créer une sauvegarde</string>
-    <string name="pref_import_drive">Importer une sauvegarde</string>
-    <string name="pref_auto_sync">Synchronisation automatique</string>
-    <string name="pref_last_synced">Dernière synchronisation</string>
-    <string name="pref_auto_sync_summary">Sauvegarde automatique tous les jours</string>
+    <string name="main_pref_category_about_app">À propos de l\'application</string>
+    <string name="main_pref_rate_app">Évaluer l\'application</string>
+    <string name="main_pref_app_version_title">Version de l\'application</string>
+    <string name="main_pref_export_drive">Créer une sauvegarde</string>
+    <string name="main_pref_import_drive">Importer une sauvegarde</string>
+    <string name="main_pref_auto_sync">Synchronisation automatique</string>
+    <string name="main_pref_last_synced">Dernière synchronisation</string>
+    <string name="main_pref_auto_sync_summary">Sauvegarde automatique tous les jours</string>
     <string name="error_create_backup">Erreur lors de la création de la sauvegarde</string>
     <string name="error_import">Erreur lors de l\'importation</string>
     <string name="error_import_backup">Erreur lors de l\'importation</string>
-    <string name="msg_backup_created">Sauvegarde créée avec succès</string>
+    <string name="dialog_msg_backup_created">Sauvegarde créée avec succès</string>
     <string name="error_statistics">Erreur lord du chargement des statistiques</string>
     <string name="period_year">Depuis un an</string>
-    <string name="before_meal">Avant de manger</string>
-    <string name="after_meal">Après manger</string>
+    <string name="stats_before_meal">Avant de manger</string>
+    <string name="stats_after_meal">Après manger</string>
 </resources>

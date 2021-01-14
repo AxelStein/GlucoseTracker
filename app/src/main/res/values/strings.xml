@@ -2,69 +2,151 @@
     <string name="app_name" translatable="false">Glucose Tracker</string>
     <string name="app_version" translatable="false">1.0.5</string>
 
+    <!--action-->
     <string name="action_settings">Settings</string>
-
-    <string name="before_breakfast">Before breakfast</string>
-    <string name="after_breakfast">After breakfast</string>
-
-    <string name="before_lunch">Before lunch</string>
-    <string name="after_lunch">After lunch</string>
-
-    <string name="before_dinner">Before dinner</string>
-    <string name="after_dinner">After dinner</string>
-
-    <string name="other">Other</string>
-
-    <string name="title_confirm">Are you sure?</string>
-    <string name="msg_delete_note">Note will be permanently deleted.</string>
-    <string name="msg_delete_glucose">Log will be permanently deleted.</string>
-    <string name="msg_delete_a1c">Log will be permanently deleted.</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
-    <string name="fab_add_log">add log</string>
+    <string name="action_save">Save</string>
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_suspend">Suspend</string>
+    <string name="action_resume">Resume</string>
+
+    <!--fab menu-->
     <string name="fab_menu_blood_sugar">Blood sugar</string>
     <string name="fab_menu_note">Note</string>
+    <string name="fab_menu_insulin">Insulin intake</string>
+    <string name="fab_menu_medication">Medication intake</string>
+
+    <!--bottom nav view-->
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_statistics">Statistics</string>
+    <string name="bottom_nav_archive">Archive</string>
+    <string name="bottom_nav_more">More</string>
+
+    <!--dialog title-->
+    <string name="dialog_title_confirm">Are you sure?</string>
+
+    <!--dialog message-->
+    <string name="dialog_msg_delete_note">Note will be permanently deleted.</string>
+    <string name="dialog_msg_delete_glucose">Log will be permanently deleted.</string>
+    <string name="dialog_msg_delete_a1c">Log will be permanently deleted.</string>
+    <string name="dialog_msg_import_completed">Import completed</string>
+    <string name="dialog_msg_backup_created">Backup created successfully</string>
+    <string name="dialog_msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
+    <string name="dialog_msg_delete_medication">Medication and all the associated records will be permanently deleted.</string>
+    <string name="dialog_msg_delete_insulin_log">Log will be permanently deleted.</string>
+
+    <!--hint-->
     <string name="hint_sugar_level">Sugar level</string>
-    <string name="mmol_l">mmol/L</string>
-    <string name="mg_dl">mg/dL</string>
     <string name="hint_note">Note</string>
-    <string name="no_data">No data</string>
-    <string name="action_save">Save</string>
-    <string name="no_value">Please fill in this field</string>
+    <string name="hint_measured">Measured</string>
+    <string name="hint_a1c" translatable="false">HbA1c</string>
+    <string name="hint_units">Number of units</string>
+    <string name="hint_insulin_type">Insulin type</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_dosage_form">Dosage form</string>
+    <string name="hint_indicate_height">Tap here to set your height for calculating BMI</string>
+    <string name="hint_weight">Weight</string>
+    <string name="hint_dosage">Dosage</string>
+    <string name="hint_amount">Amount</string>
+    <string name="hint_active_medications">Active medications</string>
+    <string name="hint_suspended_medications">Suspended medications</string>
+
+    <!--error-->
+    <string name="error_import_file">File import error</string>
+    <string name="error_export_file">Export file error</string>
     <string name="error_saving_note">Error saving note</string>
     <string name="error_deleting_note">Error deleting note</string>
     <string name="error_saving_log">Error saving log</string>
     <string name="error_deleting_log">Error deleting log</string>
-    <string name="hint_measured">Measured</string>
-    <string name="bottom_nav_home">Home</string>
-    <string name="bottom_nav_statistics">Statistics</string>
-    <string name="bottom_nav_more">More</string>
-    <string name="fab_menu_a1c" translatable="false">HbA1c</string>
-    <string name="bottom_nav_settings">Settings</string>
-    <string name="pref_list_glucose_units">Glucose units</string>
-    <string name="pref_category_backup">Backup and import</string>
-    <string name="pref_export_backup">Export to file</string>
-    <string name="pref_import_backup">Import from file</string>
-    <string name="msg_import_completed">Import completed</string>
-    <string name="error_import_file">File import error</string>
-    <string name="error_export_file">Export file error</string>
-    <string name="pref_night_mode">Night mode</string>
+    <string name="error_medication_list_empty">Add medication first</string>
+    <string name="error_insulin_list_empty">Add insulin first</string>
 
-    <string name="period_two_weeks">Last 2 weeks</string>
-    <string name="period_month">Last month</string>
-    <string name="period_three_months">Last 3 months</string>
-    <string name="period_year">Last year</string>
+    <!--no data placeholder-->
+    <string name="no_data">No data</string>
+    <string name="no_value">Please fill in this field</string>
+    <string name="no_insulin">No insulin</string>
+    <string name="no_medication">No medication</string>
 
+    <!--statistics-->
     <string name="stats_min">Minimum value</string>
     <string name="stats_max">Maximum value</string>
     <string name="stats_avg">Average value</string>
     <string name="stats_a1c">HbA1c estimated value</string>
+    <string name="stats_before_meal">Before meal</string> <!--todo-->
+    <string name="stats_after_meal">After meal</string> <!--todo-->
+
+    <!--diabetes control-->
     <string name="diabetes_control_good">Good diabetes control</string>
     <string name="diabetes_control_average">Relative diabetes control</string>
     <string name="diabetes_control_bad">Poor diabetes control</string>
-    <string name="hint_a1c" translatable="false">HbA1c</string>
-    <string name="bottom_nav_archive">Archive</string>
 
+    <!--error-->
+    <string name="error_opening_log">Error opening log</string>
+    <string name="error_create_backup">Error creating backup</string>
+    <string name="error_import">Import error</string>
+    <string name="error_import_backup">Import error</string>
+    <string name="error_statistics">Error loading statistics</string>
+
+    <!--main preferences-->
+    <string name="main_pref_theme">Theme</string>
+    <string name="main_pref_glucose_units">Glucose units</string>
+    <string name="main_pref_weight_units">Weight units</string>
+    <string name="main_pref_height">Height</string>
+    <string name="main_pref_height_summary">Indicate your height for calculating body mass index</string>
+
+    <string name="main_pref_category_backup">Backup and import</string>
+    <string name="main_pref_export_backup">Export to file</string>
+    <string name="main_pref_import_backup">Import from file</string>
+
+    <string name="main_pref_category_google_drive" translatable="false">Google Drive</string>
+    <string name="main_pref_auto_sync">Auto sync</string>
+    <string name="main_pref_auto_sync_summary">Create backup automatically every day</string>
+    <string name="main_pref_export_drive">Create backup</string>
+    <string name="main_pref_import_drive">Import backup</string>
+    <string name="main_pref_last_synced">Last sync</string>
+
+    <string name="main_pref_category_about_app">About app</string>
+    <string name="main_pref_rate_app">Rate app</string>
+    <string name="main_pref_app_version_title">App version</string>
+
+    <!--plus preferences-->
+    <string name="plus_pref_insulin_list">Insulin list</string>
+    <string name="plus_pref_medications">Medications</string>
+
+    <string name="pref_category_measurements">Measurements</string>
+    <string name="plus_pref_a1c" translatable="false">HbA1c</string>
+    <string name="plus_pref_weight">Weight and BMI</string>
+
+    <!--todo height units-->
+    <string name="height_unit_cm">cm</string>
+
+    <!--theme array-->
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">Follow system</string>
+
+    <!--statistics periods array-->
+    <string name="stats_period_two_weeks">Last 2 weeks</string>
+    <string name="stats_period_month">Last month</string>
+    <string name="stats_period_three_months">Last 3 months</string>
+    <string name="period_year">Last year</string>
+
+    <!--glucose units array-->
+    <string name="glucose_unit_mmol_l">mmol/L</string>
+    <string name="glucose_unit_mg_dl">mg/dL</string>
+
+    <!--measured array-->
+    <string name="measured_before_breakfast">Before breakfast</string>
+    <string name="measured_after_breakfast">After breakfast</string>
+    <string name="measured_before_lunch">Before lunch</string>
+    <string name="measured_after_lunch">After lunch</string>
+    <string name="measured_before_dinner">Before dinner</string>
+    <string name="measured_after_dinner">After dinner</string>
+    <string name="measured_other">Other</string>
+
+    <!--months array-->
     <string name="month_jan">January</string>
     <string name="month_feb">February</string>
     <string name="month_mar">March</string>
@@ -78,6 +160,7 @@
     <string name="month_nov">November</string>
     <string name="month_dec">December</string>
 
+    <!--months array-->
     <string name="month_jan_a">Jan</string>
     <string name="month_feb_a">Feb</string>
     <string name="month_mar_a">Mar</string>
@@ -91,91 +174,45 @@
     <string name="month_nov_a">Nov</string>
     <string name="month_dec_a">Dec</string>
 
-    <string name="error_opening_log">Error opening log</string>
-    <string name="pref_about_app">About app</string>
-    <string name="pref_rate_app">Rate app</string>
-    <string name="app_version_title">App version</string>
-    <string name="pref_export_drive">Create backup</string>
-    <string name="pref_import_drive">Import backup</string>
-    <string name="pref_category_google_drive" translatable="false">Google Drive</string>
-    <string name="pref_auto_sync">Auto sync</string>
-    <string name="pref_last_synced">Last sync</string>
-    <string name="pref_auto_sync_summary">Create backup automatically every day</string>
-    <string name="error_create_backup">Error creating backup</string>
-    <string name="msg_backup_created">Backup created successfully</string>
-    <string name="error_import">Import error</string>
-    <string name="error_import_backup">Import error</string>
-    <string name="error_statistics">Error loading statistics</string>
-    <string name="before_meal">Before meal</string>
-    <string name="after_meal">After meal</string>
-    <string name="hint_units">Number of units</string>
-    <string name="fab_menu_insulin">Insulin</string>
-    <string name="fab_menu_medication">Medication</string>
-    <string name="pref_theme">Theme</string>
-    <string name="action_add">Add</string>
-    <string name="insulin_list">Insulin list</string>
-    <string name="action_edit">Edit</string>
-    <string name="hint_insulin_type">Insulin type</string>
-    <string name="hint_title">Title</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_system">Follow system</string>
-    <string name="type_rapid">Rapid</string>
-    <string name="type_short">Short</string>
-    <string name="type_intermediate">Intermediate</string>
-    <string name="type_long">Long</string>
-    <string name="msg_delete_insulin">Insulin and all the associated records will be permanently deleted.</string>
-    <string name="msg_delete_medication">Medication and all the associated records will be permanently deleted.</string>
-    <string name="msg_delete_insulin_log">Log will be permanently deleted.</string>
-    <string name="medications">Medications</string>
-    <string name="notes">Notes</string>
-    <string name="weight">Weight and BMI</string>
-    <string name="a1c">HbA1c</string>
-    <string name="blood_sugar">Blood sugar</string>
-    <string name="pref_list_weight_units">Weight units</string>
-    <string name="error_insulin_list_empty">Add insulin first</string>
-    <string name="hint_dosage">Dosage</string>
-    <string name="hint_amount">Amount</string>
-    <string name="kg">kg</string>
-    <string name="lb">lb</string>
-    <string name="pref_kg">Kilograms (kg)</string>
-    <string name="pref_lb">Pounds (lb)</string>
-    <string name="mg">mg</string>
-    <string name="ml">ml</string>
-    <string name="g">g</string>
-    <string name="IU">IU</string>
-    <string name="no_insulin">No insulin</string>
-    <string name="no_medication">No medication</string>
-    <string name="error_medication_list_empty">Add medication first</string>
-    <string name="mg_ml">mg/ml</string>
-    <string name="mcg_ml">µg/ml</string>
-    <string name="form_tablet">Tablet</string>
-    <string name="form_capsule">Capsule</string>
-    <string name="form_ampule">Ampule</string>
-    <string name="form_injection">Injection</string>
-    <string name="form_packet">Packet</string>
-    <string name="form_drop">Drop</string>
-    <string name="form_dose">Dose</string>
-    <string name="form_ml">ml</string>
-    <string name="form_g">Gram</string>
-    <string name="form_iu">IU</string>
-    <string name="form_suppository">Suppository</string>
-    <string name="hint_dosage_form">Dosage form</string>
-    <string name="suspend">suspend</string>
-    <string name="resume">resume</string>
-    <string name="active_medications">Active medications</string>
-    <string name="suspended_medications">Suspended medications</string>
-    <string name="hint_weight">Weight</string>
-    <string name="height">Height</string>
-    <string name="cm">cm</string>
-    <string name="thinness_3">Severe thinness</string>
-    <string name="thinness_2">Moderate thinness</string>
-    <string name="thinness_1">Mild thinness</string>
-    <string name="normal_weight">Normal</string>
-    <string name="overweight">Overweight</string>
-    <string name="obese_1">Obese Class I</string>
-    <string name="obese_2">Obese Class II</string>
-    <string name="obese_3">Obese Class III</string>
-    <string name="pref_height_summary">Indicate your height for calculating body mass index</string>
-    <string name="hint_indicate_height">Tap here to set your height for calculating BMI</string>
+    <!--insulin types array-->
+    <string name="insulin_type_rapid">Rapid</string>
+    <string name="insulin_type_short">Short</string>
+    <string name="insulin_type_intermediate">Intermediate</string>
+    <string name="insulin_type_long">Long</string>
+
+    <!--weight units array-->
+    <string name="weight_unit_kg">kg</string>
+    <string name="weight_unit_lb">lb</string>
+
+    <!--dosage units array-->
+    <string name="dosage_unit_mg">mg</string>
+    <string name="dosage_unit_ml">ml</string>
+    <string name="dosage_unit_g">g</string>
+    <string name="dosage_unit_IU">IU</string>
+    <string name="dosage_unit_mg_ml">mg/ml</string>
+    <string name="dosage_unit_mcg">µg</string>
+    <string name="dosage_unit_mcg_ml">µg/ml</string>
+
+    <!--dosage forms array-->
+    <string name="dosage_form_tablet">Tablet</string>
+    <string name="dosage_form_capsule">Capsule</string>
+    <string name="dosage_form_ampule">Ampule</string>
+    <string name="dosage_form_injection">Injection</string>
+    <string name="dosage_form_packet">Packet</string>
+    <string name="dosage_form_drop">Drop</string>
+    <string name="dosage_form_dose">Dose</string>
+    <string name="dosage_form_ml">ml</string>
+    <string name="dosage_form_g">Gram</string>
+    <string name="dosage_form_iu">IU</string>
+    <string name="dosage_form_suppository">Suppository</string>
+
+    <!--bmi categories array-->
+    <string name="bmi_category_thinness_3">Severe thinness</string>
+    <string name="bmi_category_thinness_2">Moderate thinness</string>
+    <string name="bmi_category_thinness_1">Mild thinness</string>
+    <string name="bmi_category_normal_weight">Normal</string>
+    <string name="bmi_category_overweight">Overweight</string>
+    <string name="bmi_category_obese_1">Obese Class I</string>
+    <string name="bmi_category_obese_2">Obese Class II</string>
+    <string name="bmi_category_obese_3">Obese Class III</string>
 </resources>

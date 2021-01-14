@@ -30,7 +30,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
         setViewVisible(args.id != 0L, binding.btnToggleActive)
         binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
         viewModel.activeLiveData().observe(this, {
-            binding.btnToggleActive.setText(if (it) R.string.suspend else R.string.resume)
+            binding.btnToggleActive.setText(if (it) R.string.action_suspend else R.string.action_resume)
         })
 
         viewModel.actionFinishLiveData().observe(this, {
@@ -105,8 +105,8 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
             R.id.menu_delete -> {
                 ConfirmDialog.Builder()
                     .from(this)
-                    .title(R.string.title_confirm)
-                    .message(R.string.msg_delete_medication)
+                    .title(R.string.dialog_title_confirm)
+                    .message(R.string.dialog_msg_delete_medication)
                     .positiveBtnText(R.string.action_delete)
                     .negativeBtnText(R.string.action_cancel)
                     .show()

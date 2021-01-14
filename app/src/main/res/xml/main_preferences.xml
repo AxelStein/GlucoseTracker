@@ -7,7 +7,7 @@
         app:key="theme"
         android:entries="@array/theme_entries"
         app:entryValues="@array/theme_values"
-        app:title="@string/pref_theme"
+        app:title="@string/main_pref_theme"
         app:summary="%s"
         app:defaultValue="system"
         app:iconSpaceReserved="false"/>
@@ -19,7 +19,7 @@
         app:entryValues="@array/glucose_units_values"
         app:entries="@array/glucose_units_entries"
         app:defaultValue="mmol_l"
-        app:title="@string/pref_list_glucose_units" />
+        app:title="@string/main_pref_glucose_units" />
 
     <ListPreference
         app:key="weight_units"
@@ -28,7 +28,7 @@
         app:entryValues="@array/weight_units_values"
         app:entries="@array/weight_units_entries"
         app:defaultValue="kg"
-        app:title="@string/pref_list_weight_units" />
+        app:title="@string/main_pref_weight_units" />
 
     <EditTextPreference
         app:dialogLayout="@layout/layout_edit_height"
@@ -36,46 +36,46 @@
         android:inputType="number"
         app:iconSpaceReserved="false"
         app:key="height"
-        app:summary="@string/pref_height_summary"
-        app:title="@string/height"/>
+        app:summary="@string/main_pref_height_summary"
+        app:title="@string/main_pref_height"/>
 
     <PreferenceCategory
-        app:title="@string/pref_category_backup"
+        app:title="@string/main_pref_category_backup"
         app:iconSpaceReserved="false">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="export_backup"
-            app:title="@string/pref_export_backup" />
+            app:title="@string/main_pref_export_backup" />
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="import_backup"
-            app:title="@string/pref_import_backup"/>
+            app:title="@string/main_pref_import_backup"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:title="@string/pref_category_google_drive"
+        app:title="@string/main_pref_category_google_drive"
         app:iconSpaceReserved="false">
 
         <SwitchPreference
             tools:isPreferenceVisible="true"
             app:isPreferenceVisible="false"
             app:key="drive_auto_sync"
-            app:title="@string/pref_auto_sync"
-            app:summary="@string/pref_auto_sync_summary"
+            app:title="@string/main_pref_auto_sync"
+            app:summary="@string/main_pref_auto_sync_summary"
             app:iconSpaceReserved="false" />
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="drive_create_backup"
-            app:title="@string/pref_export_drive" />
+            app:title="@string/main_pref_export_drive" />
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="drive_import"
-            app:title="@string/pref_import_drive"/>
+            app:title="@string/main_pref_import_drive"/>
 
         <Preference
             tools:summary="May 24, 13:45"
@@ -83,18 +83,18 @@
             app:isPreferenceVisible="false"
             app:iconSpaceReserved="false"
             app:key="drive_last_synced"
-            app:title="@string/pref_last_synced"/>
+            app:title="@string/main_pref_last_synced"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref_about_app">
+        app:title="@string/main_pref_category_about_app">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="rate_app"
-            app:title="@string/pref_rate_app">
+            app:title="@string/main_pref_rate_app">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -106,7 +106,7 @@
             app:iconSpaceReserved="false"
             app:key="app_version"
             app:summary="@string/app_version"
-            app:title="@string/app_version_title"/>
+            app:title="@string/main_pref_app_version_title"/>
 
     </PreferenceCategory>
 

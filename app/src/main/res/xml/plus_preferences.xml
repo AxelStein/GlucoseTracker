@@ -1,28 +1,29 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Preference
         app:iconSpaceReserved="false"
         app:key="insulin_list"
-        app:title="@string/insulin_list"/>
+        app:title="@string/plus_pref_insulin_list"/>
 
     <Preference
         app:iconSpaceReserved="false"
         app:key="medications"
-        app:title="@string/medications"/>
+        app:title="@string/plus_pref_medications"/>
 
     <PreferenceCategory
-        app:title="Measurements"
+        app:title="@string/pref_category_measurements"
         app:iconSpaceReserved="false">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="a1c_list"
-            app:title="@string/a1c" />
+            app:title="@string/plus_pref_a1c" />
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="weight_list"
-            app:title="@string/weight"/>
+            app:title="@string/plus_pref_weight"/>
 
     </PreferenceCategory>
 

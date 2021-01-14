@@ -2,29 +2,28 @@
 <resources>
     <string name="action_settings">Configuraciones</string>
 
-    <string name="before_breakfast">Antes del desayuno</string>
-    <string name="after_breakfast">Después del desayuno</string>
+    <string name="measured_before_breakfast">Antes del desayuno</string>
+    <string name="measured_after_breakfast">Después del desayuno</string>
 
-    <string name="before_lunch">Antes del almuerzo</string>
-    <string name="after_lunch">Después del almuerzo</string>
+    <string name="measured_before_lunch">Antes del almuerzo</string>
+    <string name="measured_after_lunch">Después del almuerzo</string>
 
-    <string name="before_dinner">Antes de cenar</string>
-    <string name="after_dinner">Después de la cena</string>
+    <string name="measured_before_dinner">Antes de cenar</string>
+    <string name="measured_after_dinner">Después de la cena</string>
 
-    <string name="other">Otro</string>
+    <string name="measured_other">Otro</string>
 
-    <string name="title_confirm">¿Estás seguro?</string>
-    <string name="msg_delete_note">La nota se eliminará de forma permanente.</string>
-    <string name="msg_delete_glucose">El registro se eliminará de forma permanente.</string>
-    <string name="msg_delete_a1c">El registro se eliminará de forma permanente.</string>
+    <string name="dialog_title_confirm">¿Estás seguro?</string>
+    <string name="dialog_msg_delete_note">La nota se eliminará de forma permanente.</string>
+    <string name="dialog_msg_delete_glucose">El registro se eliminará de forma permanente.</string>
+    <string name="dialog_msg_delete_a1c">El registro se eliminará de forma permanente.</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_cancel">Cancelar</string>
-    <string name="fab_add_log">agregar registro</string>
     <string name="fab_menu_blood_sugar">Glucemia</string>
     <string name="fab_menu_note">Nota</string>
     <string name="hint_sugar_level">Nivel de azúcar</string>
-    <string name="mmol_l">mmol/L</string>
-    <string name="mg_dl">mg/dL</string>
+    <string name="glucose_unit_mmol_l">mmol/L</string>
+    <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="hint_note">Nota</string>
     <string name="no_data">Sin datos</string>
     <string name="action_save">Salvar</string>
@@ -37,19 +36,17 @@
     <string name="bottom_nav_home">Casa</string>
     <string name="bottom_nav_statistics">Estadísticas</string>
     <string name="bottom_nav_more">Más</string>
-    <string name="bottom_nav_settings">Configuraciones</string>
-    <string name="pref_list_glucose_units">Unidades de glucosa</string>
-    <string name="pref_category_backup">Copia de seguridad e importación</string>
-    <string name="pref_export_backup">Exportar a archivo</string>
-    <string name="pref_import_backup">Importar desde archivo</string>
-    <string name="msg_import_completed">Importación completada</string>
+    <string name="main_pref_glucose_units">Unidades de glucosa</string>
+    <string name="main_pref_category_backup">Copia de seguridad e importación</string>
+    <string name="main_pref_export_backup">Exportar a archivo</string>
+    <string name="main_pref_import_backup">Importar desde archivo</string>
+    <string name="dialog_msg_import_completed">Importación completada</string>
     <string name="error_import_file">Error de importación de archivo</string>
     <string name="error_export_file">Error de archivo de exportación</string>
-    <string name="pref_night_mode">Modo nocturno</string>
 
-    <string name="period_two_weeks">Últimas 2 semanas</string>
-    <string name="period_month">El mes pasado</string>
-    <string name="period_three_months">Últimos 3 meses</string>
+    <string name="stats_period_two_weeks">Últimas 2 semanas</string>
+    <string name="stats_period_month">El mes pasado</string>
+    <string name="stats_period_three_months">Últimos 3 meses</string>
     <string name="period_year">El año pasado</string>
 
     <string name="stats_min">Valor mínimo</string>
@@ -88,19 +85,19 @@
     <string name="month_dec_a">Dic</string>
 
     <string name="error_opening_log">Error al abrir el registro</string>
-    <string name="pref_about_app">Acerca de la aplicación</string>
-    <string name="pref_rate_app">Calificar aplicacion</string>
-    <string name="app_version_title">Version de aplicacion</string>
-    <string name="pref_export_drive">Crear copia de seguridad</string>
-    <string name="pref_import_drive">Importar copia de seguridad</string>
-    <string name="pref_auto_sync">Sincronización automática</string>
-    <string name="pref_last_synced">Última sincronización</string>
-    <string name="pref_auto_sync_summary">Cree copias de seguridad automáticamente todos los días</string>
+    <string name="main_pref_category_about_app">Acerca de la aplicación</string>
+    <string name="main_pref_rate_app">Calificar aplicacion</string>
+    <string name="main_pref_app_version_title">Version de aplicacion</string>
+    <string name="main_pref_export_drive">Crear copia de seguridad</string>
+    <string name="main_pref_import_drive">Importar copia de seguridad</string>
+    <string name="main_pref_auto_sync">Sincronización automática</string>
+    <string name="main_pref_last_synced">Última sincronización</string>
+    <string name="main_pref_auto_sync_summary">Cree copias de seguridad automáticamente todos los días</string>
     <string name="error_create_backup">Error al crear la copia de seguridad</string>
-    <string name="msg_backup_created">Copia de seguridad creada con éxito</string>
+    <string name="dialog_msg_backup_created">Copia de seguridad creada con éxito</string>
     <string name="error_import">Error de importación</string>
     <string name="error_import_backup">Error de importación</string>
     <string name="error_statistics">Error al cargar las estadísticas</string>
-    <string name="before_meal">Antes de la comida</string>
-    <string name="after_meal">Después de comer</string>
+    <string name="stats_before_meal">Antes de la comida</string>
+    <string name="stats_after_meal">Después de comer</string>
 </resources>

@@ -93,8 +93,8 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                    .title(R.string.title_confirm)
-                    .message(R.string.msg_delete_a1c)
+                    .title(R.string.dialog_title_confirm)
+                    .message(R.string.dialog_msg_delete_a1c)
                     .positiveBtnText(R.string.action_delete)
                     .negativeBtnText(R.string.action_cancel)
                     .show()

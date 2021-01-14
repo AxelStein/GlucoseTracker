@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:suffixText="@string/mmol_l"
+            app:suffixText="@string/glucose_unit_mmol_l"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:suffixText="@string/mg_dl"
+            app:suffixText="@string/glucose_unit_mg_dl"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText

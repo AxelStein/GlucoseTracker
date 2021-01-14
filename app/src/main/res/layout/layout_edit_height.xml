@@ -8,9 +8,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="?attr/dialogPreferredPadding"
         android:layout_marginEnd="?attr/dialogPreferredPadding"
-        app:suffixText="@string/cm"
+        app:suffixText="@string/height_unit_cm"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText

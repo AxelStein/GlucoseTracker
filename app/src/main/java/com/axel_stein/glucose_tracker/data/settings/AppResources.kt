@@ -5,8 +5,8 @@ import com.axel_stein.glucose_tracker.R
 import java.io.File
 
 class AppResources(private val ctx: Context, private val settings: AppSettings) {
-    val mmolSuffix = ctx.getString(R.string.mmol_l)
-    val mgSuffix = ctx.getString(R.string.mg_dl)
+    val mmolSuffix = ctx.getString(R.string.glucose_unit_mmol_l)
+    val mgSuffix = ctx.getString(R.string.glucose_unit_mg_dl)
 
     fun appDir(): File = ctx.filesDir
 

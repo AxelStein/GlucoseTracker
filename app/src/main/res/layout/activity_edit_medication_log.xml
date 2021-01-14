@@ -127,7 +127,7 @@
                 android:id="@+id/measured_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/before_breakfast"
+                android:text="@string/measured_before_breakfast"
                 android:inputType="none"
                 tools:ignore="LabelFor" />
 

@@ -91,7 +91,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             codePickFile -> {
                 importFromFile(data?.data)
                     .subscribe({
-                        message.value = R.string.msg_import_completed
+                        message.value = R.string.dialog_msg_import_completed
                     }, {
                         it.printStackTrace()
                         message.value = R.string.error_import_file
@@ -135,7 +135,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             .doOnComplete { updateLastSyncTime() }
             .doFinally { showProgressBar(false) }
             .subscribe({
-                message.value = R.string.msg_backup_created
+                message.value = R.string.dialog_msg_backup_created
             }, {
                 it.printStackTrace()
                 message.value = R.string.error_create_backup
@@ -159,7 +159,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             .doOnSubscribe { showProgressBar(true) }
             .doFinally { showProgressBar(false) }
             .subscribe({
-                message.value = R.string.msg_import_completed
+                message.value = R.string.dialog_msg_import_completed
             }, {
                 it.printStackTrace()
                 message.value = R.string.error_import_backup

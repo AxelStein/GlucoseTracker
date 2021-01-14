@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/medication_list"
         android:name="com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragment"
-        android:label="@string/medications">
+        android:label="@string/plus_pref_medications">
         <action
             android:id="@+id/action_medication_list_add"
             app:destination="@id/edit_medication" />
@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/a1c_list"
         android:name="com.axel_stein.glucose_tracker.ui.log_list.A1cListFragment"
-        android:label="@string/a1c">
+        android:label="@string/plus_pref_a1c">
         <action
             android:id="@+id/action_a1c_list_add_a1c"
             app:destination="@id/edit_a1c" />
@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/insulin_list"
         android:name="com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragment"
-        android:label="@string/insulin_list" >
+        android:label="@string/plus_pref_insulin_list" >
         <action
             android:id="@+id/action_insulin_list_edit_insulin"
             app:destination="@id/edit_insulin">
