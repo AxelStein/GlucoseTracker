@@ -106,7 +106,7 @@
     <string name="hint_insulin_type">Тип инсулина</string>
     <string name="hint_title">Название</string>
     <string name="hint_dosage_form">Форма приема</string>
-    <string name="hint_indicate_height">Нажмите здесь, чтобы указать свой рост для расчета ИМТ</string>
+    <string name="hint_indicate_height">Укажите свой рост в настройках для расчета ИМТ</string>
     <string name="hint_weight">Вес</string>
     <string name="hint_dosage">Дозировка</string>
     <string name="hint_amount">Количество</string>
@@ -160,4 +160,5 @@
     <string name="bmi_category_obese_1">Ожирение I степени</string>
     <string name="bmi_category_obese_2">Ожирение II степени</string>
     <string name="bmi_category_obese_3">Ожирение III степени</string>
+    <string name="bmi_result">ИМТ: %1$.1f (%2$s)</string>
 </resources>

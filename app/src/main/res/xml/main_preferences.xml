@@ -22,6 +22,7 @@
         app:title="@string/main_pref_glucose_units" />
 
     <ListPreference
+        app:isPreferenceVisible="false"
         app:key="weight_units"
         app:summary="%s"
         app:iconSpaceReserved="false"

@@ -79,7 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
+            android:layout_marginEnd="16dp"
+            app:suffixText="@string/weight_unit_kg">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_weight"
@@ -94,12 +95,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/text_bmi_normal"
+            android:id="@+id/text_bmi"
             android:drawablePadding="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="?attr/diabetesControlGoodColor"
-            app:drawableTint="?attr/diabetesControlGoodColor"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             android:gravity="center_vertical"
             android:ellipsize="end"
@@ -108,47 +108,9 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:lines="2"
+            android:layout_marginTop="8dp"
             tools:visibility="visible"
-            android:visibility="gone"
-            app:drawableStartCompat="@drawable/icon_checked" />
-
-        <TextView
-            android:id="@+id/text_bmi_avg"
-            android:drawablePadding="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="?attr/diabetesControlAvgColor"
-            app:drawableTint="?attr/diabetesControlAvgColor"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:ellipsize="end"
-            tools:text="BMI: 27.4 (Overweight)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:lines="2"
-            tools:visibility="visible"
-            android:visibility="gone"
-            app:drawableStartCompat="@drawable/icon_checked" />
-
-        <TextView
-            android:id="@+id/text_bmi_bad"
-            android:drawablePadding="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="?attr/diabetesControlBadColor"
-            app:drawableTint="?attr/diabetesControlBadColor"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:ellipsize="end"
-            tools:text="ИМТ: 34.5 (Выраженный дефицит массы тела)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:lines="2"
-            tools:visibility="visible"
-            android:visibility="gone"
-            app:drawableStartCompat="@drawable/icon_checked" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/text_indicate_height"
@@ -157,10 +119,11 @@
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
             android:gravity="center_vertical"
-            tools:text="@string/hint_indicate_height"
+            android:text="@string/hint_indicate_height"
             tools:visibility="visible"
             android:visibility="gone"
             android:minHeight="48dp"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

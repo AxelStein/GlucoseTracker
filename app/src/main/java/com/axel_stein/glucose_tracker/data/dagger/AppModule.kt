@@ -117,4 +117,10 @@ class AppModule(private val ctx: Context) {
     fun provideMedicationLogDao(): MedicationLogDao {
         return MedicationLogDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideWeightLogDao(): WeightLogDao {
+        return WeightLogDao()
+    }
 }

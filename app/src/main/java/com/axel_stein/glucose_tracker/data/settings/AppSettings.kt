@@ -33,4 +33,6 @@ class AppSettings(ctx: Context) {
     fun setGlucoseUnits(units: String) {
         prefs.edit().putString("glucose_units", units).apply()
     }
+
+    fun getHeight() = prefs.getString("height", "0") ?: "0"
 }

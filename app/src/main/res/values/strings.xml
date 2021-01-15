@@ -46,7 +46,7 @@
     <string name="hint_insulin_type">Insulin type</string>
     <string name="hint_title">Title</string>
     <string name="hint_dosage_form">Dosage form</string>
-    <string name="hint_indicate_height">Tap here to set your height for calculating BMI</string>
+    <string name="hint_indicate_height">Set your height in settings for calculating BMI</string>
     <string name="hint_weight">Weight</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_amount">Amount</string>
@@ -215,4 +215,6 @@
     <string name="bmi_category_obese_1">Obese Class I</string>
     <string name="bmi_category_obese_2">Obese Class II</string>
     <string name="bmi_category_obese_3">Obese Class III</string>
+
+    <string name="bmi_result">BMI: %1$.1f (%2$s)</string>
 </resources>
