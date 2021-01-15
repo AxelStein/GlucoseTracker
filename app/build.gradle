@@ -20,6 +20,16 @@ android {
         // If set to 'true', indicates that the Android system should run the instrumentation
         // class as a functional test. The default value is 'false'
         testFunctionalTest true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
     buildTypes {
@@ -116,4 +126,6 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
 }

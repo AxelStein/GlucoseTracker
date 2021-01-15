@@ -19,8 +19,7 @@ import com.axel_stein.glucose_tracker.data.room.dao.*
         MedicationLog::class,
         WeightLog::class
     ],
-    version = 2,
-    exportSchema = false
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
