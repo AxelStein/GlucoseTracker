@@ -13,7 +13,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:paddingStart="0dp"
         android:paddingEnd="16dp">
 
@@ -22,24 +22,25 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/icon_glucose"
+            android:src="@drawable/icon_weight"
             android:layout_marginStart="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tint="?android:attr/textColorSecondary" />
 
         <TextView
-            android:id="@+id/text_value"
+            android:id="@+id/text_weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="4.7 mmol/L"
-            android:lines="1"
+            android:layout_marginEnd="16dp"
             android:ellipsize="end"
-            android:textSize="16sp"
+            android:maxLines="1"
+            tools:text="45 kg"
             android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
             android:layout_marginStart="72dp"
-            app:layout_constraintEnd_toStartOf="@+id/text_measured"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,22 +49,12 @@
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="9:30"
+            tools:text="7:25"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/text_measured"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/text_measured"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="After breakfast"
-            android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
