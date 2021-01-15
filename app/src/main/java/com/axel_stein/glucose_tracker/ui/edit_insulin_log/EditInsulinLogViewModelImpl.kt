@@ -9,7 +9,6 @@ import com.axel_stein.glucose_tracker.data.model.InsulinLog
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
 import com.axel_stein.glucose_tracker.utils.getOrDefault
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -152,32 +151,30 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
                 errorUnitsEmpty.value = true
             }
             else -> {
-                createLog()
-                    .subscribeOn(io())
-                    .map { log ->
-                        if (id != 0L) logDao.update(log)
-                        else logDao.insert(log)
-                    }
-                    .subscribe(
-                        { actionFinish.postValue(true) },
-                        { it.printStackTrace() }
-                    )
+                val log = createLog()
+                val task = if (id != 0L) logDao.update(log) else logDao.insert(log)
+                task.subscribeOn(io())
+                    .subscribe({
+                        actionFinish.postValue(true)
+                    }, {
+                        it.printStackTrace()
+                    })
             }
         }
     }
 
-    private fun createLog() = Single.fromCallable {
+    private fun createLog(): InsulinLog {
         val items = insulinList.getOrDefault(emptyList())
         if (items.isEmpty()) {
             throw IllegalStateException("Insulin list is empty")
         }
         val insulin = items[insulinSelected.getOrDefault(0)]
-        InsulinLog(
+        return InsulinLog(
             insulin.id,
             units.getOrDefault("").toFloat(),
             measured.getOrDefault(0),
             dateTime.getOrDefault(MutableDateTime()).toDateTime()
-        )
+        ).also { it.id = id }
     }
 
     @SuppressLint("CheckResult")

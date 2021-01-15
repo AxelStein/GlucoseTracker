@@ -21,7 +21,6 @@ class TestMigration1to2 {
     @Test
     fun test() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db1 = testHelper.createDatabase(context.packageName, 1)
         val db2 = testHelper.runMigrationsAndValidate(context.packageName, 2, true, migration_1_2())
         assertTrue(db2.isDatabaseIntegrityOk)
     }

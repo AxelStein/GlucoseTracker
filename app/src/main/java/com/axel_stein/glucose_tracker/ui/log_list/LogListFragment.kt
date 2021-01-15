@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditA1c
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditGlucose
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditInsulinLog
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditMedicationLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditNote
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditWeightLog
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
 import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
@@ -35,13 +38,17 @@ open class LogListFragment: Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(headerDecor)
 
-        adapter = LogListAdapter()
+        adapter = LogListAdapter(requireContext())
         adapter.setOnItemClickListener { _, item ->
             findNavController().navigate(
                 when (item.itemType) {
                     0 -> actionEditGlucose(item.id)
                     1 -> actionEditNote(item.id)
-                    else -> actionEditA1c(item.id)
+                    2 -> actionEditA1c(item.id)
+                    3 -> actionEditInsulinLog(item.id)
+                    4 -> actionEditMedicationLog(item.id)
+                    5 -> actionEditWeightLog(item.id)
+                    else -> TODO()
                 }
             )
         }

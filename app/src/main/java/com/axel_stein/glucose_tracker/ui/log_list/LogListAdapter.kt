@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,14 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.LogItem
-import com.axel_stein.glucose_tracker.databinding.ItemA1cBinding
-import com.axel_stein.glucose_tracker.databinding.ItemGlucoseBinding
-import com.axel_stein.glucose_tracker.databinding.ItemNoteBinding
-import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
+import com.axel_stein.glucose_tracker.databinding.*
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
+import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.ui.inflate
 
-class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
+class LogListAdapter(context: Context) : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
+    private val measuredArr = context.resources.getStringArray(R.array.measured)
 
     companion object : DiffUtil.ItemCallback<LogItem>() {
         override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
@@ -54,6 +55,9 @@ class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion
             0 -> GlucoseViewHolder(parent)
             1 -> NoteViewHolder(parent)
             2 -> A1cViewHolder(parent)
+            3 -> InsulinViewHolder(parent)
+            4 -> MedicationViewHolder(parent)
+            5 -> WeightViewHolder(parent)
             else -> TODO()
         }
         vh.container?.setOnClickListener {
@@ -72,9 +76,8 @@ class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion
         abstract fun bind(item: LogItem)
     }
 
-    class GlucoseViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_glucose)) {
+    inner class GlucoseViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_glucose)) {
         private val binding = ItemGlucoseBinding.bind(itemView)
-        private val measuredArr = itemView.resources.getStringArray(R.array.measured)
 
         override fun bind(item: LogItem) {
             binding.textValue.text = if (item.useMmol) item.valueMmol else item.valueMg
@@ -97,6 +100,35 @@ class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion
 
         override fun bind(item: LogItem) {
             binding.textValue.text = item.a1c
+            binding.textTime.text = item.timeFormatted
+        }
+    }
+
+    inner class InsulinViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_insulin_log)) {
+        private val binding = ItemInsulinLogBinding.bind(itemView)
+
+        override fun bind(item: LogItem) {
+            binding.textTime.text = item.timeFormatted
+            binding.textUnits.text = item.units.toString()
+            binding.textMeasured.text = measuredArr[item.measured ?: 0]
+        }
+    }
+
+    inner class MedicationViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_medication_log)) {
+        private val binding = ItemMedicationLogBinding.bind(itemView)
+
+        override fun bind(item: LogItem) {
+            binding.textTime.text = item.timeFormatted
+            binding.textAmount.text = item.amount.toString()
+            binding.textMeasured.text = measuredArr[item.measured ?: 0]
+        }
+    }
+
+    class WeightViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_weight)) {
+        private val binding = ItemWeightBinding.bind(itemView)
+
+        override fun bind(item: LogItem) {
+            binding.textWeight.text = item.kg.formatIfInt()
             binding.textTime.text = item.timeFormatted
         }
     }

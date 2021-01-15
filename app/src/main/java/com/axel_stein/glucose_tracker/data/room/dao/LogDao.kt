@@ -69,6 +69,16 @@ interface LogDao {
     """)
     fun getA1cList(): Flowable<List<LogItem>>
 
+    @Query(""" 
+        select id, null as value_mmol, null as value_mg, 
+            kg, null as insulin_id, null as units, 
+            null as medication_id, null as amount, null as measured, 
+            date_time, 5 as item_type, null as note, 
+            null as foods, null as a1c 
+        from weight_log
+    """)
+    fun getWeightList(): Flowable<List<LogItem>>
+
     @Query("""
         select id, value_mmol, value_mg, 
             null as kg, null as insulin_id, null as units, 

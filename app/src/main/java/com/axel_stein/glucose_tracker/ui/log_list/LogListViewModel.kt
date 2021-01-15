@@ -57,6 +57,12 @@ class LogListViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun loadWeightList() {
+        if (items.value.isNullOrEmpty()) {
+            loadImpl(dao.getWeightList())
+        }
+    }
+
     fun loadItemsByYearMonth(yearMonth: String) {
         if (yearMonth != this.yearMonth) {
             this.yearMonth = yearMonth

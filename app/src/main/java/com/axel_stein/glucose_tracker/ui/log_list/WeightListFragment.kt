@@ -18,7 +18,7 @@ class WeightListFragment : LogListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewBottomPadding(resources.getDimensionPixelSize(R.dimen.padding_small))
-        // fixme
+        viewModel.loadWeightList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

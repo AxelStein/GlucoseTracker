@@ -26,18 +26,6 @@ class AppModule(private val ctx: Context) {
 
     @Provides
     @Singleton
-    fun provideFoodListDao(db: AppDatabase): FoodListDao {
-        return db.foodListDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideFoodLogDao(db: AppDatabase): FoodLogDao {
-        return db.foodLogDao()
-    }
-
-    @Provides
-    @Singleton
     fun provideGlucoseLogDao(db: AppDatabase): GlucoseLogDao {
         return db.glucoseLogDao()
     }

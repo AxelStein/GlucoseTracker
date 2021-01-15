@@ -1,7 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.edit_medication
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -101,7 +100,6 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
             title.value.isNullOrBlank() -> errorEmptyTitle.value = true
             else -> {
                 val medication = createMedication()
-                Log.e("TAG", "$medication")
                 val task = if (id != 0L) dao.update(medication) else dao.insert(medication)
                 task.subscribeOn(io()).subscribe(
                     { actionFinish.postValue(true) },

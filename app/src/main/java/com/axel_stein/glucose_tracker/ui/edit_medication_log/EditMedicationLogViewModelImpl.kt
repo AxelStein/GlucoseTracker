@@ -10,7 +10,6 @@ import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationLogDao
 import com.axel_stein.glucose_tracker.utils.get
 import com.axel_stein.glucose_tracker.utils.getOrDefault
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -157,32 +156,30 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
                 errorAmountEmpty.value = true
             }
             else -> {
-                createLog()
-                    .subscribeOn(io())
-                    .map { log ->
-                        if (id != 0L) logDao.update(log)
-                        else logDao.insert(log)
-                    }
-                    .subscribe(
-                        { actionFinish.postValue(true) },
-                        { it.printStackTrace() }
-                    )
+                val log = createLog()
+                val task = if (id != 0L) logDao.update(log) else logDao.insert(log)
+                task.subscribeOn(io())
+                    .subscribe({
+                        actionFinish.postValue(true)
+                    }, {
+                        it.printStackTrace()
+                    })
             }
         }
     }
 
-    private fun createLog() = Single.fromCallable {
+    private fun createLog(): MedicationLog {
         val items = medicationList.getOrDefault(emptyList())
         if (items.isEmpty()) {
             throw IllegalStateException("Medication list is empty")
         }
         val insulin = items[medicationSelected.getOrDefault(0)]
-        MedicationLog(
+        return MedicationLog(
             insulin.id,
             amount.getOrDefault("1").toFloat(),
             measured.getOrDefault(0),
             dateTime.getOrDefault(MutableDateTime()).toDateTime()
-        )
+        ).also { it.id = id }
     }
 
     @SuppressLint("CheckResult")

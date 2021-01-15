@@ -8,8 +8,6 @@ import com.axel_stein.glucose_tracker.data.room.dao.*
 
 @Database(
     entities = [
-        FoodList::class,
-        FoodLog::class,
         GlucoseLog::class,
         NoteLog::class,
         A1cLog::class,
@@ -23,8 +21,6 @@ import com.axel_stein.glucose_tracker.data.room.dao.*
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun foodLogDao(): FoodLogDao
-    abstract fun foodListDao(): FoodListDao
     abstract fun glucoseLogDao(): GlucoseLogDao
     abstract fun noteLogDao(): NoteLogDao
     abstract fun logDao(): LogDao

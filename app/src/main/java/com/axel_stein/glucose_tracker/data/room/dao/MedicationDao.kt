@@ -1,7 +1,9 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
-import androidx.room.*
-import com.axel_stein.glucose_tracker.data.model.Insulin
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.Medication
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -17,9 +19,6 @@ interface MedicationDao {
 
     @Insert
     fun update(item: Medication): Completable
-
-    @Delete
-    fun delete(item: Insulin): Completable
 
     @Query("delete from medication_list")
     fun deleteAll()

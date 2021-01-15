@@ -16,9 +16,6 @@ interface MedicationLogDao {
     @Update
     fun update(item: MedicationLog): Completable
 
-    @Delete
-    fun delete(item: MedicationLog): Completable
-
     @Query("delete from medication_log")
     fun deleteAll()
 

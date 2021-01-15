@@ -75,7 +75,7 @@ open class EditWeightViewModelImpl(private val id: Long = 0L) : ViewModel(), Dat
             .subscribe({
                 postData(
                     it.dateTime.toMutableDateTime(),
-                    it.kg.toString()
+                    it.kg.formatIfInt()
                 )
             }, {
                 it.printStackTrace()
