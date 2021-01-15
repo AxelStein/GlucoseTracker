@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.axel_stein.glucose_tracker.data.room.dao.LogDao
+import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @SuppressLint("CheckResult")
 class ArchiveViewModel(
-    dao: LogDao? = null
+    repository: LogRepository? = null
 ): ViewModel() {
     private val yearsData = MutableLiveData<List<String>>()
     private var years = listOf<String>()
@@ -30,32 +30,34 @@ class ArchiveViewModel(
     private val disposables = CompositeDisposable()
 
     @Inject
-    lateinit var dao: LogDao
+    lateinit var repository: LogRepository
 
     init {
-        if (dao == null) {
+        if (repository == null) {
             App.appComponent.inject(this)
         } else {
-            this.dao = dao
+            this.repository = repository
         }
 
         disposables.add(
-            this.dao.getYears().subscribeOn(io()).subscribe({ newList ->
-                var index = selectedYear
-                if (this.years.isNotEmpty()) {  // update years
-                    if (newList.isEmpty()) {
-                        index = -1
-                    } else if (index >= newList.size) {
+            this.repository.getYears()
+                .subscribeOn(io())
+                .subscribe({ newList ->
+                    var index = selectedYear
+                    if (this.years.isNotEmpty()) {  // update years
+                        if (newList.isEmpty()) {
+                            index = -1
+                        } else if (index >= newList.size) {
+                            index = 0
+                        }
+                    } else if (newList.isNotEmpty()) {  // load years
                         index = 0
                     }
-                } else if (newList.isNotEmpty()) {  // load years
-                    index = 0
-                }
-                setYears(newList)
-                setCurrentYear(index)
-            }, {
-                it.printStackTrace()
-            })
+                    setYears(newList)
+                    setCurrentYear(index)
+                }, {
+                    it.printStackTrace()
+                })
         )
     }
 
@@ -124,29 +126,31 @@ class ArchiveViewModel(
 
     private fun loadMonths(year: String) {
         disposables.add(
-            dao.getMonths(year).subscribeOn(io()).subscribe({ newList ->
-                val months = mutableListOf<Int>()
-                newList.forEach { months.add(it.toInt()) }
+            repository.getMonths(year)
+                .subscribeOn(io())
+                .subscribe({ newList ->
+                    val months = mutableListOf<Int>()
+                    newList.forEach { months.add(it.toInt()) }
 
-                var index = selectedMonth
-                if (this.months.isNotEmpty()) {  // update months
-                    if (newList.isNotEmpty()) {
-                        val currentMonth = getCurrentMonth()
-                        index = if (months.contains(currentMonth)) {
-                            months.indexOf(currentMonth)
-                        } else {
-                            0
+                    var index = selectedMonth
+                    if (this.months.isNotEmpty()) {  // update months
+                        if (newList.isNotEmpty()) {
+                            val currentMonth = getCurrentMonth()
+                            index = if (months.contains(currentMonth)) {
+                                months.indexOf(currentMonth)
+                            } else {
+                                0
+                            }
                         }
+                    } else if (newList.isNotEmpty()) {  // load months
+                        index = 0
                     }
-                } else if (newList.isNotEmpty()) {  // load months
-                    index = 0
-                }
 
-                setMonths(months)
-                setCurrentMonth(index)
-            }, {
-                it.printStackTrace()
-            })
+                    setMonths(months)
+                    setCurrentMonth(index)
+                }, {
+                    it.printStackTrace()
+                })
         )
     }
 

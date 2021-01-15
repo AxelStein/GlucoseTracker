@@ -7,12 +7,14 @@ import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.databinding.FragmentMedicationListBinding
 import com.axel_stein.glucose_tracker.ui.log_list.TextHeaderDecor
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionAddMedication
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionEditMedication
+import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class MedicationListFragment : Fragment() {
@@ -33,17 +35,22 @@ class MedicationListFragment : Fragment() {
         adapter.setOnItemClickListener { _, item ->
             findNavController().navigate(actionEditMedication(item.id))
         }
-        binding.recyclerView.adapter = adapter
+
+        binding.recyclerView.layoutManager = LinearLayoutManagerWrapper(requireContext(), VERTICAL, false)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.addItemDecoration(headerDecor)
+        binding.recyclerView.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.itemsLiveData().observe(viewLifecycleOwner, {
-            updateHeaders(it)
             adapter.submitList(it)
+            updateHeaders(it)
+            binding.recyclerView.post {
+                binding.recyclerView.invalidateItemDecorations()
+            }
             binding.textEmpty.setShown(it.isEmpty())
         })
     }

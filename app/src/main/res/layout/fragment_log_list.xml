@@ -10,7 +10,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        tools:listitem="@layout/item_glucose"
+        tools:listitem="@layout/item_log"
         android:paddingBottom="88dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"

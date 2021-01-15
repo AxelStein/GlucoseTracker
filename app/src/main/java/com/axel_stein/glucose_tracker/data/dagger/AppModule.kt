@@ -3,6 +3,7 @@ package com.axel_stein.glucose_tracker.data.dagger
 import android.content.Context
 import androidx.room.Room
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
+import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.room.migration_1_2
 import com.axel_stein.glucose_tracker.data.settings.AppResources
@@ -22,6 +23,12 @@ class AppModule(private val ctx: Context) {
         return Room.databaseBuilder(ctx, AppDatabase::class.java, ctx.packageName)
             .addMigrations(migration_1_2())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogRepository(db: AppDatabase, dao: LogDao): LogRepository {
+        return LogRepository(ctx, db, dao)
     }
 
     @Provides

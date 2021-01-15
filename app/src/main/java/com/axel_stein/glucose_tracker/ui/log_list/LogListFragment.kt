@@ -17,6 +17,7 @@ import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditNote
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditWeightLog
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
+import com.axel_stein.glucose_tracker.ui.log_list.log_items.ItemType.*
 import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
@@ -38,17 +39,17 @@ open class LogListFragment: Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(headerDecor)
 
-        adapter = LogListAdapter(requireContext())
+        adapter = LogListAdapter()
         adapter.setOnItemClickListener { _, item ->
+            val id = item.id()
             findNavController().navigate(
-                when (item.itemType) {
-                    0 -> actionEditGlucose(item.id)
-                    1 -> actionEditNote(item.id)
-                    2 -> actionEditA1c(item.id)
-                    3 -> actionEditInsulinLog(item.id)
-                    4 -> actionEditMedicationLog(item.id)
-                    5 -> actionEditWeightLog(item.id)
-                    else -> TODO()
+                when (item.type()) {
+                    GLUCOSE -> actionEditGlucose(id)
+                    NOTE -> actionEditNote(id)
+                    A1C -> actionEditA1c(id)
+                    INSULIN -> actionEditInsulinLog(id)
+                    MEDICATION -> actionEditMedicationLog(id)
+                    WEIGHT -> actionEditWeightLog(id)
                 }
             )
         }
@@ -69,6 +70,7 @@ open class LogListFragment: Fragment() {
         })
         viewModel.headersLiveData().observe(viewLifecycleOwner, {
             headerDecor.setHeaders(it)
+            // binding.recyclerView.invalidateItemDecorations()
         })
     }
 

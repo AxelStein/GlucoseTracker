@@ -75,7 +75,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        tools:listitem="@layout/item_glucose"
+        tools:listitem="@layout/item_log"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_below="@+id/layout"
         android:paddingBottom="8dp"

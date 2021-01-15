@@ -2,6 +2,7 @@
   <dictionary name="alex">
     <words>
       <w>fileprovider</w>
+      <w>flowable</w>
       <w>gson</w>
       <w>mmol</w>
       <w>snackbar</w>

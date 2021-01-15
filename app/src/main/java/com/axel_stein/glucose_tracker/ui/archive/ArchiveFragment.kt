@@ -64,7 +64,7 @@ class ArchiveFragment: LogListFragment() {
         }
 
         archiveViewModel.monthsLiveData().observe(viewLifecycleOwner, { months ->
-            val titles = appResources.monthsArray()
+            val titles = appResources.monthsArray
             binding.spinnerMonth.setSpinnerItems(months.map { titles[it-1] })
         })
         archiveViewModel.selectedMonthLiveData().observe(viewLifecycleOwner, { position ->

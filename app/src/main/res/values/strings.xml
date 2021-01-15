@@ -121,6 +121,7 @@
 
     <!--todo height units-->
     <string name="height_unit_cm">cm</string>
+    <string name="insulin_units_suffix">units</string>
 
     <!--theme array-->
     <string name="theme_light">Light</string>

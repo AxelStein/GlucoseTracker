@@ -8,7 +8,7 @@ class AppSettings(ctx: Context) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
 
     init {
-        // Workaround for version 1.0.6
+        // Night mode pref was removed in version 1.0.7
         if (prefs.contains("night_mode")) {
             prefs.edit().remove("night_mode").apply()
         }

@@ -181,7 +181,7 @@ class StatisticsViewModel(
                 chartColors?.beforeMealFillColor ?: Color.BLACK,
                 appSettings.useMmolAsGlucoseUnits(),
                 arrayListOf(5.5f, 7f, 3.5f),
-                appResources.monthsAbbrArray()
+                appResources.monthsAbbrArray
             )
             if (beforeMealData.isNotEmpty()) {
                 beforeMealChart.postValue(beforeMealData.createLineData())
@@ -199,7 +199,7 @@ class StatisticsViewModel(
                 chartColors?.afterMealFillColor ?: Color.BLACK,
                 appSettings.useMmolAsGlucoseUnits(),
                 arrayListOf(7.8f, 11f, 3.5f),
-                appResources.monthsAbbrArray()
+                appResources.monthsAbbrArray
             )
             if (afterMealData.isNotEmpty()) {
                 afterMealChart.postValue(afterMealData.createLineData())
@@ -230,7 +230,7 @@ class StatisticsViewModel(
                     logs.sortedBy { it.dateTime },
                     chartColors?.a1cLineColor ?: Color.BLACK,
                     chartColors?.a1cFillColor ?: Color.BLACK,
-                    appResources.monthsAbbrArray()
+                    appResources.monthsAbbrArray
                 )
                 a1cChart.postValue(data.createLineData())
                 a1cMax.postValue(data.maxValue())

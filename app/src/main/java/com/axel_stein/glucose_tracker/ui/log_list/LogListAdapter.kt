@@ -1,37 +1,31 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
-import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.model.LogItem
-import com.axel_stein.glucose_tracker.databinding.*
+import com.axel_stein.glucose_tracker.databinding.ItemLogBinding
+import com.axel_stein.glucose_tracker.ui.log_list.log_items.LogItem
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
-import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.ui.inflate
+import com.axel_stein.glucose_tracker.utils.ui.setShown
 
-class LogListAdapter(context: Context) : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
-    private val measuredArr = context.resources.getStringArray(R.array.measured)
-
+class LogListAdapter : ListAdapter<LogItem, LogListAdapter.ViewHolder>(Companion) {
     companion object : DiffUtil.ItemCallback<LogItem>() {
-        override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
-            return oldItem.id == newItem.id && oldItem.itemType == oldItem.itemType
+        override fun areItemsTheSame(a: LogItem, b: LogItem): Boolean {
+            return a.id() == b.id() && a.icon() == a.icon()
         }
 
-        override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean {
-            return CompareBuilder().append(oldItem.id, newItem.id)
-                .append(oldItem.itemType, newItem.itemType)
-                .append(oldItem.valueMmol, newItem.valueMg)
-                .append(oldItem.valueMg, newItem.valueMg)
-                .append(oldItem.measured, newItem.measured)
-                .append(oldItem.note, newItem.note)
-                .append(oldItem.a1c, newItem.a1c)
-                .append(oldItem.foods, newItem.foods)
-                .append(oldItem.dateTime, newItem.dateTime)
+        override fun areContentsTheSame(a: LogItem, b: LogItem): Boolean {
+            return CompareBuilder().append(a.id(), b.id())
+                .append(a.icon(), b.icon())
+                .append(a.type(), b.type())
+                .append(a.title(), b.title())
+                .append(a.description(), b.description())
+                .append(a.time(), b.time())
+                .append(a.timeDescription(), b.timeDescription())
                 .areEqual()
         }
     }
@@ -46,90 +40,37 @@ class LogListAdapter(context: Context) : ListAdapter<LogItem, LogListAdapter.Vie
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return getItem(position)?.itemType ?: -1
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val vh = when(viewType) {
-            0 -> GlucoseViewHolder(parent)
-            1 -> NoteViewHolder(parent)
-            2 -> A1cViewHolder(parent)
-            3 -> InsulinViewHolder(parent)
-            4 -> MedicationViewHolder(parent)
-            5 -> WeightViewHolder(parent)
-            else -> TODO()
+        return ViewHolder(parent).also { vh ->
+            vh.setOnClickListener { pos ->
+                onItemCLickListener?.onItemClick(pos, getItem(pos))
+            }
         }
-        vh.container?.setOnClickListener {
-            val pos = vh.adapterPosition
-            getItem(pos)?.let { item -> onItemCLickListener?.onItemClick(pos, item) }
-        }
-        return vh
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        holder.setItem(getItem(position))
     }
 
-    abstract class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val container: View? = itemView.findViewById(R.id.container)
-        abstract fun bind(item: LogItem)
-    }
+    class ViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(parent.inflate(R.layout.item_log)) {
+        private val binding = ItemLogBinding.bind(itemView)
 
-    inner class GlucoseViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_glucose)) {
-        private val binding = ItemGlucoseBinding.bind(itemView)
-
-        override fun bind(item: LogItem) {
-            binding.textValue.text = if (item.useMmol) item.valueMmol else item.valueMg
-            binding.textTime.text = item.timeFormatted
-            binding.textMeasured.text = measuredArr[item.measured ?: 0]
+        fun setOnClickListener(l: (pos: Int) -> Unit) {
+            binding.container.setOnClickListener {
+                l(adapterPosition)
+            }
         }
-    }
 
-    class NoteViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_note)) {
-        private val binding = ItemNoteBinding.bind(itemView)
+        fun setItem(item: LogItem) {
+            binding.icon.setImageResource(item.icon())
+            binding.title.text = item.title()
 
-        override fun bind(item: LogItem) {
-            binding.textNote.text = item.note
-            binding.textTime.text = item.timeFormatted
-        }
-    }
+            binding.description.text = item.description()
+            binding.description.setShown(!item.description().isNullOrEmpty())
 
-    class A1cViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_a1c)) {
-        private val binding = ItemA1cBinding.bind(itemView)
-
-        override fun bind(item: LogItem) {
-            binding.textValue.text = item.a1c
-            binding.textTime.text = item.timeFormatted
-        }
-    }
-
-    inner class InsulinViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_insulin_log)) {
-        private val binding = ItemInsulinLogBinding.bind(itemView)
-
-        override fun bind(item: LogItem) {
-            binding.textTime.text = item.timeFormatted
-            binding.textUnits.text = item.units.toString()
-            binding.textMeasured.text = measuredArr[item.measured ?: 0]
-        }
-    }
-
-    inner class MedicationViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_medication_log)) {
-        private val binding = ItemMedicationLogBinding.bind(itemView)
-
-        override fun bind(item: LogItem) {
-            binding.textTime.text = item.timeFormatted
-            binding.textAmount.text = item.amount.toString()
-            binding.textMeasured.text = measuredArr[item.measured ?: 0]
-        }
-    }
-
-    class WeightViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_weight)) {
-        private val binding = ItemWeightBinding.bind(itemView)
-
-        override fun bind(item: LogItem) {
-            binding.textWeight.text = item.kg.formatIfInt()
-            binding.textTime.text = item.timeFormatted
+            binding.time.text = item.time()
+            binding.timeDescription.text = item.timeDescription()
+            binding.timeDescription.setShown(!item.timeDescription().isNullOrEmpty())
         }
     }
 }

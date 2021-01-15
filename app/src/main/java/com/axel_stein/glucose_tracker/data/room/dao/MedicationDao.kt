@@ -32,7 +32,7 @@ interface MedicationDao {
     @Query("update medication_list set active = :active where id = :id")
     fun setActive(id: Long, active: Boolean): Completable
 
-    @Query("select * from medication_list order by title, active desc")
+    @Query("select * from medication_list order by title")
     fun observeItems(): Flowable<List<Medication>>
 
     @Query("select * from medication_list where active = 1 order by title, active desc")

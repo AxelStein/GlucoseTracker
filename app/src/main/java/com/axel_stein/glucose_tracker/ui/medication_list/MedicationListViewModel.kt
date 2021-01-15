@@ -28,7 +28,7 @@ class MedicationListViewModel : ViewModel() {
         disposables.add(
             dao.observeItems().subscribeOn(Schedulers.io()).subscribe(
                 {
-                    items.postValue(it)
+                    items.postValue(it.sortedByDescending { item -> item.active })
                 },
                 { it.printStackTrace() }
             )

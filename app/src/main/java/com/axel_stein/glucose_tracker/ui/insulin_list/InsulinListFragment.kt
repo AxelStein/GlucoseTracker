@@ -5,10 +5,12 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentInsulinListBinding
 import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionAddInsulin
 import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirections.Companion.actionEditInsulin
+import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 class InsulinListFragment : Fragment() {
@@ -28,6 +30,9 @@ class InsulinListFragment : Fragment() {
         adapter.setOnItemClickListener { _, item ->
             findNavController().navigate(actionEditInsulin(item.id))
         }
+
+        binding.recyclerView.layoutManager = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
         return binding.root
     }

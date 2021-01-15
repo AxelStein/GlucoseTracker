@@ -139,7 +139,7 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
     }
 
     fun setMeasured(measured: Int) {
-        val maxMeasured = appResources.measuredArray().size - 1
+        val maxMeasured = appResources.measuredArray.size - 1
 
         this.measured.value = when {
             measured < 0 -> 0
