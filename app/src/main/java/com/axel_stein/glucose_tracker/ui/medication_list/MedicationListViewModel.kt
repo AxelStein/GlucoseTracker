@@ -28,14 +28,14 @@ class MedicationListViewModel : ViewModel() {
         disposables.add(
             dao.observeItems().subscribeOn(Schedulers.io()).subscribe(
                 {
-                    items.postValue(sort(it))
+                    items.postValue(it)
                 },
                 { it.printStackTrace() }
             )
         )
     }
 
-    private fun sort(items: List<Medication>) = items.sortedByDescending { it.active }
+    // private fun sort(items: List<Medication>) = items.sortedByDescending { it.active }
 
     override fun onCleared() {
         super.onCleared()

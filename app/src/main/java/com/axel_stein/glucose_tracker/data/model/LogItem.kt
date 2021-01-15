@@ -18,6 +18,16 @@ data class LogItem(
     @ColumnInfo(name = "value_mg")
     var valueMg: String?,
 
+    val kg: Float,
+
+    @ColumnInfo(name = "insulin_id")
+    val insulinId: Long,
+    val units: Float,
+
+    @ColumnInfo(name = "medication_id")
+    val medicationId: Long,
+    val amount: Float,
+
     val measured: Int?,
     val note: String?,
     var a1c: String?,

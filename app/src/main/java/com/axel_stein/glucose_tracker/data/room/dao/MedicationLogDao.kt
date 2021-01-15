@@ -1,41 +1,36 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
+import androidx.room.*
 import com.axel_stein.glucose_tracker.data.model.MedicationLog
 import io.reactivex.Completable
 import io.reactivex.Single
-import org.joda.time.MutableDateTime
 
-class MedicationLogDao {
-    fun insert(item: MedicationLog): Completable {
-        return Completable.fromAction {}
-    }
+@Dao
+interface MedicationLogDao {
+    @Insert
+    fun insert(item: MedicationLog): Completable
 
-    fun insert(items: List<MedicationLog>) {}
+    @Insert
+    fun insert(items: List<MedicationLog>)
 
-    fun update(item: MedicationLog): Completable {
-        return Completable.fromAction {}
-    }
+    @Update
+    fun update(item: MedicationLog): Completable
 
-    fun delete(item: MedicationLog): Completable {
-        return Completable.fromAction {}
-    }
+    @Delete
+    fun delete(item: MedicationLog): Completable
 
-    fun deleteAll() {}
+    @Query("delete from medication_log")
+    fun deleteAll()
 
-    fun deleteById(id: Long): Completable {
-        return Completable.fromAction {}
-    }
+    @Query("delete from medication_log where id = :id")
+    fun deleteById(id: Long): Completable
 
-    fun get(id: Long): Single<MedicationLog> {
-        return Single.fromCallable {
-            MedicationLog(
-                1L, 1f, 3,
-                MutableDateTime().apply {
-                    year = 2020
-                    monthOfYear = 11
-                    dayOfMonth = 22
-                }.toDateTime()
-            )
-        }
+    @Query("select * from medication_log where id = :id")
+    fun get(id: Long): Single<MedicationLog>
+
+    @Transaction
+    fun importBackup(backup: List<MedicationLog>) {
+        deleteAll()
+        insert(backup)
     }
 }

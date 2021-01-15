@@ -1,40 +1,33 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
+import androidx.room.*
 import com.axel_stein.glucose_tracker.data.model.WeightLog
 import io.reactivex.Completable
 import io.reactivex.Single
-import org.joda.time.MutableDateTime
 
-class WeightLogDao {
-    fun insert(item: WeightLog): Completable {
-        return Completable.fromAction {}
-    }
+@Dao
+interface WeightLogDao {
+    @Insert
+    fun insert(item: WeightLog): Completable
 
-    fun insert(items: List<WeightLog>) {}
+    @Insert
+    fun insert(items: List<WeightLog>)
 
-    fun update(item: WeightLog): Completable {
-        return Completable.fromAction {}
-    }
+    @Update
+    fun update(item: WeightLog): Completable
 
-    fun delete(item: WeightLog): Completable {
-        return Completable.fromAction {}
-    }
+    @Query("delete from weight_log")
+    fun deleteAll()
 
-    fun deleteAll() {}
+    @Query("delete from weight_log where id = :id")
+    fun deleteById(id: Long): Completable
 
-    fun deleteById(id: Long): Completable {
-        return Completable.fromAction {}
-    }
+    @Query("select * from weight_log where id = :id")
+    fun get(id: Long): Single<WeightLog>
 
-    fun get(id: Long): Single<WeightLog> {
-        return Single.fromCallable {
-            WeightLog(45f, 55f,
-                MutableDateTime().apply {
-                    year = 2020
-                    monthOfYear = 11
-                    dayOfMonth = 22
-                }.toDateTime()
-            )
-        }
+    @Transaction
+    fun importBackup(backup: List<WeightLog>) {
+        deleteAll()
+        insert(backup)
     }
 }

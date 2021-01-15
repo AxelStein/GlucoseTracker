@@ -2,12 +2,24 @@ package com.axel_stein.glucose_tracker.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import org.joda.time.DateTime
 
-@Entity(tableName = "insulin_log")
+@Entity(
+    tableName = "insulin_log",
+    foreignKeys = [
+        ForeignKey(
+            entity = Insulin::class,
+            parentColumns = ["id"],
+            childColumns = ["insulin_id"],
+            onDelete = CASCADE
+        )
+    ]
+)
 data class InsulinLog(
-    @ColumnInfo(name = "insulin_id")
+    @ColumnInfo(name = "insulin_id", index = true)
     val insulinId: Long,
 
     val units: Float,

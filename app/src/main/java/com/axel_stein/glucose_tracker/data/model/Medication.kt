@@ -13,7 +13,7 @@ data class Medication(
 
     var dosage: Float = 0f,
 
-    @ColumnInfo(name = "dosage_units")
+    @ColumnInfo(name = "dosage_unit")
     var dosageUnit: Int = -1,
 
     var active: Boolean = true

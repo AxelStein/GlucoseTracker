@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.*
+import com.axel_stein.glucose_tracker.data.room.migration_1_2
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.google.gson.*
@@ -18,7 +19,9 @@ class AppModule(private val ctx: Context) {
     @Provides
     @Singleton
     fun provideDB(): AppDatabase {
-        return Room.databaseBuilder(ctx, AppDatabase::class.java, ctx.packageName).build()
+        return Room.databaseBuilder(ctx, AppDatabase::class.java, ctx.packageName)
+            .addMigrations(migration_1_2())
+            .build()
     }
 
     @Provides
@@ -96,31 +99,31 @@ class AppModule(private val ctx: Context) {
 
     @Provides
     @Singleton
-    fun provideInsulinDao(): InsulinDao {
-        return InsulinDao()
+    fun provideInsulinDao(db: AppDatabase): InsulinDao {
+        return db.insulinDao()
     }
 
     @Provides
     @Singleton
-    fun provideInsulinLogDao(): InsulinLogDao {
-        return InsulinLogDao()
+    fun provideInsulinLogDao(db: AppDatabase): InsulinLogDao {
+        return db.insulinLogDao()
     }
 
     @Provides
     @Singleton
-    fun provideMedicationDao(): MedicationDao {
-        return MedicationDao()
+    fun provideMedicationDao(db: AppDatabase): MedicationDao {
+        return db.medicationDao()
     }
 
     @Provides
     @Singleton
-    fun provideMedicationLogDao(): MedicationLogDao {
-        return MedicationLogDao()
+    fun provideMedicationLogDao(db: AppDatabase): MedicationLogDao {
+        return db.medicationLogDao()
     }
 
     @Provides
     @Singleton
-    fun provideWeightLogDao(): WeightLogDao {
-        return WeightLogDao()
+    fun provideWeightLogDao(db: AppDatabase): WeightLogDao {
+        return db.weightLogDao()
     }
 }

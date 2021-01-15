@@ -1,78 +1,47 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
+import androidx.room.*
 import com.axel_stein.glucose_tracker.data.model.Insulin
 import com.axel_stein.glucose_tracker.data.model.Medication
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class MedicationDao {
-    private var id = 2L
+@Dao
+interface MedicationDao {
+    @Insert
+    fun insert(item: Medication): Completable
 
-    private val items: MutableList<Medication> = mutableListOf(
-        Medication("Glucophage", 0, 500f, 0).apply { id = 1L },
-    )
+    @Insert
+    fun insert(items: List<Medication>)
 
-    fun insert(item: Medication): Completable {
-        return Completable.fromAction {
-            item.id = id++
-            items.add(item)
-        }
-    }
+    @Insert
+    fun update(item: Medication): Completable
 
-    fun insert(items: List<Medication>) {
-        this.items.addAll(items)
-    }
+    @Delete
+    fun delete(item: Insulin): Completable
 
-    fun update(item: Medication): Completable {
-        return Completable.fromAction {
-            items.find { it.id == item.id }?.apply {
-                title = item.title
-                dosageForm = item.dosageForm
-                dosage = item.dosage
-                dosageUnit = item.dosageUnit
-                active = item.active
-            }
-        }
-    }
+    @Query("delete from medication_list")
+    fun deleteAll()
 
-    fun delete(item: Insulin): Completable {
-        return Completable.fromAction {
-            items.removeAll { it.id == item.id }
-        }
-    }
+    @Query("delete from medication_list where id = :id")
+    fun deleteById(id: Long): Completable
 
-    fun deleteAll() {
-        items.clear()
-    }
+    @Query("select * from medication_list where id = :id")
+    fun get(id: Long): Single<Medication>
 
-    fun deleteById(id: Long): Completable {
-        return Completable.fromAction {
-            items.removeAll { it.id == id }
-        }
-    }
+    @Query("update medication_list set active = :active where id = :id")
+    fun setActive(id: Long, active: Boolean): Completable
 
-    fun get(id: Long): Single<Medication> {
-        return Single.fromCallable {
-            items.find { it.id == id }
-        }
-    }
+    @Query("select * from medication_list order by title, active desc")
+    fun observeItems(): Flowable<List<Medication>>
 
-    fun observeItems(): Flowable<List<Medication>> {
-        return Flowable.fromCallable { items }
-    }
+    @Query("select * from medication_list where active = 1 order by title, active desc")
+    fun getActiveItems(): Single<List<Medication>>
 
-    fun observeActiveItems(): Flowable<List<Medication>> {
-        return Flowable.fromCallable { items.filter { it.active } }
-    }
-
-    fun getItems() = Single.fromCallable { items }
-
-    fun setActive(id: Long, active: Boolean): Completable {
-        return Completable.fromAction {
-            items.find { it.id == id }?.apply {
-                this.active = active
-            }
-        }
+    @Transaction
+    fun importBackup(backup: List<Medication>) {
+        deleteAll()
+        insert(backup)
     }
 }
