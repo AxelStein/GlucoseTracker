@@ -123,7 +123,6 @@
 
     <!--todo height units-->
     <string name="height_unit_cm">cm</string>
-    <string name="insulin_units_suffix">units</string>
 
     <!--theme array-->
     <string name="theme_light">Light</string>
@@ -197,17 +196,91 @@
     <string name="dosage_unit_mcg_ml">µg/ml</string>
 
     <!--dosage forms array-->
-    <string name="dosage_form_tablet">tablet</string>
-    <string name="dosage_form_capsule">capsule</string>
-    <string name="dosage_form_ampule">ampule</string>
-    <string name="dosage_form_injection">injection</string>
-    <string name="dosage_form_packet">packet</string>
-    <string name="dosage_form_drop">drop</string>
-    <string name="dosage_form_dose">dose</string>
+    <string name="dosage_form_tablet">Tablet</string>
+    <string name="dosage_form_capsule">Capsule</string>
+    <string name="dosage_form_ampule">Ampule</string>
+    <string name="dosage_form_injection">Injection</string>
+    <string name="dosage_form_packet">Packet</string>
+    <string name="dosage_form_drop">Drop</string>
+    <string name="dosage_form_dose">Dose</string>
     <string name="dosage_form_ml">ml</string>
-    <string name="dosage_form_g">gram</string>
+    <string name="dosage_form_g">Gram</string>
     <string name="dosage_form_iu">IU</string>
-    <string name="dosage_form_suppository">suppository</string>
+    <string name="dosage_form_suppository">Suppository</string>
+
+    <array name="dosage_form_plurals">
+        <item>@plurals/tablet</item>
+        <item>@plurals/capsule</item>
+        <item>@plurals/ampule</item>
+        <item>@plurals/injection</item>
+        <item>@plurals/packet</item>
+        <item>@plurals/drop</item>
+        <item>@plurals/dose</item>
+        <item>@plurals/ml</item>
+        <item>@plurals/gram</item>
+        <item>@plurals/iu</item>
+        <item>@plurals/suppository</item>
+    </array>
+
+    <plurals name="tablet">
+        <item quantity="one">%1$s tablet</item>
+        <item quantity="other">%1$s tablets</item>
+    </plurals>
+
+    <plurals name="capsule">
+        <item quantity="one">%1$s capsule</item>
+        <item quantity="other">%1$s capsules</item>
+    </plurals>
+
+    <plurals name="ampule">
+        <item quantity="one">%1$s ampule</item>
+        <item quantity="other">%1$s ampules</item>
+    </plurals>
+
+    <plurals name="injection">
+        <item quantity="one">%1$s injection</item>
+        <item quantity="other">%1$s injections</item>
+    </plurals>
+
+    <plurals name="packet">
+        <item quantity="one">%1$s packet</item>
+        <item quantity="other">%1$s packets</item>
+    </plurals>
+
+    <plurals name="drop">
+        <item quantity="one">%1$s drop</item>
+        <item quantity="other">%1$s drops</item>
+    </plurals>
+
+    <plurals name="dose">
+        <item quantity="one">%1$s dose</item>
+        <item quantity="other">%1$s doses</item>
+    </plurals>
+
+    <plurals name="gram">
+        <item quantity="one">%1$s gram</item>
+        <item quantity="other">%1$s grams</item>
+    </plurals>
+
+    <plurals name="suppository">
+        <item quantity="one">%1$s suppository</item>
+        <item quantity="other">%1$s suppositories</item>
+    </plurals>
+
+    <plurals name="ml">
+        <item quantity="one">%1$s ml</item>
+        <item quantity="other">%1$s ml</item>
+    </plurals>
+
+    <plurals name="iu">
+        <item quantity="one">%1$s IU</item>
+        <item quantity="other">%1$s IU</item>
+    </plurals>
+
+    <plurals name="units">
+        <item quantity="one">>%1$s unit</item>
+        <item quantity="other">>%1$s units</item>
+    </plurals>
 
     <!--bmi categories array-->
     <string name="bmi_category_thinness_3">Severe thinness</string>

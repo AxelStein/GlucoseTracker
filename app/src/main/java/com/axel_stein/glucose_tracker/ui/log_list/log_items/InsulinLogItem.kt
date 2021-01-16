@@ -16,7 +16,8 @@ class InsulinLogItem(private val item: InsulinLogEmbedded) : LogItem {
 
     override fun format(context: Context, appSettings: AppSettings, appResources: AppResources) {
         title = item.insulin.title
-        description = "${item.log.units.formatIfInt()} ${appResources.unitsSuffix}"
+        // description = "${item.log.units.formatIfInt()} ${appResources.unitsSuffix}"
+        description = context.resources.getQuantityString(R.plurals.units, item.log.units.toInt(), item.log.units.formatIfInt())
         time = formatTime(context, item.log.dateTime)
         timeDescription = appResources.measuredArray[item.log.measured]
     }

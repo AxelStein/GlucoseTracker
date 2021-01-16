@@ -16,7 +16,8 @@ class MedicationLogItem(private val item: MedicationLogEmbedded) : LogItem {
 
     override fun format(context: Context, appSettings: AppSettings, appResources: AppResources) {
         title = item.medication.title
-        description = "${item.log.amount.formatIfInt()} ${appResources.dosageFormsArray[item.medication.dosageForm]}"
+        val res = appResources.dosageFormsPlurals.getResourceId(item.medication.dosageForm, 0)
+        description = context.resources.getQuantityString(res, item.log.amount.toInt(), item.log.amount.formatIfInt())
         time = formatTime(context, item.log.dateTime)
         timeDescription = appResources.measuredArray[item.log.measured]
     }
