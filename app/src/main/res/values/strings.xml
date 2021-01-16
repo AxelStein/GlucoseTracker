@@ -278,8 +278,8 @@
     </plurals>
 
     <plurals name="units">
-        <item quantity="one">>%1$s unit</item>
-        <item quantity="other">>%1$s units</item>
+        <item quantity="one">%1$s unit</item>
+        <item quantity="other">%1$s units</item>
     </plurals>
 
     <!--bmi categories array-->
