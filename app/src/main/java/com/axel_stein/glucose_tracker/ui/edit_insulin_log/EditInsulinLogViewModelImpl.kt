@@ -20,6 +20,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     protected var dateTime = MutableLiveData<MutableDateTime>()
     protected var insulinList = MutableLiveData<List<Insulin>>()
     protected var insulinSelected = MutableLiveData<Int>()
+    protected var editorActive = MutableLiveData<Boolean>()
     protected var units = MutableLiveData<String>()
     protected var measured = MutableLiveData<Int>()
     protected var errorLoading = MutableLiveData<Boolean>()
@@ -35,6 +36,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
     fun insulinLiveData(): LiveData<List<Insulin>> = insulinList
     fun insulinSelectedLiveData(): LiveData<Int> = insulinSelected
+    fun editorActiveLiveData(): LiveData<Boolean> = editorActive
     fun unitsLiveData(): LiveData<String> = units
     fun measuredLiveData(): LiveData<Int> = measured
     fun errorLoadingLiveData(): LiveData<Boolean> = errorLoading
@@ -82,62 +84,62 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     }
 
     @SuppressLint("CheckResult")
-    private fun loadInsulinList(loadLogCallback: (List<Insulin>) -> Unit) {
-        disposables.add(
-            listDao.observeItems()
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .subscribe({ items ->
-                    insulinList.value = items
-                    if (items.isNotEmpty()) {
-                        errorInsulinListEmpty.value = false
+    private fun loadActiveInsulinList(insulinId: Long = -1L) {
+        listDao.getItems()
+            .subscribeOn(io())
+            .observeOn(mainThread())
+            .subscribe({
+                insulinList.value = it
+                if (it.isEmpty()) {
+                    errorInsulinListEmpty.value = true
+                } else {
+                    if (insulinId == -1L) selectInsulin(0)
+                    else it.forEachIndexed { index, insulin ->
+                        if (insulin.id == insulinId) {
+                            selectInsulin(index)
+                            return@forEachIndexed
+                        }
                     }
-                    if (dateTime.value == null) {
-                        loadLogCallback(items)
-                    }
-                }, {
-                    it.printStackTrace()
-                })
-        )
+                }
+            }, {
+                it.printStackTrace()
+            })
     }
 
     @SuppressLint("CheckResult")
     fun loadData() {
-        loadInsulinList { insulinItems ->
-            if (id == 0L) setData(insulinSelected = if (insulinItems.isNotEmpty()) 0 else -1)
-            else logDao.getById(id)
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .subscribe({ log ->
-                    var selected = -1
-                    insulinItems.forEachIndexed { index, insulin ->
-                        if (insulin.id == log.insulinId) selected = index
-                    }
-                    setData(
-                        log.dateTime.toMutableDateTime(),
-                        log.units.toString(),
-                        log.measured,
-                        selected
-                    )
-                }, {
-                    it.printStackTrace()
-                    errorLoading.postValue(true)
-                })
-        }
+        if (id == 0L) {
+            setData()
+            loadActiveInsulinList()
+        } else logDao.getById(id)
+            .subscribeOn(io())
+            .observeOn(mainThread())
+            .subscribe({
+                setData(
+                    it.log.dateTime.toMutableDateTime(),
+                    it.log.units.toString(),
+                    it.log.measured
+                )
+                if (!it.insulin.active) {
+                    insulinList.value = listOf(it.insulin)
+                    selectInsulin(0)
+                    editorActive.value = false
+                } else {
+                    loadActiveInsulinList(it.insulin.id)
+                }
+            }, {
+                it.printStackTrace()
+            })
     }
 
     private fun setData(
         dateTime: MutableDateTime = MutableDateTime.now(),
         units: String = "",
-        measured: Int = 0,
-        insulinSelected: Int = -1
+        measured: Int = 0
     ) {
         this.dateTime.value = dateTime
         this.units.value = units
         this.measured.value = measured
-        if (insulinSelected > -1) {
-            this.insulinSelected.value = insulinSelected
-        }
     }
 
     @SuppressLint("CheckResult")

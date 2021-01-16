@@ -161,4 +161,6 @@
     <string name="bmi_category_obese_2">Ожирение II степени</string>
     <string name="bmi_category_obese_3">Ожирение III степени</string>
     <string name="bmi_result">ИМТ: %1$.1f (%2$s)</string>
+    <string name="hint_suspended_insulin_list">Неактивные препараты</string>
+    <string name="hint_active_insulin_list">Активные препараты</string>
 </resources>

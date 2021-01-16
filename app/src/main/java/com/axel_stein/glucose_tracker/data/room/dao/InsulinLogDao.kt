@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.InsulinLog
+import com.axel_stein.glucose_tracker.data.model.InsulinLogEmbedded
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -16,7 +17,7 @@ abstract class InsulinLogDao : BaseDao<InsulinLog>() {
     abstract fun deleteById(id: Long): Completable
 
     @Query("select * from insulin_log where id = :id")
-    abstract fun getById(id: Long): Single<InsulinLog>
+    abstract fun getById(id: Long): Single<InsulinLogEmbedded>
 
     @Query("select * from insulin_log")
     abstract fun getAll(): List<InsulinLog>

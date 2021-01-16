@@ -20,6 +20,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
     private val args: EditMedicationLogActivityArgs by navArgs()
     private val viewModel: EditMedicationLogViewModel by viewModels { EditMedicationLogFactory(this, args.id) }
     private lateinit var binding: ActivityEditMedicationLogBinding
+    private var showSaveMenuItem = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,16 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         setupAmountEditor()
         setupMeasuredSpinner()
 
+        viewModel.editorActiveLiveData().observe(this, {
+            showSaveMenuItem = it
+            invalidateOptionsMenu()
+
+            binding.btnDate.isEnabled = it
+            binding.btnTime.isEnabled = it
+            binding.inputLayoutMedication.isEnabled = it
+            binding.inputLayoutAmount.isEnabled = it
+            binding.inputLayoutMeasured.isEnabled = it
+        })
         viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
@@ -80,13 +91,6 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         viewModel.medicationSelectedLiveData().observe(this, {
             binding.medicationSpinner.setSpinnerSelection(it)
         })
-        viewModel.medicationListActiveLiveData().observe(this, {
-            binding.btnDate.isEnabled = it
-            binding.btnTime.isEnabled = it
-            binding.inputLayoutMedication.isEnabled = it
-            binding.inputLayoutAmount.isEnabled = it
-            binding.inputLayoutMeasured.isEnabled = it
-        })
         viewModel.errorMedicationListEmptyLiveData().observe(this, {
             binding.inputLayoutMedication.showError(it, R.string.error_medication_list_empty)
         })
@@ -121,8 +125,9 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_edit_medication_log, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
+        menu?.findItem(R.id.menu_save)?.isVisible = showSaveMenuItem
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -21,7 +21,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     protected var dateTime = MutableLiveData<MutableDateTime>()
     protected var medicationList = MutableLiveData<List<Medication>>()
     protected var medicationSelected = MutableLiveData<Int>()
-    protected var medicationListActive = MutableLiveData<Boolean>()
+    protected var editorActive = MutableLiveData<Boolean>()
     protected var amount = MutableLiveData<String>()
     protected var dosageForm = MutableLiveData<Int>()
     protected var measured = MutableLiveData<Int>()
@@ -38,7 +38,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
     fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
     fun medicationListLiveData(): LiveData<List<Medication>> = medicationList
     fun medicationSelectedLiveData(): LiveData<Int> = medicationSelected
-    fun medicationListActiveLiveData(): LiveData<Boolean> = medicationListActive
+    fun editorActiveLiveData(): LiveData<Boolean> = editorActive
     fun amountLiveData(): LiveData<String> = amount
     fun dosageFormLiveData(): LiveData<Int> = dosageForm
     fun measuredLiveData(): LiveData<Int> = measured
@@ -99,13 +99,11 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
             .observeOn(mainThread())
             .subscribe({ items ->
                 medicationList.value = items
-                if (items.isNotEmpty()) {
-                    errorMedicationListEmpty.value = false
-                }
-                if (medicationId == -1L) {
-                    selectMedication(0)
+                if (items.isEmpty()) {
+                    errorMedicationListEmpty.value = true
                 } else {
-                    items.forEachIndexed { index, medication ->
+                    if (medicationId == -1L) selectMedication(0)
+                    else items.forEachIndexed { index, medication ->
                         if (medication.id == medicationId) {
                             selectMedication(index)
                             return@forEachIndexed
@@ -134,7 +132,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
                 if (!it.medication.active) {
                     medicationList.value = listOf(it.medication)
                     selectMedication(0)
-                    medicationListActive.value = false
+                    editorActive.value = false
                 } else {
                     loadActiveMedications(it.medication.id)
                 }

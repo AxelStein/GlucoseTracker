@@ -10,13 +10,15 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityEditInsulinLogBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.axel_stein.glucose_tracker.utils.*
+import com.axel_stein.glucose_tracker.utils.formatDate
+import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
 
 class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
     private val args: EditInsulinLogActivityArgs by navArgs()
     private val viewModel: EditInsulinLogViewModel by viewModels { EditInsulinLogFactory(this, args.id) }
     private lateinit var binding: ActivityEditInsulinLogBinding
+    private var showSaveMenuItem = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,17 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         setupInsulinSpinner()
         setupUnits()
         setupMeasuredDropDown()
+
+        viewModel.editorActiveLiveData().observe(this, {
+            showSaveMenuItem = it
+            invalidateOptionsMenu()
+
+            binding.btnDate.isEnabled = it
+            binding.btnTime.isEnabled = it
+            binding.inputLayoutInsulin.isEnabled = it
+            binding.inputLayoutUnits.isEnabled = it
+            binding.inputLayoutMeasured.isEnabled = it
+        })
 
         viewModel.actionFinishLiveData().observe(this, {
             if (it) finish()
@@ -101,8 +114,9 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_edit_insulin_log, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
+        menu?.findItem(R.id.menu_save)?.isVisible = showSaveMenuItem
         return super.onCreateOptionsMenu(menu)
     }
 

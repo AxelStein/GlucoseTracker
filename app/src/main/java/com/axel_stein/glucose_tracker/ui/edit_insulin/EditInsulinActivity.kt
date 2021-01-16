@@ -26,6 +26,12 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
         setupEditor()
         setupTypeSpinner()
 
+        setViewVisible(args.id != 0L, binding.btnToggleActive)
+        binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
+        viewModel.activeLiveData().observe(this, {
+            binding.btnToggleActive.setText(if (it) R.string.action_suspend_medication_taking else R.string.action_resume_medication_taking)
+        })
+
         viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
@@ -62,7 +68,7 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_edit_insulin, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }

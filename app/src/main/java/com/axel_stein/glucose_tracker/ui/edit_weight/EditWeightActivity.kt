@@ -68,7 +68,7 @@ class EditWeightActivity : EditorActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_edit_weight, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }

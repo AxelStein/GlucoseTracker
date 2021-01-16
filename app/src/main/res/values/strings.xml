@@ -15,7 +15,7 @@
     <!--fab menu-->
     <string name="fab_menu_blood_sugar">Blood sugar</string>
     <string name="fab_menu_note">Note</string>
-    <string name="fab_menu_insulin">Insulin intake</string>
+    <string name="fab_menu_insulin" translatable="false">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>
 
     <!--bottom nav view-->
@@ -52,6 +52,8 @@
     <string name="hint_amount">Amount</string>
     <string name="hint_active_medications">Active medications</string>
     <string name="hint_suspended_medications">Suspended medications</string>
+    <string name="hint_active_insulin_list">Active</string>
+    <string name="hint_suspended_insulin_list">Suspended</string>
 
     <!--error-->
     <string name="error_import_file">File import error</string>

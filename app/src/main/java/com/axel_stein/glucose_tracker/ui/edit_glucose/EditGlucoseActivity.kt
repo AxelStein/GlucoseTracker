@@ -13,7 +13,8 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditGlucoseBinding
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.axel_stein.glucose_tracker.utils.*
+import com.axel_stein.glucose_tracker.utils.formatDate
+import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
@@ -123,7 +124,7 @@ class EditGlucoseActivity: AppCompatActivity(), OnConfirmListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_edit_glucose, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }

@@ -19,8 +19,17 @@ abstract class InsulinDao : BaseDao<Insulin>() {
     @Query("select * from insulin_list where id = :id")
     abstract fun getById(id: Long): Single<Insulin>
 
+    @Query("update insulin_list set active = :active where id = :id")
+    abstract fun setActive(id: Long, active: Boolean): Completable
+
     @Query("select * from insulin_list order by title")
     abstract fun observeItems(): Flowable<List<Insulin>>
+
+    @Query("select * from insulin_list order by title")
+    abstract fun getItems(): Single<List<Insulin>>
+
+    @Query("select * from insulin_list where active = 1 order by title")
+    abstract fun getActiveItems(): Flowable<List<Insulin>>
 
     @Query("select * from insulin_list")
     abstract fun getAll(): List<Insulin>

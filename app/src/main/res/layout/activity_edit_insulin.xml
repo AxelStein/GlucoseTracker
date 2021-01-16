@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
@@ -89,5 +89,13 @@
             app:drawableTopCompat="@drawable/icon_error" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_toggle_active"
+        android:layout_gravity="bottom"
+        tools:text="@string/action_suspend_medication_taking"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
