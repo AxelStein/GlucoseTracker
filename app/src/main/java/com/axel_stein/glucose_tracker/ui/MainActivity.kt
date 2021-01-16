@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val animationHelper = AnimationHelper()
     private lateinit var navController: NavController
+    private val destinationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
+        when(destination.id) {
+            R.id.menu_home_fragment -> binding.fab.show()
+            else -> binding.fab.hide()
+        }
+    }
 
     @Inject
     lateinit var appSettings: AppSettings
@@ -86,13 +92,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavView.setupWithNavController(navController)
-        binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.menu_home_fragment -> binding.fab.show()
-                else -> binding.fab.hide()
-            }
-            NavigationUI.onNavDestinationSelected(item, navController)
-        }
     }
 
     private fun showFabMenu() {
@@ -105,6 +104,16 @@ class MainActivity : AppCompatActivity() {
         animationHelper.rotateFab(binding.fab, false)
         animationHelper.hideDim(binding.dim)
         animationHelper.hideFabMenu(binding.fabMenu)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        navController.addOnDestinationChangedListener(destinationListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        navController.removeOnDestinationChangedListener(destinationListener)
     }
 
     override fun onBackPressed() {
