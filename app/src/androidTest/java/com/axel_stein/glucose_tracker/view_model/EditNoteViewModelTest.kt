@@ -66,7 +66,7 @@ class EditNoteViewModelTest {
 
     @Test
     fun testLoad() {
-        dao.insert(createLog("2021", "01", "10")).subscribe()
+        dao.insert(createLog("2021", "01", "10"))
 
         val items = dao.get()
         Assert.assertFalse(items.isEmpty())
@@ -80,7 +80,7 @@ class EditNoteViewModelTest {
 
     @Test
     fun testDelete() {
-        dao.insert(createLog()).subscribe()
+        dao.insert(createLog())
 
         val log = dao.get()[0]
         val vm = createViewModel(log.id)

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "medication_list")
 data class Medication(
-    val title: String,
+    var title: String,
 
     @ColumnInfo(name = "dosage_form", defaultValue = "0")
     val dosageForm: Int = 0,

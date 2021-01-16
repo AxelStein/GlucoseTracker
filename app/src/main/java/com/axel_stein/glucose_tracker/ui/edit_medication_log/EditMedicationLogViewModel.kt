@@ -6,7 +6,7 @@ import com.axel_stein.glucose_tracker.data.room.dao.MedicationLogDao
 import com.axel_stein.glucose_tracker.ui.App
 import javax.inject.Inject
 
-class EditMedicationLogViewModel(id: Long = 0L, state: SavedStateHandle) : EditMedicationLogViewModelImpl() {
+class EditMedicationLogViewModel(id: Long = 0L, state: SavedStateHandle) : EditMedicationLogViewModelImpl(id) {
     @Inject
     lateinit var _logDao: MedicationLogDao
 
@@ -21,6 +21,7 @@ class EditMedicationLogViewModel(id: Long = 0L, state: SavedStateHandle) : EditM
         dateTime = state.getLiveData("date_time")
         medicationSelected = state.getLiveData("medication_selected")
         medicationList = state.getLiveData("medication_list")
+        medicationListActive = state.getLiveData("medication_list_active")
         amount = state.getLiveData("amount")
         measured = state.getLiveData("measured")
         errorLoading = state.getLiveData("error_loading")

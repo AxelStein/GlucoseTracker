@@ -64,7 +64,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun testControlGood() {
-        glucoseDao.insert(createLog(4f)).subscribe()
+        glucoseDao.insert(createLog(4f))
 
         val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)
@@ -75,7 +75,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun testControlAvg() {
-        glucoseDao.insert(createLog(8f)).subscribe()
+        glucoseDao.insert(createLog(8f))
 
         val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)
@@ -85,7 +85,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun testControlBad() {
-        glucoseDao.insert(createLog(10f)).subscribe()
+        glucoseDao.insert(createLog(10f))
 
         val vm = StatisticsViewModel(dao, glucoseDao, a1cDao, appSettings, appResources)
         assertNotNull(vm.statsLiveData().value)

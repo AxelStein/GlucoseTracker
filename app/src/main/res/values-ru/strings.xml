@@ -123,7 +123,7 @@
     <string name="plus_pref_insulin_list">Препараты инсулина</string>
     <string name="plus_pref_medications">Лекарства</string>
     <string name="pref_category_measurements">Измерения</string>
-    <string name="plus_pref_weight">Вес и ИМТ</string>
+    <string name="plus_pref_weight">Вес</string>
     <string name="height_unit_cm">см</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>

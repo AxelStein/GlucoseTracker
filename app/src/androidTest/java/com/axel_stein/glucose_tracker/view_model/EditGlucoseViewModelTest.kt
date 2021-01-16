@@ -123,7 +123,7 @@ class EditGlucoseViewModelTest {
     @Test
     fun testLoad() {
         assertTrue(dao.getAll().isEmpty())
-        dao.insert(createLog(2, "2021", "01", "10")).subscribe()
+        dao.insert(createLog(2, "2021", "01", "10"))
 
         val items = dao.getAll()
         assertFalse(items.isEmpty())
@@ -139,7 +139,7 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testLoad_error() {
-        dao.insert(createLog(2, "2021", "01", "10", "15", "30")).subscribe()
+        dao.insert(createLog(2, "2021", "01", "10", "15", "30"))
         val vm = createVieModel(2L)  // incorrect id
         assertNotNull(vm.errorLoadingLiveData().value)
         assertTrue(vm.errorLoadingLiveData().value ?: false)
@@ -147,7 +147,7 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testDelete() {
-        dao.insert(createLog()).subscribe()
+        dao.insert(createLog())
 
         val log = dao.getAll()[0]
         val vm = createVieModel(log.id)

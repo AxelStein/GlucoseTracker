@@ -10,6 +10,8 @@ import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.LogDao
 import org.joda.time.DateTime
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,21 +42,21 @@ class LogDaoTest {
 
     @Test
     fun testGetYears() {
-        glucoseDao.insert(createGlucoseLog("2020", "12")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2020", "12"))
 
         logDao.getYears().test()
             .assertValue { it.size == 1 }
             .assertValue { it[0] == "2020" }
 
-        glucoseDao.insert(createGlucoseLog("2021", "01")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "11")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "09")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2021", "01"))
+        glucoseDao.insert(createGlucoseLog("2020", "11"))
+        glucoseDao.insert(createGlucoseLog("2020", "09"))
 
         logDao.getYears().test()
             .assertValue { it.size == 2 }
             .assertValue { it == listOf("2021", "2020") }
 
-        glucoseDao.insert(createGlucoseLog("2019", "06")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2019", "06"))
 
         logDao.getYears().test()
             .assertValue { it.size == 3 }
@@ -63,13 +65,13 @@ class LogDaoTest {
 
     @Test
     fun testGetMonths() {
-        glucoseDao.insert(createGlucoseLog("2020", "12")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2020", "12"))
 
         logDao.getMonths("2020").test().assertValue { it.size == 1 }
 
-        glucoseDao.insert(createGlucoseLog("2021", "01")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "11")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "09")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2021", "01"))
+        glucoseDao.insert(createGlucoseLog("2020", "11"))
+        glucoseDao.insert(createGlucoseLog("2020", "09"))
 
         logDao.getMonths("2020").test().assertValue { it.size == 3 }
         logDao.getMonths("2021").test().assertValue { it.size == 1 }
@@ -83,27 +85,27 @@ class LogDaoTest {
 
     @Test
     fun testGetItems() {
-        glucoseDao.insert(createGlucoseLog("2020", "12")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2021", "01")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "12")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2020", "11")).subscribe()
-        glucoseDao.insert(createGlucoseLog("2019", "09")).subscribe()
+        glucoseDao.insert(createGlucoseLog("2020", "12"))
+        glucoseDao.insert(createGlucoseLog("2021", "01"))
+        glucoseDao.insert(createGlucoseLog("2020", "12"))
+        glucoseDao.insert(createGlucoseLog("2020", "11"))
+        glucoseDao.insert(createGlucoseLog("2019", "09"))
 
-        logDao.getItems("2020-12").test().assertValue { it.size == 2 }
-        logDao.getItems("2020-11").test().assertValue { it.size == 1 }
-        logDao.getItems("2021-01").test().assertValue { it.size == 1 }
+        assertEquals(2, logDao.getLogsByYearMonth("2020-12").size)
+        assertEquals(1, logDao.getLogsByYearMonth("2020-11").size)
+        assertEquals(1, logDao.getLogsByYearMonth("2020-01").size)
 
         // test empty yearMonth
-        logDao.getItems("").test().assertValue { it.isEmpty() }
+        assertTrue(logDao.getLogsByYearMonth("").isEmpty())
 
         // test without month
-        logDao.getItems("2020").test().assertValue { it.isEmpty() }
+        assertTrue(logDao.getLogsByYearMonth("2020").isEmpty())
 
         // test no data
-        logDao.getItems("2021-02").test().assertValue { it.isEmpty() }
+        assertTrue(logDao.getLogsByYearMonth("2021-02").isEmpty())
 
         // test incorrect format
-        logDao.getItems("2021-01-03").test().assertValue { it.isEmpty() }
+        assertTrue(logDao.getLogsByYearMonth("2021-02-03").isEmpty())
     }
 
     private fun createGlucoseLog(year: String, month: String): GlucoseLog {

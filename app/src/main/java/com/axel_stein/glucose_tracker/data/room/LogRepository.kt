@@ -47,33 +47,38 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
     private fun createFlowable(getData: () -> List<Any>): Flowable<LogListResult> {
         return Flowable.create({ emitter ->
             val worker = Schedulers.io().createWorker()
-
-            val emitCurrentList = {
+            val emitData = {
                 worker.schedule {
-                    val objects = getData().map {
-                        when (it) {
-                            is GlucoseLog -> GlucoseLogItem(it)
-                            is NoteLog -> NoteLogItem(it)
-                            is A1cLog -> A1cLogItem(it)
-                            is InsulinLogEmbedded -> InsulinLogItem(it)
-                            is MedicationLogEmbedded -> MedicationLogItem(it)
-                            is WeightLog -> WeightLogItem(it)
-                            else -> TODO()
+                    try {
+                        val objects = getData().map {
+                            when (it) {
+                                is GlucoseLog -> GlucoseLogItem(it)
+                                is NoteLog -> NoteLogItem(it)
+                                is A1cLog -> A1cLogItem(it)
+                                is InsulinLogEmbedded -> InsulinLogItem(it)
+                                is MedicationLogEmbedded -> MedicationLogItem(it)
+                                is WeightLog -> WeightLogItem(it)
+                                else -> TODO()
+                            }
                         }
+                        val list = sort(format(objects).toMutableList())
+                        emitter.onNext(LogListResult(list, createHeaders(list)))
+                    } catch (e: Exception) {
+                        emitter.tryOnError(e)
                     }
-                    val list = sort(format(objects).toMutableList())
-                    emitter.onNext(LogListResult(list, createHeaders(list)))
                 }
             }
 
             val observer = object : InvalidationTracker.Observer(tables) {
                 override fun onInvalidated(tables: MutableSet<String>) {
-                    emitCurrentList()
+                    emitData()
                 }
             }
             db.invalidationTracker.addObserver(observer)
-            emitter.setCancellable { db.invalidationTracker.removeObserver(observer) }
-            emitCurrentList()
+            emitter.setCancellable {
+                db.invalidationTracker.removeObserver(observer)
+            }
+            emitData()
         }, BackpressureStrategy.LATEST)
     }
 

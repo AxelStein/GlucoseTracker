@@ -117,7 +117,7 @@
 
     <string name="pref_category_measurements">Measurements</string>
     <string name="plus_pref_a1c" translatable="false">HbA1c</string>
-    <string name="plus_pref_weight">Weight and BMI</string>
+    <string name="plus_pref_weight">Weight</string>
 
     <!--todo height units-->
     <string name="height_unit_cm">cm</string>

@@ -25,8 +25,11 @@ abstract class MedicationDao : BaseDao<Medication>() {
     @Query("select * from medication_list order by title")
     abstract fun observeItems(): Flowable<List<Medication>>
 
-    @Query("select * from medication_list where active = 1 order by title, active desc")
+    @Query("select * from medication_list where active = 1 order by title")
     abstract fun getActiveItems(): Single<List<Medication>>
+
+    @Query("select * from medication_list order by title")
+    abstract fun getItems(): Single<List<Medication>>
 
     @Transaction
     open fun importBackup(backup: List<Medication>) {

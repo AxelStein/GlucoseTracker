@@ -109,12 +109,9 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe({ log ->
-                    val selected = if (insulinItems.isNullOrEmpty()) -1 else {
-                        insulinItems.indexOf(
-                            insulinItems.find { item ->
-                                item.id == log.id
-                            }
-                        )
+                    var selected = -1
+                    insulinItems.forEachIndexed { index, insulin ->
+                        if (insulin.id == log.insulinId) selected = index
                     }
                     setData(
                         log.dateTime.toMutableDateTime(),

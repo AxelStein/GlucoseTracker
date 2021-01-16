@@ -123,7 +123,7 @@ fun AutoCompleteTextView.setSpinnerItems(items: Array<String>) {
 }
 
 fun AutoCompleteTextView.setSpinnerSelection(position: Int) {
-    if (position != -1 && position != listSelection) {
+    if (position >= 0 && position < adapter?.count ?: 0) {
         listSelection = position
         val item = adapter?.getItem(position)
         if (item != null) {

@@ -11,7 +11,9 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditMedicationLogBindi
 import com.axel_stein.glucose_tracker.databinding.ActivityEditMedicationLogBinding.inflate
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.axel_stein.glucose_tracker.utils.*
+import com.axel_stein.glucose_tracker.utils.formatDate
+import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
 
 class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
@@ -77,6 +79,13 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         })
         viewModel.medicationSelectedLiveData().observe(this, {
             binding.medicationSpinner.setSpinnerSelection(it)
+        })
+        viewModel.medicationListActiveLiveData().observe(this, {
+            binding.btnDate.isEnabled = it
+            binding.btnTime.isEnabled = it
+            binding.inputLayoutMedication.isEnabled = it
+            binding.inputLayoutAmount.isEnabled = it
+            binding.inputLayoutMeasured.isEnabled = it
         })
         viewModel.errorMedicationListEmptyLiveData().observe(this, {
             binding.inputLayoutMedication.showError(it, R.string.error_medication_list_empty)

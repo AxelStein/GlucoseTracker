@@ -73,7 +73,7 @@ fun migration_1_2() = object : Migration(1, 2) {
             """
         )
 
-        database.execSQL("drop table food_list")
-        database.execSQL("drop table food_log")
+        database.execSQL("DROP TABLE IF EXISTS food_list")
+        database.execSQL("DROP TABLE IF EXISTS food_log")
     }
 }
