@@ -22,7 +22,7 @@ import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.ui.setShown
 
 open class LogListFragment: Fragment() {
-    protected val viewModel: LogListViewModel by viewModels { LogListViewModelFactory(requireActivity().application) }
+    protected val viewModel: LogListViewModel by viewModels()
     private lateinit var adapter: LogListAdapter
     private val headerDecor = TextHeaderDecor(R.layout.item_date)
     private var _binding: FragmentLogListBinding? = null

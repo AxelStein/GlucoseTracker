@@ -1,11 +1,10 @@
 package com.axel_stein.glucose_tracker.ui.log_list
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.util.SparseArray
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
@@ -16,7 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
-class LogListViewModel(app: Application): AndroidViewModel(app) {
+class LogListViewModel : ViewModel() {
     private val items = MutableLiveData<List<LogItem>>()
     private val headers = MutableLiveData<SparseArray<String>>()
     private var yearMonth = ""

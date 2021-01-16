@@ -1,15 +1,12 @@
 package com.axel_stein.glucose_tracker.ui.medication_list
 
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.*
-import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.databinding.FragmentMedicationListBinding
 import com.axel_stein.glucose_tracker.ui.log_list.TextHeaderDecor
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragmentDirections.Companion.actionAddMedication
@@ -46,26 +43,13 @@ class MedicationListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.itemsLiveData().observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-            updateHeaders(it)
+            adapter.submitList(it.list)
+            headerDecor.setHeaders(it.headers)
             binding.recyclerView.post {
                 binding.recyclerView.invalidateItemDecorations()
             }
-            binding.textEmpty.setShown(it.isEmpty())
+            binding.textEmpty.setShown(it.list.isEmpty())
         })
-    }
-
-    private fun updateHeaders(list: List<Medication>) {
-        val headers = SparseArray<String>()
-        var active: Boolean? = null
-        list.forEachIndexed { index, item ->
-            val itemActive = item.active
-            if (active == null || active != itemActive) {
-                headers[index] = getString(if (itemActive) R.string.hint_active_medications else R.string.hint_suspended_medications)
-                active = itemActive
-            }
-        }
-        headerDecor.setHeaders(headers)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
