@@ -293,4 +293,17 @@
     <string name="bmi_category_obese_3">Obese Class III</string>
 
     <string name="bmi_result">BMI: %1$.1f (%2$s)</string>
+
+    <string-array name="chart_titles">
+        <item>Blood sugar (before meal)</item>
+        <item>Blood sugar (after meal)</item>
+        <item>HbA1c</item>
+        <item>Weight</item>
+    </string-array>
+
+    <string-array name="chart_periods">
+        <item>2 weeks</item>
+        <item>1 month</item>
+        <item>3 months</item>
+    </string-array>
 </resources>

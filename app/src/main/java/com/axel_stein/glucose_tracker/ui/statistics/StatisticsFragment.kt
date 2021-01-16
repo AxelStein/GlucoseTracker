@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,12 +43,10 @@ class StatisticsFragment: Fragment() {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
 
         setupStatsView()
-        setupBeforeMealChart()
-        setupAfterMealChart()
-        setupA1cChart()
+        setupChart()
 
-        binding.spinnerPeriod.onItemSelectedListener = setItemSelectedListener {
-            viewModel.setPeriod(it)
+        binding.spinnerStats.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setStatsPeriod(it)
         }
         viewModel.showErrorLiveData().observe(viewLifecycleOwner, {
             if (it) {
@@ -83,55 +83,24 @@ class StatisticsFragment: Fragment() {
         })
     }
 
-    private fun setupBeforeMealChart() {
-        setupChartView(binding.beforeMealChart)
+    private fun setupChart() {
+        setupChartView(binding.chart)
+        binding.chartTitleSpinner.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setChartType(it)
+            binding.chartPeriodSpinner.visibility = if (it < 2) VISIBLE else INVISIBLE
+        }
+        binding.chartPeriodSpinner.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setChartPeriod(it)
+        }
 
-        viewModel.beforeMealChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.beforeMealChart, it)
-            binding.cardViewBeforeMeal.show()
+        viewModel.chartLiveData().observe(viewLifecycleOwner, {
+            setChartLineData(binding.chart, it)
         })
-        viewModel.beforeMealMaxLiveData().observe(viewLifecycleOwner, {
-            binding.beforeMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
+        viewModel.chartLimits().observe(viewLifecycleOwner, {
+            setChartLimitLines(binding.chart, it)
         })
-        viewModel.beforeMealLimitsLiveData().observe(viewLifecycleOwner, {
-            addChartLimitLines(binding.beforeMealChart, it)
-        })
-        viewModel.beforeMealLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.beforeMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
-        })
-    }
-
-    private fun setupAfterMealChart() {
-        setupChartView(binding.afterMealChart)
-
-        viewModel.afterMealChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.afterMealChart, it)
-            binding.cardViewAfterMeal.show()
-        })
-        viewModel.afterMealMaxLiveData().observe(viewLifecycleOwner, {
-            binding.afterMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
-        })
-        viewModel.afterMealLimitsLiveData().observe(viewLifecycleOwner, {
-            addChartLimitLines(binding.afterMealChart, it)
-        })
-        viewModel.afterMealLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.afterMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
-        })
-    }
-
-    private fun setupA1cChart() {
-        setupChartView(binding.a1cChart)
-        addChartLimitLines(binding.a1cChart, arrayListOf(6f, 7f, 8f))
-
-        viewModel.a1cChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.a1cChart, it)
-            binding.cardViewA1c.show()
-        })
-        viewModel.a1cMaxLiveData().observe(viewLifecycleOwner, {
-            binding.a1cChart.axisLeft.axisMaximum = if (it < 10f) 10f else it + 2f
-        })
-        viewModel.a1cLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.a1cChart.xAxis.valueFormatter = LabelValueFormatter(it)
+        viewModel.chartLabelsLiveData().observe(viewLifecycleOwner, {
+            binding.chart.xAxis.valueFormatter = LabelValueFormatter(it)
         })
     }
 
@@ -141,6 +110,7 @@ class StatisticsFragment: Fragment() {
         chart.setDrawGridBackground(false)
         chart.xAxis.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        chart.axisLeft.spaceTop = 50f
         chart.axisLeft.axisMinimum = 0f
         chart.axisLeft.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.axisRight.setDrawLabels(false)
@@ -148,17 +118,18 @@ class StatisticsFragment: Fragment() {
     }
 
     private fun setChartLineData(chart: LineChart, data: LineData?) {
+        chart.axisLeft.removeAllLimitLines()
         chart.data = data
         chart.notifyDataSetChanged()
-        chart.setVisibleXRangeMaximum(10f)
         if (data != null) {
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = data.entryCount
         }
+        chart.setVisibleXRange(0f, 10f)
         chart.invalidate()
     }
 
-    private fun addChartLimitLines(chart: LineChart, limits: ArrayList<Float>) {
+    private fun setChartLimitLines(chart: LineChart, limits: ArrayList<Float>) {
         for (limit in limits) {
             chart.axisLeft.addLimitLine(LimitLine(limit))
         }

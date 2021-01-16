@@ -1,11 +1,11 @@
 package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
 import android.graphics.Color
-import com.axel_stein.glucose_tracker.data.model.A1cLog
+import com.axel_stein.glucose_tracker.data.model.WeightLog
 import com.github.mikephil.charting.data.Entry
 
-class A1cLineDataHelper(
-    logs: List<A1cLog>,
+class WeightLineDataHelper(
+    logs: List<WeightLog>,
     private var lineColor: Int = Color.BLACK,
     private var fillColor: Int = lineColor,
     months: Array<String>
@@ -16,11 +16,11 @@ class A1cLineDataHelper(
 
     init {
         logs.forEachIndexed { i, log ->
-            if (log.value > maxValue) {
-                maxValue = log.value
+            if (log.kg > maxValue) {
+                maxValue = log.kg
             }
             dateLabelInflater.add(i, log.dateTime)
-            entries.add(Entry(i.toFloat(), log.value))
+            entries.add(Entry(i.toFloat(), log.kg))
         }
     }
 

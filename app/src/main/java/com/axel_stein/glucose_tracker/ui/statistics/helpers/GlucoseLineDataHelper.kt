@@ -13,7 +13,7 @@ class GlucoseLineDataHelper(
     private var fillColor: Int = lineColor,
     private val useMmol: Boolean = true,
     private val limits: ArrayList<Float>,
-    private val months: Array<String>
+    months: Array<String>
 ) {
     private var maxValue = 0f
     private var hypoCount = 0

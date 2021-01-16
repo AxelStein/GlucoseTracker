@@ -21,6 +21,9 @@ abstract class WeightLogDao : BaseDao<WeightLog>() {
     @Query("select * from weight_log")
     abstract fun getAll(): List<WeightLog>
 
+    @Query("select * from weight_log where date_time > date('now', '-1 year')")
+    abstract fun getByThisYear(): List<WeightLog>
+
     @Transaction
     open fun importBackup(backup: List<WeightLog>) {
         deleteAll()
