@@ -8,6 +8,7 @@ import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
 import com.axel_stein.glucose_tracker.utils.DateTimeProvider
 import com.axel_stein.glucose_tracker.utils.getOrDateTime
 import com.axel_stein.glucose_tracker.utils.getOrDefault
+import io.reactivex.Completable
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers.io
@@ -83,16 +84,14 @@ open class EditNoteViewModelImpl(private var id: Long = 0L) : ViewModel(), DateT
         when {
             note.getOrDefault("").isBlank() -> errorNoteEmpty.value = true
             else -> {
-                val log = createLog()
-                val task = if (id != 0L) dao.update(log) else dao.insert(log)
-                task.subscribeOn(io())
-                    .subscribe(
-                        { actionFinish.postValue(true) },
-                        {
-                            it.printStackTrace()
-                            errorSave.postValue(true)
-                        }
-                    )
+                Completable.fromAction {
+                    dao.upsert(createLog())
+                }.subscribeOn(io()).subscribe({
+                    actionFinish.postValue(true)
+                }, {
+                    it.printStackTrace()
+                    errorSave.postValue(true)
+                })
             }
         }
     }

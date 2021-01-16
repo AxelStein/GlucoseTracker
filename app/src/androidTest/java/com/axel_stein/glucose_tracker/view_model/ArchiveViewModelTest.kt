@@ -101,7 +101,7 @@ class ArchiveViewModelTest {
         glucoseDao.insert(createLog(year = "2012", month = "01")).subscribe()
         glucoseDao.insert(createLog(year = "2009", month = "03")).subscribe()
         glucoseDao.insert(createLog(year = "2005", month = "05")).subscribe()
-        assertEquals(3, glucoseDao.get().size)
+        assertEquals(3, glucoseDao.getAll().size)
 
         val vm = ArchiveViewModel(dao = dao)
         vm.setCurrentYear(1)
@@ -109,21 +109,21 @@ class ArchiveViewModelTest {
 
         // delete year 2009
         glucoseDao.deleteById(2).subscribe()
-        assertEquals(2, glucoseDao.get().size)
+        assertEquals(2, glucoseDao.getAll().size)
 
         assertEquals(1, vm.getSelectedYear())
         assertEquals("2005", vm.getCurrentYear())
 
         // delete year 2005
         glucoseDao.deleteById(3).subscribe()
-        assertEquals(1, glucoseDao.get().size)
+        assertEquals(1, glucoseDao.getAll().size)
 
         assertEquals(0, vm.getSelectedYear())
         assertEquals("2012", vm.getCurrentYear())
 
         // delete year 2012
         glucoseDao.deleteById(1).subscribe()
-        assertTrue(glucoseDao.get().isEmpty())
+        assertTrue(glucoseDao.getAll().isEmpty())
 
         assertEquals(-1, vm.getSelectedYear())
         assertEquals("", vm.getCurrentYear())

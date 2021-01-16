@@ -1,14 +1,14 @@
 package com.axel_stein.glucose_tracker.ui.edit_a1c
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.A1cLog
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
-import io.reactivex.CompletableObserver
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 
@@ -42,45 +42,34 @@ open class EditA1cViewModelImpl(private val id: Long = 0L) : ViewModel() {
     fun getValue() = a1c.value ?: ""
 
     fun loadData() {
-        if (id != 0L) {
-            dao.get(id).subscribeOn(Schedulers.io()).subscribe(object : SingleObserver<A1cLog> {
-                override fun onSubscribe(d: Disposable) {}
+        if (id == 0L) postData()
+        else Single.fromCallable { dao.getById(id) }
+            .subscribeOn(io())
+            .subscribe({
+                a1c.postValue(it.value.toString())
+                dateTime.postValue(it.dateTime.toMutableDateTime())
+            }, {
 
-                override fun onSuccess(l: A1cLog) {
-                    a1c.postValue(l.value.toString())
-                    dateTime.postValue(l.dateTime.toMutableDateTime())
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
             })
-        } else {
-            dateTime.postValue(MutableDateTime())
-            a1c.postValue("")
-        }
     }
 
+    private fun postData(a1cValue: String = "", dateTime: MutableDateTime = MutableDateTime()) {
+        a1c.postValue(a1cValue)
+        this.dateTime.postValue(dateTime)
+    }
+
+    @SuppressLint("CheckResult")
     fun save() {
         if (getValue().isEmpty()) {
             errorValueEmpty.value = true
         } else {
-            val log = createLog()
-            var completable = dao.insert(log)
-            if (log.id != 0L) {
-                completable = dao.update(log)
-            }
-            completable.subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    errorSave.postValue(true)
-                }
+            Completable.fromAction {
+                dao.upsert(createLog())
+            }.subscribeOn(io()).subscribe({
+                actionFinish.postValue(true)
+            }, {
+                it.printStackTrace()
+                errorSave.postValue(true)
             })
         }
     }
@@ -112,19 +101,13 @@ open class EditA1cViewModelImpl(private val id: Long = 0L) : ViewModel() {
     }
 
     fun delete() {
-        if (id != 0L) {
-            dao.deleteById(id).subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-
-                override fun onComplete() {
-                    actionFinish.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    errorDelete.postValue(true)
-                }
+        if (id != 0L) Single.fromCallable { dao.deleteById(id) }
+            .subscribeOn(io())
+            .subscribe({
+                actionFinish.postValue(true)
+            }, {
+                it.printStackTrace()
+                errorDelete.postValue(true)
             })
-        }
     }
 }

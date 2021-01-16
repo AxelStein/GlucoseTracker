@@ -1,35 +1,25 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.InsulinLog
 import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
-interface InsulinLogDao {
-    @Insert
-    fun insert(item: InsulinLog): Completable
-
-    @Insert
-    fun insert(items: List<InsulinLog>)
-
-    @Update
-    fun update(item: InsulinLog): Completable
-
-    @Delete
-    fun delete(item: InsulinLog): Completable
-
+abstract class InsulinLogDao : BaseDao<InsulinLog>() {
     @Query("delete from insulin_log")
-    fun deleteAll()
+    abstract fun deleteAll()
 
     @Query("delete from insulin_log where id = :id")
-    fun deleteById(id: Long): Completable
+    abstract fun deleteById(id: Long): Completable
 
     @Query("select * from insulin_log where id = :id")
-    fun get(id: Long): Single<InsulinLog>
+    abstract fun get(id: Long): Single<InsulinLog>
 
     @Transaction
-    fun importBackup(backup: List<InsulinLog>) {
+    open fun importBackup(backup: List<InsulinLog>) {
         deleteAll()
         insert(backup)
     }

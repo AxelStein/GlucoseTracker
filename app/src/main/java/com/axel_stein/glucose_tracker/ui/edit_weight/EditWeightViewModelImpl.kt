@@ -7,6 +7,7 @@ import com.axel_stein.glucose_tracker.data.model.WeightLog
 import com.axel_stein.glucose_tracker.data.room.dao.WeightLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.utils.*
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.MutableDateTime
 import kotlin.math.pow
@@ -132,16 +133,14 @@ open class EditWeightViewModelImpl(private val id: Long = 0L) : ViewModel(), Dat
         when {
             weight.getOrDefault("").isBlank() -> errorEmpty.value = true
             else -> {
-                val log = createLog()
-                val task = if (id != 0L) dao.update(log) else dao.insert(log)
-                task.subscribeOn(io())
-                    .subscribe(
-                        { actionFinish.postValue(true) },
-                        {
-                            it.printStackTrace()
-                            errorSave.postValue(true)
-                        }
-                    )
+                Completable.fromAction {
+                    dao.upsert(createLog())
+                }.subscribeOn(io()).subscribe({
+                    actionFinish.postValue(true)
+                }, {
+                    it.printStackTrace()
+                    errorSave.postValue(true)
+                })
             }
         }
     }

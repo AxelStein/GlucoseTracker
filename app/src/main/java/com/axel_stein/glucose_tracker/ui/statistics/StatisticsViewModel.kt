@@ -131,7 +131,7 @@ class StatisticsViewModel(
 
     @SuppressLint("CheckResult")
     private fun loadStats(period: Int) {
-        Single.fromCallable { glucoseDao.get() }
+        Single.fromCallable { glucoseDao.getAll() }
             .flatMapMaybe {
                 if (it.isNullOrEmpty()) {
                     Maybe.empty()
@@ -167,10 +167,12 @@ class StatisticsViewModel(
 
     @SuppressLint("CheckResult")
     private fun loadCharts(period: Int) {
-        when (period) {
-            0 -> glucoseDao.getLastTwoWeeks()
-            1 -> glucoseDao.getLastMonth()
-            else -> glucoseDao.getLastThreeMonths()
+        Single.fromCallable {
+            when (period) {
+                0 -> glucoseDao.getLastTwoWeeks()
+                1 -> glucoseDao.getLastMonth()
+                else -> glucoseDao.getLastThreeMonths()
+            }
         }.subscribeOn(io()).subscribe({
             val logs = it.sortedBy { item -> item.dateTime }
 
@@ -216,7 +218,7 @@ class StatisticsViewModel(
 
     @SuppressLint("CheckResult")
     private fun loadA1c() {
-        Single.fromCallable { a1cDao.getThisYear() }
+        Single.fromCallable { a1cDao.getByThisYear() }
             .flatMapMaybe {
                 if (it.isNotEmpty()) {
                     Maybe.just(it)

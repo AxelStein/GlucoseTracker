@@ -47,9 +47,9 @@ class BackupHelper {
     fun _createBackup(): File {
         val backup = Backup(
             1,
-            glucoseLogDao.get(),
+            glucoseLogDao.getAll(),
             noteLogDao.get(),
-            a1cLogDao.get(),
+            a1cLogDao.getAll(),
             appSettings.getGlucoseUnits()
         )
         val data = gson.toJson(backup, Backup::class.java)

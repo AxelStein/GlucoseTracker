@@ -31,13 +31,16 @@ class ArchiveFragment: LogListFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentArchiveBinding.inflate(inflater, container, false)
         setupRecyclerView(binding.recyclerView)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupYearSection()
         setupMonthSection()
-
         archiveViewModel.loadItemsByYearMonthLiveData().observe(viewLifecycleOwner, {
             viewModel.loadItemsByYearMonth(it)
         })
-        return binding.root
     }
 
     private fun setupYearSection() {

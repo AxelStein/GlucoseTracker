@@ -1,7 +1,6 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.Medication
@@ -10,36 +9,27 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
-interface MedicationDao {
-    @Insert
-    fun insert(item: Medication): Completable
-
-    @Insert
-    fun insert(items: List<Medication>)
-
-    @Insert
-    fun update(item: Medication): Completable
-
+abstract class MedicationDao : BaseDao<Medication>() {
     @Query("delete from medication_list")
-    fun deleteAll()
+    abstract fun deleteAll()
 
     @Query("delete from medication_list where id = :id")
-    fun deleteById(id: Long): Completable
+    abstract fun deleteById(id: Long): Completable
 
     @Query("select * from medication_list where id = :id")
-    fun get(id: Long): Single<Medication>
+    abstract fun get(id: Long): Single<Medication>
 
     @Query("update medication_list set active = :active where id = :id")
-    fun setActive(id: Long, active: Boolean): Completable
+    abstract fun setActive(id: Long, active: Boolean): Completable
 
     @Query("select * from medication_list order by title")
-    fun observeItems(): Flowable<List<Medication>>
+    abstract fun observeItems(): Flowable<List<Medication>>
 
     @Query("select * from medication_list where active = 1 order by title, active desc")
-    fun getActiveItems(): Single<List<Medication>>
+    abstract fun getActiveItems(): Single<List<Medication>>
 
     @Transaction
-    fun importBackup(backup: List<Medication>) {
+    open fun importBackup(backup: List<Medication>) {
         deleteAll()
         insert(backup)
     }

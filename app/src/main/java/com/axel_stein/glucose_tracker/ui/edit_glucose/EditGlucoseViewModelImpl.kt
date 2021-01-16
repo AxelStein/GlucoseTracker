@@ -12,6 +12,8 @@ import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.intoMgDl
 import com.axel_stein.glucose_tracker.utils.intoMmol
 import com.axel_stein.glucose_tracker.utils.round
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
@@ -72,7 +74,7 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     fun loadData() {
         if (id == 0L) postData()
-        else dao.get(id)
+        else Single.fromCallable { dao.getById(id) }
             .subscribeOn(io())
             .subscribe({ log ->
                 val logGlucose = if (useMmol) log.valueMmol else log.valueMg
@@ -98,15 +100,14 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
         if (glucose.value.isNullOrEmpty()) {
             errorGlucoseEmpty.value = true
         } else {
-            val log = createLog()
-            val task = if (id != 0L) dao.update(log) else dao.insert(log)
-            task.subscribeOn(io()).subscribe(
-                { actionFinish.postValue(true) },
-                {
+            Completable.fromAction { dao.upsert(createLog()) }
+                .subscribeOn(io())
+                .subscribe({
+                    actionFinish.postValue(true)
+                }, {
                     it.printStackTrace()
                     errorSave.postValue(true)
-                }
-            )
+                })
         }
     }
 
@@ -150,14 +151,13 @@ open class EditGlucoseViewModelImpl(private var id: Long = 0L) : ViewModel() {
 
     @SuppressLint("CheckResult")
     fun delete() {
-        if (id != 0L) dao.deleteById(id)
+        if (id != 0L) Completable.fromAction { dao.deleteById(id) }
             .subscribeOn(io())
-            .subscribe(
-                { actionFinish.postValue(true) },
-                {
-                    it.printStackTrace()
-                    errorDelete.postValue(true)
-                }
-            )
+            .subscribe({
+                actionFinish.postValue(true)
+            }, {
+                it.printStackTrace()
+                errorDelete.postValue(true)
+            })
     }
 }

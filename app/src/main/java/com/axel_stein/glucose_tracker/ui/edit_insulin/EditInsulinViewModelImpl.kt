@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.model.Insulin
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers.io
 
 open class EditInsulinViewModelImpl(protected val id: Long = 0L) : ViewModel() {
@@ -52,12 +53,13 @@ open class EditInsulinViewModelImpl(protected val id: Long = 0L) : ViewModel() {
         if (title.value.isNullOrBlank()) {
             errorEmptyTitle.value = true
         } else {
-            val log = createLog()
-            val task = if (id != 0L) dao.update(log) else dao.insert(log)
-            task.subscribeOn(io()).subscribe(
-                { actionFinish.postValue(true) },
-                { it.printStackTrace() }
-            )
+            Completable.fromAction {
+                dao.upsert(createLog())
+            }.subscribeOn(io()).subscribe({
+                actionFinish.postValue(true)
+            }, {
+                it.printStackTrace()
+            })
         }
     }
 

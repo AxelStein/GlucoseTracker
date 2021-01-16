@@ -9,6 +9,7 @@ import com.axel_stein.glucose_tracker.data.model.InsulinLog
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
 import com.axel_stein.glucose_tracker.utils.getOrDefault
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -123,6 +124,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
                     )
                 }, {
                     it.printStackTrace()
+                    errorLoading.postValue(true)
                 })
         }
     }
@@ -151,14 +153,13 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
                 errorUnitsEmpty.value = true
             }
             else -> {
-                val log = createLog()
-                val task = if (id != 0L) logDao.update(log) else logDao.insert(log)
-                task.subscribeOn(io())
-                    .subscribe({
-                        actionFinish.postValue(true)
-                    }, {
-                        it.printStackTrace()
-                    })
+                Completable.fromAction {
+                    logDao.upsert(createLog())
+                }.subscribeOn(io()).subscribe({
+                    actionFinish.postValue(true)
+                }, {
+                    it.printStackTrace()
+                })
             }
         }
     }

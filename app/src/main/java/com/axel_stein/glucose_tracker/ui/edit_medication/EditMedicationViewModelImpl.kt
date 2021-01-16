@@ -9,6 +9,7 @@ import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.notBlankOrDefault
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers.io
 
 open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel() {
@@ -99,12 +100,13 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
         when {
             title.value.isNullOrBlank() -> errorEmptyTitle.value = true
             else -> {
-                val medication = createMedication()
-                val task = if (id != 0L) dao.update(medication) else dao.insert(medication)
-                task.subscribeOn(io()).subscribe(
-                    { actionFinish.postValue(true) },
-                    { it.printStackTrace() }
-                )
+                Completable.fromAction {
+                    dao.upsert(createMedication())
+                }.subscribeOn(io()).subscribe({
+                    actionFinish.postValue(true)
+                }, {
+                    it.printStackTrace()
+                })
             }
         }
     }

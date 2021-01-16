@@ -71,7 +71,7 @@ class EditA1cViewModelTest {
     fun testLoad() {
         dao.insert(createLog("2021", "01", "10")).subscribe()
 
-        val items = dao.get()
+        val items = dao.getById()
         assertFalse(items.isEmpty())
 
         val vm = createViewModel(items[0].id)
@@ -85,12 +85,12 @@ class EditA1cViewModelTest {
     fun testDelete() {
         dao.insert(createLog()).subscribe()
 
-        val log = dao.get()[0]
+        val log = dao.getById()[0]
         val vm = createViewModel(log.id)
         vm.delete()
 
         assertTrue(vm.actionFinishLiveData().value ?: false)
-        assertTrue(dao.get().isEmpty())
+        assertTrue(dao.getById().isEmpty())
     }
 
     private fun createViewModel(id: Long = 0L): EditA1cViewModelImpl {

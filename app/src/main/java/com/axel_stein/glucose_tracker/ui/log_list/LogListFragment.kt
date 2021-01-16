@@ -27,6 +27,7 @@ open class LogListFragment: Fragment() {
     private val headerDecor = TextHeaderDecor(R.layout.item_date)
     private var _binding: FragmentLogListBinding? = null
     private val binding get() = _binding!!
+    private var recyclerView: RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLogListBinding.inflate(inflater, container, false)
@@ -35,6 +36,7 @@ open class LogListFragment: Fragment() {
     }
 
     protected fun setupRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
         recyclerView.layoutManager = LinearLayoutManagerWrapper(requireContext(), VERTICAL, false)
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(headerDecor)
@@ -70,12 +72,15 @@ open class LogListFragment: Fragment() {
         })
         viewModel.headersLiveData().observe(viewLifecycleOwner, {
             headerDecor.setHeaders(it)
-            // binding.recyclerView.invalidateItemDecorations()
+            recyclerView?.let { rv ->
+                rv.post { rv.invalidateItemDecorations() }
+            }
         })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        recyclerView = null
     }
 }

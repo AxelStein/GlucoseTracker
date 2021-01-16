@@ -122,10 +122,10 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testLoad() {
-        assertTrue(dao.get().isEmpty())
+        assertTrue(dao.getAll().isEmpty())
         dao.insert(createLog(2, "2021", "01", "10")).subscribe()
 
-        val items = dao.get()
+        val items = dao.getAll()
         assertFalse(items.isEmpty())
 
         val vm = createVieModel(items[0].id)
@@ -149,12 +149,12 @@ class EditGlucoseViewModelTest {
     fun testDelete() {
         dao.insert(createLog()).subscribe()
 
-        val log = dao.get()[0]
+        val log = dao.getAll()[0]
         val vm = createVieModel(log.id)
         vm.delete()
 
         assertTrue(vm.actionFinishLiveData().value ?: false)
-        assertTrue(dao.get().isEmpty())
+        assertTrue(dao.getAll().isEmpty())
     }
 
     private fun createVieModel(id: Long = 0L): EditGlucoseViewModelImpl {

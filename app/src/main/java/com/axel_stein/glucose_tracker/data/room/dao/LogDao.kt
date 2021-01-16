@@ -18,9 +18,11 @@ interface LogDao {
     @Query("select * from a1c_log where date_time > date('now', '-3 month')")
     fun getRecentA1cLogs(): List<A1cLog>
 
+    @Transaction
     @Query("select * from insulin_log where date_time > date('now', '-3 month')")
     fun getRecentInsulinLogs(): List<InsulinLogEmbedded>
 
+    @Transaction
     @Query("select * from medication_log where date_time > date('now', '-3 month')")
     fun getRecentMedicationLogs(): List<MedicationLogEmbedded>
 
@@ -54,9 +56,11 @@ interface LogDao {
     @Query("select * from a1c_log where substr(date_time, 1, 7) = :yearMonth")
     fun getA1cLogsByYearMonth(yearMonth: String): List<A1cLog>
 
+    @Transaction
     @Query("select * from insulin_log where substr(date_time, 1, 7) = :yearMonth")
     fun getInsulinLogsByYearMonth(yearMonth: String): List<InsulinLogEmbedded>
 
+    @Transaction
     @Query("select * from medication_log where substr(date_time, 1, 7) = :yearMonth")
     fun getMedicationLogsByYearMonth(yearMonth: String): List<MedicationLogEmbedded>
 

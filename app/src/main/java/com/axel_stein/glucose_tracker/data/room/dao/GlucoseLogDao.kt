@@ -1,47 +1,35 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog
-import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
-interface GlucoseLogDao {
-    @Insert
-    fun insert(log: GlucoseLog): Completable
-
-    @Insert
-    fun insert(list: List<GlucoseLog>)
-
-    @Update
-    fun update(log: GlucoseLog): Completable
-
-    @Delete
-    fun delete(log: GlucoseLog): Completable
-
+abstract class GlucoseLogDao : BaseDao<GlucoseLog>() {
     @Query("delete from glucose_log")
-    fun deleteAll()
+    abstract fun deleteAll()
 
     @Query("delete from glucose_log where id = :id")
-    fun deleteById(id: Long): Completable
+    abstract fun deleteById(id: Long)
 
     @Query("select * from glucose_log where id = :id")
-    fun get(id: Long): Single<GlucoseLog>
+    abstract fun getById(id: Long): GlucoseLog
 
     @Query("select * from glucose_log")
-    fun get(): List<GlucoseLog>
+    abstract fun getAll(): List<GlucoseLog>
 
     @Query("select * from glucose_log where date_time > date('now', '-14 day')")
-    fun getLastTwoWeeks(): Single<List<GlucoseLog>>
+    abstract fun getLastTwoWeeks(): List<GlucoseLog>
 
     @Query("select * from glucose_log where date_time > date('now', '-1 month')")
-    fun getLastMonth(): Single<List<GlucoseLog>>
+    abstract fun getLastMonth(): List<GlucoseLog>
 
     @Query("select * from glucose_log where date_time > date('now', '-3 month')")
-    fun getLastThreeMonths(): Single<List<GlucoseLog>>
+    abstract fun getLastThreeMonths(): List<GlucoseLog>
 
     @Transaction
-    fun importBackup(backup: List<GlucoseLog>) {
+    open fun importBackup(backup: List<GlucoseLog>) {
         deleteAll()
         insert(backup)
     }

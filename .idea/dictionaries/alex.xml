@@ -8,6 +8,7 @@
       <w>snackbar</w>
       <w>strftime</w>
       <w>substr</w>
+      <w>upsert</w>
       <w>vert</w>
     </words>
   </dictionary>
