@@ -8,6 +8,7 @@ import com.axel_stein.glucose_tracker.data.model.Insulin
 import com.axel_stein.glucose_tracker.data.model.InsulinLog
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
+import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
@@ -91,7 +92,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
             .subscribe({
                 insulinList.value = it
                 if (it.isEmpty()) {
-                    errorInsulinListEmpty.value = true
+                    editorActive.value = false
                 } else {
                     if (insulinId == -1L) selectInsulin(0)
                     else it.forEachIndexed { index, insulin ->
@@ -117,7 +118,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
             .subscribe({
                 setData(
                     it.log.dateTime.toMutableDateTime(),
-                    it.log.units.toString(),
+                    it.log.units.formatIfInt(),
                     it.log.measured
                 )
                 if (!it.insulin.active) {

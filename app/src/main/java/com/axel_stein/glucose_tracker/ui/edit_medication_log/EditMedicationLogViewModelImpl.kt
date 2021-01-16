@@ -8,6 +8,7 @@ import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.model.MedicationLog
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationLogDao
+import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.get
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import io.reactivex.Completable
@@ -100,7 +101,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
             .subscribe({ items ->
                 medicationList.value = items
                 if (items.isEmpty()) {
-                    errorMedicationListEmpty.value = true
+                    editorActive.value = false
                 } else {
                     if (medicationId == -1L) selectMedication(0)
                     else items.forEachIndexed { index, medication ->
@@ -126,7 +127,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
             .subscribe({
                 setData(
                     it.log.dateTime.toMutableDateTime(),
-                    it.log.amount.toString(),
+                    it.log.amount.formatIfInt(),
                     it.log.measured
                 )
                 if (!it.medication.active) {

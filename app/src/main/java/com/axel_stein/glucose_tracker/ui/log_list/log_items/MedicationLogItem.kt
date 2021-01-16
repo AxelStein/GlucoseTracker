@@ -5,6 +5,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.MedicationLogEmbedded
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
+import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.formatTime
 
 class MedicationLogItem(private val item: MedicationLogEmbedded) : LogItem {
@@ -15,7 +16,7 @@ class MedicationLogItem(private val item: MedicationLogEmbedded) : LogItem {
 
     override fun format(context: Context, appSettings: AppSettings, appResources: AppResources) {
         title = item.medication.title
-        description = "${item.log.amount} ${appResources.dosageFormsArray[item.medication.dosageForm]}"
+        description = "${item.log.amount.formatIfInt()} ${appResources.dosageFormsArray[item.medication.dosageForm]}"
         time = formatTime(context, item.log.dateTime)
         timeDescription = appResources.measuredArray[item.log.measured]
     }
