@@ -1,8 +1,11 @@
 package com.axel_stein.glucose_tracker.data.settings
 
 import android.content.Context
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 
 class AppSettings(ctx: Context) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
@@ -38,5 +41,24 @@ class AppSettings(ctx: Context) {
 
     fun setHeight(height: String) {
         prefs.edit().putString("height", height).apply()
+    }
+
+    fun observeGlucoseUnits(): Flowable<Boolean> {
+        return Flowable.create({ emitter ->
+            var oldVal = useMmolAsGlucoseUnits()
+            val listener = OnSharedPreferenceChangeListener { _, key ->
+                if (key == "glucose_units") {
+                    val newVal = useMmolAsGlucoseUnits()
+                    if (oldVal != newVal) {
+                        oldVal = newVal
+                        emitter.onNext(newVal)
+                    }
+                }
+            }
+            prefs.registerOnSharedPreferenceChangeListener(listener)
+            emitter.setCancellable {
+                prefs.unregisterOnSharedPreferenceChangeListener(listener)
+            }
+        }, BackpressureStrategy.LATEST)
     }
 }

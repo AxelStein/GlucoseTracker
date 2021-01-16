@@ -12,6 +12,7 @@ import com.axel_stein.glucose_tracker.ui.log_list.log_items.*
 import com.axel_stein.glucose_tracker.utils.formatDate
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.joda.time.LocalDate
 
@@ -69,6 +70,13 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
                 }
             }
 
+            val disposables = CompositeDisposable()
+            disposables.add(
+                settings.observeGlucoseUnits()
+                    .subscribe {
+                        emitData()
+                    }
+            )
             val observer = object : InvalidationTracker.Observer(tables) {
                 override fun onInvalidated(tables: MutableSet<String>) {
                     emitData()
@@ -77,6 +85,7 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
             db.invalidationTracker.addObserver(observer)
             emitter.setCancellable {
                 db.invalidationTracker.removeObserver(observer)
+                disposables.clear()
             }
             emitData()
         }, BackpressureStrategy.LATEST)
