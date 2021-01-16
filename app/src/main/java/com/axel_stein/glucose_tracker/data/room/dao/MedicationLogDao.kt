@@ -17,10 +17,10 @@ abstract class MedicationLogDao : BaseDao<MedicationLog>() {
     abstract fun deleteById(id: Long): Completable
 
     @Query("select * from medication_log where id = :id")
-    abstract fun getById(id: Long): Single<MedicationLog>
+    abstract fun getById(id: Long): Single<MedicationLogEmbedded>
 
-    @Query("select * from medication_log where id = :id")
-    abstract fun get(id: Long): Single<MedicationLogEmbedded>
+    @Query("select * from medication_log")
+    abstract fun getAll(): List<MedicationLog>
 
     @Transaction
     open fun importBackup(backup: List<MedicationLog>) {

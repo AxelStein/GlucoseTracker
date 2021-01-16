@@ -24,7 +24,7 @@ open class EditInsulinViewModelImpl(protected val id: Long = 0L) : ViewModel() {
     @SuppressLint("CheckResult")
     fun loadData() {
         if (id != 0L) {
-            dao.get(id).subscribeOn(io()).subscribe(
+            dao.getById(id).subscribeOn(io()).subscribe(
                 {
                     title.postValue(it.title)
                     type.postValue(it.type)

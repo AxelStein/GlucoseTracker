@@ -22,7 +22,7 @@ class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, 
 
     private fun createBackup(): Result {
         return try {
-            val backupFile = backupHelper._createBackup()
+            val backupFile = backupHelper.createBackupImpl()
             driveService.uploadFileImpl(backupHelper.backupFileName, backupFile)
             Result.success()
         } catch (e: Exception) {

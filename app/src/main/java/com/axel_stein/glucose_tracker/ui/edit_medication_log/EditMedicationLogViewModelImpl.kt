@@ -122,7 +122,7 @@ open class EditMedicationLogViewModelImpl(private val id: Long = 0L) : ViewModel
         if (id == 0L) {
             setData()
             loadActiveMedications()
-        } else logDao.get(id)
+        } else logDao.getById(id)
             .subscribeOn(io())
             .observeOn(mainThread())
             .subscribe({

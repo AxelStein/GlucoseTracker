@@ -32,7 +32,7 @@ open class EditMedicationViewModelImpl(protected val id: Long = 0L) : ViewModel(
 
     @SuppressLint("CheckResult")
     fun loadData() {
-        if (id != 0L) dao.get(id)
+        if (id != 0L) dao.getById(id)
             .subscribeOn(io())
             .subscribe({ medication ->
                 var dosage = medication.dosage.formatIfInt()

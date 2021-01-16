@@ -17,7 +17,7 @@ abstract class MedicationDao : BaseDao<Medication>() {
     abstract fun deleteById(id: Long): Completable
 
     @Query("select * from medication_list where id = :id")
-    abstract fun get(id: Long): Single<Medication>
+    abstract fun getById(id: Long): Single<Medication>
 
     @Query("update medication_list set active = :active where id = :id")
     abstract fun setActive(id: Long, active: Boolean): Completable
@@ -30,6 +30,9 @@ abstract class MedicationDao : BaseDao<Medication>() {
 
     @Query("select * from medication_list order by title")
     abstract fun getItems(): Single<List<Medication>>
+
+    @Query("select * from medication_list")
+    abstract fun getAll(): List<Medication>
 
     @Transaction
     open fun importBackup(backup: List<Medication>) {

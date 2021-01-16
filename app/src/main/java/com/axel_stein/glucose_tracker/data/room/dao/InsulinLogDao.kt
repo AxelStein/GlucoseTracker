@@ -16,7 +16,10 @@ abstract class InsulinLogDao : BaseDao<InsulinLog>() {
     abstract fun deleteById(id: Long): Completable
 
     @Query("select * from insulin_log where id = :id")
-    abstract fun get(id: Long): Single<InsulinLog>
+    abstract fun getById(id: Long): Single<InsulinLog>
+
+    @Query("select * from insulin_log")
+    abstract fun getAll(): List<InsulinLog>
 
     @Transaction
     open fun importBackup(backup: List<InsulinLog>) {

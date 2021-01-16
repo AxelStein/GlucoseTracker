@@ -35,4 +35,8 @@ class AppSettings(ctx: Context) {
     }
 
     fun getHeight() = prefs.getString("height", "0") ?: "0"
+
+    fun setHeight(height: String) {
+        prefs.edit().putString("height", height).apply()
+    }
 }

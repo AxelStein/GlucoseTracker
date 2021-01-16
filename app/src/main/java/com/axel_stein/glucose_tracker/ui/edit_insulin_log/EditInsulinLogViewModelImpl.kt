@@ -105,7 +105,7 @@ open class EditInsulinLogViewModelImpl(private val id: Long = 0L) : ViewModel() 
     fun loadData() {
         loadInsulinList { insulinItems ->
             if (id == 0L) setData(insulinSelected = if (insulinItems.isNotEmpty()) 0 else -1)
-            else logDao.get(id)
+            else logDao.getById(id)
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe({ log ->

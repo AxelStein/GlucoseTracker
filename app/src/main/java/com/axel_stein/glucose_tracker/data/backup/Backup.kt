@@ -1,13 +1,17 @@
 package com.axel_stein.glucose_tracker.data.backup
 
-import com.axel_stein.glucose_tracker.data.model.A1cLog
-import com.axel_stein.glucose_tracker.data.model.GlucoseLog
-import com.axel_stein.glucose_tracker.data.model.NoteLog
+import com.axel_stein.glucose_tracker.data.model.*
 
 data class Backup(
     val version: Int,
     val glucoseLogs: List<GlucoseLog>,
     val noteLogs: List<NoteLog>,
     val a1cLogs: List<A1cLog>,
-    val glucoseUnits: String
+    val glucoseUnits: String,
+    val height: String,
+    val medications: List<Medication>,
+    val medicationLogs: List<MedicationLog>,
+    val insulinList: List<Insulin>,
+    val insulinLogs: List<InsulinLog>,
+    val weightLogs: List<WeightLog>
 )

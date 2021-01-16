@@ -71,7 +71,7 @@ open class EditWeightViewModelImpl(private val id: Long = 0L) : ViewModel(), Dat
 
     fun loadData() {
         if (id == 0L) postData()
-        else dao.get(id)
+        else dao.getById(id)
             .subscribeOn(io())
             .subscribe({
                 postData(

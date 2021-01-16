@@ -16,7 +16,10 @@ abstract class WeightLogDao : BaseDao<WeightLog>() {
     abstract fun deleteById(id: Long): Completable
 
     @Query("select * from weight_log where id = :id")
-    abstract fun get(id: Long): Single<WeightLog>
+    abstract fun getById(id: Long): Single<WeightLog>
+
+    @Query("select * from weight_log")
+    abstract fun getAll(): List<WeightLog>
 
     @Transaction
     open fun importBackup(backup: List<WeightLog>) {
