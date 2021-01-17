@@ -96,9 +96,7 @@
             android:clickable="true"
             android:focusable="true"
             android:paddingStart="0dp"
-            android:paddingEnd="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingEnd="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,9 +134,7 @@
             android:clickable="true"
             android:focusable="true"
             android:paddingStart="0dp"
-            android:paddingEnd="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingEnd="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,9 +172,7 @@
             android:clickable="true"
             android:focusable="true"
             android:paddingStart="0dp"
-            android:paddingEnd="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingEnd="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -216,9 +210,7 @@
             android:clickable="true"
             android:focusable="true"
             android:paddingStart="0dp"
-            android:paddingEnd="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingEnd="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
