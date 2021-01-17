@@ -107,7 +107,7 @@
     <string name="error_saving_note">Error saving note</string>
     <string name="error_statistics">Error loading statistics</string>
     <string name="fab_menu_blood_sugar">Blood sugar</string>
-    <string name="fab_menu_insulin" translatable="false">Insulin intake</string>
+    <string name="fab_menu_insulin">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>
     <string name="fab_menu_note">Note</string>
     <string name="glucose_unit_mg_dl">mg/dL</string>

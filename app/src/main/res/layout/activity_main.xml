@@ -62,11 +62,12 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="72dp"
+        android:contentDescription="@string/action_add"
         android:src="@drawable/icon_add"
         android:tint="#de000000"
         app:backgroundTint="?attr/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/dim"
@@ -120,10 +121,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_medication"
                 android:src="@drawable/icon_medication"
                 android:tint="?android:attr/textColorSecondary"
                 app:backgroundTint="?attr/logItemBackgroundColor"
-                app:fabSize="mini"/>
+                app:fabSize="mini" />
 
         </TableRow>
 
@@ -158,10 +160,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_insulin"
                 android:src="@drawable/icon_insulin"
                 android:tint="?android:attr/textColorSecondary"
                 app:backgroundTint="?attr/logItemBackgroundColor"
-                app:fabSize="mini"/>
+                app:fabSize="mini" />
 
         </TableRow>
 
@@ -196,10 +199,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_note"
                 android:src="@drawable/icon_note"
                 android:tint="?android:attr/textColorSecondary"
                 app:backgroundTint="?attr/logItemBackgroundColor"
-                app:fabSize="mini"/>
+                app:fabSize="mini" />
 
         </TableRow>
 
@@ -234,10 +238,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_blood_sugar"
                 android:src="@drawable/icon_glucose"
                 android:tint="?android:attr/textColorSecondary"
                 app:backgroundTint="?attr/logItemBackgroundColor"
-                app:fabSize="mini"/>
+                app:fabSize="mini" />
 
 
         </TableRow>

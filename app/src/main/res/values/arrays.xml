@@ -84,11 +84,6 @@
         <item>@string/month_nov_a</item>
         <item>@string/month_dec_a</item>
     </string-array>
-    <string-array name="stats_period">
-        <item>@string/stats_period_two_weeks</item>
-        <item>@string/stats_period_month</item>
-        <item>@string/stats_period_three_months</item>
-    </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>

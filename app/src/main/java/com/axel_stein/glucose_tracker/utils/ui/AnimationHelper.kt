@@ -71,7 +71,7 @@ class AnimationHelper {
         view.animate().apply {
             duration = 200
             translationY(view.height.toFloat())
-            withEndAction { view.visibility = View.GONE }
+            withEndAction { view.visibility = GONE }
             alpha(0f)
         }.start()
     }
