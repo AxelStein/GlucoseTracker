@@ -2,6 +2,7 @@ package com.axel_stein.glucose_tracker.ui.insulin_list
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragmentDirecti
 import com.axel_stein.glucose_tracker.ui.log_list.TextHeaderDecor
 import com.axel_stein.glucose_tracker.utils.ui.LinearLayoutManagerWrapper
 import com.axel_stein.glucose_tracker.utils.ui.setShown
+import com.google.android.material.transition.MaterialSharedAxis
 
 class InsulinListFragment : Fragment() {
     private val viewModel: InsulinListViewModel by viewModels()
@@ -24,6 +26,8 @@ class InsulinListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -42,10 +46,17 @@ class InsulinListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         viewModel.itemsLiveData().observe(viewLifecycleOwner, {
             adapter.submitList(it.list)
             headerDecor.setHeaders(it.headers)
+            binding.recyclerView.post {
+                binding.recyclerView.invalidateItemDecorations()
+            }
             binding.textEmpty.setShown(it.list.isEmpty())
+            (view.parent as? ViewGroup)?.doOnPreDraw {
+                startPostponedEnterTransition()
+            }
         })
     }
 

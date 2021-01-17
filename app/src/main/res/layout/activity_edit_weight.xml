@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,17 +24,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_date"
@@ -48,11 +48,11 @@
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp"
-                tools:text="Thu, December 10"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/icon_date"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/icon_date" />
+                tools:text="Thu, December 10" />
 
             <TextView
                 android:id="@+id/btn_time"
@@ -65,11 +65,11 @@
                 android:gravity="center_vertical|end"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                tools:text="12:30"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/icon_time"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/icon_time" />
+                tools:text="12:30" />
 
         </LinearLayout>
 
@@ -96,36 +96,36 @@
 
         <TextView
             android:id="@+id/text_bmi"
-            android:drawablePadding="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:ellipsize="end"
-            tools:text="BMI: 18.7 (Normal)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:lines="2"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            tools:visibility="visible"
-            android:visibility="gone"/>
+            android:layout_marginEnd="16dp"
+            android:drawablePadding="16dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:minHeight="48dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="BMI: 18.7 (Normal)"
+            tools:visibility="visible"/>
 
         <TextView
             android:id="@+id/text_indicate_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:text="@string/hint_indicate_height"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="@string/hint_indicate_height"
-            tools:visibility="visible"
             android:visibility="gone"
-            android:minHeight="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            tools:visibility="visible"/>
 
     </LinearLayout>
 

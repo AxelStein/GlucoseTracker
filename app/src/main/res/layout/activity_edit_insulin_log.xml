@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,17 +24,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_date"
@@ -48,11 +48,11 @@
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp"
-                tools:text="Thu, December 10"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/icon_date"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/icon_date" />
+                tools:text="Thu, December 10" />
 
             <TextView
                 android:id="@+id/btn_time"
@@ -65,31 +65,31 @@
                 android:gravity="center_vertical|end"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                tools:text="12:30"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/icon_time"
                 app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/icon_time" />
+                tools:text="12:30" />
 
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_insulin"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            app:hintEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/insulin_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/no_insulin"
-                tools:text="Humalog"
-                android:inputType="none"/>
+                android:inputType="none"
+                tools:text="Humalog" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,20 +115,20 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_measured"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
             <AutoCompleteTextView
                 android:id="@+id/measured_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/measured_before_breakfast"
                 android:inputType="none"
+                android:text="@string/measured_before_breakfast"
                 tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>

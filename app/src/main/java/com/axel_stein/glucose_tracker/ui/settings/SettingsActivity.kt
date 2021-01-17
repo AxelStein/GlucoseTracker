@@ -17,7 +17,7 @@ class SettingsActivity : AppCompatActivity(), ProgressListener {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
     override fun showProgress(show: Boolean) {

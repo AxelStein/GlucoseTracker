@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,18 +24,18 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_title"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,38 +53,38 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_form"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
             <AutoCompleteTextView
                 android:id="@+id/form_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:hint="@string/hint_dosage_form"
-                tools:text="Capsule"
-                tools:ignore="LabelFor" />
+                android:inputType="none"
+                tools:ignore="LabelFor"
+                tools:text="Capsule" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_dosage"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -102,10 +102,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_units"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <AutoCompleteTextView
@@ -113,8 +113,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    tools:text="mg"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="LabelFor"
+                    tools:text="mg" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,10 +145,10 @@
 
     <Button
         android:id="@+id/btn_toggle_active"
-        android:layout_gravity="bottom"
-        tools:text="@string/action_suspend_medication_taking"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        tools:text="@string/action_suspend_medication_taking"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

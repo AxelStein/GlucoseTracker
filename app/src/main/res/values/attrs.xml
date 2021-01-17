@@ -1,28 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <attr name="bottomNavItemTextColor" format="color|reference"/>
-    <attr name="bottomNavItemIconColor" format="color|reference"/>
-    <attr name="bottomNavBackgroundColor" format="color|reference"/>
-
-    <attr name="logListBackgroundColor" format="color|reference"/>
-    <attr name="logItemBackgroundColor" format="color|reference"/>
-
-    <attr name="toolbarBackgroundColor" format="color|reference"/>
-
-    <attr name="progressBarColor" format="color|reference"/>
-
-    <attr name="diabetesControlGoodColor" format="color|reference"/>
-    <attr name="diabetesControlAvgColor" format="color|reference"/>
-    <attr name="diabetesControlBadColor" format="color|reference"/>
-
-    <attr name="beforeMealLineColor" format="color|reference"/>
-    <attr name="beforeMealFillColor" format="color|reference"/>
-
-    <attr name="afterMealLineColor" format="color|reference"/>
-    <attr name="afterMealFillColor" format="color|reference"/>
-
-    <attr name="a1cLineColor" format="color|reference"/>
-    <attr name="a1cFillColor" format="color|reference"/>
-
-    <attr name="chartTextColor" format="color|reference"/>
+    <attr format="color|reference" name="a1cFillColor"/>
+    <attr format="color|reference" name="a1cLineColor"/>
+    <attr format="color|reference" name="afterMealFillColor"/>
+    <attr format="color|reference" name="afterMealLineColor"/>
+    <attr format="color|reference" name="beforeMealFillColor"/>
+    <attr format="color|reference" name="beforeMealLineColor"/>
+    <attr format="color|reference" name="bottomNavBackgroundColor"/>
+    <attr format="color|reference" name="bottomNavItemIconColor"/>
+    <attr format="color|reference" name="bottomNavItemTextColor"/>
+    <attr format="color|reference" name="chartTextColor"/>
+    <attr format="color|reference" name="diabetesControlAvgColor"/>
+    <attr format="color|reference" name="diabetesControlBadColor"/>
+    <attr format="color|reference" name="diabetesControlGoodColor"/>
+    <attr format="color|reference" name="logItemBackgroundColor"/>
+    <attr format="color|reference" name="logListBackgroundColor"/>
+    <attr format="color|reference" name="progressBarColor"/>
+    <attr format="color|reference" name="toolbarBackgroundColor"/>
 </resources>

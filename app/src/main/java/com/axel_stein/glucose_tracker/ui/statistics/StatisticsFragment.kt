@@ -24,7 +24,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.utils.Utils
 import com.google.android.material.color.MaterialColors
-
+import com.google.android.material.transition.MaterialFadeThrough
 
 class StatisticsFragment: Fragment() {
     private lateinit var viewModel: StatisticsViewModel
@@ -33,6 +33,8 @@ class StatisticsFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitTransition = MaterialFadeThrough()
+        enterTransition = MaterialFadeThrough()
         viewModel = ViewModelProvider(this, StatisticsFactory(ChartColors(requireActivity())))
             .get(StatisticsViewModel::class.java)
         Utils.init(context)
@@ -41,6 +43,11 @@ class StatisticsFragment: Fragment() {
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupStatsView()
         setupChart()
@@ -57,7 +64,6 @@ class StatisticsFragment: Fragment() {
                 binding.textError.hide()
             }
         })
-        return binding.root
     }
 
     private fun setupStatsView() {

@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
+    android:layout_height="56dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Glucophage"
-        android:textSize="16sp"
-        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:lines="1"
         android:ellipsize="end"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:lines="1"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Glucophage" />
 
     <TextView
         android:id="@+id/description"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        tools:text="500 mg"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="500 mg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.navigation.NavController
+import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddGlucose
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddInsulinLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddMedicationLog
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val animationHelper = AnimationHelper()
     private lateinit var navController: NavController
-    private val destinationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
+    private val destinationListener = OnDestinationChangedListener { _, destination, _ ->
         when(destination.id) {
             R.id.menu_home_fragment -> binding.fab.show()
             else -> binding.fab.hide()
@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupActionBarWithNavController(this, navController,
             AppBarConfiguration(
-                setOf(R.id.menu_home_fragment, R.id.menu_statistics_fragment, R.id.menu_archive_fragment, R.id.menu_plus_fragment)
+                setOf(R.id.menu_home_fragment, R.id.menu_statistics_fragment, R.id.menu_archive_fragment, R.id.menu_plus_fragment),
+                fallbackOnNavigateUpListener = { true }
             )
         )
 
@@ -91,7 +92,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.bottomNavView.setupWithNavController(navController)
+        binding.bottomNavView.setOnNavigationItemSelectedListener {
+            navController.popBackStack()
+            navController.navigate(it.itemId)
+            true
+        }
+        binding.bottomNavView.setOnNavigationItemReselectedListener {}
     }
 
     private fun showFabMenu() {

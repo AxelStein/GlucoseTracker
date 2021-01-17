@@ -12,8 +12,8 @@
         app:title="@string/plus_pref_medications"/>
 
     <PreferenceCategory
-        app:title="@string/pref_category_measurements"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_category_measurements">
 
         <Preference
             app:iconSpaceReserved="false"
