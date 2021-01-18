@@ -130,8 +130,8 @@ class StatisticsFragment: Fragment() {
         chart.setDrawGridBackground(false)
         chart.xAxis.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        chart.axisLeft.spaceTop = 50f
-        chart.axisLeft.axisMinimum = 0f
+        // chart.axisLeft.spaceTop = 50f
+        // chart.axisLeft.axisMinimum = 0f
         chart.axisLeft.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
@@ -143,6 +143,7 @@ class StatisticsFragment: Fragment() {
         chart.data = data
         chart.notifyDataSetChanged()
         if (data != null) {
+            chart.axisLeft.granularity = 1f
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = data.entryCount
         }
