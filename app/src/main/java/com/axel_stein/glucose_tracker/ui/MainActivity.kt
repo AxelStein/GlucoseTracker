@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavView.setOnNavigationItemSelectedListener {
-            navController.popBackStack()
+            while (navController.popBackStack()) {}
             navController.navigate(it.itemId)
             true
         }
