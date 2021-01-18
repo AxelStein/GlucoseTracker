@@ -12,4 +12,6 @@ class ChartColors(ctx: Context) {
     val afterMealFillColor = MaterialColors.getColor(ctx, R.attr.afterMealFillColor, Color.BLACK)
     val a1cLineColor = MaterialColors.getColor(ctx, R.attr.a1cLineColor, Color.BLACK)
     val a1cFillColor = MaterialColors.getColor(ctx, R.attr.a1cFillColor, Color.BLACK)
+    val weightLineColor = MaterialColors.getColor(ctx, R.attr.weightLineColor, Color.BLACK)
+    val weightFillColor = MaterialColors.getColor(ctx, R.attr.weightFillColor, Color.BLACK)
 }

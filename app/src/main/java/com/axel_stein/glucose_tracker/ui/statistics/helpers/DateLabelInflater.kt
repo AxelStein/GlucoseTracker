@@ -13,13 +13,14 @@ class DateLabelInflater(size: Int, private val months: Array<String>) {
         if (currentMonth != month) {
             currentMonth = month
             currentDay = day
-            labels[index] = "${months[month]} $day"
+            labels[index] = months[month]
+            // labels[index] = "${months[month]} $day"
         } else {
             if (currentDay != day) {
                 currentDay = day
                 labels[index] = dateTime.dayOfMonth.toString()
             } else {
-                labels[index] = "-"
+                labels[index] = ""
             }
         }
     }

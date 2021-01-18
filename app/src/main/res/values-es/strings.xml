@@ -183,12 +183,12 @@
     <string name="plus_pref_medications">Medicamentos</string>
     <string name="plus_pref_weight">Peso</string>
     <string name="pref_category_measurements">Mediciones</string>
-    <string name="stats_a1c">Valor estimado de HbA1c</string>
+    <string name="stats_a1c">a1c est.</string>
     <string name="stats_after_meal">Después de comer</string>
-    <string name="stats_avg">Valor promedio</string>
+    <string name="stats_avg">promedio</string>
     <string name="stats_before_meal">Antes de la comida</string>
-    <string name="stats_max">Valor máximo</string>
-    <string name="stats_min">Valor mínimo</string>
+    <string name="stats_max">máx</string>
+    <string name="stats_min">mín</string>
     <plurals name="suppository">
         <item quantity="one">%1$s supositorio</item>
         <item quantity="other">%1$s supositorios</item>

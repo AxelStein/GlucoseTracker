@@ -201,12 +201,12 @@
     <string name="plus_pref_medications">Ліки</string>
     <string name="plus_pref_weight">Вага</string>
     <string name="pref_category_measurements">Вимірювання</string>
-    <string name="stats_a1c">HbA1c розрахункове значення</string>
+    <string name="stats_a1c">a1c розр.</string>
     <string name="stats_after_meal">Після їжі</string>
-    <string name="stats_avg">Середнє значення</string>
+    <string name="stats_avg">серед.</string>
     <string name="stats_before_meal">До їжі</string>
-    <string name="stats_max">Максимальне значення</string>
-    <string name="stats_min">Мінімальне значення</string>
+    <string name="stats_max">макс</string>
+    <string name="stats_min">мін</string>
     <plurals name="suppository">
         <item quantity="one">%1$s супп.</item>
         <item quantity="few">%1$s супп.</item>

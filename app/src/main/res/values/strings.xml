@@ -212,12 +212,12 @@
     <string name="plus_pref_medications">Medications</string>
     <string name="plus_pref_weight">Weight</string>
     <string name="pref_category_measurements">Measurements</string>
-    <string name="stats_a1c">HbA1c estimated value</string>
+    <string name="stats_a1c">a1c est.</string>
     <string name="stats_after_meal">After meal</string>
-    <string name="stats_avg">Average value</string>
+    <string name="stats_avg">avg</string>
     <string name="stats_before_meal">Before meal</string>
-    <string name="stats_max">Maximum value</string>
-    <string name="stats_min">Minimum value</string>
+    <string name="stats_max">max</string>
+    <string name="stats_min">min</string>
     <plurals name="suppository">
         <item quantity="one">%1$s supp.</item>
         <item quantity="other">%1$s supp.</item>

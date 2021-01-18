@@ -183,12 +183,12 @@
     <string name="plus_pref_medications">Medikamente</string>
     <string name="plus_pref_weight">Gewicht</string>
     <string name="pref_category_measurements">Messungen</string>
-    <string name="stats_a1c">HbA1c-Schätzwert</string>
+    <string name="stats_a1c">a1c</string>
     <string name="stats_after_meal">Nach dem Essen</string>
-    <string name="stats_avg">Durchschnittswert</string>
+    <string name="stats_avg">mitt.</string>
     <string name="stats_before_meal">Vor dem Essen</string>
-    <string name="stats_max">Höchster Wert</string>
-    <string name="stats_min">Mindestwert</string>
+    <string name="stats_max">max</string>
+    <string name="stats_min">min</string>
     <plurals name="suppository">
         <item quantity="one">%1$s Zäpfchen</item>
         <item quantity="other">%1$s Zäpfchen</item>

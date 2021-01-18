@@ -6,13 +6,15 @@
     <attr format="color|reference" name="afterMealLineColor"/>
     <attr format="color|reference" name="beforeMealFillColor"/>
     <attr format="color|reference" name="beforeMealLineColor"/>
+    <attr format="color|reference" name="weightFillColor"/>
+    <attr format="color|reference" name="weightLineColor"/>
     <attr format="color|reference" name="bottomNavBackgroundColor"/>
     <attr format="color|reference" name="bottomNavItemIconColor"/>
     <attr format="color|reference" name="bottomNavItemTextColor"/>
     <attr format="color|reference" name="chartTextColor"/>
-    <attr format="color|reference" name="diabetesControlAvgColor"/>
     <attr format="color|reference" name="diabetesControlBadColor"/>
     <attr format="color|reference" name="diabetesControlGoodColor"/>
+    <attr format="color|reference" name="diabetesControlRelativeColor"/>
     <attr format="color|reference" name="logItemBackgroundColor"/>
     <attr format="color|reference" name="logListBackgroundColor"/>
     <attr format="color|reference" name="progressBarColor"/>

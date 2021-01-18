@@ -240,8 +240,8 @@ class StatisticsViewModel(
             .subscribe({ logs ->
                 val data = WeightLineDataHelper(
                     logs.sortedBy { it.dateTime },
-                    chartColors?.a1cLineColor ?: Color.BLACK,
-                    chartColors?.a1cFillColor ?: Color.BLACK,
+                    chartColors?.weightLineColor ?: Color.BLACK,
+                    chartColors?.weightFillColor ?: Color.BLACK,
                     appResources.monthsAbbrArray
                 )
                 chart.postValue(data.createLineData())
@@ -253,18 +253,17 @@ class StatisticsViewModel(
 
     private fun formatMin(stats: Stats): String {
         val value = if (appSettings.useMmolAsGlucoseUnits()) stats.min_mmol else stats.min_mg
-        return "$value ${appResources.currentSuffix()}"
+        return value.toString()
     }
 
     private fun formatMax(stats: Stats): String {
         val value = if (appSettings.useMmolAsGlucoseUnits()) stats.max_mmol else stats.max_mg
-        return "$value ${appResources.currentSuffix()}"
+        return value.toString()
     }
 
     private fun formatAvg(stats: Stats): String {
         val value = (if (appSettings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg) ?: return ""
-        return "${String.format("%.1f", value.toFloat())} ${appResources.currentSuffix()}"
-                .replace(',', '.')
+        return String.format("%.1f", value.toFloat()).replace(',', '.')
     }
 
     private fun formatA1C(stats: Stats): String = "${String.format("%.1f", calcA1C(stats))}%"

@@ -183,12 +183,12 @@
     <string name="plus_pref_medications">Farmaci</string>
     <string name="plus_pref_weight">Peso</string>
     <string name="pref_category_measurements">Misurazioni</string>
-    <string name="stats_a1c">Valore stimato di HbA1c</string>
+    <string name="stats_a1c">a1c stim.</string>
     <string name="stats_after_meal">Dopo il pasto</string>
-    <string name="stats_avg">Valore medio</string>
+    <string name="stats_avg">medio</string>
     <string name="stats_before_meal">Prima del pasto</string>
-    <string name="stats_max">Valore massimo</string>
-    <string name="stats_min">Valore minimo</string>
+    <string name="stats_max">max</string>
+    <string name="stats_min">min</string>
     <plurals name="suppository">
         <item quantity="one">%1$s supp.</item>
         <item quantity="other">%1$s supp.</item>
