@@ -270,7 +270,7 @@
                             android:layout_weight="3"
                             android:entries="@array/chart_titles"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"/>
+                            android:paddingEnd="32dp"/>
 
                         <Spinner
                             android:id="@+id/chart_period_spinner"
