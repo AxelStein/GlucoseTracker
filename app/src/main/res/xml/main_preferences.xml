@@ -21,16 +21,6 @@
         app:summary="%s"
         app:title="@string/main_pref_glucose_units" />
 
-    <ListPreference
-        app:defaultValue="kg"
-        app:entries="@array/weight_units_entries"
-        app:entryValues="@array/weight_units_values"
-        app:iconSpaceReserved="false"
-        app:isPreferenceVisible="false"
-        app:key="weight_units"
-        app:summary="%s"
-        app:title="@string/main_pref_weight_units" />
-
     <EditTextPreference
         android:inputType="number"
         app:dialogLayout="@layout/layout_edit_height"

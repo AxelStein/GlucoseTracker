@@ -3,7 +3,6 @@
     <string name="action_add">Add</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
-    <string name="action_edit">Edit</string>
     <string name="action_resume_medication_taking">Resume taking</string>
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
@@ -31,16 +30,22 @@
         <item quantity="one">%1$s capsule</item>
         <item quantity="other">%1$s capsules</item>
     </plurals>
+    <string name="chart_period_half_month">2 weeks</string>
+    <string name="chart_period_month">1 month</string>
+    <string name="chart_period_three_months">3 months</string>
     <string-array name="chart_periods">
-        <item>2 weeks</item>
-        <item>1 month</item>
-        <item>3 months</item>
+        <item>@string/chart_period_half_month</item>
+        <item>@string/chart_period_month</item>
+        <item>@string/chart_period_three_months</item>
     </string-array>
+    <string name="chart_title_blood_sugar_after_meal">Blood sugar (after meal)</string>
+    <string name="chart_title_blood_sugar_before_meal">Blood sugar (before meal)</string>
+    <string name="chart_title_weight">Weight</string>
     <string-array name="chart_titles">
-        <item>Blood sugar (before meal)</item>
-        <item>Blood sugar (after meal)</item>
-        <item>HbA1c</item>
-        <item>Weight</item>
+        <item>@string/chart_title_blood_sugar_before_meal</item>
+        <item>@string/chart_title_blood_sugar_after_meal</item>
+        <item>@string/hint_a1c</item>
+        <item>@string/chart_title_weight</item>
     </string-array>
     <string name="diabetes_control_bad">Poor diabetes control</string>
     <string name="diabetes_control_good">Good diabetes control</string>
@@ -100,8 +105,6 @@
     <string name="error_import">Import error</string>
     <string name="error_import_backup">Import error</string>
     <string name="error_import_file">File import error</string>
-    <string name="error_insulin_list_empty">Add insulin first</string>
-    <string name="error_medication_list_empty">Add medication first</string>
     <string name="error_opening_log">Error opening log</string>
     <string name="error_saving_log">Error saving log</string>
     <string name="error_saving_note">Error saving note</string>
@@ -161,7 +164,6 @@
     <string name="main_pref_last_synced">Last sync</string>
     <string name="main_pref_rate_app">Rate app</string>
     <string name="main_pref_theme">Theme</string>
-    <string name="main_pref_weight_units">Weight units</string>
     <string name="measured_after_breakfast">After breakfast</string>
     <string name="measured_after_dinner">After dinner</string>
     <string name="measured_after_lunch">After lunch</string>
@@ -198,16 +200,15 @@
     <string name="month_sep">September</string>
     <string name="month_sep_a">Sep</string>
     <string name="no_data">No data</string>
-    <string name="no_insulin">No insulin</string>
+    <string name="no_insulin">No insulin medications</string>
     <string name="no_medication">No medication</string>
     <string name="no_value">Please fill in this field</string>
     <plurals name="packet">
         <item quantity="one">%1$s packet</item>
         <item quantity="other">%1$s packets</item>
     </plurals>
-    <string name="period_year">Last year</string>
     <string name="plus_pref_a1c" translatable="false">HbA1c</string>
-    <string name="plus_pref_insulin_list">Insulin list</string>
+    <string name="plus_pref_insulin_list">Insulin medications</string>
     <string name="plus_pref_medications">Medications</string>
     <string name="plus_pref_weight">Weight</string>
     <string name="pref_category_measurements">Measurements</string>
@@ -217,12 +218,9 @@
     <string name="stats_before_meal">Before meal</string>
     <string name="stats_max">Maximum value</string>
     <string name="stats_min">Minimum value</string>
-    <string name="stats_period_month">Last month</string>
-    <string name="stats_period_three_months">Last 3 months</string>
-    <string name="stats_period_two_weeks">Last 2 weeks</string>
     <plurals name="suppository">
-        <item quantity="one">%1$s suppository</item>
-        <item quantity="other">%1$s suppositories</item>
+        <item quantity="one">%1$s supp.</item>
+        <item quantity="other">%1$s supp.</item>
     </plurals>
     <plurals name="tablet">
         <item quantity="one">%1$s tablet</item>

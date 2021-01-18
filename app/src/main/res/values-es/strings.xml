@@ -1,22 +1,77 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+    <string name="action_add">Añadir</string>
     <string name="action_cancel">Cancelar</string>
     <string name="action_delete">Eliminar</string>
+    <string name="action_resume_medication_taking">Reanudar la tome</string>
     <string name="action_save">Salvar</string>
     <string name="action_settings">Configuraciones</string>
+    <string name="action_suspend_medication_taking">Suspender la toma</string>
+    <plurals name="ampule">
+        <item quantity="one">%1$s ampolla</item>
+        <item quantity="other">%1$s ampollas</item>
+    </plurals>
+    <string name="bmi_category_normal_weight">Normal</string>
+    <string name="bmi_category_obese_1">Obesidad Clase I</string>
+    <string name="bmi_category_obese_2">Obesidad Clase II</string>
+    <string name="bmi_category_obese_3">Obesidad Clase III</string>
+    <string name="bmi_category_overweight">Exceso de peso</string>
+    <string name="bmi_category_thinness_1">Leve delgadez</string>
+    <string name="bmi_category_thinness_2">Delgadez moderada</string>
+    <string name="bmi_category_thinness_3">Delgadez severa</string>
+    <string name="bmi_result">ÍMC: %1$.1f (%2$s)</string>
     <string name="bottom_nav_archive">Archivo</string>
     <string name="bottom_nav_home">Casa</string>
     <string name="bottom_nav_more">Más</string>
     <string name="bottom_nav_statistics">Estadísticas</string>
+    <plurals name="capsule">
+        <item quantity="one">%1$s cápsula</item>
+        <item quantity="other">%1$s cápsulas</item>
+    </plurals>
+    <string name="chart_period_half_month">2 semanas</string>
+    <string name="chart_period_month">1 mes</string>
+    <string name="chart_period_three_months">3 meses</string>
+    <string name="chart_title_blood_sugar_after_meal">Azúcar en sangre (después de las comidas)</string>
+    <string name="chart_title_blood_sugar_before_meal">Azúcar en sangre (antes de la comida)</string>
+    <string name="chart_title_weight">Peso</string>
     <string name="diabetes_control_bad">Control deficiente de la diabetes</string>
     <string name="diabetes_control_good">Buen control de la diabetes</string>
     <string name="diabetes_control_relative">Control relativo de la diabetes</string>
     <string name="dialog_msg_backup_created">Copia de seguridad creada con éxito</string>
     <string name="dialog_msg_delete_a1c">El registro se eliminará de forma permanente.</string>
     <string name="dialog_msg_delete_glucose">El registro se eliminará de forma permanente.</string>
+    <string name="dialog_msg_delete_insulin">La insulina y todos los registros asociados se eliminarán de forma permanente.</string>
+    <string name="dialog_msg_delete_insulin_log">El registro se eliminará de forma permanente.</string>
+    <string name="dialog_msg_delete_medication">La medicación y todos los registros asociados se eliminarán de forma permanente.</string>
     <string name="dialog_msg_delete_note">La nota se eliminará de forma permanente.</string>
     <string name="dialog_msg_import_completed">Importación completada</string>
     <string name="dialog_title_confirm">¿Estás seguro?</string>
+    <string name="dosage_form_ampule">Ampolla</string>
+    <string name="dosage_form_capsule">Cápsula</string>
+    <string name="dosage_form_dose">Dosis</string>
+    <string name="dosage_form_drop">Gota</string>
+    <string name="dosage_form_g">Gramo</string>
+    <string name="dosage_form_injection">Inyección</string>
+    <string name="dosage_form_iu">IU</string>
+    <string name="dosage_form_ml">ml</string>
+    <string name="dosage_form_packet">Paquete</string>
+    <string name="dosage_form_suppository">Supositorio</string>
+    <string name="dosage_form_tablet">Tableta</string>
+    <string name="dosage_unit_IU">IU</string>
+    <string name="dosage_unit_g">g</string>
+    <string name="dosage_unit_mcg">µg</string>
+    <string name="dosage_unit_mcg_ml">µg/ml</string>
+    <string name="dosage_unit_mg">mg</string>
+    <string name="dosage_unit_mg_ml">mg/ml</string>
+    <string name="dosage_unit_ml">ml</string>
+    <plurals name="dose">
+        <item quantity="one">%1$s dosis</item>
+        <item quantity="other">%1$s dosis</item>
+    </plurals>
+    <plurals name="drop">
+        <item quantity="one">%1$s gota</item>
+        <item quantity="other">%1$s gotas</item>
+    </plurals>
     <string name="error_create_backup">Error al crear la copia de seguridad</string>
     <string name="error_deleting_log">Error al eliminar el registro</string>
     <string name="error_deleting_note">Error al eliminar la nota</string>
@@ -29,12 +84,43 @@
     <string name="error_saving_note">Error al guardar la nota</string>
     <string name="error_statistics">Error al cargar las estadísticas</string>
     <string name="fab_menu_blood_sugar">Glucemia</string>
+    <string name="fab_menu_insulin">Ingesta de insulina</string>
+    <string name="fab_menu_medication">Ingesta de medicamentos</string>
     <string name="fab_menu_note">Nota</string>
     <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="glucose_unit_mmol_l">mmol/L</string>
+    <plurals name="gram">
+        <item quantity="one">%1$s gramo</item>
+        <item quantity="other">%1$s gramos</item>
+    </plurals>
+    <string name="height_unit_cm">cm</string>
+    <string name="hint_active_insulin_list">Activos</string>
+    <string name="hint_active_medications">Activos</string>
+    <string name="hint_amount">Cantidad</string>
+    <string name="hint_dosage">Dosificación</string>
+    <string name="hint_dosage_form">Forma de dosificación</string>
+    <string name="hint_indicate_height">Establezca su altura en la configuración para calcular el IMC</string>
+    <string name="hint_insulin_type">Tipo de insulina</string>
     <string name="hint_measured">Medido</string>
     <string name="hint_note">Nota</string>
     <string name="hint_sugar_level">Nivel de azúcar</string>
+    <string name="hint_suspended_insulin_list">Suspendidos</string>
+    <string name="hint_suspended_medications">Suspendidos</string>
+    <string name="hint_title">Título</string>
+    <string name="hint_units">Número de unidades</string>
+    <string name="hint_weight">Peso</string>
+    <plurals name="injection">
+        <item quantity="one">%1$s inyección</item>
+        <item quantity="other">%1$s inyecciónes</item>
+    </plurals>
+    <string name="insulin_type_intermediate">Intermedio</string>
+    <string name="insulin_type_long">Largo</string>
+    <string name="insulin_type_rapid">Rápido</string>
+    <string name="insulin_type_short">Corto</string>
+    <plurals name="iu">
+        <item quantity="one">%1$s IU</item>
+        <item quantity="other">%1$s IU</item>
+    </plurals>
     <string name="main_pref_app_version_title">Version de aplicacion</string>
     <string name="main_pref_auto_sync">Sincronización automática</string>
     <string name="main_pref_auto_sync_summary">Cree copias de seguridad automáticamente todos los días</string>
@@ -43,10 +129,13 @@
     <string name="main_pref_export_backup">Exportar a archivo</string>
     <string name="main_pref_export_drive">Crear copia de seguridad</string>
     <string name="main_pref_glucose_units">Unidades de glucosa</string>
+    <string name="main_pref_height">Altura</string>
+    <string name="main_pref_height_summary">Indique su altura para calcular el índice de masa corporal</string>
     <string name="main_pref_import_backup">Importar desde archivo</string>
     <string name="main_pref_import_drive">Importar copia de seguridad</string>
     <string name="main_pref_last_synced">Última sincronización</string>
     <string name="main_pref_rate_app">Calificar aplicacion</string>
+    <string name="main_pref_theme">Tema</string>
     <string name="measured_after_breakfast">Después del desayuno</string>
     <string name="measured_after_dinner">Después de la cena</string>
     <string name="measured_after_lunch">Después del almuerzo</string>
@@ -54,6 +143,10 @@
     <string name="measured_before_dinner">Antes de cenar</string>
     <string name="measured_before_lunch">Antes del almuerzo</string>
     <string name="measured_other">Otro</string>
+    <plurals name="ml">
+        <item quantity="one">%1$s ml</item>
+        <item quantity="other">%1$s ml</item>
+    </plurals>
     <string name="month_apr">Abril</string>
     <string name="month_apr_a">Abr</string>
     <string name="month_aug">Agosto</string>
@@ -79,15 +172,38 @@
     <string name="month_sep">Septiembre</string>
     <string name="month_sep_a">Sep</string>
     <string name="no_data">Sin datos</string>
+    <string name="no_insulin">Sin medicamentos de insulina</string>
+    <string name="no_medication">Sin medicación</string>
     <string name="no_value">Por favor complete este campo</string>
-    <string name="period_year">El año pasado</string>
+    <plurals name="packet">
+        <item quantity="one">%1$s paquete</item>
+        <item quantity="other">%1$s paquetes</item>
+    </plurals>
+    <string name="plus_pref_insulin_list">Medicamentos para la insulina</string>
+    <string name="plus_pref_medications">Medicamentos</string>
+    <string name="plus_pref_weight">Peso</string>
+    <string name="pref_category_measurements">Mediciones</string>
     <string name="stats_a1c">Valor estimado de HbA1c</string>
     <string name="stats_after_meal">Después de comer</string>
     <string name="stats_avg">Valor promedio</string>
     <string name="stats_before_meal">Antes de la comida</string>
     <string name="stats_max">Valor máximo</string>
     <string name="stats_min">Valor mínimo</string>
-    <string name="stats_period_month">El mes pasado</string>
-    <string name="stats_period_three_months">Últimos 3 meses</string>
-    <string name="stats_period_two_weeks">Últimas 2 semanas</string>
+    <plurals name="suppository">
+        <item quantity="one">%1$s supositorio</item>
+        <item quantity="other">%1$s supositorios</item>
+    </plurals>
+    <plurals name="tablet">
+        <item quantity="one">%1$s tableta</item>
+        <item quantity="other">%1$s tabletas</item>
+    </plurals>
+    <string name="theme_dark">Oscuro</string>
+    <string name="theme_light">Ligero</string>
+    <string name="theme_system">Ajustes del sistema</string>
+    <plurals name="units">
+        <item quantity="one">%1$s unidad</item>
+        <item quantity="other">%1$s unidades</item>
+    </plurals>
+    <string name="weight_unit_kg">kg</string>
+    <string name="weight_unit_lb">lb</string>
 </resources>

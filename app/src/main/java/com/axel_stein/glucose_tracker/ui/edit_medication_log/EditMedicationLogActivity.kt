@@ -91,9 +91,9 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         viewModel.medicationSelectedLiveData().observe(this, {
             binding.medicationSpinner.setSpinnerSelection(it)
         })
-        viewModel.errorMedicationListEmptyLiveData().observe(this, {
+        /*viewModel.errorMedicationListEmptyLiveData().observe(this, {
             binding.inputLayoutMedication.showError(it, R.string.error_medication_list_empty)
-        })
+        })*/
     }
 
     private fun setupAmountEditor() {

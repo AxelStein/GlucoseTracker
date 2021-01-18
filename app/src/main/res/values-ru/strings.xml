@@ -3,7 +3,6 @@
     <string name="action_add">Добавить</string>
     <string name="action_cancel">Отмена</string>
     <string name="action_delete">Удалить</string>
-    <string name="action_edit">Редактировать</string>
     <string name="action_resume_medication_taking">Продолжить прием</string>
     <string name="action_save">Сохранить</string>
     <string name="action_settings">Настройки</string>
@@ -33,6 +32,12 @@
         <item quantity="many">%1$s капсул</item>
         <item quantity="other">%1$s капсул</item>
     </plurals>
+    <string name="chart_period_half_month">2 недели</string>
+    <string name="chart_period_month">1 месяц</string>
+    <string name="chart_period_three_months">3 месяца</string>
+    <string name="chart_title_blood_sugar_after_meal">Сахар крови (до еды)</string>
+    <string name="chart_title_blood_sugar_before_meal">Сахар крови (после еды)</string>
+    <string name="chart_title_weight">Вес</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
     <string name="diabetes_control_relative">Относительный контроль диабета</string>
@@ -82,15 +87,13 @@
     <string name="error_import">Ошибка импортирования</string>
     <string name="error_import_backup">Ошибка импортирования</string>
     <string name="error_import_file">Ошибка импортирования файла</string>
-    <string name="error_insulin_list_empty">Сначала добавьте препарат инсулина</string>
-    <string name="error_medication_list_empty">Сначала добавьте лекарство</string>
     <string name="error_opening_log">Ошибка открытия записи</string>
     <string name="error_saving_log">Ошибка сохранения</string>
     <string name="error_saving_note">Ошибка сохранения заметки</string>
     <string name="error_statistics">Ошибка загрузки статистики</string>
     <string name="fab_menu_blood_sugar">Сахар крови</string>
     <string name="fab_menu_insulin">Прием инсулина</string>
-    <string name="fab_menu_medication">Прием лекарства</string>
+    <string name="fab_menu_medication">Прием лекарств</string>
     <string name="fab_menu_note">Заметка</string>
     <string name="glucose_unit_mg_dl">мг/дл</string>
     <string name="glucose_unit_mmol_l">ммоль/л</string>
@@ -101,8 +104,8 @@
         <item quantity="other">%1$s грамм</item>
     </plurals>
     <string name="height_unit_cm">см</string>
-    <string name="hint_active_insulin_list">Активные препараты</string>
-    <string name="hint_active_medications">Активные лекарства</string>
+    <string name="hint_active_insulin_list">Текущие</string>
+    <string name="hint_active_medications">Текущие</string>
     <string name="hint_amount">Количество</string>
     <string name="hint_dosage">Дозировка</string>
     <string name="hint_dosage_form">Форма приема</string>
@@ -111,8 +114,8 @@
     <string name="hint_measured">Измерение</string>
     <string name="hint_note">Заметка</string>
     <string name="hint_sugar_level">Уровень сахара</string>
-    <string name="hint_suspended_insulin_list">Неактивные препараты</string>
-    <string name="hint_suspended_medications">Неактивные лекарства</string>
+    <string name="hint_suspended_insulin_list">Неактивные</string>
+    <string name="hint_suspended_medications">Неактивные</string>
     <string name="hint_title">Название</string>
     <string name="hint_units">Количество единиц</string>
     <string name="hint_weight">Вес</string>
@@ -147,7 +150,6 @@
     <string name="main_pref_last_synced">Последняя синхронизация</string>
     <string name="main_pref_rate_app">Оценить приложение</string>
     <string name="main_pref_theme">Тема</string>
-    <string name="main_pref_weight_units">Единицы измерения веса</string>
     <string name="measured_after_breakfast">После завтрака</string>
     <string name="measured_after_dinner">После ужина</string>
     <string name="measured_after_lunch">После обеда</string>
@@ -190,12 +192,11 @@
     <string name="no_medication">Нет лекарств</string>
     <string name="no_value">Пожалуйста, заполните это поле</string>
     <plurals name="packet">
-        <item quantity="one">%1$s пакетик</item>
-        <item quantity="few">%1$s пакетика</item>
-        <item quantity="many">%1$s пакетиков</item>
-        <item quantity="other">%1$s пакетиков</item>
+        <item quantity="one">%1$s пак.</item>
+        <item quantity="few">%1$s пак.</item>
+        <item quantity="many">%1$s пак.</item>
+        <item quantity="other">%1$s пак.</item>
     </plurals>
-    <string name="period_year">За последний год</string>
     <string name="plus_pref_insulin_list">Препараты инсулина</string>
     <string name="plus_pref_medications">Лекарства</string>
     <string name="plus_pref_weight">Вес</string>
@@ -206,9 +207,6 @@
     <string name="stats_before_meal">До еды</string>
     <string name="stats_max">Максимальное значение</string>
     <string name="stats_min">Минимальное значение</string>
-    <string name="stats_period_month">За последний месяц</string>
-    <string name="stats_period_three_months">За последние 3 месяца</string>
-    <string name="stats_period_two_weeks">За последние 2 недели</string>
     <plurals name="suppository">
         <item quantity="one">%1$s супп.</item>
         <item quantity="few">%1$s супп.</item>

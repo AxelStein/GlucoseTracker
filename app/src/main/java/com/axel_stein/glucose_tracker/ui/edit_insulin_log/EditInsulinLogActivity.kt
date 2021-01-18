@@ -85,9 +85,9 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         viewModel.insulinSelectedLiveData().observe(this, { position ->
             binding.insulinSpinner.setSpinnerSelection(position)
         })
-        viewModel.errorInsulinListEmptyLiveData().observe(this, { error ->
+        /*viewModel.errorInsulinListEmptyLiveData().observe(this, { error ->
             binding.inputLayoutInsulin.showError(error, R.string.error_insulin_list_empty)
-        })
+        })*/
     }
 
     private fun setupUnits() {
