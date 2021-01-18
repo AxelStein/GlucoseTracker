@@ -22,14 +22,14 @@ open class EditWeightViewModelImpl(private val id: Long = 0L) : ViewModel(), Dat
     protected var errorDelete = MutableLiveData<Boolean>()
     protected var actionFinish = MutableLiveData<Boolean>()
     private lateinit var dao: WeightLogDao
-    private lateinit var appSettings: AppSettings
+    private lateinit var settings: AppSettings
 
     fun setDao(dao: WeightLogDao) {
         this.dao = dao
     }
 
     fun setAppSettings(appSettings: AppSettings) {
-        this.appSettings = appSettings
+        this.settings = appSettings
     }
 
     fun weightLiveData(): LiveData<String> = weight
@@ -103,7 +103,12 @@ open class EditWeightViewModelImpl(private val id: Long = 0L) : ViewModel(), Dat
     }
 
     private fun calculateBMI(kg: Float) {
-        val h = appSettings.getHeight().toFloat().intoMeter()
+        var height = 0f
+        try {
+            height = settings.getHeight().toFloat()
+        } catch (e: Exception) {
+        }
+        val h = height.intoMeter()
         if (h > 0f) {
             if (kg > 0f) {
                 val value = kg.div(h.pow(2)).round()

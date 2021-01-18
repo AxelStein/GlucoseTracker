@@ -99,7 +99,7 @@
     <string name="hint_amount">Nombre</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_dosage_form">Forme galénique</string>
-    <string name="hint_indicate_height">Veuillez indiquer votre taille pour calculer l\'IMC</string>
+    <string name="hint_indicate_height">Veuillez indiquer votre taille dans les paramètres pour calculer l\'IMC</string>
     <string name="hint_insulin_type">Type d\'insuline</string>
     <string name="hint_measured">Mesuré</string>
     <string name="hint_note">Note</string>
