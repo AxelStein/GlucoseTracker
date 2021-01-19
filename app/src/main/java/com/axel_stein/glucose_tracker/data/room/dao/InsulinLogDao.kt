@@ -16,6 +16,7 @@ abstract class InsulinLogDao : BaseDao<InsulinLog>() {
     @Query("delete from insulin_log where id = :id")
     abstract fun deleteById(id: Long): Completable
 
+    @Transaction
     @Query("select * from insulin_log where id = :id")
     abstract fun getById(id: Long): Single<InsulinLogEmbedded>
 

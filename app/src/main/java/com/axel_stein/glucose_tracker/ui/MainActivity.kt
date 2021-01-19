@@ -16,6 +16,7 @@ import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddMedic
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionAddNote
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionOpenSettings
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.databinding.ActivityMainBinding
 import com.axel_stein.glucose_tracker.utils.ui.AnimationHelper
@@ -36,12 +37,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Inject
-    lateinit var appSettings: AppSettings
+    private lateinit var settings: AppSettings
+    private lateinit var resources: AppResources
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.appComponent.inject(this)
+        resources.initColorResources(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -98,6 +100,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.bottomNavView.setOnNavigationItemReselectedListener {}
+    }
+
+    @Inject
+    fun injectAppResources(s: AppSettings, r: AppResources) {
+        settings = s
+        resources = r
     }
 
     private fun showFabMenu() {

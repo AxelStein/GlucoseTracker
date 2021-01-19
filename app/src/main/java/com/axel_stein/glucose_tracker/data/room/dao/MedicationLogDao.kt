@@ -16,6 +16,7 @@ abstract class MedicationLogDao : BaseDao<MedicationLog>() {
     @Query("delete from medication_log where id = :id")
     abstract fun deleteById(id: Long): Completable
 
+    @Transaction
     @Query("select * from medication_log where id = :id")
     abstract fun getById(id: Long): Single<MedicationLogEmbedded>
 

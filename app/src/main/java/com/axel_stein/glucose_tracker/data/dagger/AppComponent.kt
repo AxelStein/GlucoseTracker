@@ -19,6 +19,8 @@ import com.axel_stein.glucose_tracker.ui.log_list.LogListHelper
 import com.axel_stein.glucose_tracker.ui.medication_list.MedicationListViewModel
 import com.axel_stein.glucose_tracker.ui.settings.SettingsFragment
 import com.axel_stein.glucose_tracker.ui.statistics.StatisticsViewModel
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.DateLabelInflater
 import dagger.Component
 import javax.inject.Singleton
 
@@ -44,4 +46,6 @@ interface AppComponent {
     fun inject(vm: EditWeightViewModel)
     fun inject(helper: LogListHelper)
     fun inject(impl: ArchiveImpl)
+    fun inject(chartData: ChartData)
+    fun inject(dateLabelInflater: DateLabelInflater)
 }
