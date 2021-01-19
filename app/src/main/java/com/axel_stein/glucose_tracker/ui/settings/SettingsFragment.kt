@@ -13,8 +13,8 @@ import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
 import com.axel_stein.glucose_tracker.utils.formatDateTime
+import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -48,6 +48,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
         theme?.setOnPreferenceChangeListener { _, value ->
             appSettings.applyTheme(value as String)
             true
+        }
+
+        val height = preferenceManager.findPreference<Preference>("height")
+        height?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue.toString().isBlank() || newValue == "0") {
+                preference.summary = resources.getString(R.string.main_pref_height_summary)
+            } else {
+                preference.summary = "$newValue ${resources.getString(R.string.height_unit_cm)}"
+            }
+            true
+        }
+        val h = appSettings.getHeight()
+        if (h.isNotEmpty() && h != "0") {
+            height?.summary = "$h ${resources.getString(R.string.height_unit_cm)}"
         }
 
         val exportBackup = preferenceManager.findPreference<Preference>("export_backup")
