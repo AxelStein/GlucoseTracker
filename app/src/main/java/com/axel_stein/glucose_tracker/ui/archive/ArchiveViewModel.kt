@@ -3,12 +3,13 @@ package com.axel_stein.glucose_tracker.ui.archive
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.room.LogRepository.LogListResult
 import com.axel_stein.glucose_tracker.ui.log_list.LogListHelper
 
 @SuppressLint("CheckResult")
-class ArchiveViewModel: ViewModel() {
+class ArchiveViewModel(state: SavedStateHandle): ViewModel() {
     private val years = MutableLiveData<List<String>>()
     val yearsLiveData = years as LiveData<List<String>>
 
@@ -28,21 +29,29 @@ class ArchiveViewModel: ViewModel() {
     private val impl = ArchiveImpl().apply {
         onUpdateYearsListener = {
             years.setValue(it)
+            state.set("years", it)
         }
         onUpdateSelectedYearListener = {
             selectedYear.setValue(it)
+            state.set("selected_year", it)
         }
         onUpdateMonthsListener = {
             months.setValue(it)
+            state.set("months", it)
         }
         onUpdateSelectedMonthListener = {
             selectedMonth.setValue(it)
+            state.set("selected_month", it)
         }
         onUpdateYearMonthListener = { yearMonth ->
             helper.loadItemsByYearMonth(yearMonth) {
                 logList.postValue(it)
             }
         }
+    }
+
+    init {
+        impl.restore(state)
     }
 
     fun setCurrentYear(position: Int) {

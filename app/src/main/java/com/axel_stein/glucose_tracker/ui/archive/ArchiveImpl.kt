@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.archive
 
+import androidx.lifecycle.SavedStateHandle
 import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
@@ -124,5 +125,13 @@ class ArchiveImpl {
             val yearMonth = "$currentYear-${currentMonth.toString().padStart(2, '0')}"
             onUpdateYearMonthListener?.invoke(yearMonth)
         }
+    }
+
+    fun restore(state: SavedStateHandle) {
+        years = state.get<List<String>>("years") ?: emptyList()
+        selectedYear = state.get<Int>("selected_year") ?: -1
+        months = state.get<List<Int>>("months") ?: emptyList()
+        selectedMonth = state.get<Int>("selected_month") ?: -1
+        loadLogList()
     }
 }
