@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.databinding.ItemMedicationBinding
-import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
 import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.ViewHolder>(Companion) {
@@ -22,8 +22,10 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
         override fun areContentsTheSame(oldItem: Medication, newItem: Medication): Boolean {
             return CompareBuilder().append(oldItem.id, newItem.id)
                 .append(oldItem.title, newItem.title)
-                .append(oldItem.dosage, oldItem.dosage)
-                .append(oldItem.dosageUnit, oldItem.dosageUnit)
+                .append(oldItem.dosage, newItem.dosage)
+                .append(oldItem.dosageForm, newItem.dosageForm)
+                .append(oldItem.dosageUnit, newItem.dosageUnit)
+                .append(oldItem.active, newItem.active)
                 .areEqual()
         }
     }
@@ -58,10 +60,11 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
 
         @SuppressLint("SetTextI18n")
         fun setItem(item: Medication) {
-            if (item.dosageUnit >= 0) {
-                binding.title.text = "${item.title} (${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]})"
+            binding.title.text = item.title
+            if (item.dosage > 0f) {
+                binding.dosage.text = "${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]}"
             } else {
-                binding.title.text = item.title
+                binding.dosage.text = ""
             }
             binding.description.text = dosageForms[item.dosageForm]
         }

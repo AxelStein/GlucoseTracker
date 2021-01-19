@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.model.Insulin
 import com.axel_stein.glucose_tracker.databinding.ItemInsulinBinding
-import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
+import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.ui.inflate
 
 class InsulinListAdapter : ListAdapter<Insulin, InsulinListAdapter.ViewHolder>(Companion) {
@@ -21,6 +21,7 @@ class InsulinListAdapter : ListAdapter<Insulin, InsulinListAdapter.ViewHolder>(C
             return CompareBuilder().append(oldItem.id, newItem.id)
                 .append(oldItem.title, newItem.title)
                 .append(oldItem.type, newItem.type)
+                .append(oldItem.active, newItem.active)
                 .areEqual()
         }
     }

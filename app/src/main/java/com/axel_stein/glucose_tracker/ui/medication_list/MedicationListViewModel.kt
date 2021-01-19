@@ -11,7 +11,7 @@ import com.axel_stein.glucose_tracker.data.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
 class MedicationListViewModel(app: Application) : AndroidViewModel(app) {
@@ -33,7 +33,7 @@ class MedicationListViewModel(app: Application) : AndroidViewModel(app) {
 
     fun loadData() {
         disposables.add(
-            dao.observeItems().subscribeOn(Schedulers.io()).subscribe(
+            dao.observeItems().subscribeOn(io()).subscribe(
                 { items ->
                     val list = items.sortedByDescending { item -> item.active }
                     this.items.postValue(MedicationListResult(list, createHeaders(list)))
