@@ -17,13 +17,16 @@ import javax.inject.Inject
 class InsulinListViewModel(app: Application) : AndroidViewModel(app) {
     private val items = MutableLiveData<InsulinListResult>()
     private val disposables = CompositeDisposable()
-
-    @Inject
-    lateinit var dao: InsulinDao
+    private lateinit var dao: InsulinDao
 
     init {
         App.appComponent.inject(this)
         loadData()
+    }
+
+    @Inject
+    fun setDao(dao: InsulinDao) {
+        this.dao = dao
     }
 
     fun itemsLiveData(): LiveData<InsulinListResult> = items

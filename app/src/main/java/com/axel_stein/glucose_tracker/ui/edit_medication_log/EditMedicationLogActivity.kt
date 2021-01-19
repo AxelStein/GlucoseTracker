@@ -3,6 +3,7 @@ package com.axel_stein.glucose_tracker.ui.edit_medication_log
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
@@ -15,6 +16,8 @@ import com.axel_stein.glucose_tracker.utils.formatDate
 import com.axel_stein.glucose_tracker.utils.formatIfInt
 import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
     private val args: EditMedicationLogActivityArgs by navArgs()
@@ -33,7 +36,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         setupAmountEditor()
         setupMeasuredSpinner()
 
-        viewModel.editorActiveLiveData().observe(this, {
+        viewModel.editorActiveLiveData.observe(this, {
             showSaveMenuItem = it
             invalidateOptionsMenu()
 
@@ -43,7 +46,22 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
             binding.inputLayoutAmount.isEnabled = it
             binding.inputLayoutMeasured.isEnabled = it
         })
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
+
+        viewModel.errorLoadingLiveData.observe(this, {
+            if (it) binding.errorLoading.visibility = View.VISIBLE
+        })
+
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
+        })
     }
 
     private fun setupToolbar() {
@@ -66,7 +84,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
             }
         }
 
-        viewModel.dateTimeLiveData().observe(this, {
+        viewModel.dateTimeLiveData.observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -78,7 +96,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         }
 
         val dosageUnits = resources.getStringArray(R.array.dosage_units)
-        viewModel.medicationListLiveData().observe(this, {
+        viewModel.medicationListLiveData.observe(this, {
             binding.inputLayoutMedication.isEnabled = it.isNotEmpty()
             binding.medicationSpinner.setSpinnerItems(it.map { item ->
                 if (item.dosageUnit >= 0) {
@@ -88,10 +106,10 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
                 }
             })
         })
-        viewModel.medicationSelectedLiveData().observe(this, {
+        viewModel.medicationSelectedLiveData.observe(this, {
             binding.medicationSpinner.setSpinnerSelection(it)
         })
-        /*viewModel.errorMedicationListEmptyLiveData().observe(this, {
+        /*viewModel.errorMedicationListEmptyLiveData.observe(this, {
             binding.inputLayoutMedication.showError(it, R.string.error_medication_list_empty)
         })*/
     }
@@ -100,15 +118,15 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         binding.editAmount.setupEditor {
             viewModel.setAmount(it)
         }
-        viewModel.amountLiveData().observe(this, {
+        viewModel.amountLiveData.observe(this, {
             binding.editAmount.setEditorText(it)
         })
 
         val dosageForms = resources.getStringArray(R.array.dosage_forms)
-        viewModel.dosageFormLiveData().observe(this, {
+        viewModel.dosageFormLiveData.observe(this, {
             if (it >= 0) binding.inputLayoutAmount.suffixText = dosageForms[it]
         })
-        viewModel.errorAmountEmptyLiveData().observe(this, {
+        viewModel.errorAmountEmptyLiveData.observe(this, {
             binding.inputLayoutAmount.showEmptyFieldError(it)
         })
     }
@@ -119,7 +137,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
         }
         binding.measuredSpinner.setSpinnerItems(resources.getStringArray(R.array.measured))
 
-        viewModel.measuredLiveData().observe(this, { position ->
+        viewModel.measuredLiveData.observe(this, { position ->
             binding.measuredSpinner.setSpinnerSelection(position)
         })
     }

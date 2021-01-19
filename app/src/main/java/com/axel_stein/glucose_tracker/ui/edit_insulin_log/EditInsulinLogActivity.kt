@@ -3,6 +3,7 @@ package com.axel_stein.glucose_tracker.ui.edit_insulin_log
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
@@ -13,6 +14,8 @@ import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.formatDate
 import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
     private val args: EditInsulinLogActivityArgs by navArgs()
@@ -30,7 +33,7 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         setupUnits()
         setupMeasuredDropDown()
 
-        viewModel.editorActiveLiveData().observe(this, {
+        viewModel.editorActiveLiveData.observe(this, {
             showSaveMenuItem = it
             invalidateOptionsMenu()
 
@@ -41,8 +44,20 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
             binding.inputLayoutMeasured.isEnabled = it
         })
 
-        viewModel.actionFinishLiveData().observe(this, {
-            if (it) finish()
+        viewModel.errorLoadingLiveData.observe(this, {
+            if (it) binding.errorLoading.visibility = VISIBLE
+        })
+
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
     }
 
@@ -66,7 +81,7 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
             }
         }
 
-        viewModel.dateTimeLiveData().observe(this, {
+        viewModel.dateTimeLiveData.observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -78,14 +93,14 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         }
 
         val insulinTypes = resources.getStringArray(R.array.insulin_types)
-        viewModel.insulinLiveData().observe(this, { items ->
+        viewModel.insulinLiveData.observe(this, { items ->
             binding.inputLayoutInsulin.isEnabled = items.isNotEmpty()
             binding.insulinSpinner.setSpinnerItems(items.map { item -> "${item.title} (${insulinTypes[item.type]})"})
         })
-        viewModel.insulinSelectedLiveData().observe(this, { position ->
+        viewModel.insulinSelectedLiveData.observe(this, { position ->
             binding.insulinSpinner.setSpinnerSelection(position)
         })
-        /*viewModel.errorInsulinListEmptyLiveData().observe(this, { error ->
+        /*viewModel.errorInsulinListEmptyLiveData.observe(this, { error ->
             binding.inputLayoutInsulin.showError(error, R.string.error_insulin_list_empty)
         })*/
     }
@@ -94,10 +109,10 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         binding.editUnits.setupEditor { text ->
             viewModel.setUnits(text)
         }
-        viewModel.unitsLiveData().observe(this, { units ->
+        viewModel.unitsLiveData.observe(this, { units ->
             binding.editUnits.setEditorText(units)
         })
-        viewModel.errorUnitsEmptyLiveData().observe(this, { error ->
+        viewModel.errorUnitsEmptyLiveData.observe(this, { error ->
             binding.inputLayoutUnits.showEmptyFieldError(error)
         })
     }
@@ -108,7 +123,7 @@ class EditInsulinLogActivity : AppCompatActivity(), OnConfirmListener {
         }
         binding.measuredSpinner.setSpinnerItems(resources.getStringArray(R.array.measured))
 
-        viewModel.measuredLiveData().observe(this, { position ->
+        viewModel.measuredLiveData.observe(this, { position ->
             binding.measuredSpinner.setSpinnerSelection(position)
         })
     }

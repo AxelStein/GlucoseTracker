@@ -10,7 +10,6 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditWeightBinding
 import com.axel_stein.glucose_tracker.ui.EditorActivity
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.utils.ui.*
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 class EditWeightActivity : EditorActivity() {
@@ -28,7 +27,7 @@ class EditWeightActivity : EditorActivity() {
         setupDateTime(binding.btnDate, binding.btnTime, viewModel)
         setupWeightEditor()
 
-        viewModel.bmiResultLiveData().observe(this, {
+        viewModel.bmiResultLiveData.observe(this, {
             if (it.value == 0f) binding.textBmi.hide()
             else {
                 binding.textBmi.show()
@@ -36,21 +35,20 @@ class EditWeightActivity : EditorActivity() {
                 binding.textBmi.text = getString(R.string.bmi_result, it.value, categories[it.category])
             }
         })
-        viewModel.showHintIndicateHeight().observe(this, {
+        viewModel.showHintIndicateHeightLiveData.observe(this, {
             setViewVisible(it, binding.textIndicateHeight)
         })
 
-        viewModel.errorSaveLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_saving_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
             }
         })
-        viewModel.errorDeleteLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_deleting_note, BaseTransientBottomBar.LENGTH_INDEFINITE).show()
-            }
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupWeightEditor() {
@@ -58,11 +56,11 @@ class EditWeightActivity : EditorActivity() {
             viewModel.setWeight(text)
         }
 
-        viewModel.weightLiveData().observe(this, { value ->
+        viewModel.weightLiveData.observe(this, { value ->
             binding.editWeight.setEditorText(value)
         })
 
-        viewModel.errorNoteEmptyLiveData().observe(this, { error ->
+        viewModel.errorNoteEmptyLiveData.observe(this, { error ->
             binding.inputLayoutWeight.showEmptyFieldError(error)
         })
     }

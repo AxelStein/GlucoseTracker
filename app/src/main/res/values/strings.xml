@@ -231,4 +231,7 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
+    <string name="error_saving">Error saving</string>
+    <string name="error_deleting">Error deleting</string>
+    <string name="error_toggle_active">Error occured</string>
 </resources>

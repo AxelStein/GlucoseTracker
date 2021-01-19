@@ -20,43 +20,38 @@ import com.axel_stein.glucose_tracker.data.google_drive.DriveWorker
 import com.axel_stein.glucose_tracker.data.google_drive.GoogleDriveService
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.readStrFromFileUri
+import com.axel_stein.glucose_tracker.utils.ui.Event
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 class SettingsViewModel(app: App) : AndroidViewModel(app) {
-    val codePickFile = 1
-    private val codeRequestPermissions = 2
+    companion object {
+        const val CODE_PICK_FILE = 1
+        private const val CODE_REQUEST_PERMISSIONS = 2
+    }
+
+    private val showProgressBar = MutableLiveData(false)
+    val showProgressBarLiveData: LiveData<Boolean> = showProgressBar
+
+    private val showAutoSync = MutableLiveData(false)
+    val showAutoSyncLiveData: LiveData<Boolean> = showAutoSync
+
+    private val lastSyncTime = MutableLiveData(0L)
+    val lastSyncTimeLiveData: LiveData<Long> = lastSyncTime
+
+    private val message = MutableLiveData<Event<Int>>()
+    val messageLiveData: LiveData<Event<Int>> = message
 
     private val driveService = GoogleDriveService(app)
     private val backupHelper = BackupHelper()
     private var lastAction = ""
-    private val showProgressBar = MutableLiveData(false)
-    private val showAutoSync = MutableLiveData(false)
-    private val lastSyncTime = MutableLiveData(0L)
-    private val message = MutableLiveData(-1)
 
     init {
         if (driveService.hasPermissions()) {
             showAutoSync.value = true
         }
         updateLastSyncTime()
-    }
-
-    fun notifyMessageReceived() {
-        message.value = -1
-    }
-
-    fun messageLiveData(): LiveData<Int> = message
-
-    fun showAutoSyncLiveData(): LiveData<Boolean> = showAutoSync
-
-    fun lastSyncTimeLiveData(): LiveData<Long> = lastSyncTime
-
-    fun showProgressBarLiveData(): LiveData<Boolean> = showProgressBar
-
-    private fun showProgressBar(show: Boolean) {
-        showProgressBar.value = show
     }
 
     fun startExportToFile() = backupHelper.createBackup()
@@ -88,17 +83,17 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
         if (resultCode != Activity.RESULT_OK) return
 
         when (requestCode) {
-            codePickFile -> {
+            CODE_PICK_FILE -> {
                 importFromFile(data?.data)
                     .subscribe({
-                        message.value = R.string.dialog_msg_import_completed
+                        message.value = Event(R.string.dialog_msg_import_completed)
                     }, {
                         it.printStackTrace()
-                        message.value = R.string.error_import_file
+                        message.value = Event(R.string.error_import_file)
                     })
             }
 
-            codeRequestPermissions -> {
+            CODE_REQUEST_PERMISSIONS -> {
                 showAutoSync.value = true
                 updateLastSyncTime()
 
@@ -120,7 +115,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     fun driveCreateBackup(fragment: Fragment) {
         if (!driveService.hasPermissions()) {
             lastAction = "create"
-            driveService.requestPermissions(fragment, codeRequestPermissions)
+            driveService.requestPermissions(fragment, CODE_REQUEST_PERMISSIONS)
         } else {
             driveCreateBackup()
         }
@@ -135,17 +130,17 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             .doOnComplete { updateLastSyncTime() }
             .doFinally { showProgressBar(false) }
             .subscribe({
-                message.value = R.string.dialog_msg_backup_created
+                message.value = Event(R.string.dialog_msg_backup_created)
             }, {
                 it.printStackTrace()
-                message.value = R.string.error_create_backup
+                message.value = Event(R.string.error_create_backup)
             })
     }
 
     fun driveImportBackup(fragment: Fragment) {
         if (!driveService.hasPermissions()) {
             lastAction = "import"
-            driveService.requestPermissions(fragment, codeRequestPermissions)
+            driveService.requestPermissions(fragment, CODE_REQUEST_PERMISSIONS)
         } else {
             driveImportBackup()
         }
@@ -159,10 +154,10 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             .doOnSubscribe { showProgressBar(true) }
             .doFinally { showProgressBar(false) }
             .subscribe({
-                message.value = R.string.dialog_msg_import_completed
+                message.value = Event(R.string.dialog_msg_import_completed)
             }, {
                 it.printStackTrace()
-                message.value = R.string.error_import_backup
+                message.value = Event(R.string.error_import_backup)
             })
     }
 
@@ -196,5 +191,9 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
         } else {
             wm.cancelAllWorkByTag(tag)
         }
+    }
+
+    private fun showProgressBar(show: Boolean) {
+        showProgressBar.value = show
     }
 }

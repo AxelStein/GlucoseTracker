@@ -3,8 +3,6 @@ package com.axel_stein.glucose_tracker.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -13,8 +11,10 @@ import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
+import com.axel_stein.glucose_tracker.ui.settings.SettingsViewModel.Companion.CODE_PICK_FILE
 import com.axel_stein.glucose_tracker.utils.formatDateTime
 import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
+import com.google.android.material.snackbar.Snackbar
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -71,14 +71,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     startActivity(Intent.createChooser(it, null))
                 }, {
                     it.printStackTrace()
-                    showSnackbar(R.string.error_export_file)
+                    showMessage(R.string.error_export_file)
                 })
             true
         }
 
         val importBackup = preferenceManager.findPreference<Preference>("import_backup")
         importBackup?.setOnPreferenceClickListener {
-            startActivityForResult(viewModel.startImportFromFile(), viewModel.codePickFile)
+            startActivityForResult(viewModel.startImportFromFile(), CODE_PICK_FILE)
             true
         }
 
@@ -102,35 +102,34 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        viewModel.showAutoSyncLiveData().observe(viewLifecycleOwner, {
+        viewModel.showAutoSyncLiveData.observe(viewLifecycleOwner, {
             autoSync?.isVisible = it
         })
 
-        viewModel.lastSyncTimeLiveData().observe(viewLifecycleOwner, { time ->
+        viewModel.lastSyncTimeLiveData.observe(viewLifecycleOwner, { time ->
             if (time > 0) {
                 lastSynced?.summary = formatDateTime(requireContext(), DateTime(time), false)
                 lastSynced?.isVisible = true
             }
         })
 
-        viewModel.messageLiveData().observe(viewLifecycleOwner, { message ->
-            showSnackbar(message)
+        viewModel.messageLiveData.observe(viewLifecycleOwner, {
+            val msg = it.getContent()
+            if (msg != null) {
+                showMessage(msg)
+            }
         })
 
-        viewModel.showProgressBarLiveData().observe(viewLifecycleOwner, {
+        viewModel.showProgressBarLiveData.observe(viewLifecycleOwner, {
             if (activity is ProgressListener) {
                 (activity as ProgressListener).showProgress(it)
             }
         })
     }
 
-    private fun showSnackbar(message: Int) {
-        if (message != -1) {
-            val c = context
-            if (c != null) {
-                Toast.makeText(c, message, LENGTH_SHORT).show()
-            }
-            viewModel.notifyMessageReceived()
+    private fun showMessage(message: Int) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
         }
     }
 

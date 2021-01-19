@@ -17,6 +17,8 @@ fun MutableLiveData<MutableDateTime>.getOrDefault() = value ?: MutableDateTime()
 
 fun MutableLiveData<MutableDateTime>.getOrDateTime(): DateTime = value?.toDateTime() ?: DateTime()
 
+fun <T> MutableLiveData<T>.hasValue() = value != null
+
 fun <T> LiveData<T>.get() = value!!
 
 fun <T> LiveData<T>.getOrDefault(default: T) = value ?: default
@@ -24,3 +26,5 @@ fun <T> LiveData<T>.getOrDefault(default: T) = value ?: default
 fun LiveData<MutableDateTime>.getOrDefault() = value ?: MutableDateTime()
 
 fun LiveData<MutableDateTime>.getOrDateTime(): DateTime = value?.toDateTime() ?: DateTime()
+
+fun <T> LiveData<T>.hasValue() = value != null

@@ -11,6 +11,8 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditMedicationBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.ui.*
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
     private val args: EditMedicationActivityArgs by navArgs()
@@ -29,12 +31,20 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
 
         setViewVisible(args.id != 0L, binding.btnToggleActive)
         binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
-        viewModel.activeLiveData().observe(this, {
+        viewModel.activeLiveData.observe(this, {
             binding.btnToggleActive.setText(if (it) R.string.action_suspend_medication_taking else R.string.action_resume_medication_taking)
         })
 
-        viewModel.actionFinishLiveData().observe(this, {
-            if (it) finish()
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
     }
 
@@ -50,11 +60,11 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
             viewModel.setTitle(it)
         }
 
-        viewModel.titleLiveData().observe(this, {
+        viewModel.titleLiveData.observe(this, {
             binding.editTitle.setEditorText(it)
         })
 
-        viewModel.errorEmptyTitleLiveData().observe(this, {
+        viewModel.errorEmptyTitleLiveData.observe(this, {
             binding.inputLayoutTitle.showEmptyFieldError(it)
         })
     }
@@ -66,7 +76,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
 
         binding.formSpinner.setSpinnerItems(resources.getStringArray(R.array.dosage_forms))
 
-        viewModel.dosageFormLiveData().observe(this, {
+        viewModel.dosageFormLiveData.observe(this, {
             binding.formSpinner.setSpinnerSelection(it)
         })
     }
@@ -76,7 +86,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
             viewModel.setDosage(it)
         }
 
-        viewModel.dosageLiveData().observe(this, {
+        viewModel.dosageLiveData.observe(this, {
             binding.editDosage.setEditorText(it, false)
         })
     }
@@ -88,7 +98,7 @@ class EditMedicationActivity : AppCompatActivity(), OnConfirmListener {
 
         binding.unitsSpinner.setSpinnerItems(resources.getStringArray(R.array.dosage_units))
 
-        viewModel.dosageUnitLiveData().observe(this, {
+        viewModel.dosageUnitLiveData.observe(this, {
             binding.unitsSpinner.setSpinnerSelection(it)
         })
     }

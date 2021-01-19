@@ -38,8 +38,6 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
 
     fun appDir(): File = ctx.filesDir
 
-    fun currentSuffix() = if (settings.useMmolAsGlucoseUnits()) mmolSuffix else mgSuffix
-
     fun beforeMealLineColor() = beforeMealLineColor
     fun beforeMealFillColor() = beforeMealFillColor
     fun afterMealLineColor() = afterMealLineColor

@@ -11,6 +11,8 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditInsulinBinding
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivityArgs
 import com.axel_stein.glucose_tracker.utils.ui.*
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener {
     private val args: EditInsulinLogActivityArgs by navArgs()
@@ -28,11 +30,21 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
 
         setViewVisible(args.id != 0L, binding.btnToggleActive)
         binding.btnToggleActive.setOnClickListener { viewModel.toggleActive() }
-        viewModel.activeLiveData().observe(this, {
+        viewModel.activeLiveData.observe(this, {
             binding.btnToggleActive.setText(if (it) R.string.action_suspend_medication_taking else R.string.action_resume_medication_taking)
         })
 
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
+        })
     }
 
     private fun setupToolbar() {
@@ -47,11 +59,11 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
             viewModel.setTitle(text)
         }
 
-        viewModel.titleLiveData().observe(this, { text ->
+        viewModel.titleLiveData.observe(this, { text ->
             binding.editTitle.setEditorText(text)
         })
 
-        viewModel.errorEmptyTitleLiveData().observe(this, { error ->
+        viewModel.errorEmptyTitleLiveData.observe(this, { error ->
             binding.inputLayoutTitle.showEmptyFieldError(error)
         })
     }
@@ -62,7 +74,7 @@ class EditInsulinActivity : AppCompatActivity(), ConfirmDialog.OnConfirmListener
         }
         binding.typeSpinner.setSpinnerItems(resources.getStringArray(R.array.insulin_types))
 
-        viewModel.typeLiveData().observe(this, { type ->
+        viewModel.typeLiveData.observe(this, { type ->
             binding.typeSpinner.setSpinnerSelection(type)
         })
     }

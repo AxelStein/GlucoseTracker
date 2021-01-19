@@ -13,8 +13,8 @@ import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.ui.setEditorText
 import com.axel_stein.glucose_tracker.utils.ui.setupEditor
 import com.axel_stein.glucose_tracker.utils.ui.showEmptyFieldError
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditNoteActivity : EditorActivity(), OnConfirmListener {
     private val args: EditNoteActivityArgs by navArgs()
@@ -32,17 +32,16 @@ class EditNoteActivity : EditorActivity(), OnConfirmListener {
 
         setupEditNote()
 
-        viewModel.errorSaveLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_saving_note, LENGTH_INDEFINITE).show()
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
             }
         })
-        viewModel.errorDeleteLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_deleting_note, LENGTH_INDEFINITE).show()
-            }
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupEditNote() {
@@ -50,11 +49,11 @@ class EditNoteActivity : EditorActivity(), OnConfirmListener {
             viewModel.setNote(text)
         }
 
-        viewModel.noteLiveData().observe(this, { value ->
+        viewModel.noteLiveData.observe(this, { value ->
             binding.editNote.setEditorText(value)
         })
 
-        viewModel.errorNoteEmptyLiveData().observe(this, { error ->
+        viewModel.errorNoteEmptyLiveData.observe(this, { error ->
             binding.inputLayoutNote.showEmptyFieldError(error)
         })
     }

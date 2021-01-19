@@ -35,10 +35,10 @@ class ChartData {
     fun setGlucoseLogs(list: List<GlucoseLog>, type: Int) {
         lineColor = if (type == 0) resources.beforeMealLineColor() else resources.afterMealLineColor()
         fillColor = if (type == 0) resources.beforeMealFillColor() else resources.afterMealFillColor()
-        if (settings.useMmolAsGlucoseUnits()) {
-            limits = if (type == 0) arrayListOf(5.5f, 7f, 3.5f) else arrayListOf(7.8f, 11f, 3.5f)
+        limits = if (settings.useMmolAsGlucoseUnits()) {
+            if (type == 0) arrayListOf(5.5f, 7f, 3.5f) else arrayListOf(7.8f, 11f, 3.5f)
         } else {
-            limits = if (type == 0) arrayListOf(100f, 126f, 70f) else arrayListOf(140f, 200f, 70f)
+            if (type == 0) arrayListOf(100f, 126f, 70f) else arrayListOf(140f, 200f, 70f)
         }
         val items = if (type == 0) {
             list.filter { it.measured in intArrayOf(0, 2, 4, 6) }

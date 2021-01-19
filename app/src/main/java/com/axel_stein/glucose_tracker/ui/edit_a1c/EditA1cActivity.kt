@@ -13,8 +13,8 @@ import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.formatDate
 import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
     private val args: EditA1cActivityArgs by navArgs()
@@ -31,17 +31,16 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
         setupDateTime()
         setupEditor()
 
-        viewModel.errorSaveLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_saving_log, LENGTH_INDEFINITE).show()
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
             }
         })
-        viewModel.errorDeleteLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_deleting_log, LENGTH_INDEFINITE).show()
-            }
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
     }
 
     private fun setupToolbar() {
@@ -64,7 +63,7 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             }
         }
 
-        viewModel.dateTimeLiveData().observe(this, {
+        viewModel.dateTimeLiveData.observe(this, {
             binding.btnDate.text = formatDate(this, it)
             binding.btnTime.text = formatTime(this, it)
         })
@@ -75,11 +74,11 @@ class EditA1cActivity: AppCompatActivity(), OnConfirmListener {
             viewModel.setValue(text)
         }
 
-        viewModel.valueLiveData().observe(this, { value ->
+        viewModel.a1cLiveData.observe(this, { value ->
             binding.editA1c.setEditorText(value)
         })
 
-        viewModel.errorValueEmptyLiveData().observe(this, { error ->
+        viewModel.errorValueEmptyLiveData.observe(this, { error ->
             binding.inputLayout.showEmptyFieldError(error)
         })
     }
