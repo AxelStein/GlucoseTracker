@@ -14,6 +14,7 @@ import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
 import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class StatisticsViewModel : ViewModel() {
     private lateinit var a1cDao: A1cLogDao
     private lateinit var weightDao: WeightLogDao
     private lateinit var settings: AppSettings
+    private val disposables = CompositeDisposable()
 
     private var period = -1
     private var chartPeriod = -1
@@ -44,6 +46,12 @@ class StatisticsViewModel : ViewModel() {
         App.appComponent.inject(this)
         setStatsPeriod(0)
         loadA1cChartData()
+        disposables.add(
+            settings.observeGlucoseUnits()
+                .subscribe {
+                    forceUpdate()
+                }
+        )
     }
 
     @Inject
@@ -79,6 +87,11 @@ class StatisticsViewModel : ViewModel() {
             period = p
             loadStats(period)
         }
+    }
+
+    private fun forceUpdate() {
+        loadStats(period)
+        setChartPeriod(chartPeriod)
     }
 
     @SuppressLint("CheckResult")
@@ -230,5 +243,10 @@ class StatisticsViewModel : ViewModel() {
             }, {
                 it.printStackTrace()
             })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
     }
 }
