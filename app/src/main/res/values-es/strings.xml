@@ -76,7 +76,6 @@
     <string name="error_deleting_log">Error al eliminar el registro</string>
     <string name="error_deleting_note">Error al eliminar la nota</string>
     <string name="error_export_file">Error de archivo de exportación</string>
-    <string name="error_import">Error de importación</string>
     <string name="error_import_backup">Error de importación</string>
     <string name="error_import_file">Error de importación de archivo</string>
     <string name="error_opening_log">Error al abrir el registro</string>
@@ -101,7 +100,6 @@
     <string name="hint_dosage_form">Forma de dosificación</string>
     <string name="hint_indicate_height">Establezca su altura en la configuración para calcular el IMC</string>
     <string name="hint_insulin_type">Tipo de insulina</string>
-    <string name="hint_measured">Medido</string>
     <string name="hint_note">Nota</string>
     <string name="hint_sugar_level">Nivel de azúcar</string>
     <string name="hint_suspended_insulin_list">Suspendidos</string>
@@ -184,9 +182,7 @@
     <string name="plus_pref_weight">Peso</string>
     <string name="pref_category_measurements">Mediciones</string>
     <string name="stats_a1c">a1c est.</string>
-    <string name="stats_after_meal">Después de comer</string>
     <string name="stats_avg">promedio</string>
-    <string name="stats_before_meal">Antes de la comida</string>
     <string name="stats_max">máx</string>
     <string name="stats_min">mín</string>
     <plurals name="suppository">

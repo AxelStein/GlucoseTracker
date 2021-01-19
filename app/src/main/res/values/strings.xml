@@ -102,7 +102,6 @@
     <string name="error_deleting_log">Error deleting log</string>
     <string name="error_deleting_note">Error deleting note</string>
     <string name="error_export_file">Export file error</string>
-    <string name="error_import">Import error</string>
     <string name="error_import_backup">Import error</string>
     <string name="error_import_file">File import error</string>
     <string name="error_opening_log">Error opening log</string>
@@ -128,7 +127,6 @@
     <string name="hint_dosage_form">Dosage form</string>
     <string name="hint_indicate_height">Set your height in settings for calculating BMI</string>
     <string name="hint_insulin_type">Insulin type</string>
-    <string name="hint_measured">Measured</string>
     <string name="hint_note">Note</string>
     <string name="hint_sugar_level">Sugar level</string>
     <string name="hint_suspended_insulin_list">Suspended</string>
@@ -213,9 +211,7 @@
     <string name="plus_pref_weight">Weight</string>
     <string name="pref_category_measurements">Measurements</string>
     <string name="stats_a1c">a1c est.</string>
-    <string name="stats_after_meal">After meal</string>
     <string name="stats_avg">avg</string>
-    <string name="stats_before_meal">Before meal</string>
     <string name="stats_max">max</string>
     <string name="stats_min">min</string>
     <plurals name="suppository">

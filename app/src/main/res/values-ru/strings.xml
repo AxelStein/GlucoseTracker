@@ -84,7 +84,6 @@
     <string name="error_deleting_log">Ошибка удаления</string>
     <string name="error_deleting_note">Ошибка удаления заметки</string>
     <string name="error_export_file">Ошибка создания резервной копии</string>
-    <string name="error_import">Ошибка импортирования</string>
     <string name="error_import_backup">Ошибка импортирования</string>
     <string name="error_import_file">Ошибка импортирования файла</string>
     <string name="error_opening_log">Ошибка открытия записи</string>
@@ -111,7 +110,6 @@
     <string name="hint_dosage_form">Форма приема</string>
     <string name="hint_indicate_height">Укажите свой рост в настройках для расчета ИМТ</string>
     <string name="hint_insulin_type">Тип инсулина</string>
-    <string name="hint_measured">Измерение</string>
     <string name="hint_note">Заметка</string>
     <string name="hint_sugar_level">Уровень сахара</string>
     <string name="hint_suspended_insulin_list">Неактивные</string>
@@ -202,9 +200,7 @@
     <string name="plus_pref_weight">Вес</string>
     <string name="pref_category_measurements">Измерения</string>
     <string name="stats_a1c">a1c расч.</string>
-    <string name="stats_after_meal">После еды</string>
     <string name="stats_avg">ср.</string>
-    <string name="stats_before_meal">До еды</string>
     <string name="stats_max">макс</string>
     <string name="stats_min">мин</string>
     <plurals name="suppository">

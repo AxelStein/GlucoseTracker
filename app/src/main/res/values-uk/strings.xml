@@ -84,7 +84,6 @@
     <string name="error_deleting_log">Помилка видалення</string>
     <string name="error_deleting_note">Помилка видалення замітки</string>
     <string name="error_export_file">Помилка створення резервної копії</string>
-    <string name="error_import">Помилка імпортування</string>
     <string name="error_import_backup">Помилка імпортування</string>
     <string name="error_import_file">Помилка імпортування файлу</string>
     <string name="error_opening_log">Помилка відкриття запису</string>
@@ -111,7 +110,6 @@
     <string name="hint_dosage_form">Форма прийому</string>
     <string name="hint_indicate_height">Вкажіть свій зріст в настройках для розрахунку ІМТ</string>
     <string name="hint_insulin_type">Тип інсулину</string>
-    <string name="hint_measured">Вимірювання</string>
     <string name="hint_note">Замітка</string>
     <string name="hint_sugar_level">Рівень цукру</string>
     <string name="hint_suspended_insulin_list">Неактивні</string>
@@ -202,9 +200,7 @@
     <string name="plus_pref_weight">Вага</string>
     <string name="pref_category_measurements">Вимірювання</string>
     <string name="stats_a1c">a1c розр.</string>
-    <string name="stats_after_meal">Після їжі</string>
     <string name="stats_avg">серед.</string>
-    <string name="stats_before_meal">До їжі</string>
     <string name="stats_max">макс</string>
     <string name="stats_min">мін</string>
     <plurals name="suppository">

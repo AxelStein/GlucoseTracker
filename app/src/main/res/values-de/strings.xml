@@ -76,7 +76,6 @@
     <string name="error_deleting_log">Fehler beim Löschen des Protokolls</string>
     <string name="error_deleting_note">Fehler beim Löschen der Notiz</string>
     <string name="error_export_file">Fehler beim Exportieren der Datei</string>
-    <string name="error_import">Importfehler</string>
     <string name="error_import_backup">Importfehler</string>
     <string name="error_import_file">Dateiimportfehler</string>
     <string name="error_opening_log">Fehler beim Öffnen des Protokolls</string>
@@ -101,7 +100,6 @@
     <string name="hint_dosage_form">Darreichungsform</string>
     <string name="hint_indicate_height">Stellen Sie Ihre Körpergröße in den Einstellungen zur Berechnung des BMI ein</string>
     <string name="hint_insulin_type">Insulintyp</string>
-    <string name="hint_measured">Gemessen</string>
     <string name="hint_note">Hinweis</string>
     <string name="hint_sugar_level">Zuckergehalt</string>
     <string name="hint_suspended_insulin_list">Suspendierte</string>
@@ -184,9 +182,7 @@
     <string name="plus_pref_weight">Gewicht</string>
     <string name="pref_category_measurements">Messungen</string>
     <string name="stats_a1c">a1c</string>
-    <string name="stats_after_meal">Nach dem Essen</string>
     <string name="stats_avg">mitt.</string>
-    <string name="stats_before_meal">Vor dem Essen</string>
     <string name="stats_max">max</string>
     <string name="stats_min">min</string>
     <plurals name="suppository">
