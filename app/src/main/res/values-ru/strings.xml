@@ -226,4 +226,7 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
+    <string name="error_saving">Ошибка сохранения</string>
+    <string name="error_toggle_active">Произошла ошибка</string>
+    <string name="error_deleting">Ошибка удаления</string>
 </resources>

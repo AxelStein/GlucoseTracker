@@ -202,4 +202,7 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
+    <string name="error_saving">Error al guardar</string>
+    <string name="error_toggle_active">Se produjo un error</string>
+    <string name="error_deleting">Error al eliminar</string>
 </resources>
