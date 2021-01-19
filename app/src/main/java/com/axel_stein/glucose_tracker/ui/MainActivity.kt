@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.findNavController
@@ -25,8 +26,11 @@ import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
-    private val extraShowFab = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
-    private val extraShowFabMenu = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
+    companion object {
+        private const val EXTRA_SHOW_FAB = "com.axel_stein.glucose_tracker.ui.SHOW_FAB"
+        private const val EXTRA_SHOW_FAB_MENU = "com.axel_stein.glucose_tracker.ui.SHOW_FAB_MENU"
+    }
+
     private lateinit var binding: ActivityMainBinding
     private val animationHelper = AnimationHelper()
     private lateinit var navController: NavController
@@ -61,12 +65,14 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        var showFabMenu = false
         if (savedInstanceState != null) {
-            binding.fab.setShown(savedInstanceState.getBoolean(extraShowFab, true))
+            binding.fab.setShown(savedInstanceState.getBoolean(EXTRA_SHOW_FAB, true))
+            showFabMenu = savedInstanceState.getBoolean(EXTRA_SHOW_FAB_MENU, false)
         }
-
         binding.fabMenu.post {
             animationHelper.initFabMenu(binding.fabMenu)
+            if (showFabMenu) showFabMenu()
         }
         binding.fabMenu.forEach { child ->
             child.setOnClickListener {
@@ -140,8 +146,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(extraShowFab, binding.fab.isShown)
-        outState.putBoolean(extraShowFabMenu, binding.fabMenu.isShown)
+        outState.putBoolean(EXTRA_SHOW_FAB, binding.fab.isShown)
+        outState.putBoolean(EXTRA_SHOW_FAB_MENU, binding.fabMenu[0].isShown)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
