@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,6 @@ import com.axel_stein.glucose_tracker.utils.ui.setSpinnerItems
 import com.axel_stein.glucose_tracker.utils.ui.setSpinnerSelection
 import com.axel_stein.glucose_tracker.utils.ui.setViewVisible
 import com.axel_stein.glucose_tracker.utils.ui.setupSpinner
-import com.google.android.material.transition.MaterialFadeThrough
 import javax.inject.Inject
 
 
@@ -39,12 +37,6 @@ class ArchiveFragment: Fragment() {
         resources = r
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        exitTransition = MaterialFadeThrough()
-        enterTransition = MaterialFadeThrough()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentArchiveBinding.inflate(inflater, container, false)
         _viewHelper = LogListViewHelper(
@@ -57,14 +49,10 @@ class ArchiveFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
         setupYearSection()
         setupMonthSection()
         archiveViewModel.logListLiveData.observe(viewLifecycleOwner, {
             viewHelper.submitLogList(it)
-            (view.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
         })
     }
 

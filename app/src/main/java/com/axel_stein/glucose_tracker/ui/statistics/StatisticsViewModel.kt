@@ -45,7 +45,6 @@ class StatisticsViewModel : ViewModel() {
     init {
         App.appComponent.inject(this)
         setStatsPeriod(0)
-        loadA1cChartData()
         disposables.add(
             settings.observeGlucoseUnits()
                 .subscribe {
@@ -78,8 +77,6 @@ class StatisticsViewModel : ViewModel() {
     fun setSettings(settings: AppSettings) {
         this.settings = settings
     }
-
-    fun getChartType() = chartType
 
     @SuppressLint("CheckResult")
     fun setStatsPeriod(p: Int) {
@@ -191,11 +188,10 @@ class StatisticsViewModel : ViewModel() {
                 else -> glucoseDao.getLastThreeMonths()
             }
         }.subscribeOn(io()).subscribe({
-            val wrapper = ChartData()
-            wrapper.setGlucoseLogs(it, type)
-
-            if (wrapper.isEmpty()) chart.postValue(null)
-            else chart.postValue(wrapper)
+            val data = ChartData()
+            data.setGlucoseLogs(it, type)
+            if (data.isEmpty()) chart.postValue(null)
+            else chart.postValue(data)
         }, {
             it.printStackTrace()
         })
@@ -204,20 +200,12 @@ class StatisticsViewModel : ViewModel() {
     @SuppressLint("CheckResult")
     private fun loadA1cChartData() {
         Single.fromCallable { a1cDao.getByThisYear() }
-            .flatMapMaybe {
-                if (it.isNotEmpty()) {
-                    Maybe.just(it)
-                } else {
-                    Maybe.empty()
-                }
-            }
             .subscribeOn(io())
             .subscribe({
-                val wrapper = ChartData()
-                wrapper.setA1cLogs(it)
-
-                if (wrapper.isEmpty()) chart.postValue(null)
-                else chart.postValue(wrapper)
+                val data = ChartData()
+                data.setA1cLogs(it)
+                if (data.isEmpty()) chart.postValue(null)
+                else chart.postValue(data)
             }, {
                 it.printStackTrace()
             })
@@ -226,20 +214,12 @@ class StatisticsViewModel : ViewModel() {
     @SuppressLint("CheckResult")
     private fun loadWeightChartData() {
         Single.fromCallable { weightDao.getByThisYear() }
-            .flatMapMaybe {
-                if (it.isNotEmpty()) {
-                    Maybe.just(it)
-                } else {
-                    Maybe.empty()
-                }
-            }
             .subscribeOn(io())
             .subscribe({
-                val wrapper = ChartData()
-                wrapper.setWeightLogs(it)
-
-                if (wrapper.isEmpty()) chart.postValue(null)
-                else chart.postValue(wrapper)
+                val data = ChartData()
+                data.setWeightLogs(it)
+                if (data.isEmpty()) chart.postValue(null)
+                else chart.postValue(data)
             }, {
                 it.printStackTrace()
             })

@@ -2,7 +2,6 @@ package com.axel_stein.glucose_tracker.ui.a1c_list
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -10,7 +9,6 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
 import com.axel_stein.glucose_tracker.ui.a1c_list.A1cListFragmentDirections.Companion.actionAddA1c
 import com.axel_stein.glucose_tracker.ui.log_list.LogListViewHelper
-import com.google.android.material.transition.MaterialSharedAxis
 
 class A1cListFragment : Fragment() {
     private val viewModel: A1cListViewModel by viewModels()
@@ -24,8 +22,6 @@ class A1cListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -41,12 +37,8 @@ class A1cListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
         viewModel.logListLiveData.observe(viewLifecycleOwner, {
             viewHelper.submitLogList(it)
-            (view.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
         })
     }
 

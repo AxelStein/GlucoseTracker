@@ -12,7 +12,7 @@ import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.utils.ui.*
 import com.google.android.material.snackbar.Snackbar
 
-class EditWeightActivity : EditorActivity() {
+class EditWeightActivity : EditorActivity(), ConfirmDialog.OnConfirmListener {
     private val args: EditWeightActivityArgs by navArgs()
     private val viewModel: EditWeightViewModel by viewModels { EditWeightFactory(this, args.id) }
     private lateinit var binding: ActivityEditWeightBinding
@@ -84,5 +84,9 @@ class EditWeightActivity : EditorActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onConfirm(tag: String?) {
+        viewModel.delete()
     }
 }

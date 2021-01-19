@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentStatisticsBinding
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.LabelValueFormatter
 import com.axel_stein.glucose_tracker.utils.ui.hide
 import com.axel_stein.glucose_tracker.utils.ui.setItemSelectedListener
@@ -19,10 +20,8 @@ import com.axel_stein.glucose_tracker.utils.ui.show
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.utils.Utils
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.transition.MaterialFadeThrough
 
 class StatisticsFragment: Fragment() {
     private val viewModel: StatisticsViewModel by viewModels()
@@ -31,8 +30,6 @@ class StatisticsFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialFadeThrough()
-        enterTransition = MaterialFadeThrough()
         Utils.init(context)
     }
 
@@ -44,7 +41,6 @@ class StatisticsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupStatsView()
         setupChart()
 
@@ -102,7 +98,7 @@ class StatisticsFragment: Fragment() {
 
     private fun setupChart() {
         setupChartView(binding.chart)
-        binding.chartTitleSpinner.onItemSelectedListener = setItemSelectedListener {
+        binding.chartTypeSpinner.onItemSelectedListener = setItemSelectedListener {
             viewModel.setChartType(it)
             binding.chartPeriodSpinner.visibility = if (it < 2) VISIBLE else INVISIBLE
         }
@@ -111,9 +107,7 @@ class StatisticsFragment: Fragment() {
         }
 
         viewModel.chartLiveData.observe(viewLifecycleOwner, {
-            setChartLineData(binding.chart, it.getLineData(), it.getMaxValue())
-            setChartLimitLines(binding.chart, it.getLimits())
-            binding.chart.xAxis.valueFormatter = LabelValueFormatter(it.getLabels())
+            setChartData(binding.chart, it)
         })
     }
 
@@ -129,35 +123,31 @@ class StatisticsFragment: Fragment() {
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
         chart.setExtraOffsets(8f, 0f, 8f, 4f)
+        chart.setNoDataText(getString(R.string.no_data))
+        chart.axisLeft.setCenterAxisLabels(true)
+        chart.setPinchZoom(false)
     }
 
-    private fun setChartLineData(chart: LineChart, data: LineData?, maxValue: Float) {
-        val axis = binding.chart.axisLeft
-        axis.removeAllLimitLines()
+    private fun setChartData(chart: LineChart, data: ChartData?) {
+        chart.clear()
         if (data != null) {
+            val lineData = data.getLineData()
+            val maxValue = data.getMaxValue()
             chart.xAxis.granularity = 1f
-            chart.xAxis.labelCount = data.entryCount
-
-            when (viewModel.getChartType()) {
-                0, 1 -> {
-                    axis.axisMinimum = 0f
-                    axis.axisMaximum = maxValue.plus(maxValue.times(0.25f))
-                    // axis.setLabelCount(axis.axisMaximum.toInt(), true)
-                    // binding.chart.setVisibleYRange(0f, axis.axisMaximum, axis.axisDependency)
-                }
-                2, 3 -> {
-                    axis.resetAxisMinimum()
-                    axis.resetAxisMaximum()
-                }
-            }
+            chart.xAxis.labelCount = lineData.entryCount
+            chart.axisLeft.axisMinimum = 0f
+            chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
+            chart.data = lineData
+            chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
+            setChartLimitLines(binding.chart, data.getLimits())
+            chart.setVisibleXRange(0f, 10f)
+            chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
+            chart.animateX(400)
         }
-        chart.data = data
-        chart.notifyDataSetChanged()
-        chart.setVisibleXRange(0f, 10f)
-        chart.invalidate()
     }
 
     private fun setChartLimitLines(chart: LineChart, limits: ArrayList<Float>) {
+        chart.axisLeft.removeAllLimitLines()
         for (limit in limits) {
             chart.axisLeft.addLimitLine(LimitLine(limit))
         }

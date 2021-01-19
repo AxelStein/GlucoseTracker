@@ -16,9 +16,9 @@ import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.hasValue
 import com.axel_stein.glucose_tracker.utils.ui.Event
 import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 import javax.inject.Inject
@@ -111,9 +111,9 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
 
     @SuppressLint("CheckResult")
     private fun loadActiveInsulinList(insulinId: Long = -1L) {
-        dao.getItems()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        dao.getActiveItems()
+            .subscribeOn(io())
+            .observeOn(mainThread())
             .subscribe({
                 insulinList.value = it
                 val restoredSelection = state.get<Int>("insulin_selected")
@@ -142,8 +142,8 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
             setData()
             loadActiveInsulinList()
         } else logDao.getById(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(io())
+            .observeOn(mainThread())
             .subscribe({
                 setData(
                     it.log.dateTime.toMutableDateTime(),
@@ -182,7 +182,7 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
             else -> {
                 Completable.fromAction {
                     logDao.upsert(createLog())
-                }.subscribeOn(Schedulers.io()).subscribe({
+                }.subscribeOn(io()).subscribe({
                     actionFinish.postValue(Event(true))
                 }, {
                     it.printStackTrace()
@@ -209,7 +209,7 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
     @SuppressLint("CheckResult")
     fun delete() {
         if (id != 0L) {
-            logDao.deleteById(id).subscribeOn(Schedulers.io()).subscribe(
+            logDao.deleteById(id).subscribeOn(io()).subscribe(
                 { actionFinish.postValue(Event(true)) },
                 {
                     it.printStackTrace()
