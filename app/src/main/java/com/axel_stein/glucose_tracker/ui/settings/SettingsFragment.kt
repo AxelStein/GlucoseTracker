@@ -11,6 +11,8 @@ import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
+import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
+import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.ui.settings.SettingsViewModel.Companion.CODE_PICK_FILE
 import com.axel_stein.glucose_tracker.utils.formatDateTime
 import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
@@ -18,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     private lateinit var viewModel: SettingsViewModel
     private var lastSynced: Preference? = null
     private var autoSync: SwitchPreference? = null
@@ -78,19 +80,37 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val importBackup = preferenceManager.findPreference<Preference>("import_backup")
         importBackup?.setOnPreferenceClickListener {
-            startActivityForResult(viewModel.startImportFromFile(), CODE_PICK_FILE)
+            ConfirmDialog.Builder()
+                .from(this, "import_backup")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_import_backup)
+                .positiveBtnText(R.string.action_import)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
         val driveCreateBackup = preferenceManager.findPreference<Preference>("drive_create_backup")
         driveCreateBackup?.setOnPreferenceClickListener {
-            viewModel.driveCreateBackup(this)
+            ConfirmDialog.Builder()
+                .from(this, "drive_create_backup")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_drive_export)
+                .positiveBtnText(R.string.action_create)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
         val driveImport = preferenceManager.findPreference<Preference>("drive_import")
         driveImport?.setOnPreferenceClickListener {
-            viewModel.driveImportBackup(this)
+            ConfirmDialog.Builder()
+                .from(this, "drive_import")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_import_backup)
+                .positiveBtnText(R.string.action_import)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
@@ -136,5 +156,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         viewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onConfirm(tag: String?) {
+        when (tag) {
+            "drive_import" -> viewModel.driveImportBackup(this)
+            "drive_create_backup" -> viewModel.driveCreateBackup(this)
+            "import_backup" -> startActivityForResult(viewModel.startImportFromFile(), CODE_PICK_FILE)
+        }
     }
 }

@@ -2,7 +2,10 @@
 <resources>
     <string name="action_add">Добавить</string>
     <string name="action_cancel">Отмена</string>
+    <string name="action_create">Создать</string>
     <string name="action_delete">Удалить</string>
+    <string name="action_export">Экспортировать</string>
+    <string name="action_import">Импортировать</string>
     <string name="action_resume_medication_taking">Продолжить прием</string>
     <string name="action_save">Сохранить</string>
     <string name="action_settings">Настройки</string>
@@ -49,7 +52,7 @@
     <string name="dialog_msg_delete_medication">Лекарство и его записи будут удалены навсегда.</string>
     <string name="dialog_msg_delete_note">Заметка будет удалена навсегда.</string>
     <string name="dialog_msg_import_completed">Импорт завершен</string>
-    <string name="dialog_title_confirm">Вы уверены?</string>
+    <string name="dialog_title_confirm">Подтвердите действие</string>
     <string name="dosage_form_ampule">Ампула</string>
     <string name="dosage_form_capsule">Капсула</string>
     <string name="dosage_form_dose">Доза</string>
@@ -81,15 +84,18 @@
         <item quantity="other">%1$s капель</item>
     </plurals>
     <string name="error_create_backup">Ошибка создания резервной копии</string>
+    <string name="error_deleting">Ошибка удаления</string>
     <string name="error_deleting_log">Ошибка удаления</string>
     <string name="error_deleting_note">Ошибка удаления заметки</string>
     <string name="error_export_file">Ошибка создания резервной копии</string>
     <string name="error_import_backup">Ошибка импортирования</string>
     <string name="error_import_file">Ошибка импортирования файла</string>
     <string name="error_opening_log">Ошибка открытия записи</string>
+    <string name="error_saving">Ошибка сохранения</string>
     <string name="error_saving_log">Ошибка сохранения</string>
     <string name="error_saving_note">Ошибка сохранения заметки</string>
     <string name="error_statistics">Ошибка загрузки статистики</string>
+    <string name="error_toggle_active">Произошла ошибка</string>
     <string name="fab_menu_blood_sugar">Сахар крови</string>
     <string name="fab_menu_insulin">Прием инсулина</string>
     <string name="fab_menu_medication">Прием лекарств</string>
@@ -117,6 +123,7 @@
     <string name="hint_title">Название</string>
     <string name="hint_units">Количество единиц</string>
     <string name="hint_weight">Вес</string>
+    <string name="humalog">Хумалог</string>
     <plurals name="injection">
         <item quantity="one">%1$s инъекция</item>
         <item quantity="few">%1$s инъекции</item>
@@ -155,6 +162,9 @@
     <string name="measured_before_dinner">До ужина</string>
     <string name="measured_before_lunch">До обеда</string>
     <string name="measured_other">Другое</string>
+    <string name="message_drive_export">Все данные на Google Диске будут заменены.</string>
+    <string name="message_import_backup">Все данные на этом устройстве будут заменены.</string>
+    <string name="metformin">Метформин</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -226,9 +236,4 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
-    <string name="error_saving">Ошибка сохранения</string>
-    <string name="error_toggle_active">Произошла ошибка</string>
-    <string name="error_deleting">Ошибка удаления</string>
-    <string name="humalog">Хумалог</string>
-    <string name="metformin">Метформин</string>
 </resources>

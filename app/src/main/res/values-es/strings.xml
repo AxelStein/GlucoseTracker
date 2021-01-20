@@ -2,7 +2,10 @@
 <resources>
     <string name="action_add">Añadir</string>
     <string name="action_cancel">Cancelar</string>
+    <string name="action_create">Crear</string>
     <string name="action_delete">Eliminar</string>
+    <string name="action_export">Exportar</string>
+    <string name="action_import">Importar</string>
     <string name="action_resume_medication_taking">Reanudar la tome</string>
     <string name="action_save">Salvar</string>
     <string name="action_settings">Configuraciones</string>
@@ -45,7 +48,7 @@
     <string name="dialog_msg_delete_medication">La medicación y todos los registros asociados se eliminarán de forma permanente.</string>
     <string name="dialog_msg_delete_note">La nota se eliminará de forma permanente.</string>
     <string name="dialog_msg_import_completed">Importación completada</string>
-    <string name="dialog_title_confirm">¿Estás seguro?</string>
+    <string name="dialog_title_confirm">Сonfirmar esta acción</string>
     <string name="dosage_form_ampule">Ampolla</string>
     <string name="dosage_form_capsule">Cápsula</string>
     <string name="dosage_form_dose">Dosis</string>
@@ -73,15 +76,18 @@
         <item quantity="other">%1$s gotas</item>
     </plurals>
     <string name="error_create_backup">Error al crear la copia de seguridad</string>
+    <string name="error_deleting">Error al eliminar</string>
     <string name="error_deleting_log">Error al eliminar el registro</string>
     <string name="error_deleting_note">Error al eliminar la nota</string>
     <string name="error_export_file">Error de archivo de exportación</string>
     <string name="error_import_backup">Error de importación</string>
     <string name="error_import_file">Error de importación de archivo</string>
     <string name="error_opening_log">Error al abrir el registro</string>
+    <string name="error_saving">Error al guardar</string>
     <string name="error_saving_log">Error al guardar el registro</string>
     <string name="error_saving_note">Error al guardar la nota</string>
     <string name="error_statistics">Error al cargar las estadísticas</string>
+    <string name="error_toggle_active">Se produjo un error</string>
     <string name="fab_menu_blood_sugar">Glucemia</string>
     <string name="fab_menu_insulin">Ingesta de insulina</string>
     <string name="fab_menu_medication">Ingesta de medicamentos</string>
@@ -107,6 +113,7 @@
     <string name="hint_title">Título</string>
     <string name="hint_units">Número de unidades</string>
     <string name="hint_weight">Peso</string>
+    <string name="humalog">Humalog</string>
     <plurals name="injection">
         <item quantity="one">%1$s inyección</item>
         <item quantity="other">%1$s inyecciónes</item>
@@ -141,6 +148,9 @@
     <string name="measured_before_dinner">Antes de cenar</string>
     <string name="measured_before_lunch">Antes del almuerzo</string>
     <string name="measured_other">Otro</string>
+    <string name="message_drive_export">Se reemplazarán todos los datos de Google Drive.</string>
+    <string name="message_import_backup">Todos los datos de este dispositivo serán reemplazados.</string>
+    <string name="metformin">Metformin</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>
@@ -202,9 +212,4 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
-    <string name="error_saving">Error al guardar</string>
-    <string name="error_toggle_active">Se produjo un error</string>
-    <string name="error_deleting">Error al eliminar</string>
-    <string name="humalog">Humalog</string>
-    <string name="metformin">Metformin</string>
 </resources>

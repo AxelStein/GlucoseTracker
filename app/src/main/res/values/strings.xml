@@ -2,7 +2,10 @@
 <resources>
     <string name="action_add">Add</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_create">Create</string>
     <string name="action_delete">Delete</string>
+    <string name="action_export">Export</string>
+    <string name="action_import">Import</string>
     <string name="action_resume_medication_taking">Resume taking</string>
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
@@ -58,7 +61,7 @@
     <string name="dialog_msg_delete_medication">Medication and all the associated records will be permanently deleted.</string>
     <string name="dialog_msg_delete_note">Note will be permanently deleted.</string>
     <string name="dialog_msg_import_completed">Import completed</string>
-    <string name="dialog_title_confirm">Are you sure?</string>
+    <string name="dialog_title_confirm">Confirm action</string>
     <string name="dosage_form_ampule">Ampule</string>
     <string name="dosage_form_capsule">Capsule</string>
     <string name="dosage_form_dose">Dose</string>
@@ -173,6 +176,8 @@
     <string name="measured_before_dinner">Before dinner</string>
     <string name="measured_before_lunch">Before lunch</string>
     <string name="measured_other">Other</string>
+    <string name="message_drive_export">All data on Google Drive will be replaced.</string>
+    <string name="message_import_backup">All data on this device will be replaced.</string>
     <string name="metformin">Metformin</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>

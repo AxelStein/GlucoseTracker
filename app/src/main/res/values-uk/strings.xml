@@ -2,7 +2,10 @@
 <resources>
     <string name="action_add">Додати</string>
     <string name="action_cancel">Скасувати</string>
+    <string name="action_create">Створити</string>
     <string name="action_delete">Видалити</string>
+    <string name="action_export">Експортувати</string>
+    <string name="action_import">Імпортувати</string>
     <string name="action_resume_medication_taking">Продовжити прийом</string>
     <string name="action_save">Зберегти</string>
     <string name="action_settings">Налаштування</string>
@@ -49,7 +52,7 @@
     <string name="dialog_msg_delete_medication">Ліки та його записи будуть видалені назавжди.</string>
     <string name="dialog_msg_delete_note">Замітка буде видалена назавжди.</string>
     <string name="dialog_msg_import_completed">імпорт завершено</string>
-    <string name="dialog_title_confirm">Ви впевнені?</string>
+    <string name="dialog_title_confirm">Підтвердіть цю дію</string>
     <string name="dosage_form_ampule">Ампула</string>
     <string name="dosage_form_capsule">Капсула</string>
     <string name="dosage_form_dose">Доза</string>
@@ -81,15 +84,18 @@
         <item quantity="other">%1$s крапель</item>
     </plurals>
     <string name="error_create_backup">Помилка створення резервної копії</string>
+    <string name="error_deleting">Помилка видалення</string>
     <string name="error_deleting_log">Помилка видалення</string>
     <string name="error_deleting_note">Помилка видалення замітки</string>
     <string name="error_export_file">Помилка створення резервної копії</string>
     <string name="error_import_backup">Помилка імпортування</string>
     <string name="error_import_file">Помилка імпортування файлу</string>
     <string name="error_opening_log">Помилка відкриття запису</string>
+    <string name="error_saving">Помилка збереження</string>
     <string name="error_saving_log">Помилка збереження</string>
     <string name="error_saving_note">Помилка збереження замітки</string>
     <string name="error_statistics">Помилка завантаження статистики</string>
+    <string name="error_toggle_active">Сталася помилка</string>
     <string name="fab_menu_blood_sugar">Цукор крові</string>
     <string name="fab_menu_insulin">Прийом інсуліну</string>
     <string name="fab_menu_medication">Прийом ліків</string>
@@ -117,6 +123,7 @@
     <string name="hint_title">Назва</string>
     <string name="hint_units">Кількість одиниць</string>
     <string name="hint_weight">Вага</string>
+    <string name="humalog">Хумалог</string>
     <plurals name="injection">
         <item quantity="one">%1$s ін\'єкція</item>
         <item quantity="few">%1$s ін\'єкції</item>
@@ -155,6 +162,9 @@
     <string name="measured_before_dinner">До вечері</string>
     <string name="measured_before_lunch">До обіду</string>
     <string name="measured_other">Інше</string>
+    <string name="message_drive_export">Усі дані на Google Drive будуть замінені.</string>
+    <string name="message_import_backup">Усі дані на цьому пристрої будуть замінені.</string>
+    <string name="metformin">Метформін</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -226,9 +236,4 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
-    <string name="error_saving">Помилка збереження</string>
-    <string name="error_toggle_active">Сталася помилка</string>
-    <string name="error_deleting">Помилка видалення</string>
-    <string name="humalog">Хумалог</string>
-    <string name="metformin">Метформін</string>
 </resources>
