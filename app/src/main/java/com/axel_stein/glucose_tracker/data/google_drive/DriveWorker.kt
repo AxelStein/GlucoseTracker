@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
+import com.axel_stein.glucose_tracker.data.backup.BackupHelper.Companion.BACKUP_FILE_NAME
 import org.joda.time.LocalDate
 
 class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -11,7 +12,7 @@ class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, 
     private val backupHelper = BackupHelper()
 
     override fun doWork(): Result {
-        val time = driveService.getLastSyncTimeImpl(backupHelper.backupFileName)
+        val time = driveService.getLastSyncTimeImpl(BACKUP_FILE_NAME)
         if (time != -1L) {
             val date = LocalDate(time)
             val today = LocalDate()
@@ -23,7 +24,7 @@ class DriveWorker(context: Context, params: WorkerParameters) : Worker(context, 
     private fun createBackup(): Result {
         return try {
             val backupFile = backupHelper.createBackupImpl()
-            driveService.uploadFileImpl(backupHelper.backupFileName, backupFile)
+            driveService.uploadFileImpl(BACKUP_FILE_NAME, backupFile)
             Result.success()
         } catch (e: Exception) {
             e.printStackTrace()

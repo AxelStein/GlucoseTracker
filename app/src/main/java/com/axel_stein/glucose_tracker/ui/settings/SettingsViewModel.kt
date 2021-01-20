@@ -16,6 +16,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
+import com.axel_stein.glucose_tracker.data.backup.BackupHelper.Companion.BACKUP_FILE_NAME
 import com.axel_stein.glucose_tracker.data.google_drive.DriveWorker
 import com.axel_stein.glucose_tracker.data.google_drive.GoogleDriveService
 import com.axel_stein.glucose_tracker.ui.App
@@ -124,7 +125,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     @SuppressLint("CheckResult")
     private fun driveCreateBackup() {
         backupHelper.createBackup()
-            .flatMapCompletable { file -> driveService.uploadFile(backupHelper.backupFileName, file) }
+            .flatMapCompletable { file -> driveService.uploadFile(BACKUP_FILE_NAME, file) }
             .observeOn(mainThread())
             .doOnSubscribe { showProgressBar(true) }
             .doOnComplete { updateLastSyncTime() }
@@ -148,7 +149,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
 
     @SuppressLint("CheckResult")
     private fun driveImportBackup() {
-        driveService.downloadFile(backupHelper.backupFileName)
+        driveService.downloadFile(BACKUP_FILE_NAME)
             .flatMapCompletable { data -> backupHelper.importBackup(data) }
             .observeOn(mainThread())
             .doOnSubscribe { showProgressBar(true) }
@@ -164,7 +165,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     @SuppressLint("CheckResult")
     private fun updateLastSyncTime() {
         if (driveService.hasPermissions()) {
-            driveService.getLastSyncTime(backupHelper.backupFileName)
+            driveService.getLastSyncTime(BACKUP_FILE_NAME)
                 .observeOn(mainThread())
                 .doOnSubscribe { showProgressBar(true) }
                 .doFinally { showProgressBar(false) }

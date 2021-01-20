@@ -13,5 +13,7 @@ data class Backup(
     val medicationLogs: List<MedicationLog>,
     val insulinList: List<Insulin>,
     val insulinLogs: List<InsulinLog>,
-    val weightLogs: List<WeightLog>
+    val weightLogs: List<WeightLog>,
+    val apLogs: List<ApLog>,
+    val pulseLogs: List<PulseLog>
 )
