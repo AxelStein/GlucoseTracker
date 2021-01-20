@@ -14,8 +14,8 @@
         <item quantity="one">%1$s ampule</item>
         <item quantity="other">%1$s ampules</item>
     </plurals>
-    <string name="app_name" translatable="false">Glucose Tracker</string>
-    <string name="app_version" translatable="false">1.0.7</string>
+    <string name="app_name" translatable="false">Diabetes Tracker</string>
+    <string name="app_version" translatable="false">1.0.8</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Obese Class I</string>
     <string name="bmi_category_obese_2">Obese Class II</string>
