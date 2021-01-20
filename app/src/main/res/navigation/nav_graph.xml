@@ -36,6 +36,12 @@
         <action
             android:id="@+id/action_open_weight_list"
             app:destination="@id/weight_list_fragment" />
+        <action
+            android:id="@+id/action_open_pulse_list"
+            app:destination="@id/pulse_list_fragment" />
+        <action
+            android:id="@+id/action_open_ap_list"
+            app:destination="@id/ap_list_fragment" />
     </fragment>
 
     <fragment
@@ -195,4 +201,31 @@
         android:id="@+id/action_edit_weight_log"
         app:destination="@+id/edit_weight_activity" />
 
+    <fragment
+        android:id="@+id/ap_list_fragment"
+        android:name="com.axel_stein.glucose_tracker.ui.ap_list.ApListFragment"
+        android:label="@string/plus_pref_ap">
+        <!--
+        <action
+            android:id="@+id/action_add_app"
+            app:destination="@+id/edit_weight_activity" />
+        <action
+            android:id="@+id/action_edit_app"
+            app:destination="@id/edit_weight_activity" />
+        -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/pulse_list_fragment"
+        android:name="com.axel_stein.glucose_tracker.ui.pulse_list.PulseListFragment"
+        android:label="@string/plus_pref_pulse">
+        <!--
+        <action
+            android:id="@+id/action_add_app"
+            app:destination="@+id/edit_weight_activity" />
+        <action
+            android:id="@+id/action_edit_app"
+            app:destination="@id/edit_weight_activity" />
+        -->
+    </fragment>
 </navigation>

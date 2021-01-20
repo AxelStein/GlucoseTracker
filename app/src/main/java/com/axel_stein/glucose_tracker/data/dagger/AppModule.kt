@@ -11,6 +11,7 @@ import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.room.migration_1_2
+import com.axel_stein.glucose_tracker.data.room.migration_2_3
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.google.gson.*
@@ -42,7 +43,7 @@ class AppModule(private val ctx: Context) {
                     }.subscribeOn(io()).subscribe()
                 }
             })
-            .addMigrations(migration_1_2())
+            .addMigrations(migration_1_2(), migration_2_3())
             .build()
     }
 
@@ -141,5 +142,17 @@ class AppModule(private val ctx: Context) {
     @Singleton
     fun provideWeightLogDao(db: AppDatabase): WeightLogDao {
         return db.weightLogDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApLogDao(db: AppDatabase): ApLogDao {
+        return db.apLogDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providePulseLogDao(db: AppDatabase): PulseLogDao {
+        return db.pulseLogDao()
     }
 }

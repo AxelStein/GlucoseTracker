@@ -41,6 +41,10 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
 
     fun getWeightLogs() = createFlowable { dao.getWeightLogs() }
 
+    fun getPulseLogs() = createFlowable { dao.getPulseLogs() }
+
+    fun getApLogs() = createFlowable { dao.getApLogs() }
+
     fun getYears() = dao.getYears()
 
     fun getMonths(year: String) = dao.getMonths(year)
@@ -73,6 +77,8 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
                                 is InsulinLogEmbedded -> InsulinLogItem(it)
                                 is MedicationLogEmbedded -> MedicationLogItem(it)
                                 is WeightLog -> WeightLogItem(it)
+                                is ApLog -> ApLogItem(it)
+                                is PulseLog -> PulseLogItem(it)
                                 else -> TODO()
                             }
                         }

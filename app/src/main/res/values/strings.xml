@@ -217,4 +217,6 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
+    <string name="plus_pref_ap">Arterial pressure</string>
+    <string name="plus_pref_pulse">Pulse</string>
 </resources>

@@ -16,6 +16,16 @@
 
         <Preference
             app:iconSpaceReserved="false"
+            app:key="ap_list"
+            app:title="@string/plus_pref_ap" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="pulse_list"
+            app:title="@string/plus_pref_pulse" />
+
+        <Preference
+            app:iconSpaceReserved="false"
             app:key="a1c_list"
             app:title="@string/plus_pref_a1c" />
 

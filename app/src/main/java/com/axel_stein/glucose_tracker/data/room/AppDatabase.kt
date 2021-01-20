@@ -15,9 +15,11 @@ import com.axel_stein.glucose_tracker.data.room.dao.*
         InsulinLog::class,
         Medication::class,
         MedicationLog::class,
-        WeightLog::class
+        WeightLog::class,
+        ApLog::class,
+        PulseLog::class
     ],
-    version = 2
+    version = 3
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -31,4 +33,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun medicationDao(): MedicationDao
     abstract fun medicationLogDao(): MedicationLogDao
     abstract fun weightLogDao(): WeightLogDao
+    abstract fun apLogDao(): ApLogDao
+    abstract fun pulseLogDao(): PulseLogDao
 }

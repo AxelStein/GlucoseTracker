@@ -48,6 +48,14 @@ class LogListHelper {
         loadImpl(repository.getWeightLogs(), callback)
     }
 
+    fun loadPulseList(callback: (result: LogListResult) -> Unit) {
+        loadImpl(repository.getPulseLogs(), callback)
+    }
+
+    fun loadApList(callback: (result: LogListResult) -> Unit) {
+        loadImpl(repository.getApLogs(), callback)
+    }
+
     fun loadItemsByYearMonth(yearMonth: String, callback: (result: LogListResult) -> Unit) {
         if (yearMonth != this.yearMonth) {
             this.yearMonth = yearMonth

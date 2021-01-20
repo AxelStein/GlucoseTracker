@@ -44,6 +44,8 @@ class LogListViewHelper(
                     ItemType.INSULIN -> actionEditInsulinLog(id)
                     ItemType.MEDICATION -> actionEditMedicationLog(id)
                     ItemType.WEIGHT -> actionEditWeightLog(id)
+                    ItemType.AP -> actionEditWeightLog(id)  // todo
+                    ItemType.PULSE -> actionEditWeightLog(id)  // todo
                 }
             )
         }
