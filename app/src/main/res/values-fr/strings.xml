@@ -205,4 +205,6 @@
     <string name="error_saving">Erreur lors de l\'enregistrement</string>
     <string name="error_toggle_active">Erreur est survenue</string>
     <string name="error_deleting">Erreur lors de la suppression</string>
+    <string name="humalog">Humalog</string>
+    <string name="metformin">Metformine</string>
 </resources>

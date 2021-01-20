@@ -84,7 +84,7 @@
     <string name="error_statistics">Fehler beim Laden der Statistik</string>
     <string name="fab_menu_blood_sugar">Blutzucker</string>
     <string name="fab_menu_insulin">Insulinaufnahme</string>
-    <string name="fab_menu_medication">Medikamenteneinnahme</string>
+    <string name="fab_menu_medication">Medikamentenaufnahme</string>
     <string name="fab_menu_note">Hinweis</string>
     <string name="glucose_unit_mg_dl">mg/dl</string>
     <string name="glucose_unit_mmol_l">mmol/l</string>
@@ -205,4 +205,6 @@
     <string name="error_saving">Fehler beim Speichern</string>
     <string name="error_toggle_active">Ein Fehler ist aufgetreten</string>
     <string name="error_deleting">Fehler beim Löschen</string>
+    <string name="humalog">Humalog</string>
+    <string name="metformin">Metformin</string>
 </resources>

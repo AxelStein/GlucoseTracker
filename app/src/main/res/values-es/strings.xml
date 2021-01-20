@@ -205,4 +205,6 @@
     <string name="error_saving">Error al guardar</string>
     <string name="error_toggle_active">Se produjo un error</string>
     <string name="error_deleting">Error al eliminar</string>
+    <string name="humalog">Humalog</string>
+    <string name="metformin">Metformin</string>
 </resources>

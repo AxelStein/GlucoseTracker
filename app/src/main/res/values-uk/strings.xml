@@ -229,4 +229,6 @@
     <string name="error_saving">Помилка збереження</string>
     <string name="error_toggle_active">Сталася помилка</string>
     <string name="error_deleting">Помилка видалення</string>
+    <string name="humalog">Хумалог</string>
+    <string name="metformin">Метформін</string>
 </resources>

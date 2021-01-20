@@ -205,4 +205,6 @@
     <string name="error_saving">Errore durante il salvataggio</string>
     <string name="error_toggle_active">C\'è stato un\'errore</string>
     <string name="error_deleting">Errore durante l\'eliminazione</string>
+    <string name="humalog">Humalog</string>
+    <string name="metformin">Metformin</string>
 </resources>

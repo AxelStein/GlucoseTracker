@@ -99,15 +99,18 @@
         <item quantity="other">%1$s drops</item>
     </plurals>
     <string name="error_create_backup">Error creating backup</string>
+    <string name="error_deleting">Error deleting</string>
     <string name="error_deleting_log">Error deleting log</string>
     <string name="error_deleting_note">Error deleting note</string>
     <string name="error_export_file">Export file error</string>
     <string name="error_import_backup">Import error</string>
     <string name="error_import_file">File import error</string>
     <string name="error_opening_log">Error opening log</string>
+    <string name="error_saving">Error saving</string>
     <string name="error_saving_log">Error saving log</string>
     <string name="error_saving_note">Error saving note</string>
     <string name="error_statistics">Error loading statistics</string>
+    <string name="error_toggle_active">Error occured</string>
     <string name="fab_menu_blood_sugar">Blood sugar</string>
     <string name="fab_menu_insulin">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>
@@ -134,6 +137,7 @@
     <string name="hint_title">Title</string>
     <string name="hint_units">Number of units</string>
     <string name="hint_weight">Weight</string>
+    <string name="humalog">Humalog</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -169,6 +173,7 @@
     <string name="measured_before_dinner">Before dinner</string>
     <string name="measured_before_lunch">Before lunch</string>
     <string name="measured_other">Other</string>
+    <string name="metformin">Metformin</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>
@@ -231,7 +236,4 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
-    <string name="error_saving">Error saving</string>
-    <string name="error_deleting">Error deleting</string>
-    <string name="error_toggle_active">Error occured</string>
 </resources>

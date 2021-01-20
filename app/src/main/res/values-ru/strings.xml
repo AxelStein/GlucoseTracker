@@ -229,4 +229,6 @@
     <string name="error_saving">Ошибка сохранения</string>
     <string name="error_toggle_active">Произошла ошибка</string>
     <string name="error_deleting">Ошибка удаления</string>
+    <string name="humalog">Хумалог</string>
+    <string name="metformin">Метформин</string>
 </resources>
