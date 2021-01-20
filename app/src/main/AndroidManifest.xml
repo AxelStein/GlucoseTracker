@@ -44,6 +44,8 @@
 
         <activity android:name=".ui.edit_ap.EditApActivity" />
 
+        <activity android:name=".ui.edit_pulse.EditPulseActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.axel_stein.glucose_tracker.fileprovider"

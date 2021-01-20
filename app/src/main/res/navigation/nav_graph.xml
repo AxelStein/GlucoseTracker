@@ -233,13 +233,27 @@
         android:id="@+id/pulse_list_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.pulse_list.PulseListFragment"
         android:label="@string/plus_pref_pulse">
-        <!--
         <action
-            android:id="@+id/action_add"
-            app:destination="@+id/edit_weight_activity" />
+            android:id="@+id/action_add_pulse"
+            app:destination="@+id/edit_pulse_activity">
+            <argument
+                android:name="id"
+                app:argType="long"
+                android:defaultValue="0L" />
+        </action>
         <action
-            android:id="@+id/action_edit"
-            app:destination="@id/edit_weight_activity" />
-        -->
+            android:id="@+id/action_edit_pulse"
+            app:destination="@id/edit_pulse_activity" />
     </fragment>
+
+    <activity
+        android:id="@+id/edit_pulse_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_pulse.EditPulseActivity">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </activity>
+    <action
+        android:id="@+id/action_edit_pulse_log"
+        app:destination="@+id/edit_pulse_activity" />
 </navigation>

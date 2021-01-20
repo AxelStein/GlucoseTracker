@@ -10,6 +10,7 @@ import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditGluc
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditInsulinLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditMedicationLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditNote
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditPulseLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditWeightLog
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.LogRepository.LogListResult
@@ -46,7 +47,7 @@ class LogListViewHelper(
                     ItemType.MEDICATION -> actionEditMedicationLog(id)
                     ItemType.WEIGHT -> actionEditWeightLog(id)
                     ItemType.AP -> actionEditApLog(id)
-                    ItemType.PULSE -> actionEditWeightLog(id)  // todo
+                    ItemType.PULSE -> actionEditPulseLog(id)
                 }
             )
         }

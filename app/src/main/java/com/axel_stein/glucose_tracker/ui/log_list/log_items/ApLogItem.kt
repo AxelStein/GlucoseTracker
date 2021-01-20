@@ -12,7 +12,7 @@ class ApLogItem(private val log: ApLog) : LogItem {
     private lateinit var time: String
 
     override fun format(context: Context, appSettings: AppSettings, appResources: AppResources) {
-        title = "${log.systolic}/${log.diastolic} mmHg"
+        title = "${log.systolic}/${log.diastolic} mm Hg"
         time = formatTime(context, log.dateTime)
     }
 

@@ -221,4 +221,5 @@
     <string name="plus_pref_pulse">Pulse</string>
     <string name="hint_systolic">Systolic</string>
     <string name="hint_diastolic">Diastolic</string>
+    <string name="hint_pulse">Pulse</string>
 </resources>

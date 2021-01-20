@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
 import com.axel_stein.glucose_tracker.ui.log_list.LogListViewHelper
-import com.axel_stein.glucose_tracker.ui.weight_list.WeightListFragmentDirections
+import com.axel_stein.glucose_tracker.ui.pulse_list.PulseListFragmentDirections.Companion.actionAddPulse
 
 class PulseListFragment : Fragment() {
     private val viewModel: PulseListViewModel by viewModels()
@@ -50,7 +50,7 @@ class PulseListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_add ->
-                findNavController().navigate(WeightListFragmentDirections.actionAddWeight())  // todo
+                findNavController().navigate(actionAddPulse())
         }
         return super.onOptionsItemSelected(item)
     }
