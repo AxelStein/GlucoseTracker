@@ -26,6 +26,8 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
     private var weightFillColor = 0
     private var pulseLineColor = 0
     private var pulseFillColor = 0
+    private var systolicLineColor = 0
+    private var diastolicLineColor = 0
 
     fun initColorResources(context: AppCompatActivity) {
         beforeMealLineColor = getColor(context, R.attr.beforeMealLineColor, BLACK)
@@ -38,6 +40,8 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
         weightFillColor = getColor(context, R.attr.weightFillColor, BLACK)
         pulseLineColor = getColor(context, R.attr.pulseLineColor, BLACK)
         pulseFillColor = getColor(context, R.attr.pulseFillColor, BLACK)
+        systolicLineColor = getColor(context, R.attr.systolicLineColor, BLACK)
+        diastolicLineColor = getColor(context, R.attr.diastolicLineColor, BLACK)
     }
 
     fun appDir(): File = ctx.filesDir
@@ -52,4 +56,6 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
     fun weightFillColor() = weightFillColor
     fun pulseLineColor() = pulseLineColor
     fun pulseFillColor() = pulseFillColor
+    fun systolicLineColor() = systolicLineColor
+    fun diastolicLineColor() = diastolicLineColor
 }

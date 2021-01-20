@@ -40,6 +40,12 @@
     <color name="color_pulse_line_night">#FF5252</color>
     <color name="color_pulse_fill_night">#FF8A80</color>
 
+    <color name="color_systolic_line_day">#FF1744</color>
+    <color name="color_systolic_line_night">#FF5252</color>
+
+    <color name="color_diastolic_line_day">#D500F9</color>
+    <color name="color_diastolic_line_night">#E040FB</color>
+
     <color name="log_item_bg_color_day">#fff</color>
     <color name="log_item_bg_color_night">#404040</color>
     <color name="log_list_bg_color_day">#eee</color>

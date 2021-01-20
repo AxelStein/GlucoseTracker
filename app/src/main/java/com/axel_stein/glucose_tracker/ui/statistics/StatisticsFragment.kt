@@ -135,13 +135,18 @@ class StatisticsFragment: Fragment() {
             val maxValue = data.getMaxValue()
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = lineData.entryCount
-            chart.axisLeft.axisMinimum = 0f
-            chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
+            if (lineData.dataSetCount == 1) {
+                chart.axisLeft.axisMinimum = 0f
+                chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
+            } else {
+                chart.axisLeft.resetAxisMinimum()
+                chart.axisLeft.resetAxisMaximum()
+            }
             chart.data = lineData
             chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
             setChartLimitLines(binding.chart, data.getLimits())
             chart.setVisibleXRange(0f, 10f)
-            chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
+            // chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
             chart.animateX(400)
         }
     }

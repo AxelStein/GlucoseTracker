@@ -22,6 +22,7 @@ class StatisticsViewModel : ViewModel() {
     private lateinit var a1cDao: A1cLogDao
     private lateinit var weightDao: WeightLogDao
     private lateinit var pulseDao: PulseLogDao
+    private lateinit var apDao: ApLogDao
     private lateinit var settings: AppSettings
     private lateinit var logRepository: LogRepository
     private val disposables = CompositeDisposable()
@@ -82,6 +83,11 @@ class StatisticsViewModel : ViewModel() {
     @Inject
     fun setPulseDao(dao: PulseLogDao) {
         pulseDao = dao
+    }
+
+    @Inject
+    fun setApDao(dao: ApLogDao) {
+        apDao = dao
     }
 
     @Inject
@@ -190,7 +196,8 @@ class StatisticsViewModel : ViewModel() {
             1 -> loadGlucoseChartData(chartPeriod, 1)
             2 -> loadA1cChartData()
             3 -> loadWeightChartData()
-            4 -> loadPulseChartData()
+            4 -> loadApChartData()
+            5 -> loadPulseChartData()
         }
     }
 
@@ -248,6 +255,20 @@ class StatisticsViewModel : ViewModel() {
             .subscribe({
                 val data = ChartData()
                 data.setPulseLogs(it)
+                if (data.isEmpty()) chart.postValue(null)
+                else chart.postValue(data)
+            }, {
+                it.printStackTrace()
+            })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun loadApChartData() {
+        Single.fromCallable { apDao.getByThisYear() }
+            .subscribeOn(io())
+            .subscribe({
+                val data = ChartData()
+                data.setApLogs(it)
                 if (data.isEmpty()) chart.postValue(null)
                 else chart.postValue(data)
             }, {

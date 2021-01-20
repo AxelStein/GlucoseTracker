@@ -27,6 +27,8 @@
         <item name="weightLineColor">@color/color_weight_line_night</item>
         <item name="pulseFillColor">@color/color_pulse_line_night</item>
         <item name="pulseLineColor">@color/color_pulse_line_night</item>
+        <item name="systolicLineColor">@color/color_systolic_line_night</item>
+        <item name="diastolicLineColor">@color/color_diastolic_line_night</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
     <style name="Theme.GlucoseTracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

@@ -10,6 +10,8 @@
     <attr format="color|reference" name="weightLineColor"/>
     <attr format="color|reference" name="pulseFillColor"/>
     <attr format="color|reference" name="pulseLineColor"/>
+    <attr format="color|reference" name="systolicLineColor"/>
+    <attr format="color|reference" name="diastolicLineColor"/>
     <attr format="color|reference" name="bottomNavBackgroundColor"/>
     <attr format="color|reference" name="bottomNavItemIconColor"/>
     <attr format="color|reference" name="bottomNavItemTextColor"/>

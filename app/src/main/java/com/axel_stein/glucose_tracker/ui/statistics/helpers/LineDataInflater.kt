@@ -6,7 +6,7 @@ import com.github.mikephil.charting.data.Entry
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class DateLabelInflater {
+class LineDataInflater {
     private lateinit var entries: ArrayList<Entry>
     private lateinit var labels: Array<String>
     private var currentMonth = -1

@@ -20,6 +20,7 @@
         <item>@string/chart_title_blood_sugar_after_meal</item>
         <item>@string/hint_a1c</item>
         <item>@string/chart_title_weight</item>
+        <item>@string/chart_title_ap</item>
         <item>@string/chart_title_pulse</item>
     </string-array>
     <array name="dosage_form_plurals">
@@ -128,4 +129,5 @@
         <item>lb</item>
     </string-array>
     <string name="chart_title_pulse">Pulse</string>
+    <string name="chart_title_ap">Arterial pressure</string>
 </resources>
