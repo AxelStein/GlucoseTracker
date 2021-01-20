@@ -38,8 +38,8 @@
     <string name="chart_period_half_month">2 недели</string>
     <string name="chart_period_month">1 месяц</string>
     <string name="chart_period_three_months">3 месяца</string>
-    <string name="chart_title_blood_sugar_after_meal">Сахар крови (до еды)</string>
-    <string name="chart_title_blood_sugar_before_meal">Сахар крови (после еды)</string>
+    <string name="chart_title_blood_sugar_after_meal">Сахар крови (после еды)</string>
+    <string name="chart_title_blood_sugar_before_meal">Сахар крови (до еды)</string>
     <string name="chart_title_weight">Вес</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>

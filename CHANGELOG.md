@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.8 (January 20, 2021)
+* Fix string resources
+* Fix log item layout
+
 ### 1.0.7 (January 20, 2021)
 * Updated navigation
 * Updated database
