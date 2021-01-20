@@ -1,5 +1,15 @@
 # Changelog
 
+### 1.0.7 (January 20, 2021)
+* Updated navigation
+* Updated database
+* Added medication editor
+* Added insulin editor
+* Added weight editor
+* Updated statistics view
+* Night mode removed, added Theme instead
+* Added height preference
+
 ### 1.0.6 (January 9, 2021)
 * Fix glucose editor
 * Add view binding

@@ -1,8 +1,6 @@
 package com.axel_stein.glucose_tracker.data.backup
 
-import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
-import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
-import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
+import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
@@ -24,6 +22,21 @@ class BackupHelper {
     lateinit var a1cLogDao: A1cLogDao
 
     @Inject
+    lateinit var medicationDao: MedicationDao
+
+    @Inject
+    lateinit var medicationLogDao: MedicationLogDao
+
+    @Inject
+    lateinit var insulinDao: InsulinDao
+
+    @Inject
+    lateinit var insulinLogDao: InsulinLogDao
+
+    @Inject
+    lateinit var weightLogDao: WeightLogDao
+
+    @Inject
     lateinit var gson: Gson
 
     @Inject
@@ -40,17 +53,23 @@ class BackupHelper {
 
     fun createBackup(): Single<File> {
         return Single.fromCallable {
-            _createBackup()
+            createBackupImpl()
         }.subscribeOn(io())
     }
 
-    fun _createBackup(): File {
+    fun createBackupImpl(): File {
         val backup = Backup(
-            1,
-            glucoseLogDao.get(),
+            2,
+            glucoseLogDao.getAll(),
             noteLogDao.get(),
-            a1cLogDao.get(),
-            appSettings.getGlucoseUnits()
+            a1cLogDao.getAll(),
+            appSettings.getGlucoseUnits(),
+            appSettings.getHeight(),
+            medicationDao.getAll(),
+            medicationLogDao.getAll(),
+            insulinDao.getAll(),
+            insulinLogDao.getAll(),
+            weightLogDao.getAll()
         )
         val data = gson.toJson(backup, Backup::class.java)
         val backupFile = File(appResources.appDir(), backupFileName)
@@ -61,10 +80,20 @@ class BackupHelper {
     fun importBackup(data: String): Completable {
         return Completable.fromAction {
             val backup = gson.fromJson(data, Backup::class.java)
+            // version 1
             glucoseLogDao.importBackup(backup.glucoseLogs)
             noteLogDao.importBackup(backup.noteLogs)
             a1cLogDao.importBackup(backup.a1cLogs)
             appSettings.setGlucoseUnits(backup.glucoseUnits)
+
+            if (backup.version == 2) {
+                appSettings.setHeight(backup.height)
+                medicationDao.importBackup(backup.medications)
+                medicationLogDao.importBackup(backup.medicationLogs)
+                insulinDao.importBackup(backup.insulinList)
+                insulinLogDao.importBackup(backup.insulinLogs)
+                weightLogDao.importBackup(backup.weightLogs)
+            }
         }.subscribeOn(io())
     }
 }

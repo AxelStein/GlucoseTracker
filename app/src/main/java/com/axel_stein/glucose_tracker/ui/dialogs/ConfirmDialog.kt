@@ -21,6 +21,7 @@ class ConfirmDialog : AppCompatDialogFragment() {
         fun onConfirm(tag: String?)
     }
 
+    @Suppress("unused")
     class Builder {
         private var fragment: Fragment? = null
         private var activity: AppCompatActivity? = null

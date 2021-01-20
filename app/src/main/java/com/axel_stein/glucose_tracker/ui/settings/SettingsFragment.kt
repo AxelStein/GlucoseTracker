@@ -3,21 +3,24 @@ package com.axel_stein.glucose_tracker.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.ui.ProgressListener
+import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
+import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
+import com.axel_stein.glucose_tracker.ui.settings.SettingsViewModel.Companion.CODE_PICK_FILE
 import com.axel_stein.glucose_tracker.utils.formatDateTime
+import com.axel_stein.glucose_tracker.utils.ui.ProgressListener
+import com.google.android.material.snackbar.Snackbar
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     private lateinit var viewModel: SettingsViewModel
     private var lastSynced: Preference? = null
     private var autoSync: SwitchPreference? = null
@@ -37,16 +40,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        setPreferencesFromResource(R.xml.main_preferences, rootKey)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val nightMode = preferenceManager.findPreference<SwitchPreference>("night_mode")
-        nightMode?.setOnPreferenceChangeListener { _, mode ->
-            appSettings.enableNightMode(mode as Boolean)
+        val theme = preferenceManager.findPreference<ListPreference>("theme")
+        theme?.setOnPreferenceChangeListener { _, value ->
+            appSettings.applyTheme(value as String)
             true
+        }
+
+        val height = preferenceManager.findPreference<Preference>("height")
+        height?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue.toString().isBlank() || newValue == "0") {
+                preference.summary = resources.getString(R.string.main_pref_height_summary)
+            } else {
+                preference.summary = "$newValue ${resources.getString(R.string.height_unit_cm)}"
+            }
+            true
+        }
+        val h = appSettings.getHeight()
+        if (h.isNotEmpty() && h != "0") {
+            height?.summary = "$h ${resources.getString(R.string.height_unit_cm)}"
         }
 
         val exportBackup = preferenceManager.findPreference<Preference>("export_backup")
@@ -56,26 +73,44 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     startActivity(Intent.createChooser(it, null))
                 }, {
                     it.printStackTrace()
-                    showSnackbar(R.string.error_export_file)
+                    showMessage(R.string.error_export_file)
                 })
             true
         }
 
         val importBackup = preferenceManager.findPreference<Preference>("import_backup")
         importBackup?.setOnPreferenceClickListener {
-            startActivityForResult(viewModel.startImportFromFile(), viewModel.codePickFile)
+            ConfirmDialog.Builder()
+                .from(this, "import_backup")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_import_backup)
+                .positiveBtnText(R.string.action_import)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
         val driveCreateBackup = preferenceManager.findPreference<Preference>("drive_create_backup")
         driveCreateBackup?.setOnPreferenceClickListener {
-            viewModel.driveCreateBackup(this)
+            ConfirmDialog.Builder()
+                .from(this, "drive_create_backup")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_drive_export)
+                .positiveBtnText(R.string.action_create)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
         val driveImport = preferenceManager.findPreference<Preference>("drive_import")
         driveImport?.setOnPreferenceClickListener {
-            viewModel.driveImportBackup(this)
+            ConfirmDialog.Builder()
+                .from(this, "drive_import")
+                .title(R.string.dialog_title_confirm)
+                .message(R.string.message_import_backup)
+                .positiveBtnText(R.string.action_import)
+                .negativeBtnText(R.string.action_cancel)
+                .show()
             true
         }
 
@@ -87,40 +122,47 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        viewModel.showAutoSyncLiveData().observe(viewLifecycleOwner, {
+        viewModel.showAutoSyncLiveData.observe(viewLifecycleOwner, {
             autoSync?.isVisible = it
         })
 
-        viewModel.lastSyncTimeLiveData().observe(viewLifecycleOwner, { time ->
+        viewModel.lastSyncTimeLiveData.observe(viewLifecycleOwner, { time ->
             if (time > 0) {
                 lastSynced?.summary = formatDateTime(requireContext(), DateTime(time), false)
                 lastSynced?.isVisible = true
             }
         })
 
-        viewModel.messageLiveData().observe(viewLifecycleOwner, { message ->
-            showSnackbar(message)
+        viewModel.messageLiveData.observe(viewLifecycleOwner, {
+            val msg = it.getContent()
+            if (msg != null) {
+                showMessage(msg)
+            }
         })
 
-        viewModel.showProgressBarLiveData().observe(viewLifecycleOwner, {
+        viewModel.showProgressBarLiveData.observe(viewLifecycleOwner, {
             if (activity is ProgressListener) {
                 (activity as ProgressListener).showProgress(it)
             }
         })
     }
 
-    private fun showSnackbar(message: Int) {
-        if (message != -1) {
-            val c = context
-            if (c != null) {
-                Toast.makeText(c, message, LENGTH_SHORT).show()
-            }
-            viewModel.notifyMessageReceived()
+    private fun showMessage(message: Int) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         viewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onConfirm(tag: String?) {
+        when (tag) {
+            "drive_import" -> viewModel.driveImportBackup(this)
+            "drive_create_backup" -> viewModel.driveCreateBackup(this)
+            "import_backup" -> startActivityForResult(viewModel.startImportFromFile(), CODE_PICK_FILE)
+        }
     }
 }

@@ -3,99 +3,102 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/logListBackgroundColor"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="?attr/logListBackgroundColor"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:id="@+id/layout"
-        android:background="?attr/logItemBackgroundColor"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/logItemBackgroundColor"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/input_layout_year"
-            app:boxStrokeWidth="0dp"
-            app:hintEnabled="false"
-            app:boxStrokeWidthFocused="0dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:minHeight="48dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_year"
-                tools:text="2020"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_black_24dp"
-                android:textSize="16sp"
-                android:minHeight="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="none"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/icon_drop_down"
+                app:drawableTint="?android:attr/textColorSecondary"
+                tools:ignore="LabelFor"
+                tools:text="2020" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/input_layout_month"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:hintEnabled="false"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_month"
-                tools:text="December"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_black_24dp"
-                android:textSize="16sp"
-                android:minHeight="48dp"
-                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/icon_drop_down"
+                app:drawableTint="?android:attr/textColorSecondary"
+                tools:ignore="LabelFor"
+                tools:text="December" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        tools:listitem="@layout/item_glucose"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_below="@+id/layout"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
+        android:id="@+id/archive_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_log" />
 
     <View
-        android:layout_below="@+id/layout"
-        android:background="?android:attr/dividerHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" />
+        android:layout_height="1dp"
+        android:layout_below="@+id/layout"
+        android:background="?android:attr/dividerHorizontal" />
 
     <TextView
-        android:id="@+id/text_empty"
-        android:text="@string/no_data"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
+        android:id="@+id/archive_text_empty"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_data"
+        android:visibility="gone" />
 
 </RelativeLayout>

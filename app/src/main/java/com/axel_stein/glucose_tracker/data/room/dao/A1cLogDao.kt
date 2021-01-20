@@ -1,41 +1,29 @@
 package com.axel_stein.glucose_tracker.data.room.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.axel_stein.glucose_tracker.data.model.A1cLog
-import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
-interface A1cLogDao {
-    @Insert
-    fun insert(log: A1cLog): Completable
-
-    @Insert
-    fun insert(list: List<A1cLog>)
-
-    @Update
-    fun update(log: A1cLog): Completable
-
-    @Delete
-    fun delete(log: A1cLog): Completable
-
+abstract class A1cLogDao : BaseDao<A1cLog>() {
     @Query("delete from a1c_log where id = :id")
-    fun deleteById(id: Long): Completable
+    abstract fun deleteById(id: Long)
 
     @Query("delete from a1c_log")
-    fun deleteAll()
+    abstract fun deleteAll()
 
     @Query("select * from a1c_log where id = :id")
-    fun get(id: Long): Single<A1cLog>
+    abstract fun getById(id: Long): A1cLog
 
     @Query("select * from a1c_log")
-    fun get(): List<A1cLog>
+    abstract fun getAll(): List<A1cLog>
 
     @Query("select * from a1c_log where date_time > date('now', '-1 year')")
-    fun getThisYear(): List<A1cLog>
+    abstract fun getByThisYear(): List<A1cLog>
 
     @Transaction
-    fun importBackup(backup: List<A1cLog>) {
+    open fun importBackup(backup: List<A1cLog>) {
         deleteAll()
         insert(backup)
     }

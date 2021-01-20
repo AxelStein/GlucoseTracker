@@ -4,113 +4,93 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AutoCompleteTextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.axel_stein.glucose_tracker.R
+import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.databinding.FragmentArchiveBinding
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.ui.log_list.LogListFragment
-import com.axel_stein.glucose_tracker.utils.CArrayAdapter
-import com.axel_stein.glucose_tracker.utils.hide
-import com.axel_stein.glucose_tracker.utils.show
-import com.google.android.material.textfield.TextInputLayout
+import com.axel_stein.glucose_tracker.ui.log_list.LogListViewHelper
+import com.axel_stein.glucose_tracker.utils.ui.setSpinnerItems
+import com.axel_stein.glucose_tracker.utils.ui.setSpinnerSelection
+import com.axel_stein.glucose_tracker.utils.ui.setViewVisible
+import com.axel_stein.glucose_tracker.utils.ui.setupSpinner
 import javax.inject.Inject
 
 
-class ArchiveFragment: LogListFragment() {
+class ArchiveFragment: Fragment() {
     private val archiveViewModel: ArchiveViewModel by viewModels()
+    private lateinit var resources: AppResources
+
     private var _binding: FragmentArchiveBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var appResources: AppResources
+    private var _viewHelper: LogListViewHelper? = null
+    private val viewHelper get() = _viewHelper!!
 
     init {
         App.appComponent.inject(this)
     }
 
+    @Inject
+    fun setResources(r: AppResources) {
+        resources = r
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentArchiveBinding.inflate(inflater, container, false)
-        setupRecyclerView(binding.recyclerView)
-        setupYearSection()
-        setupMonthSection()
-
-        archiveViewModel.loadItemsByYearMonthLiveData().observe(viewLifecycleOwner, {
-            viewModel.loadItemsByYearMonth(it)
-        })
+        _viewHelper = LogListViewHelper(
+            binding.archiveRecyclerView,
+            binding.archiveTextEmpty,
+            findNavController()
+        )
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupYearSection()
+        setupMonthSection()
+        archiveViewModel.logListLiveData.observe(viewLifecycleOwner, {
+            viewHelper.submitLogList(it)
+        })
+    }
+
     private fun setupYearSection() {
-        setupSpinner(binding.spinnerYear, binding.inputLayoutYear) { position ->
+        binding.spinnerYear.setupSpinner(binding.inputLayoutYear) { position ->
             archiveViewModel.setCurrentYear(position)
         }
 
-        archiveViewModel.yearsLiveData().observe(viewLifecycleOwner, { years ->
-            setSpinnerItems(binding.spinnerYear, binding.inputLayoutYear, years)
+        archiveViewModel.yearsLiveData.observe(viewLifecycleOwner, { years ->
+            binding.spinnerYear.setSpinnerItems(years)
+
+            val isEmpty = years.isEmpty()
+            setViewVisible(!isEmpty, binding.inputLayoutYear, binding.inputLayoutMonth)
+            setViewVisible(isEmpty, binding.archiveTextEmpty)
         })
 
-        archiveViewModel.selectedYearLiveData().observe(viewLifecycleOwner, { position ->
-            setSpinnerSelection(binding.spinnerYear, position)
+        archiveViewModel.selectedYearLiveData.observe(viewLifecycleOwner, { position ->
+            binding.spinnerYear.setSpinnerSelection(position)
         })
     }
 
     private fun setupMonthSection() {
-        setupSpinner(binding.spinnerMonth, binding.inputLayoutMonth) { position ->
+        binding.spinnerMonth.setupSpinner(binding.inputLayoutMonth) { position ->
             archiveViewModel.setCurrentMonth(position)
         }
 
-        archiveViewModel.monthsLiveData().observe(viewLifecycleOwner, { months ->
-            val titles = appResources.monthsArray()
-            setSpinnerItems(binding.spinnerMonth, binding.inputLayoutMonth,
-                months.map { titles[it-1] }
-            )
+        archiveViewModel.monthsLiveData.observe(viewLifecycleOwner, { months ->
+            val titles = resources.monthsArray
+            binding.spinnerMonth.setSpinnerItems(months.map { titles[it-1] })
         })
-        archiveViewModel.selectedMonthLiveData().observe(viewLifecycleOwner, { position ->
-            setSpinnerSelection(binding.spinnerMonth, position)
+        archiveViewModel.selectedMonthLiveData.observe(viewLifecycleOwner, { position ->
+            binding.spinnerMonth.setSpinnerSelection(position)
         })
     }
-
-    private fun setupSpinner(spinner: AutoCompleteTextView, inputLayout: TextInputLayout, onItemClick: (position: Int) -> Unit) {
-        spinner.inputType = 0  // disable ime input
-        spinner.setOnKeyListener { _, _, _ -> true }  // disable hardware keyboard input
-        spinner.setOnItemClickListener { _, _, position, _ ->
-            inputLayout.clearFocus()
-            onItemClick(position)
-        }
-        spinner.setOnDismissListener {
-            inputLayout.clearFocus()
-        }
-    }
-
-    private fun setSpinnerItems(spinner: AutoCompleteTextView, inputLayout: TextInputLayout, items: List<String>) {
-        if (items.isEmpty()) {
-            textEmpty().show()
-            inputLayout.hide()
-        } else {
-            textEmpty().hide()
-            inputLayout.show()
-            spinner.setAdapter(
-                CArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, items.toTypedArray())
-            )
-        }
-    }
-
-    private fun setSpinnerSelection(spinner: AutoCompleteTextView, position: Int) {
-        if (position != -1) {
-            spinner.listSelection = position
-            val item = spinner.adapter.getItem(position)
-            if (item != null) {
-                spinner.setText(item as String, false)
-            }
-        }
-    }
-
-    override fun textEmpty() = binding.textEmpty
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _viewHelper = null
     }
 }

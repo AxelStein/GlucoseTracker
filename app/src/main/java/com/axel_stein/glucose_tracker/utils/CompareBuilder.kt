@@ -1,5 +1,6 @@
 package com.axel_stein.glucose_tracker.utils
 
+@Suppress("unused")
 class CompareBuilder {
     private var mResultFalse = false
 

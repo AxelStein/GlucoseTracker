@@ -5,48 +5,49 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.FragmentStatisticsBinding
-import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartColors
+import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.LabelValueFormatter
-import com.axel_stein.glucose_tracker.utils.hide
-import com.axel_stein.glucose_tracker.utils.hideView
-import com.axel_stein.glucose_tracker.utils.setItemSelectedListener
-import com.axel_stein.glucose_tracker.utils.show
+import com.axel_stein.glucose_tracker.utils.ui.hide
+import com.axel_stein.glucose_tracker.utils.ui.setItemSelectedListener
+import com.axel_stein.glucose_tracker.utils.ui.show
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.utils.Utils
 import com.google.android.material.color.MaterialColors
 
-
 class StatisticsFragment: Fragment() {
-    private lateinit var viewModel: StatisticsViewModel
+    private val viewModel: StatisticsViewModel by viewModels()
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, StatisticsFactory(ChartColors(requireActivity())))
-            .get(StatisticsViewModel::class.java)
+        Utils.init(context)
     }
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupStatsView()
-        setupBeforeMealChart()
-        setupAfterMealChart()
-        setupA1cChart()
+        setupChart()
 
-        binding.spinnerPeriod.onItemSelectedListener = setItemSelectedListener {
-            viewModel.setPeriod(it)
+        binding.spinnerStats.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setStatsPeriod(it)
         }
-        viewModel.showErrorLiveData().observe(viewLifecycleOwner, {
+        viewModel.showErrorLiveData.observe(viewLifecycleOwner, {
             if (it) {
                 binding.content.hide()
                 binding.textError.show()
@@ -55,81 +56,58 @@ class StatisticsFragment: Fragment() {
                 binding.textError.hide()
             }
         })
-        return binding.root
     }
 
     private fun setupStatsView() {
-        viewModel.statsLiveData().observe(viewLifecycleOwner, { stats ->
+        viewModel.statsLiveData.observe(viewLifecycleOwner, { stats ->
             if (stats != null) {
-                binding.textMin.text = stats.minFormatted
-                binding.textMax.text = stats.maxFormatted
-                binding.textAvg.text = stats.avgFormatted
-                binding.textA1c.text = stats.a1cFormatted
+                binding.min.text = stats.minFormatted
+                binding.max.text = stats.maxFormatted
+                binding.avg.text = stats.avgFormatted
+                binding.a1c.text = stats.a1cFormatted
                 binding.cardViewStats.show()
             } else {
                 binding.cardViewStats.hide()
             }
         })
 
-        viewModel.diabetesControlLiveData().observe(viewLifecycleOwner, {
-            hideView(binding.textA1cControlGood, binding.textA1cControlAvg, binding.textA1cControlBad)
-            when (it) {
-                0 -> binding.textA1cControlGood.show()
-                1 -> binding.textA1cControlAvg.show()
-                2 -> binding.textA1cControlBad.show()
-            }
+        viewModel.diabetesControlLiveData.observe(viewLifecycleOwner, {
+            binding.diabetesControl.setIconStartRes(
+                when (it) {
+                    0 -> R.drawable.icon_checked
+                    1 -> R.drawable.icon_checked
+                    else -> R.drawable.icon_error
+                }
+            )
+            binding.diabetesControl.setText(
+                when (it) {
+                    0 -> R.string.diabetes_control_good
+                    1 -> R.string.diabetes_control_relative
+                    else -> R.string.diabetes_control_bad
+                }
+            )
+            binding.diabetesControl.setColorAttr(
+                when (it) {
+                    0 -> R.attr.diabetesControlGoodColor
+                    1 -> R.attr.diabetesControlRelativeColor
+                    else -> R.attr.diabetesControlBadColor
+                }
+            )
         })
     }
 
-    private fun setupBeforeMealChart() {
-        setupChartView(binding.beforeMealChart)
+    private fun setupChart() {
+        setupChartView(binding.chart)
+        binding.chartTypeSpinner.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setChartType(it)
+            binding.chartPeriodSpinner.visibility = if (it < 2) VISIBLE else INVISIBLE
+        }
+        binding.chartPeriodSpinner.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setChartPeriod(it)
+        }
 
-        viewModel.beforeMealChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.beforeMealChart, it)
-            binding.cardViewBeforeMeal.show()
-        })
-        viewModel.beforeMealMaxLiveData().observe(viewLifecycleOwner, {
-            binding.beforeMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
-        })
-        viewModel.beforeMealLimitsLiveData().observe(viewLifecycleOwner, {
-            addChartLimitLines(binding.beforeMealChart, it)
-        })
-        viewModel.beforeMealLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.beforeMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
-        })
-    }
-
-    private fun setupAfterMealChart() {
-        setupChartView(binding.afterMealChart)
-
-        viewModel.afterMealChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.afterMealChart, it)
-            binding.cardViewAfterMeal.show()
-        })
-        viewModel.afterMealMaxLiveData().observe(viewLifecycleOwner, {
-            binding.afterMealChart.axisLeft.axisMaximum = viewModel.axisMaximum(it)
-        })
-        viewModel.afterMealLimitsLiveData().observe(viewLifecycleOwner, {
-            addChartLimitLines(binding.afterMealChart, it)
-        })
-        viewModel.afterMealLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.afterMealChart.xAxis.valueFormatter = LabelValueFormatter(it)
-        })
-    }
-
-    private fun setupA1cChart() {
-        setupChartView(binding.a1cChart)
-        addChartLimitLines(binding.a1cChart, arrayListOf(6f, 7f, 8f))
-
-        viewModel.a1cChartLiveData().observe(viewLifecycleOwner, {
-            setChartLineData(binding.a1cChart, it)
-            binding.cardViewA1c.show()
-        })
-        viewModel.a1cMaxLiveData().observe(viewLifecycleOwner, {
-            binding.a1cChart.axisLeft.axisMaximum = if (it < 10f) 10f else it + 2f
-        })
-        viewModel.a1cLabelsLiveData().observe(viewLifecycleOwner, {
-            binding.a1cChart.xAxis.valueFormatter = LabelValueFormatter(it)
+        viewModel.chartLiveData.observe(viewLifecycleOwner, {
+            setChartData(binding.chart, it)
         })
     }
 
@@ -139,24 +117,37 @@ class StatisticsFragment: Fragment() {
         chart.setDrawGridBackground(false)
         chart.xAxis.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        chart.axisLeft.axisMinimum = 0f
         chart.axisLeft.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
+        chart.axisLeft.setDrawAxisLine(true)
+        chart.axisLeft.setDrawGridLines(false)
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
+        chart.setExtraOffsets(8f, 0f, 8f, 4f)
+        chart.setNoDataText(getString(R.string.no_data))
+        chart.axisLeft.setCenterAxisLabels(true)
+        chart.setPinchZoom(false)
     }
 
-    private fun setChartLineData(chart: LineChart, data: LineData?) {
-        chart.data = data
-        chart.notifyDataSetChanged()
-        chart.setVisibleXRangeMaximum(10f)
+    private fun setChartData(chart: LineChart, data: ChartData?) {
+        chart.clear()
         if (data != null) {
+            val lineData = data.getLineData()
+            val maxValue = data.getMaxValue()
             chart.xAxis.granularity = 1f
-            chart.xAxis.labelCount = data.entryCount
+            chart.xAxis.labelCount = lineData.entryCount
+            chart.axisLeft.axisMinimum = 0f
+            chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
+            chart.data = lineData
+            chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
+            setChartLimitLines(binding.chart, data.getLimits())
+            chart.setVisibleXRange(0f, 10f)
+            chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
+            chart.animateX(400)
         }
-        chart.invalidate()
     }
 
-    private fun addChartLimitLines(chart: LineChart, limits: ArrayList<Float>) {
+    private fun setChartLimitLines(chart: LineChart, limits: ArrayList<Float>) {
+        chart.axisLeft.removeAllLimitLines()
         for (limit in limits) {
             chart.axisLeft.addLimitLine(LimitLine(limit))
         }

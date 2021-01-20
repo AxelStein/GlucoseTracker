@@ -1,24 +1,22 @@
 package com.axel_stein.glucose_tracker.ui.edit_note
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.databinding.ActivityEditNoteBinding
+import com.axel_stein.glucose_tracker.ui.EditorActivity
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
-import com.axel_stein.glucose_tracker.utils.*
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.axel_stein.glucose_tracker.utils.ui.setEditorText
+import com.axel_stein.glucose_tracker.utils.ui.setupEditor
+import com.axel_stein.glucose_tracker.utils.ui.showEmptyFieldError
 import com.google.android.material.snackbar.Snackbar
-import org.joda.time.MutableDateTime
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
-class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
+class EditNoteActivity : EditorActivity(), OnConfirmListener {
     private val args: EditNoteActivityArgs by navArgs()
     private val viewModel: EditNoteViewModel by viewModels { EditNoteFactory(this, args.id) }
     private lateinit var binding: ActivityEditNoteBinding
@@ -29,92 +27,39 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupToolbar()
-        setupDateTime()
+        setupToolbar(binding.toolbar)
+        setupDateTime(binding.btnDate, binding.btnTime, viewModel)
+
         setupEditNote()
 
-        viewModel.errorSaveLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_saving_note, LENGTH_INDEFINITE).show()
+        viewModel.showMessageLiveData.observe(this, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(binding.root, msg, LENGTH_SHORT).show()
             }
         })
-        viewModel.errorDeleteLiveData().observe(this, { error ->
-            if (error) {
-                Snackbar.make(binding.toolbar, R.string.error_deleting_note, LENGTH_INDEFINITE).show()
-            }
-        })
-        viewModel.actionFinishLiveData().observe(this, { if (it) finish() })
-    }
-
-    private fun setupToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbar.setNavigationOnClickListener { finish() }
-    }
-
-    private fun setupDateTime() {
-        binding.btnDate.setOnClickListener {
-            val date = viewModel.getCurrentDateTime()
-            val dialog = DatePickerDialog(
-                this,
-                { _, year, month, dayOfMonth ->
-                    viewModel.setDate(year, month + 1, dayOfMonth)
-                },
-                date.year, date.monthOfYear - 1, date.dayOfMonth
-            )
-            dialog.datePicker.maxDate = MutableDateTime().millis  // today
-            dialog.show()
-        }
-
-        binding.btnTime.setOnClickListener {
-            val time = viewModel.getCurrentDateTime()
-            TimePickerDialog(this,
-                { _, hourOfDay, minuteOfHour ->
-                    viewModel.setTime(hourOfDay, minuteOfHour)
-                },
-                time.hourOfDay, time.minuteOfHour, is24HourFormat(this)
-            ).show()
-        }
-
-        viewModel.dateTimeLiveData().observe(this, {
-            binding.btnDate.text = formatDate(this, it)
-            binding.btnTime.text = formatTime(this, it)
+        viewModel.actionFinishLiveData.observe(this, {
+            it.handleEvent()
+            finish()
         })
     }
 
     private fun setupEditNote() {
-        binding.editNote.doAfterTextChanged {
-            viewModel.setNote(it.toString())
+        binding.editNote.setupEditor { text ->
+            viewModel.setNote(text)
         }
 
-        var focusEdit = true
-        viewModel.noteLiveData().observe(this, { value ->
-            if (value != binding.editNote.text.toString()) {
-                binding.editNote.setText(value.toString())
-                binding.editNote.setSelection(binding.editNote.length())
-            }
-            if (focusEdit) {
-                focusEdit = false
-                if (value.isNullOrEmpty()) {
-                    binding.editNote.showKeyboard()
-                } else {
-                    binding.editNote.hideKeyboard()
-                }
-            }
+        viewModel.noteLiveData.observe(this, { value ->
+            binding.editNote.setEditorText(value)
         })
 
-        viewModel.errorNoteEmptyLiveData().observe(this, { error ->
-            if (error) {
-                binding.inputLayoutNote.error = getString(R.string.no_value)
-                binding.editNote.showKeyboard()
-            }
-            binding.inputLayoutNote.isErrorEnabled = error
+        viewModel.errorNoteEmptyLiveData.observe(this, { error ->
+            binding.inputLayoutNote.showEmptyFieldError(error)
         })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_edit_note, menu)
+        menuInflater.inflate(R.menu.activity_editor, menu)
         menu?.findItem(R.id.menu_delete)?.isVisible = args.id != 0L
         return super.onCreateOptionsMenu(menu)
     }
@@ -124,8 +69,8 @@ class EditNoteActivity : AppCompatActivity(), OnConfirmListener {
             R.id.menu_save -> viewModel.save()
             R.id.menu_delete -> {
                 ConfirmDialog.Builder().from(this)
-                    .title(R.string.title_confirm)
-                    .message(R.string.msg_delete_note)
+                    .title(R.string.dialog_title_confirm)
+                    .message(R.string.dialog_msg_delete_note)
                     .positiveBtnText(R.string.action_delete)
                     .negativeBtnText(R.string.action_cancel)
                     .show()

@@ -3,153 +3,68 @@ package com.axel_stein.glucose_tracker.ui.archive
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.axel_stein.glucose_tracker.data.room.dao.LogDao
-import com.axel_stein.glucose_tracker.ui.App
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers.io
-import javax.inject.Inject
+import com.axel_stein.glucose_tracker.data.room.LogRepository.LogListResult
+import com.axel_stein.glucose_tracker.ui.log_list.LogListHelper
 
 @SuppressLint("CheckResult")
-class ArchiveViewModel(
-    dao: LogDao? = null
-): ViewModel() {
-    private val yearsData = MutableLiveData<List<String>>()
-    private var years = listOf<String>()
+class ArchiveViewModel(state: SavedStateHandle): ViewModel() {
+    private val years = MutableLiveData<List<String>>()
+    val yearsLiveData = years as LiveData<List<String>>
 
-    private val selectedYearData = MutableLiveData<Int>()
-    private var selectedYear = -1
+    private val selectedYear = MutableLiveData<Int>()
+    val selectedYearLiveData = selectedYear as LiveData<Int>
 
-    private val monthsData = MutableLiveData<List<Int>>()
-    private var months = listOf<Int>()
+    private val months = MutableLiveData<List<Int>>()
+    val monthsLiveData = months as LiveData<List<Int>>
 
-    private val selectedMonthData = MutableLiveData<Int>()
-    private var selectedMonth = -1
+    private val selectedMonth = MutableLiveData<Int>()
+    val selectedMonthLiveData = selectedMonth as LiveData<Int>
 
-    private val loadItemsByYearMonth = MutableLiveData<String>()
-    private val disposables = CompositeDisposable()
+    private val logList = MutableLiveData<LogListResult>()
+    val logListLiveData = logList as LiveData<LogListResult>
 
-    @Inject
-    lateinit var dao: LogDao
+    private val helper = LogListHelper()
+    private val impl = ArchiveImpl().apply {
+        onUpdateYearsListener = {
+            years.setValue(it)
+            state.set("years", it)
+        }
+        onUpdateSelectedYearListener = {
+            selectedYear.setValue(it)
+            state.set("selected_year", it)
+        }
+        onUpdateMonthsListener = {
+            months.setValue(it)
+            state.set("months", it)
+        }
+        onUpdateSelectedMonthListener = {
+            selectedMonth.setValue(it)
+            state.set("selected_month", it)
+        }
+        onUpdateYearMonthListener = { yearMonth ->
+            helper.loadItemsByYearMonth(yearMonth) {
+                logList.postValue(it)
+            }
+        }
+    }
 
     init {
-        if (dao == null) {
-            App.appComponent.inject(this)
-        } else {
-            this.dao = dao
-        }
+        impl.restore(state)
+    }
 
-        disposables.add(this.dao.getYears().subscribeOn(io()).subscribe { newList ->
-            var index = selectedYear
-            if (this.years.isNotEmpty()) {  // update years
-                if (newList.isEmpty()) {
-                    index = -1
-                } else if (index >= newList.size) {
-                    index = 0
-                }
-            } else if (newList.isNotEmpty()) {  // load years
-                index = 0
-            }
+    fun setCurrentYear(position: Int) {
+        impl.setCurrentYear(position)
+    }
 
-            setYears(newList)
-            setCurrentYear(index)
-        })
+    fun setCurrentMonth(position: Int) {
+        impl.setCurrentMonth(position)
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
-        disposables.dispose()
-    }
-
-    fun monthsLiveData(): LiveData<List<Int>> = monthsData
-
-    private fun setMonths(list: List<Int>) {
-        months = list
-        monthsData.postValue(list)
-    }
-
-    fun yearsLiveData(): LiveData<List<String>> = yearsData
-
-    private fun setYears(list: List<String>) {
-        years = list
-        yearsData.postValue(list)
-    }
-
-    fun selectedMonthLiveData(): LiveData<Int> = selectedMonthData
-
-    private fun setSelectedMonth(position: Int) {
-        selectedMonth = position
-        selectedMonthData.postValue(position)
-    }
-
-    fun getSelectedMonth(): Int = selectedMonth
-
-    fun getCurrentMonth(): Int = if (months.isEmpty()) -1 else months[selectedMonth]
-
-    fun selectedYearLiveData(): LiveData<Int> = selectedYearData
-
-    private fun setSelectedYear(position: Int) {
-        selectedYear = position
-        selectedYearData.postValue(position)
-    }
-
-    fun getSelectedYear(): Int = selectedYear
-
-    fun getCurrentYear(): String = if (years.isEmpty()) "" else years[selectedYear]
-
-    fun loadItemsByYearMonthLiveData(): LiveData<String> = loadItemsByYearMonth
-
-    fun setCurrentMonth(position: Int) {
-        setSelectedMonth(position)
-        if (months.isNotEmpty()) {
-            loadItems()
-        }
-    }
-
-    fun setCurrentYear(position: Int) {
-        setSelectedYear(position)
-        if (years.isNotEmpty()) {
-            loadMonths(years[position])
-        } else {
-            setYears(emptyList())
-
-            setMonths(emptyList())
-            setSelectedMonth(-1)
-        }
-    }
-
-    private fun loadMonths(year: String) {
-        disposables.add(dao.getMonths(year).subscribeOn(io()).subscribe { newList ->
-            val months = mutableListOf<Int>()
-            newList.forEach { months.add(it.toInt()) }
-
-            var index = selectedMonth
-            if (this.months.isNotEmpty()) {  // update months
-                if (newList.isNotEmpty()) {
-                    val currentMonth = getCurrentMonth()
-                    index = if (months.contains(currentMonth)) {
-                        months.indexOf(currentMonth)
-                    } else {
-                        0
-                    }
-                }
-            } else if (newList.isNotEmpty()) {  // load months
-                index = 0
-            }
-
-            setMonths(months)
-            setCurrentMonth(index)
-        })
-    }
-
-    private fun loadItems() {
-        if (!years.isNullOrEmpty() && !months.isNullOrEmpty()) {
-            val currentYear = years[selectedYear]
-            val currentMonth = months[selectedMonth]
-            loadItemsByYearMonth.postValue(
-                "$currentYear-${currentMonth.toString().padStart(2, '0')}"
-            )
-        }
+        helper.clear()
+        impl.clear()
     }
 }

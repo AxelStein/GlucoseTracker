@@ -8,12 +8,13 @@
     tools:context=".ui.MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -35,154 +36,217 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"
-            tools:ignore="FragmentTagUsage" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:translationY="-6dp"
-
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:indeterminate="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            android:indeterminateTint="?attr/progressBarColor"
-
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            app:navGraph="@navigation/nav_graph"
+            tools:ignore="FragmentTagUsage"
+            tools:layout="@layout/fragment_log_list" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
             android:background="?attr/bottomNavBackgroundColor"
-            app:menu="@menu/menu_bottom_nav"
             app:itemIconTint="?attr/bottomNavItemIconColor"
             app:itemTextColor="?attr/bottomNavItemTextColor"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"/>
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/fab"
-        app:backgroundTint="?attr/colorSecondary"
-        android:src="@drawable/baseline_add_black_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="72dp"/>
+        android:layout_marginBottom="72dp"
+        android:contentDescription="@string/action_add"
+        android:src="@drawable/icon_add"
+        android:tint="#de000000"
+        app:backgroundTint="?attr/colorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/dim"
-        android:visibility="invisible"
-        android:background="#55000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <androidx.cardview.widget.CardView
+        android:layout_height="match_parent"
+        android:background="#55000000"
         android:visibility="invisible"
-        android:id="@+id/fab_menu"
-        android:layout_marginBottom="72dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
+
+    <TableLayout
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="136dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+        <TableRow
+            android:id="@+id/btn_add_medication"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp">
 
             <TextView
-                android:id="@+id/btn_add_glucose"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/fab_menu_label_bg"
+                android:elevation="4dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="32dp"
-                android:text="@string/fab_menu_blood_sugar"
-                android:textSize="16sp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/fab_menu_medication"
                 android:textColor="?android:attr/textColorPrimary"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:drawablePadding="16dp"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_dock_black_24dp" />
+                android:textSize="16sp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_medication"
+                android:src="@drawable/icon_medication"
+                android:tint="?android:attr/textColorSecondary"
+                app:backgroundTint="?attr/logItemBackgroundColor"
+                app:fabSize="mini" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/btn_add_insulin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp">
 
             <TextView
-                android:id="@+id/btn_add_note"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/fab_menu_label_bg"
+                android:elevation="4dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="32dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/fab_menu_insulin"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_insulin"
+                android:src="@drawable/icon_insulin"
+                android:tint="?android:attr/textColorSecondary"
+                app:backgroundTint="?attr/logItemBackgroundColor"
+                app:fabSize="mini" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/btn_add_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/fab_menu_label_bg"
+                android:elevation="4dp"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp"
                 android:text="@string/fab_menu_note"
-                android:textSize="16sp"
                 android:textColor="?android:attr/textColorPrimary"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:drawablePadding="16dp"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/outline_description_black_24dp"/>
+                android:textSize="16sp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_note"
+                android:src="@drawable/icon_note"
+                android:tint="?android:attr/textColorSecondary"
+                app:backgroundTint="?attr/logItemBackgroundColor"
+                app:fabSize="mini" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/btn_add_glucose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp">
 
             <TextView
-                android:id="@+id/btn_add_a1c"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/fab_menu_label_bg"
+                android:elevation="4dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="32dp"
-                android:text="@string/fab_menu_a1c"
-                android:textSize="16sp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/fab_menu_blood_sugar"
                 android:textColor="?android:attr/textColorPrimary"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:drawablePadding="16dp"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/outline_perm_device_information_black_24dp"/>
+                android:textSize="16sp"/>
 
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/btn_add_meal"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
-                android:paddingStart="16dp"
-                android:paddingEnd="32dp"
-                tools:text="Meal"
-                android:textSize="16sp"
-                android:textColor="?android:attr/textColorPrimary"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:drawablePadding="16dp"
-                app:drawableTint="?android:attr/textColorSecondary"
-                app:drawableStartCompat="@drawable/baseline_restaurant_black_24dp"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/fab_menu_blood_sugar"
+                android:src="@drawable/icon_glucose"
+                android:tint="?android:attr/textColorSecondary"
+                app:backgroundTint="?attr/logItemBackgroundColor"
+                app:fabSize="mini" />
 
-        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

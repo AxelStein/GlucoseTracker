@@ -9,6 +9,7 @@ import com.axel_stein.glucose_tracker.data.model.NoteLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
 import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteViewModelImpl
+import com.axel_stein.glucose_tracker.utils.getOrDefault
 import org.joda.time.DateTime
 import org.junit.*
 import org.junit.runner.RunWith
@@ -42,8 +43,8 @@ class EditNoteViewModelTest {
     @Test
     fun testSave() {
         val vm = createViewModel()
-        vm.setDate(2021, 1, 1)
-        vm.setTime(20, 0)
+        vm.onDateSet(2021, 1, 1)
+        vm.onTimeSet(20, 0)
         vm.setNote("Test")
         vm.save()
 
@@ -55,8 +56,8 @@ class EditNoteViewModelTest {
     @Test
     fun testSave_noteEmpty() {
         val vm = createViewModel()
-        vm.setDate(2021, 1, 1)
-        vm.setTime(20, 0)
+        vm.onDateSet(2021, 1, 1)
+        vm.onTimeSet(20, 0)
         vm.save()
 
         Assert.assertTrue(vm.errorNoteEmptyLiveData().value ?: false)
@@ -65,21 +66,21 @@ class EditNoteViewModelTest {
 
     @Test
     fun testLoad() {
-        dao.insert(createLog("2021", "01", "10")).subscribe()
+        dao.insert(createLog("2021", "01", "10"))
 
         val items = dao.get()
         Assert.assertFalse(items.isEmpty())
 
         val vm = createViewModel(items[0].id)
-        Assert.assertEquals("com.axel_stein.glucose_tracker", vm.getNote())
-        Assert.assertEquals(2021, vm.getCurrentDateTime().toLocalDate().year)
-        Assert.assertEquals(1, vm.getCurrentDateTime().toLocalDate().monthOfYear)
-        Assert.assertEquals(10, vm.getCurrentDateTime().toLocalDate().dayOfMonth)
+        Assert.assertEquals("com.axel_stein.glucose_tracker", vm.noteLiveData().value)
+        Assert.assertEquals(2021, vm.dateTimeLiveData().getOrDefault().year)
+        Assert.assertEquals(1, vm.dateTimeLiveData().getOrDefault().monthOfYear)
+        Assert.assertEquals(10, vm.dateTimeLiveData().getOrDefault().dayOfMonth)
     }
 
     @Test
     fun testDelete() {
-        dao.insert(createLog()).subscribe()
+        dao.insert(createLog())
 
         val log = dao.get()[0]
         val vm = createViewModel(log.id)

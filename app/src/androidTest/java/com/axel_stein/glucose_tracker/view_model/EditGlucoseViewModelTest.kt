@@ -39,7 +39,10 @@ class EditGlucoseViewModelTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         dao = db.glucoseLogDao()
+
         appSettings = AppSettings(context)
+        appSettings.setGlucoseUnits("mmol_l")
+
         appResources = AppResources(context, appSettings)
     }
 
@@ -51,8 +54,6 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testSave() {
-        appSettings.setGlucoseUnits("mmol_l")
-
         val vm = createVieModel()
         vm.setDate(2021, 1, 1)
         vm.setTime(20, 0)
@@ -67,8 +68,6 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testSave_glucoseInvalid() {
-        appSettings.setGlucoseUnits("mmol_l")
-
         val vm = createVieModel()
         vm.setDate(2021, 1, 1)
         vm.setTime(20, 0)
@@ -83,8 +82,6 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testSave_glucoseNegative() {
-        appSettings.setGlucoseUnits("mmol_l")
-
         val vm = createVieModel()
         vm.setDate(2021, 1, 1)
         vm.setTime(20, 0)
@@ -99,8 +96,6 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testSave_glucoseEmpty() {
-        appSettings.setGlucoseUnits("mmol_l")
-
         val vm = createVieModel()
         vm.setDate(2021, 1, 1)
         vm.setTime(20, 0)
@@ -127,12 +122,10 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testLoad() {
-        appSettings.setGlucoseUnits("mmol_l")
+        assertTrue(dao.getAll().isEmpty())
+        dao.insert(createLog(2, "2021", "01", "10"))
 
-        assertTrue(dao.get().isEmpty())
-        dao.insert(createLog(2, "2021", "01", "10")).subscribe()
-
-        val items = dao.get()
+        val items = dao.getAll()
         assertFalse(items.isEmpty())
 
         val vm = createVieModel(items[0].id)
@@ -146,26 +139,22 @@ class EditGlucoseViewModelTest {
 
     @Test
     fun testLoad_error() {
-        appSettings.setGlucoseUnits("mmol_l")
-
-        dao.insert(createLog(2, "2021", "01", "10", "15", "30")).subscribe()
-        val vm = createVieModel(2L)
+        dao.insert(createLog(2, "2021", "01", "10", "15", "30"))
+        val vm = createVieModel(2L)  // incorrect id
         assertNotNull(vm.errorLoadingLiveData().value)
         assertTrue(vm.errorLoadingLiveData().value ?: false)
     }
 
     @Test
     fun testDelete() {
-        appSettings.setGlucoseUnits("mmol_l")
+        dao.insert(createLog())
 
-        dao.insert(createLog()).subscribe()
-
-        val log = dao.get()[0]
+        val log = dao.getAll()[0]
         val vm = createVieModel(log.id)
         vm.delete()
 
         assertTrue(vm.actionFinishLiveData().value ?: false)
-        assertTrue(dao.get().isEmpty())
+        assertTrue(dao.getAll().isEmpty())
     }
 
     private fun createVieModel(id: Long = 0L): EditGlucoseViewModelImpl {

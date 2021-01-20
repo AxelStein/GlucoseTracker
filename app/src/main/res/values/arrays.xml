@@ -1,33 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string-array name="measured">
-        <item>@string/before_breakfast</item>
-        <item>@string/after_breakfast</item>
-
-        <item>@string/before_lunch</item>
-        <item>@string/after_lunch</item>
-
-        <item>@string/before_dinner</item>
-        <item>@string/after_dinner</item>
-
-        <item>@string/other</item>
+    <string-array name="bmi_categories">
+        <item>@string/bmi_category_thinness_3</item>
+        <item>@string/bmi_category_thinness_2</item>
+        <item>@string/bmi_category_thinness_1</item>
+        <item>@string/bmi_category_normal_weight</item>
+        <item>@string/bmi_category_overweight</item>
+        <item>@string/bmi_category_obese_1</item>
+        <item>@string/bmi_category_obese_2</item>
+        <item>@string/bmi_category_obese_3</item>
     </string-array>
-
+    <string-array name="dosage_forms">
+        <item>@string/dosage_form_tablet</item>
+        <item>@string/dosage_form_capsule</item>
+        <item>@string/dosage_form_ampule</item>
+        <item>@string/dosage_form_injection</item>
+        <item>@string/dosage_form_packet</item>
+        <item>@string/dosage_form_drop</item>
+        <item>@string/dosage_form_dose</item>
+        <item>@string/dosage_form_ml</item>
+        <item>@string/dosage_form_g</item>
+        <item>@string/dosage_form_iu</item>
+        <item>@string/dosage_form_suppository</item>
+    </string-array>
+    <string-array name="dosage_units">
+        <item>@string/dosage_unit_mg</item>
+        <item>@string/dosage_unit_g</item>
+        <item>@string/dosage_unit_ml</item>
+        <item>@string/dosage_unit_mg_ml</item>
+        <item>%</item>
+        <item>@string/dosage_unit_IU</item>
+        <item>@string/dosage_unit_mcg</item>
+        <item>@string/dosage_unit_mcg_ml</item>
+    </string-array>
+    <string-array name="glucose_units_entries">
+        <item>@string/glucose_unit_mmol_l</item>
+        <item>@string/glucose_unit_mg_dl</item>
+    </string-array>
     <string-array name="glucose_units_values">
         <item>mmol_l</item>
         <item>mg_dl</item>
     </string-array>
-
-    <string-array name="glucose_units_entries">
-        <item>@string/mmol_l</item>
-        <item>@string/mg_dl</item>
+    <string-array name="insulin_types">
+        <item>@string/insulin_type_rapid</item>
+        <item>@string/insulin_type_short</item>
+        <item>@string/insulin_type_intermediate</item>
+        <item>@string/insulin_type_long</item>
     </string-array>
-
-    <string-array name="stats_period">
-        <item>@string/period_two_weeks</item>
-        <item>@string/period_month</item>
-        <item>@string/period_three_months</item>
+    <string-array name="measured">
+        <item>@string/measured_before_breakfast</item>
+        <item>@string/measured_after_breakfast</item>
+        <item>@string/measured_before_lunch</item>
+        <item>@string/measured_after_lunch</item>
+        <item>@string/measured_before_dinner</item>
+        <item>@string/measured_after_dinner</item>
+        <item>@string/measured_other</item>
     </string-array>
-
     <string-array name="months">
         <item>@string/month_jan</item>
         <item>@string/month_feb</item>
@@ -42,7 +70,6 @@
         <item>@string/month_nov</item>
         <item>@string/month_dec</item>
     </string-array>
-
     <string-array name="months_a">
         <item>@string/month_jan_a</item>
         <item>@string/month_feb_a</item>
@@ -56,5 +83,23 @@
         <item>@string/month_oct_a</item>
         <item>@string/month_nov_a</item>
         <item>@string/month_dec_a</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+    <string-array name="weight_units_entries">
+        <item>@string/weight_unit_kg</item>
+        <item>@string/weight_unit_lb</item>
+    </string-array>
+    <string-array name="weight_units_values">
+        <item>kg</item>
+        <item>lb</item>
     </string-array>
 </resources>
