@@ -10,6 +10,30 @@
         <item>@string/bmi_category_obese_2</item>
         <item>@string/bmi_category_obese_3</item>
     </string-array>
+    <string-array name="chart_periods">
+        <item>@string/chart_period_half_month</item>
+        <item>@string/chart_period_month</item>
+        <item>@string/chart_period_three_months</item>
+    </string-array>
+    <string-array name="chart_titles">
+        <item>@string/chart_title_blood_sugar_before_meal</item>
+        <item>@string/chart_title_blood_sugar_after_meal</item>
+        <item>@string/hint_a1c</item>
+        <item>@string/chart_title_weight</item>
+    </string-array>
+    <array name="dosage_form_plurals">
+        <item>@plurals/tablet</item>
+        <item>@plurals/capsule</item>
+        <item>@plurals/ampule</item>
+        <item>@plurals/injection</item>
+        <item>@plurals/packet</item>
+        <item>@plurals/drop</item>
+        <item>@plurals/dose</item>
+        <item>@plurals/ml</item>
+        <item>@plurals/gram</item>
+        <item>@plurals/iu</item>
+        <item>@plurals/suppository</item>
+    </array>
     <string-array name="dosage_forms">
         <item>@string/dosage_form_tablet</item>
         <item>@string/dosage_form_capsule</item>

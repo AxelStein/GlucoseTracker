@@ -36,20 +36,9 @@
     <string name="chart_period_half_month">2 weeks</string>
     <string name="chart_period_month">1 month</string>
     <string name="chart_period_three_months">3 months</string>
-    <string-array name="chart_periods">
-        <item>@string/chart_period_half_month</item>
-        <item>@string/chart_period_month</item>
-        <item>@string/chart_period_three_months</item>
-    </string-array>
     <string name="chart_title_blood_sugar_after_meal">Blood sugar (after meal)</string>
     <string name="chart_title_blood_sugar_before_meal">Blood sugar (before meal)</string>
     <string name="chart_title_weight">Weight</string>
-    <string-array name="chart_titles">
-        <item>@string/chart_title_blood_sugar_before_meal</item>
-        <item>@string/chart_title_blood_sugar_after_meal</item>
-        <item>@string/hint_a1c</item>
-        <item>@string/chart_title_weight</item>
-    </string-array>
     <string name="diabetes_control_bad">Poor diabetes control</string>
     <string name="diabetes_control_good">Good diabetes control</string>
     <string name="diabetes_control_relative">Relative diabetes control</string>
@@ -71,19 +60,6 @@
     <string name="dosage_form_iu">IU</string>
     <string name="dosage_form_ml">ml</string>
     <string name="dosage_form_packet">Packet</string>
-    <array name="dosage_form_plurals">
-        <item>@plurals/tablet</item>
-        <item>@plurals/capsule</item>
-        <item>@plurals/ampule</item>
-        <item>@plurals/injection</item>
-        <item>@plurals/packet</item>
-        <item>@plurals/drop</item>
-        <item>@plurals/dose</item>
-        <item>@plurals/ml</item>
-        <item>@plurals/gram</item>
-        <item>@plurals/iu</item>
-        <item>@plurals/suppository</item>
-    </array>
     <string name="dosage_form_suppository">Suppository</string>
     <string name="dosage_form_tablet">Tablet</string>
     <string name="dosage_unit_IU">IU</string>
@@ -113,7 +89,7 @@
     <string name="error_saving_log">Error saving log</string>
     <string name="error_saving_note">Error saving note</string>
     <string name="error_statistics">Error loading statistics</string>
-    <string name="error_toggle_active">Error occured</string>
+    <string name="error_toggle_active">Error occurred</string>
     <string name="fab_menu_blood_sugar">Blood sugar</string>
     <string name="fab_menu_insulin">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>

@@ -38,8 +38,8 @@
     <string name="chart_period_half_month">2 тижні</string>
     <string name="chart_period_month">1 місяць</string>
     <string name="chart_period_three_months">3 місяці</string>
-    <string name="chart_title_blood_sugar_after_meal">Цукор крові (до їжі)</string>
-    <string name="chart_title_blood_sugar_before_meal">Цукор крові (після їжі)</string>
+    <string name="chart_title_blood_sugar_after_meal">Цукор крові (після їжі)</string>
+    <string name="chart_title_blood_sugar_before_meal">Цукор крові (до їжі)</string>
     <string name="chart_title_weight">Вага</string>
     <string name="diabetes_control_bad">Поганий контроль діабету</string>
     <string name="diabetes_control_good">Хороший контроль діабету</string>
