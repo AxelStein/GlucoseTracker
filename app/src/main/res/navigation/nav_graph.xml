@@ -205,15 +205,29 @@
         android:id="@+id/ap_list_fragment"
         android:name="com.axel_stein.glucose_tracker.ui.ap_list.ApListFragment"
         android:label="@string/plus_pref_ap">
-        <!--
         <action
-            android:id="@+id/action_add_app"
-            app:destination="@+id/edit_weight_activity" />
+            android:id="@+id/action_add_ap"
+            app:destination="@+id/edit_ap_activity">
+            <argument
+                android:name="id"
+                app:argType="long"
+                android:defaultValue="0L" />
+        </action>
         <action
-            android:id="@+id/action_edit_app"
-            app:destination="@id/edit_weight_activity" />
-        -->
+            android:id="@+id/action_edit_ap"
+            app:destination="@id/edit_ap_activity" />
     </fragment>
+
+    <activity
+        android:id="@+id/edit_ap_activity"
+        android:name="com.axel_stein.glucose_tracker.ui.edit_ap.EditApActivity">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </activity>
+    <action
+        android:id="@+id/action_edit_ap_log"
+        app:destination="@+id/edit_ap_activity" />
 
     <fragment
         android:id="@+id/pulse_list_fragment"
@@ -221,10 +235,10 @@
         android:label="@string/plus_pref_pulse">
         <!--
         <action
-            android:id="@+id/action_add_app"
+            android:id="@+id/action_add"
             app:destination="@+id/edit_weight_activity" />
         <action
-            android:id="@+id/action_edit_app"
+            android:id="@+id/action_edit"
             app:destination="@id/edit_weight_activity" />
         -->
     </fragment>

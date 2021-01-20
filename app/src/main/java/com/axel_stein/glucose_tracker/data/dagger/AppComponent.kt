@@ -6,6 +6,7 @@ import com.axel_stein.glucose_tracker.ui.archive.ArchiveFragment
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveImpl
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveViewModel
 import com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cViewModel
+import com.axel_stein.glucose_tracker.ui.edit_ap.EditApViewModel
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModel
 import com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinViewModel
@@ -48,4 +49,5 @@ interface AppComponent {
     fun inject(impl: ArchiveImpl)
     fun inject(chartData: ChartData)
     fun inject(dateLabelInflater: DateLabelInflater)
+    fun inject(vm: EditApViewModel)
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditA1c
+import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditApLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditGlucose
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditInsulinLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditMedicationLog
@@ -44,7 +45,7 @@ class LogListViewHelper(
                     ItemType.INSULIN -> actionEditInsulinLog(id)
                     ItemType.MEDICATION -> actionEditMedicationLog(id)
                     ItemType.WEIGHT -> actionEditWeightLog(id)
-                    ItemType.AP -> actionEditWeightLog(id)  // todo
+                    ItemType.AP -> actionEditApLog(id)
                     ItemType.PULSE -> actionEditWeightLog(id)  // todo
                 }
             )

@@ -23,7 +23,9 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
         "insulin_log",
         "medication_log",
         "note_log",
-        "weight_log"
+        "weight_log",
+        "ap_log",
+        "pulse_log"
     )
     private val settings = AppSettings(ctx)
     private val resources = AppResources(ctx, settings)
