@@ -34,6 +34,12 @@
     <color name="color_weight_fill_day">#FFD180</color>
     <color name="color_weight_line_night">#FFAB40</color>
     <color name="color_weight_fill_night">#FFD180</color>
+
+    <color name="color_pulse_line_day">#FF1744</color>
+    <color name="color_pulse_fill_day">#FF5252</color>
+    <color name="color_pulse_line_night">#FF5252</color>
+    <color name="color_pulse_fill_night">#FF8A80</color>
+
     <color name="log_item_bg_color_day">#fff</color>
     <color name="log_item_bg_color_night">#404040</color>
     <color name="log_list_bg_color_day">#eee</color>

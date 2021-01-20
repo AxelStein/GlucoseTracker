@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.data.room.LogRepository
-import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
-import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
-import com.axel_stein.glucose_tracker.data.room.dao.StatsDao
-import com.axel_stein.glucose_tracker.data.room.dao.WeightLogDao
+import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.data.stats.Stats
 import com.axel_stein.glucose_tracker.ui.App
@@ -24,6 +21,7 @@ class StatisticsViewModel : ViewModel() {
     private lateinit var glucoseDao: GlucoseLogDao
     private lateinit var a1cDao: A1cLogDao
     private lateinit var weightDao: WeightLogDao
+    private lateinit var pulseDao: PulseLogDao
     private lateinit var settings: AppSettings
     private lateinit var logRepository: LogRepository
     private val disposables = CompositeDisposable()
@@ -79,6 +77,11 @@ class StatisticsViewModel : ViewModel() {
     @Inject
     fun setWeightDao(dao: WeightLogDao) {
         weightDao = dao
+    }
+
+    @Inject
+    fun setPulseDao(dao: PulseLogDao) {
+        pulseDao = dao
     }
 
     @Inject
@@ -187,6 +190,7 @@ class StatisticsViewModel : ViewModel() {
             1 -> loadGlucoseChartData(chartPeriod, 1)
             2 -> loadA1cChartData()
             3 -> loadWeightChartData()
+            4 -> loadPulseChartData()
         }
     }
 
@@ -230,6 +234,20 @@ class StatisticsViewModel : ViewModel() {
             .subscribe({
                 val data = ChartData()
                 data.setWeightLogs(it)
+                if (data.isEmpty()) chart.postValue(null)
+                else chart.postValue(data)
+            }, {
+                it.printStackTrace()
+            })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun loadPulseChartData() {
+        Single.fromCallable { pulseDao.getByThisYear() }
+            .subscribeOn(io())
+            .subscribe({
+                val data = ChartData()
+                data.setPulseLogs(it)
                 if (data.isEmpty()) chart.postValue(null)
                 else chart.postValue(data)
             }, {

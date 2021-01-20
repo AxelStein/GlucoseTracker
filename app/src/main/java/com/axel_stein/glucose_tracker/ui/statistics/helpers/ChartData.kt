@@ -2,6 +2,7 @@ package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
 import com.axel_stein.glucose_tracker.data.model.A1cLog
 import com.axel_stein.glucose_tracker.data.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.model.PulseLog
 import com.axel_stein.glucose_tracker.data.model.WeightLog
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
@@ -77,6 +78,19 @@ class ChartData {
         inflater.inflate(list.sortedBy { it.dateTime }) {
             val log = it as WeightLog
             log.kg to log.dateTime
+        }
+        createLineData()
+    }
+
+    fun setPulseLogs(list: List<PulseLog>) {
+        lineColor = resources.pulseLineColor()
+        fillColor = resources.pulseFillColor()
+        limits = arrayListOf(60f, 90f)
+
+        inflater = DateLabelInflater()
+        inflater.inflate(list.sortedBy { it.dateTime }) {
+            val log = it as PulseLog
+            log.value.toFloat() to log.dateTime
         }
         createLineData()
     }

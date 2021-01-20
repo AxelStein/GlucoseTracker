@@ -24,6 +24,8 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
     private var a1cFillColor = 0
     private var weightLineColor = 0
     private var weightFillColor = 0
+    private var pulseLineColor = 0
+    private var pulseFillColor = 0
 
     fun initColorResources(context: AppCompatActivity) {
         beforeMealLineColor = getColor(context, R.attr.beforeMealLineColor, BLACK)
@@ -34,6 +36,8 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
         a1cFillColor = getColor(context, R.attr.a1cFillColor, BLACK)
         weightLineColor = getColor(context, R.attr.weightLineColor, BLACK)
         weightFillColor = getColor(context, R.attr.weightFillColor, BLACK)
+        pulseLineColor = getColor(context, R.attr.pulseLineColor, BLACK)
+        pulseFillColor = getColor(context, R.attr.pulseFillColor, BLACK)
     }
 
     fun appDir(): File = ctx.filesDir
@@ -46,4 +50,6 @@ class AppResources(private val ctx: Context, private val settings: AppSettings) 
     fun a1cFillColor() = a1cFillColor
     fun weightLineColor() = weightLineColor
     fun weightFillColor() = weightFillColor
+    fun pulseLineColor() = pulseLineColor
+    fun pulseFillColor() = pulseFillColor
 }
