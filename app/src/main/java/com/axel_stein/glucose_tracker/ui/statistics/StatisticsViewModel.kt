@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.StatsDao
@@ -24,6 +25,7 @@ class StatisticsViewModel : ViewModel() {
     private lateinit var a1cDao: A1cLogDao
     private lateinit var weightDao: WeightLogDao
     private lateinit var settings: AppSettings
+    private lateinit var logRepository: LogRepository
     private val disposables = CompositeDisposable()
 
     private var period = -1
@@ -47,6 +49,12 @@ class StatisticsViewModel : ViewModel() {
         setStatsPeriod(0)
         disposables.add(
             settings.observeGlucoseUnits()
+                .subscribe {
+                    forceUpdate()
+                }
+        )
+        disposables.add(
+            logRepository.observeUpdates()
                 .subscribe {
                     forceUpdate()
                 }
@@ -78,7 +86,11 @@ class StatisticsViewModel : ViewModel() {
         this.settings = settings
     }
 
-    @SuppressLint("CheckResult")
+    @Inject
+    fun setLogRepository(repository: LogRepository) {
+        this.logRepository = repository
+    }
+
     fun setStatsPeriod(p: Int) {
         if (period != p) {
             period = p

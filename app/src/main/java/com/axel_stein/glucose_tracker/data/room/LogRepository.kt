@@ -45,6 +45,20 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
 
     fun getMonths(year: String) = dao.getMonths(year)
 
+    fun observeUpdates(): Flowable<Boolean> {
+        return Flowable.create({ emitter ->
+            val observer = object : InvalidationTracker.Observer(tables) {
+                override fun onInvalidated(tables: MutableSet<String>) {
+                    emitter.onNext(true)
+                }
+            }
+            db.invalidationTracker.addObserver(observer)
+            emitter.setCancellable {
+                db.invalidationTracker.removeObserver(observer)
+            }
+        }, BackpressureStrategy.LATEST)
+    }
+
     private fun createFlowable(getData: () -> List<Any>): Flowable<LogListResult> {
         return Flowable.create({ emitter ->
             val worker = Schedulers.io().createWorker()
