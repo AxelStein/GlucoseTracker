@@ -223,4 +223,6 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
+    <string name="plus_pref_category_report">Report</string>
+    <string name="plus_pref_export_report_pdf">Export to PDF</string>
 </resources>

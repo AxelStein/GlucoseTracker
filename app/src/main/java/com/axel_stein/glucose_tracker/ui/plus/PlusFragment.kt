@@ -1,17 +1,22 @@
 package com.axel_stein.glucose_tracker.ui.plus
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.pdf.PdfHelper
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenA1cList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenApList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenInsulinList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenMedicationList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenPulseList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenWeightList
+import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
+import java.io.File
 
 class PlusFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -56,5 +61,30 @@ class PlusFragment : PreferenceFragmentCompat() {
             findNavController().navigate(actionOpenPulseList())
             true
         }
+
+        val reportPdf = preferenceManager.findPreference<Preference>("report_export_pdf")
+        reportPdf?.setOnPreferenceClickListener {
+            PdfHelper().create()
+                .map { file ->
+                    Intent(Intent.ACTION_SEND).apply {
+                        type = "*/*"
+                        putExtra(Intent.EXTRA_STREAM, getUriForFile(file))
+                        flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    }
+                }
+                .observeOn(mainThread())
+                .subscribe({
+                    startActivity(Intent.createChooser(it, null))
+                }, {
+                    it.printStackTrace()
+                })
+            true
+        }
     }
+
+    private fun getUriForFile(file: File) = FileProvider.getUriForFile(
+        requireContext(),
+        "com.axel_stein.glucose_tracker.fileprovider",
+        file
+    )
 }

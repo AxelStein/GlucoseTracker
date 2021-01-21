@@ -36,4 +36,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/plus_pref_category_report">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="report_export_pdf"
+            app:title="@string/plus_pref_export_report_pdf" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

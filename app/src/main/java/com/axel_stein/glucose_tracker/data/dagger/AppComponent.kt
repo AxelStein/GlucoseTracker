@@ -1,6 +1,7 @@
 package com.axel_stein.glucose_tracker.data.dagger
 
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
+import com.axel_stein.glucose_tracker.data.pdf.PdfHelper
 import com.axel_stein.glucose_tracker.ui.MainActivity
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveFragment
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveImpl
@@ -52,4 +53,5 @@ interface AppComponent {
     fun inject(dateLabelInflater: LineDataInflater)
     fun inject(vm: EditApViewModel)
     fun inject(vm: EditPulseViewModel)
+    fun inject(helper: PdfHelper)
 }
