@@ -59,7 +59,7 @@ class StatisticsFragment: Fragment() {
     }
 
     private fun setupStatsView() {
-        viewModel.statsLiveData.observe(viewLifecycleOwner, { stats ->
+        viewModel.glucoseStatisticsLiveData.observe(viewLifecycleOwner, { stats ->
             if (stats != null) {
                 binding.min.text = stats.minFormatted
                 binding.max.text = stats.maxFormatted

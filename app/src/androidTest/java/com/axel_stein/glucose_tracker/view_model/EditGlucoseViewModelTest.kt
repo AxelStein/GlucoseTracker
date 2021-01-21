@@ -5,12 +5,12 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
-import com.axel_stein.glucose_tracker.data.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
-import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseViewModelImpl
+import com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseViewModelImpl
 import org.joda.time.DateTime
 import org.junit.After
 import org.junit.Assert.*

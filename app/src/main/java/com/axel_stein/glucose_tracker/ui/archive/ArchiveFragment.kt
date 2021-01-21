@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.databinding.FragmentArchiveBinding
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.ui.log_list.LogListViewHelper
+import com.axel_stein.glucose_tracker.ui.list.log_list.LogListViewHelper
 import com.axel_stein.glucose_tracker.utils.ui.setSpinnerItems
 import com.axel_stein.glucose_tracker.utils.ui.setSpinnerSelection
 import com.axel_stein.glucose_tracker.utils.ui.setViewVisible

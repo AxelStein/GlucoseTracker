@@ -1,7 +1,7 @@
 package com.axel_stein.glucose_tracker.ui.archive
 
 import androidx.lifecycle.SavedStateHandle
-import com.axel_stein.glucose_tracker.data.room.LogRepository
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
 import com.axel_stein.glucose_tracker.ui.App
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable

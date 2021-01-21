@@ -1,6 +1,6 @@
 package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
-import com.axel_stein.glucose_tracker.data.model.*
+import com.axel_stein.glucose_tracker.data.room.model.*
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App

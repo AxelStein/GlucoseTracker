@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.axel_stein.glucose_tracker.data.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.LogDao

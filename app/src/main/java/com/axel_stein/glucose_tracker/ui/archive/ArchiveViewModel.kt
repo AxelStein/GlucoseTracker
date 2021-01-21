@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.axel_stein.glucose_tracker.data.room.LogRepository.LogListResult
-import com.axel_stein.glucose_tracker.ui.log_list.LogListHelper
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository.LogListResult
+import com.axel_stein.glucose_tracker.ui.list.log_list.LogListHelper
 
 @SuppressLint("CheckResult")
 class ArchiveViewModel(state: SavedStateHandle): ViewModel() {

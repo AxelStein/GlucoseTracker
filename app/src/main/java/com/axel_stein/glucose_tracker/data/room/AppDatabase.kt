@@ -3,7 +3,7 @@ package com.axel_stein.glucose_tracker.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.axel_stein.glucose_tracker.data.model.*
+import com.axel_stein.glucose_tracker.data.room.model.*
 import com.axel_stein.glucose_tracker.data.room.dao.*
 
 @Database(

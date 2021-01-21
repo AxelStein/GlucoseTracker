@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.glucose_tracker.databinding.FragmentLogListBinding
-import com.axel_stein.glucose_tracker.ui.log_list.LogListViewHelper
+import com.axel_stein.glucose_tracker.ui.list.log_list.LogListViewHelper
 
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()

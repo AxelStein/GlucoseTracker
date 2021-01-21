@@ -3,7 +3,7 @@ package com.axel_stein.glucose_tracker.data.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.axel_stein.glucose_tracker.data.model.A1cLog
+import com.axel_stein.glucose_tracker.data.room.model.A1cLog
 
 @Dao
 abstract class A1cLogDao : BaseDao<A1cLog>() {

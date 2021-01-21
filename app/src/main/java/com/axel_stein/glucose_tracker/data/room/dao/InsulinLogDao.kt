@@ -3,8 +3,8 @@ package com.axel_stein.glucose_tracker.data.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.axel_stein.glucose_tracker.data.model.InsulinLog
-import com.axel_stein.glucose_tracker.data.model.InsulinLogEmbedded
+import com.axel_stein.glucose_tracker.data.room.model.InsulinLog
+import com.axel_stein.glucose_tracker.data.room.model.InsulinLogEmbedded
 import io.reactivex.Completable
 import io.reactivex.Single
 

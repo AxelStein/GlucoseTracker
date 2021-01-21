@@ -22,29 +22,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseActivity" />
 
-        <activity android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_note.EditNoteActivity" />
 
-        <activity android:name=".ui.edit_a1c.EditA1cActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_a1c.EditA1cActivity" />
 
-        <activity android:name=".ui.edit_insulin_log.EditInsulinLogActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_insulin_log.EditInsulinLogActivity" />
 
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/action_settings"/>
 
-        <activity android:name=".ui.edit_insulin.EditInsulinActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_insulin.EditInsulinActivity" />
 
-        <activity android:name=".ui.edit_medication.EditMedicationActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_medication.EditMedicationActivity" />
 
-        <activity android:name=".ui.edit_medication_log.EditMedicationLogActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_medication_log.EditMedicationLogActivity" />
 
-        <activity android:name=".ui.edit_weight.EditWeightActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_weight.EditWeightActivity" />
 
-        <activity android:name=".ui.edit_ap.EditApActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_ap.EditApActivity" />
 
-        <activity android:name=".ui.edit_pulse.EditPulseActivity" />
+        <activity android:name="com.axel_stein.glucose_tracker.ui.edit.edit_pulse.EditPulseActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

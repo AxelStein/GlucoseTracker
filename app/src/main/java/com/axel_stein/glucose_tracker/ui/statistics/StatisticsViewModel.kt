@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.axel_stein.glucose_tracker.data.room.LogRepository
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
-import com.axel_stein.glucose_tracker.data.stats.Stats
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseStatistics
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
 import io.reactivex.Maybe
@@ -31,8 +31,8 @@ class StatisticsViewModel : ViewModel() {
     private var chartPeriod = -1
     private var chartType = -1
 
-    private val statsData = MutableLiveData<Stats>()
-    val statsLiveData: LiveData<Stats> = statsData
+    private val statsData = MutableLiveData<GlucoseStatistics>()
+    val glucoseStatisticsLiveData: LiveData<GlucoseStatistics> = statsData
 
     private val control = MutableLiveData<Int>()
     val diabetesControlLiveData: LiveData<Int> = control
@@ -147,27 +147,27 @@ class StatisticsViewModel : ViewModel() {
             })
     }
 
-    private fun formatMin(stats: Stats): String {
-        val value = if (settings.useMmolAsGlucoseUnits()) stats.min_mmol else stats.min_mg
+    private fun formatMin(glucoseStatistics: GlucoseStatistics): String {
+        val value = if (settings.useMmolAsGlucoseUnits()) glucoseStatistics.min_mmol else glucoseStatistics.min_mg
         return value.toString()
     }
 
-    private fun formatMax(stats: Stats): String {
-        val value = if (settings.useMmolAsGlucoseUnits()) stats.max_mmol else stats.max_mg
+    private fun formatMax(glucoseStatistics: GlucoseStatistics): String {
+        val value = if (settings.useMmolAsGlucoseUnits()) glucoseStatistics.max_mmol else glucoseStatistics.max_mg
         return value.toString()
     }
 
-    private fun formatAvg(stats: Stats): String {
-        val value = (if (settings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg) ?: return ""
+    private fun formatAvg(glucoseStatistics: GlucoseStatistics): String {
+        val value = (if (settings.useMmolAsGlucoseUnits()) glucoseStatistics.avg_mmol else glucoseStatistics.avg_mg) ?: return ""
         return String.format("%.1f", value.toFloat()).replace(',', '.')
     }
 
-    private fun formatA1C(stats: Stats): String = "${String.format("%.1f", calcA1C(stats))}%"
+    private fun formatA1C(glucoseStatistics: GlucoseStatistics): String = "${String.format("%.1f", calcA1C(glucoseStatistics))}%"
         .replace(',', '.')
 
-    private fun calcA1C(stats: Stats): Float {
+    private fun calcA1C(glucoseStatistics: GlucoseStatistics): Float {
         val useMmol = settings.useMmolAsGlucoseUnits()
-        val value = (if (settings.useMmolAsGlucoseUnits()) stats.avg_mmol else stats.avg_mg) ?: return 0f
+        val value = (if (settings.useMmolAsGlucoseUnits()) glucoseStatistics.avg_mmol else glucoseStatistics.avg_mg) ?: return 0f
         val avg = value.toFloat()
         val a1c = if (useMmol) {
             (avg + 2.59f) / 1.59f

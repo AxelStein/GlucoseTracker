@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
-import com.axel_stein.glucose_tracker.data.room.LogRepository
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.room.migration_1_2
 import com.axel_stein.glucose_tracker.data.room.migration_2_3
