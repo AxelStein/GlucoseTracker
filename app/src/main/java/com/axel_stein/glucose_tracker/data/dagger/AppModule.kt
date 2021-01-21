@@ -98,8 +98,8 @@ class AppModule(private val ctx: Context) {
 
     @Provides
     @Singleton
-    fun provideAppResources(settings: AppSettings): AppResources {
-        return AppResources(ctx, settings)
+    fun provideAppResources(): AppResources {
+        return AppResources(ctx)
     }
 
     @Provides

@@ -28,7 +28,7 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
         "pulse_log"
     )
     private val settings = AppSettings(ctx)
-    private val resources = AppResources(ctx, settings)
+    private val resources = AppResources(ctx)
 
     data class LogListResult(
         val list: List<LogItem>,

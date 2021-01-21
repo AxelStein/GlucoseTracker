@@ -43,7 +43,7 @@ class EditGlucoseViewModelTest {
         appSettings = AppSettings(context)
         appSettings.setGlucoseUnits("mmol_l")
 
-        appResources = AppResources(context, appSettings)
+        appResources = AppResources(context)
     }
 
     @After

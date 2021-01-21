@@ -8,7 +8,7 @@ import com.axel_stein.glucose_tracker.R
 import com.google.android.material.color.MaterialColors.getColor
 import java.io.File
 
-class AppResources(private val ctx: Context, private val settings: AppSettings) {
+class AppResources(private val ctx: Context) {
     val mmolSuffix = ctx.getString(R.string.glucose_unit_mmol_l)
     val mgSuffix = ctx.getString(R.string.glucose_unit_mg_dl)
     val kgSuffix = ctx.getString(R.string.weight_unit_kg)

@@ -48,7 +48,7 @@ class ArchiveViewModelTest {
         glucoseDao = db.glucoseLogDao()
 
         appSettings = AppSettings(context)
-        appResources = AppResources(context, appSettings)
+        appResources = AppResources(context)
 
         logRepository = LogRepository(context, db, dao)
     }

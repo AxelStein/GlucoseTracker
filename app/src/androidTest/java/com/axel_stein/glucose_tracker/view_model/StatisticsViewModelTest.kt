@@ -45,7 +45,7 @@ class StatisticsViewModelTest {
         a1cDao = db.a1cDao()
 
         appSettings = AppSettings(context)
-        appResources = AppResources(context, appSettings)
+        appResources = AppResources(context)
     }
 
     @After
