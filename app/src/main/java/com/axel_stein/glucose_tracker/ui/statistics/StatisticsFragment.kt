@@ -132,16 +132,16 @@ class StatisticsFragment: Fragment() {
         chart.clear()
         if (data != null) {
             val lineData = data.getLineData()
-            val maxValue = data.getMaxValue()
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = lineData.entryCount
-            if (lineData.dataSetCount == 1) {
+            // val maxValue = data.getMaxValue()
+            /*if (lineData.dataSetCount == 1) {
                 chart.axisLeft.axisMinimum = 0f
                 chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
             } else {
                 chart.axisLeft.resetAxisMinimum()
                 chart.axisLeft.resetAxisMaximum()
-            }
+            }*/
             chart.data = lineData
             chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
             setChartLimitLines(binding.chart, data.getLimits())
