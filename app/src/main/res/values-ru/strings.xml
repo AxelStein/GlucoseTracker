@@ -16,6 +16,7 @@
         <item quantity="many">%1$s ампул</item>
         <item quantity="other">%1$s ампул</item>
     </plurals>
+    <string name="ap_suffix">мм рт.ст.</string>
     <string name="bmi_category_normal_weight">Норма</string>
     <string name="bmi_category_obese_1">Ожирение I степени</string>
     <string name="bmi_category_obese_2">Ожирение II степени</string>

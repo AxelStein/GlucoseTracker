@@ -14,6 +14,7 @@
         <item quantity="one">%1$s fiala</item>
         <item quantity="other">%1$s fiale</item>
     </plurals>
+    <string name="ap_suffix">mm Hg</string>
     <string name="bmi_category_normal_weight">Normale</string>
     <string name="bmi_category_obese_1">Obesi di classe I</string>
     <string name="bmi_category_obese_2">Obesi di classe II</string>

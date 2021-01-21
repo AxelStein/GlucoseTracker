@@ -14,6 +14,7 @@
         <item quantity="one">%1$s ampolla</item>
         <item quantity="other">%1$s ampollas</item>
     </plurals>
+    <string name="ap_suffix">mm Hg</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Obesidad Clase I</string>
     <string name="bmi_category_obese_2">Obesidad Clase II</string>
