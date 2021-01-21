@@ -105,14 +105,17 @@
     <string name="hint_active_insulin_list">Active</string>
     <string name="hint_active_medications">Active medications</string>
     <string name="hint_amount">Amount</string>
+    <string name="hint_diastolic">Diastolic</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_dosage_form">Dosage form</string>
     <string name="hint_indicate_height">Set your height in settings for calculating BMI</string>
     <string name="hint_insulin_type">Insulin type</string>
     <string name="hint_note">Note</string>
+    <string name="hint_pulse">Pulse</string>
     <string name="hint_sugar_level">Sugar level</string>
     <string name="hint_suspended_insulin_list">Suspended</string>
     <string name="hint_suspended_medications">Suspended medications</string>
+    <string name="hint_systolic">Systolic</string>
     <string name="hint_title">Title</string>
     <string name="hint_units">Number of units</string>
     <string name="hint_weight">Weight</string>
@@ -192,8 +195,10 @@
         <item quantity="other">%1$s packets</item>
     </plurals>
     <string name="plus_pref_a1c" translatable="false">HbA1c</string>
+    <string name="plus_pref_ap">Arterial pressure</string>
     <string name="plus_pref_insulin_list">Insulin medications</string>
     <string name="plus_pref_medications">Medications</string>
+    <string name="plus_pref_pulse">Pulse</string>
     <string name="plus_pref_weight">Weight</string>
     <string name="pref_category_measurements">Measurements</string>
     <string name="stats_a1c">a1c est.</string>
@@ -217,9 +222,4 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
-    <string name="plus_pref_ap">Arterial pressure</string>
-    <string name="plus_pref_pulse">Pulse</string>
-    <string name="hint_systolic">Systolic</string>
-    <string name="hint_diastolic">Diastolic</string>
-    <string name="hint_pulse">Pulse</string>
 </resources>

@@ -34,8 +34,10 @@
     <string name="chart_period_half_month">2 semaines</string>
     <string name="chart_period_month">1 mois</string>
     <string name="chart_period_three_months">3 mois</string>
+    <string name="chart_title_ap">Pression artérielle</string>
     <string name="chart_title_blood_sugar_after_meal">Glycémie (après manger)</string>
     <string name="chart_title_blood_sugar_before_meal">Glycémie (avant de manger)</string>
+    <string name="chart_title_pulse">Pouls</string>
     <string name="chart_title_weight">Poids</string>
     <string name="diabetes_control_bad">Mauvais contrôle du diabète</string>
     <string name="diabetes_control_good">Bon contrôle du diabète</string>
@@ -102,14 +104,17 @@
     <string name="hint_active_insulin_list">Actifs</string>
     <string name="hint_active_medications">Actifs</string>
     <string name="hint_amount">Nombre</string>
+    <string name="hint_diastolic">Diastolique</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_dosage_form">Forme galénique</string>
     <string name="hint_indicate_height">Veuillez indiquer votre taille dans les paramètres pour calculer l\'IMC</string>
     <string name="hint_insulin_type">Type d\'insuline</string>
     <string name="hint_note">Note</string>
+    <string name="hint_pulse">Pouls</string>
     <string name="hint_sugar_level">Niveau de sucre</string>
     <string name="hint_suspended_insulin_list">Inactifs</string>
     <string name="hint_suspended_medications">Inactifs</string>
+    <string name="hint_systolic">Systolique</string>
     <string name="hint_title">Titre</string>
     <string name="hint_units">Nombre d\'unités</string>
     <string name="hint_weight">Poids</string>
@@ -187,8 +192,10 @@
         <item quantity="one">%1$s paquet</item>
         <item quantity="other">%1$s paquets</item>
     </plurals>
+    <string name="plus_pref_ap">Pression artérielle</string>
     <string name="plus_pref_insulin_list">Médicaments d\'insuline</string>
     <string name="plus_pref_medications">Médicaments</string>
+    <string name="plus_pref_pulse">Pouls</string>
     <string name="plus_pref_weight">Poids</string>
     <string name="pref_category_measurements">Mesures</string>
     <string name="stats_a1c">a1c est.</string>

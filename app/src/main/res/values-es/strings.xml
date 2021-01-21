@@ -34,8 +34,10 @@
     <string name="chart_period_half_month">2 semanas</string>
     <string name="chart_period_month">1 mes</string>
     <string name="chart_period_three_months">3 meses</string>
+    <string name="chart_title_ap">Presion arterial</string>
     <string name="chart_title_blood_sugar_after_meal">Azúcar en sangre (después de las comidas)</string>
     <string name="chart_title_blood_sugar_before_meal">Azúcar en sangre (antes de la comida)</string>
+    <string name="chart_title_pulse">Pulso</string>
     <string name="chart_title_weight">Peso</string>
     <string name="diabetes_control_bad">Control deficiente de la diabetes</string>
     <string name="diabetes_control_good">Buen control de la diabetes</string>
@@ -102,14 +104,17 @@
     <string name="hint_active_insulin_list">Activos</string>
     <string name="hint_active_medications">Activos</string>
     <string name="hint_amount">Cantidad</string>
+    <string name="hint_diastolic">Diastólica</string>
     <string name="hint_dosage">Dosificación</string>
     <string name="hint_dosage_form">Forma de dosificación</string>
     <string name="hint_indicate_height">Establezca su altura en la configuración para calcular el IMC</string>
     <string name="hint_insulin_type">Tipo de insulina</string>
     <string name="hint_note">Nota</string>
+    <string name="hint_pulse">Pulso</string>
     <string name="hint_sugar_level">Nivel de azúcar</string>
     <string name="hint_suspended_insulin_list">Suspendidos</string>
     <string name="hint_suspended_medications">Suspendidos</string>
+    <string name="hint_systolic">Sistólica</string>
     <string name="hint_title">Título</string>
     <string name="hint_units">Número de unidades</string>
     <string name="hint_weight">Peso</string>
@@ -187,8 +192,10 @@
         <item quantity="one">%1$s paquete</item>
         <item quantity="other">%1$s paquetes</item>
     </plurals>
+    <string name="plus_pref_ap">Presion arterial</string>
     <string name="plus_pref_insulin_list">Medicamentos para la insulina</string>
     <string name="plus_pref_medications">Medicamentos</string>
+    <string name="plus_pref_pulse">Pulso</string>
     <string name="plus_pref_weight">Peso</string>
     <string name="pref_category_measurements">Mediciones</string>
     <string name="stats_a1c">a1c est.</string>

@@ -38,8 +38,10 @@
     <string name="chart_period_half_month">2 недели</string>
     <string name="chart_period_month">1 месяц</string>
     <string name="chart_period_three_months">3 месяца</string>
+    <string name="chart_title_ap">Артериальное давление</string>
     <string name="chart_title_blood_sugar_after_meal">Сахар крови (после еды)</string>
     <string name="chart_title_blood_sugar_before_meal">Сахар крови (до еды)</string>
+    <string name="chart_title_pulse">Пульс</string>
     <string name="chart_title_weight">Вес</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
@@ -112,14 +114,17 @@
     <string name="hint_active_insulin_list">Текущие</string>
     <string name="hint_active_medications">Текущие</string>
     <string name="hint_amount">Количество</string>
+    <string name="hint_diastolic">Диастолическое</string>
     <string name="hint_dosage">Дозировка</string>
     <string name="hint_dosage_form">Форма приема</string>
     <string name="hint_indicate_height">Укажите свой рост в настройках для расчета ИМТ</string>
     <string name="hint_insulin_type">Тип инсулина</string>
     <string name="hint_note">Заметка</string>
+    <string name="hint_pulse">Пульс</string>
     <string name="hint_sugar_level">Уровень сахара</string>
     <string name="hint_suspended_insulin_list">Неактивные</string>
     <string name="hint_suspended_medications">Неактивные</string>
+    <string name="hint_systolic">Систолическое</string>
     <string name="hint_title">Название</string>
     <string name="hint_units">Количество единиц</string>
     <string name="hint_weight">Вес</string>
@@ -205,8 +210,10 @@
         <item quantity="many">%1$s пак.</item>
         <item quantity="other">%1$s пак.</item>
     </plurals>
+    <string name="plus_pref_ap">Артериальное давление</string>
     <string name="plus_pref_insulin_list">Препараты инсулина</string>
     <string name="plus_pref_medications">Лекарства</string>
+    <string name="plus_pref_pulse">Пульс</string>
     <string name="plus_pref_weight">Вес</string>
     <string name="pref_category_measurements">Измерения</string>
     <string name="stats_a1c">a1c расч.</string>
