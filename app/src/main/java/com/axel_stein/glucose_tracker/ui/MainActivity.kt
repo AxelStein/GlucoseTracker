@@ -126,8 +126,8 @@ class MainActivity : AppCompatActivity() {
         animationHelper.hideFabMenu(binding.fabMenu)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         navController.addOnDestinationChangedListener(destinationListener)
     }
 
