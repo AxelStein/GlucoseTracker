@@ -100,7 +100,10 @@ class StatisticsFragment: Fragment() {
         setupChartView(binding.chart)
         binding.chartTypeSpinner.onItemSelectedListener = setItemSelectedListener {
             viewModel.setChartType(it)
-            binding.chartPeriodSpinner.visibility = if (it < 2) VISIBLE else INVISIBLE
+            binding.chartPeriodSpinner.visibility = when (it) {
+                0, 1, 4, 5 -> VISIBLE
+                else -> INVISIBLE
+            }
         }
         binding.chartPeriodSpinner.onItemSelectedListener = setItemSelectedListener {
             viewModel.setChartPeriod(it)

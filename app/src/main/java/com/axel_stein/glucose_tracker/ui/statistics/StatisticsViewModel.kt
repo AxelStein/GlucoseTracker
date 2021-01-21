@@ -196,8 +196,8 @@ class StatisticsViewModel : ViewModel() {
             1 -> loadGlucoseChartData(chartPeriod, 1)
             2 -> loadA1cChartData()
             3 -> loadWeightChartData()
-            4 -> loadApChartData()
-            5 -> loadPulseChartData()
+            4 -> loadApChartData(chartPeriod)
+            5 -> loadPulseChartData(chartPeriod)
         }
     }
 
@@ -249,9 +249,14 @@ class StatisticsViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    private fun loadPulseChartData() {
-        Single.fromCallable { pulseDao.getByThisYear() }
-            .subscribeOn(io())
+    private fun loadPulseChartData(period: Int) {
+        Single.fromCallable {
+            when (period) {
+                0 -> pulseDao.getLastTwoWeeks()
+                1 -> pulseDao.getLastMonth()
+                else -> pulseDao.getLastThreeMonths()
+            }
+        }.subscribeOn(io())
             .subscribe({
                 val data = ChartData()
                 data.setPulseLogs(it)
@@ -263,9 +268,14 @@ class StatisticsViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    private fun loadApChartData() {
-        Single.fromCallable { apDao.getByThisYear() }
-            .subscribeOn(io())
+    private fun loadApChartData(period: Int) {
+        Single.fromCallable {
+            when (period) {
+                0 -> apDao.getLastTwoWeeks()
+                1 -> apDao.getLastMonth()
+                else -> apDao.getLastThreeMonths()
+            }
+        }.subscribeOn(io())
             .subscribe({
                 val data = ChartData()
                 data.setApLogs(it)

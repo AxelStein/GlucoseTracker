@@ -21,6 +21,15 @@ abstract class PulseLogDao : BaseDao<PulseLog>() {
     @Query("select * from pulse_log")
     abstract fun getAll(): List<PulseLog>
 
+    @Query("select * from pulse_log where date_time > date('now', '-14 day')")
+    abstract fun getLastTwoWeeks(): List<PulseLog>
+
+    @Query("select * from pulse_log where date_time > date('now', '-1 month')")
+    abstract fun getLastMonth(): List<PulseLog>
+
+    @Query("select * from pulse_log where date_time > date('now', '-3 month')")
+    abstract fun getLastThreeMonths(): List<PulseLog>
+
     @Query("select * from pulse_log where date_time > date('now', '-1 year')")
     abstract fun getByThisYear(): List<PulseLog>
 
