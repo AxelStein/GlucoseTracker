@@ -1,20 +1,17 @@
 package com.axel_stein.glucose_tracker.data.pdf
 
 import android.content.Context
+import android.graphics.pdf.PdfDocument
+import android.view.LayoutInflater
+import android.view.View.MeasureSpec.EXACTLY
+import android.view.View.MeasureSpec.makeMeasureSpec
+import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.formatDateTime
-import com.itextpdf.kernel.pdf.PdfDocument
-import com.itextpdf.kernel.pdf.PdfWriter
-import com.itextpdf.layout.Document
-import com.itextpdf.layout.element.Cell
-import com.itextpdf.layout.element.Paragraph
-import com.itextpdf.layout.element.Table
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.io
-import org.joda.time.DateTime
 import java.io.File
 import javax.inject.Inject
 
@@ -49,41 +46,31 @@ class PdfHelper {
     }.subscribeOn(io())
 
     private fun createImpl(): File {
+        val width = 595
+        val height = 842
+
         // Creating a PdfWriter
         val file = File(resources.appDir(), "report.pdf")
-        val dest = file.absolutePath
-        val writer = PdfWriter(dest)
+        val document = PdfDocument()
 
-        // Creating a PdfDocument
-        val pdf = PdfDocument(writer)
+        val pageInfo = PdfDocument.PageInfo.Builder(width, height, 1).create()
+        val page = document.startPage(pageInfo)
 
-        // Creating a Document by passing PdfDocument object to its constructor
-        val document = Document(pdf)
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_report, null)
+        val widthSpec = makeMeasureSpec(width, EXACTLY)
+        val heightSpec = makeMeasureSpec(height, EXACTLY)
+        view.measure(widthSpec, heightSpec)
+        view.layout(0, 0, width, height)
 
-        val p = Paragraph("Report ${formatDateTime(context, DateTime())}")
-        document.add(p)
+        page.canvas.save()
+        page.canvas.translate(0f, 0f)
+        view.draw(page.canvas)
+        page.canvas.restore()
 
-        // Creating a table object
-        val table = Table(3)
+        document.finishPage(page)
 
-        val glucoseLogs = glucoseDao.getLastThreeMonths()
-        glucoseLogs.forEach {
-            val dateTime = formatDateTime(context, it.dateTime)
-            val glucose = if (settings.useMmolAsGlucoseUnits())
-                "${it.valueMmol.toString()} ${resources.mmolSuffix}"
-                else "${it.valueMg.toString()} ${resources.mgSuffix}"
-            val measured = resources.measuredArray[it.measured]
-
-            table.addCell(paragraphCell(dateTime))
-            table.addCell(paragraphCell(glucose))
-            table.addCell(paragraphCell(measured))
-        }
-        document.add(table)
-
-        // Closing the document
+        document.writeTo(file.outputStream())
         document.close()
         return file
     }
-
-    private fun paragraphCell(text: String) = Cell().add(Paragraph(text))
 }

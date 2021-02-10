@@ -10,10 +10,8 @@ import androidx.preference.PreferenceFragmentCompat
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.pdf.PdfHelper
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenA1cList
-import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenApList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenInsulinList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenMedicationList
-import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenPulseList
 import com.axel_stein.glucose_tracker.ui.plus.PlusFragmentDirections.Companion.actionOpenWeightList
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import java.io.File
@@ -47,18 +45,6 @@ class PlusFragment : PreferenceFragmentCompat() {
         val weightListPref = preferenceManager.findPreference<Preference>("weight_list")
         weightListPref?.setOnPreferenceClickListener {
             findNavController().navigate(actionOpenWeightList())
-            true
-        }
-
-        val apListPref = preferenceManager.findPreference<Preference>("ap_list")
-        apListPref?.setOnPreferenceClickListener {
-            findNavController().navigate(actionOpenApList())
-            true
-        }
-
-        val pulseListPref = preferenceManager.findPreference<Preference>("pulse_list")
-        pulseListPref?.setOnPreferenceClickListener {
-            findNavController().navigate(actionOpenPulseList())
             true
         }
 

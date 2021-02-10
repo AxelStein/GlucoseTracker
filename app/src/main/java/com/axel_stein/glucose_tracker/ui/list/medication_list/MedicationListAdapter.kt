@@ -9,7 +9,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.model.Medication
 import com.axel_stein.glucose_tracker.databinding.ItemMedicationBinding
 import com.axel_stein.glucose_tracker.utils.CompareBuilder
-import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.ui.OnItemClickListener
 import com.axel_stein.glucose_tracker.utils.ui.inflate
 
@@ -62,7 +62,7 @@ class MedicationListAdapter : ListAdapter<Medication, MedicationListAdapter.View
         fun setItem(item: Medication) {
             binding.title.text = item.title
             if (item.dosage > 0f) {
-                binding.dosage.text = "${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]}"
+                binding.dosage.text = "${item.dosage.formatRoundIfInt()} ${dosageUnits[item.dosageUnit]}"
             } else {
                 binding.dosage.text = ""
             }

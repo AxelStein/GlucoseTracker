@@ -9,7 +9,7 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.model.Medication
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.notBlankOrDefault
 import com.axel_stein.glucose_tracker.utils.ui.Event
@@ -61,7 +61,7 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
             .subscribeOn(io())
             .observeOn(mainThread())
             .subscribe({ medication ->
-                var dosage = medication.dosage.formatIfInt()
+                var dosage = medication.dosage.formatRoundIfInt()
                 if (dosage == "0") dosage = ""
                 setData(
                     medication.title,

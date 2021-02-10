@@ -2,8 +2,12 @@ package com.axel_stein.glucose_tracker.data.settings
 
 import android.content.Context
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
+import com.axel_stein.glucose_tracker.utils.heightIntoImperial
+import com.axel_stein.glucose_tracker.utils.heightIntoMetric
+import com.axel_stein.glucose_tracker.utils.round
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 
@@ -37,11 +41,38 @@ class AppSettings(ctx: Context) {
         prefs.edit().putString("glucose_units", units).apply()
     }
 
+    fun getHeightImperial(): Pair<String, String> {
+        var feet = prefs.getString("height_feet", "0") ?: "0"
+        var inches = prefs.getString("height_inches", "0") ?: "0"
+        if (feet == "0" && inches == "0" && getHeight() != "0") {
+            val pair = heightIntoImperial(getHeight().toInt())
+            feet = pair.first.toString()
+            inches = pair.second.toString()
+        }
+        return feet to inches
+    }
+
+    fun setHeightImperial(feet: String, inches: String) {
+        prefs.edit()
+            .putString("height_feet", feet)
+            .putString("height_inches", inches)
+            .putString("height", heightIntoMetric(feet.toInt(), inches.toFloat()).toString())
+            .apply()
+    }
+
     fun getHeight() = prefs.getString("height", "0") ?: "0"
 
     fun setHeight(height: String) {
-        prefs.edit().putString("height", height).apply()
+        val (feet, inches) = heightIntoImperial(height.toInt())
+        Log.e("TAG", "setHeight $height $feet $inches")
+        prefs.edit()
+            .putString("height", height)
+            .putString("height_feet", feet.toString())
+            .putString("height_inches", inches.round().toString())
+            .apply()
     }
+
+    fun useMetricSystem() = prefs.getString("measurement_system", "metric") == "metric"
 
     fun observeGlucoseUnits(): Flowable<Boolean> {
         return Flowable.create({ emitter ->
@@ -49,6 +80,25 @@ class AppSettings(ctx: Context) {
             val listener = OnSharedPreferenceChangeListener { _, key ->
                 if (key == "glucose_units") {
                     val newVal = useMmolAsGlucoseUnits()
+                    if (oldVal != newVal) {
+                        oldVal = newVal
+                        emitter.onNext(newVal)
+                    }
+                }
+            }
+            prefs.registerOnSharedPreferenceChangeListener(listener)
+            emitter.setCancellable {
+                prefs.unregisterOnSharedPreferenceChangeListener(listener)
+            }
+        }, BackpressureStrategy.LATEST)
+    }
+
+    fun observeMeasurementSystem(): Flowable<Boolean> {
+        return Flowable.create({ emitter ->
+            var oldVal = useMetricSystem()
+            val listener = OnSharedPreferenceChangeListener { _, currentKey ->
+                if (currentKey == "measurement_system") {
+                    val newVal = useMetricSystem()
                     if (oldVal != newVal) {
                         oldVal = newVal
                         emitter.onNext(newVal)

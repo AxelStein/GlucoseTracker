@@ -15,7 +15,7 @@
         <item quantity="other">%1$s ampules</item>
     </plurals>
     <string name="ap_suffix">mm Hg</string>
-    <string name="app_name" translatable="false">Diabetes Tracker</string>
+    <string name="app_name">Diabetes Tracker</string>
     <string name="app_version" translatable="false">1.0.8</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Obese Class I</string>
@@ -121,6 +121,7 @@
     <string name="hint_units">Number of units</string>
     <string name="hint_weight">Weight</string>
     <string name="humalog">Humalog</string>
+    <string name="imperial">Imperial</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -147,6 +148,7 @@
     <string name="main_pref_import_backup">Import from file</string>
     <string name="main_pref_import_drive">Import backup</string>
     <string name="main_pref_last_synced">Last sync</string>
+    <string name="main_pref_measurement_system">System of measurement</string>
     <string name="main_pref_rate_app">Rate app</string>
     <string name="main_pref_theme">Theme</string>
     <string name="measured_after_breakfast">After breakfast</string>
@@ -159,6 +161,7 @@
     <string name="message_drive_export">All data on Google Drive will be replaced.</string>
     <string name="message_import_backup">All data on this device will be replaced.</string>
     <string name="metformin">Metformin</string>
+    <string name="metric">Metric</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>
@@ -196,10 +199,9 @@
         <item quantity="other">%1$s packets</item>
     </plurals>
     <string name="plus_pref_a1c" translatable="false">HbA1c</string>
-    <string name="plus_pref_ap">Arterial pressure</string>
+    <string name="plus_pref_ap">Blood pressure and pulse</string>
     <string name="plus_pref_insulin_list">Insulin medications</string>
     <string name="plus_pref_medications">Medications</string>
-    <string name="plus_pref_pulse">Pulse</string>
     <string name="plus_pref_weight">Weight</string>
     <string name="pref_category_measurements">Measurements</string>
     <string name="stats_a1c">a1c est.</string>
@@ -223,6 +225,6 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
-    <string name="plus_pref_category_report">Report</string>
-    <string name="plus_pref_export_report_pdf">Export to PDF</string>
+    <string name="feet_suffix" translatable="false">ft</string>
+    <string name="inches_suffix" translatable="false">in</string>
 </resources>

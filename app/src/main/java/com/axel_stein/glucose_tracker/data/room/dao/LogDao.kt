@@ -29,12 +29,6 @@ interface LogDao {
     @Query("select * from weight_log where date_time > date('now', '-3 month')")
     fun getRecentWeightLogs(): List<WeightLog>
 
-    @Query("select * from ap_log where date_time > date('now', '-3 month')")
-    fun getRecentApLogs(): List<ApLog>
-
-    @Query("select * from pulse_log where date_time > date('now', '-3 month')")
-    fun getRecentPulseLogs(): List<PulseLog>
-
     @Transaction
     fun getRecentLogs(): List<Any> {
         val list = ArrayList<Any>()
@@ -44,8 +38,6 @@ interface LogDao {
         list.addAll(getRecentInsulinLogs())
         list.addAll(getRecentMedicationLogs())
         list.addAll(getRecentWeightLogs())
-        list.addAll(getRecentApLogs())
-        list.addAll(getRecentPulseLogs())
         return list
     }
 
@@ -54,12 +46,6 @@ interface LogDao {
 
     @Query("select * from weight_log")
     fun getWeightLogs(): List<WeightLog>
-
-    @Query("select * from ap_log")
-    fun getApLogs(): List<ApLog>
-
-    @Query("select * from pulse_log")
-    fun getPulseLogs(): List<PulseLog>
 
     @Query("select * from glucose_log where substr(date_time, 1, 7) = :yearMonth")
     fun getGlucoseLogsByYearMonth(yearMonth: String): List<GlucoseLog>
@@ -81,12 +67,6 @@ interface LogDao {
     @Query("select * from weight_log where substr(date_time, 1, 7) = :yearMonth")
     fun getWeightLogsByYearMonth(yearMonth: String): List<WeightLog>
 
-    @Query("select * from ap_log where substr(date_time, 1, 7) = :yearMonth")
-    fun getApLogsByYearMonth(yearMonth: String): List<ApLog>
-
-    @Query("select * from pulse_log where substr(date_time, 1, 7) = :yearMonth")
-    fun getPulseLogsByYearMonth(yearMonth: String): List<PulseLog>
-
     @Transaction
     fun getLogsByYearMonth(yearMonth: String): List<Any> {
         val list = ArrayList<Any>()
@@ -96,8 +76,6 @@ interface LogDao {
         list.addAll(getInsulinLogsByYearMonth(yearMonth))
         list.addAll(getMedicationLogsByYearMonth(yearMonth))
         list.addAll(getWeightLogsByYearMonth(yearMonth))
-        list.addAll(getApLogsByYearMonth(yearMonth))
-        list.addAll(getPulseLogsByYearMonth(yearMonth))
         return list
     }
 
@@ -118,12 +96,6 @@ interface LogDao {
         where substr(date_time, 1, 4) = :year union
 
         select substr(date_time, 6, 2) as month from weight_log
-        where substr(date_time, 1, 4) = :year union
-
-        select substr(date_time, 6, 2) as month from ap_log
-        where substr(date_time, 1, 4) = :year union
-
-        select substr(date_time, 6, 2) as month from pulse_log
         where substr(date_time, 1, 4) = :year
         
         group by month order by month desc
@@ -136,9 +108,7 @@ interface LogDao {
         select substr(date_time, 1, 4) as year from note_log union
         select substr(date_time, 1, 4) as year from insulin_log union
         select substr(date_time, 1, 4) as year from medication_log union
-        select substr(date_time, 1, 4) as year from weight_log union
-        select substr(date_time, 1, 4) as year from ap_log union
-        select substr(date_time, 1, 4) as year from pulse_log
+        select substr(date_time, 1, 4) as year from weight_log
         group by year order by year desc
     """)
     fun getYears(): Flowable<List<String>>

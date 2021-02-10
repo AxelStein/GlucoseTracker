@@ -7,7 +7,6 @@ import com.axel_stein.glucose_tracker.ui.archive.ArchiveFragment
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveImpl
 import com.axel_stein.glucose_tracker.ui.archive.ArchiveViewModel
 import com.axel_stein.glucose_tracker.ui.edit.edit_a1c.EditA1cViewModel
-import com.axel_stein.glucose_tracker.ui.edit.edit_ap.EditApViewModel
 import com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseActivity
 import com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseViewModel
 import com.axel_stein.glucose_tracker.ui.edit.edit_insulin.EditInsulinViewModel
@@ -15,7 +14,7 @@ import com.axel_stein.glucose_tracker.ui.edit.edit_insulin_log.EditInsulinLogVie
 import com.axel_stein.glucose_tracker.ui.edit.edit_medication.EditMedicationViewModel
 import com.axel_stein.glucose_tracker.ui.edit.edit_medication_log.EditMedicationLogViewModel
 import com.axel_stein.glucose_tracker.ui.edit.edit_note.EditNoteViewModel
-import com.axel_stein.glucose_tracker.ui.edit.edit_pulse.EditPulseViewModel
+import com.axel_stein.glucose_tracker.ui.edit.edit_weight.EditWeightActivity
 import com.axel_stein.glucose_tracker.ui.edit.edit_weight.EditWeightViewModel
 import com.axel_stein.glucose_tracker.ui.list.insulin_list.InsulinListViewModel
 import com.axel_stein.glucose_tracker.ui.list.log_list.LogListHelper
@@ -51,7 +50,6 @@ interface AppComponent {
     fun inject(impl: ArchiveImpl)
     fun inject(chartData: ChartData)
     fun inject(dateLabelInflater: LineDataInflater)
-    fun inject(vm: EditApViewModel)
-    fun inject(vm: EditPulseViewModel)
     fun inject(helper: PdfHelper)
+    fun inject(activity: EditWeightActivity)
 }

@@ -37,12 +37,6 @@ class BackupHelper {
     lateinit var weightLogDao: WeightLogDao
 
     @Inject
-    lateinit var apLogDao: ApLogDao
-
-    @Inject
-    lateinit var pulseLogDao: PulseLogDao
-
-    @Inject
     lateinit var gson: Gson
 
     @Inject
@@ -78,8 +72,6 @@ class BackupHelper {
             insulinDao.getAll(),
             insulinLogDao.getAll(),
             weightLogDao.getAll(),
-            apLogDao.getAll(),
-            pulseLogDao.getAll(),
         )
         val data = gson.toJson(backup, Backup::class.java)
         val backupFile = File(appResources.appDir(), BACKUP_FILE_NAME)
@@ -103,11 +95,6 @@ class BackupHelper {
                 insulinDao.importBackup(backup.insulinList)
                 insulinLogDao.importBackup(backup.insulinLogs)
                 weightLogDao.importBackup(backup.weightLogs)
-
-                if (backup.version == 3) {
-                    apLogDao.importBackup(backup.apLogs)
-                    pulseLogDao.importBackup(backup.pulseLogs)
-                }
             }
         }.subscribeOn(io())
     }

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.WeightLog
 import com.axel_stein.glucose_tracker.data.room.dao.WeightLogDao
+import com.axel_stein.glucose_tracker.data.room.model.WeightLog
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.*
@@ -84,9 +84,10 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
             .subscribeOn(io())
             .observeOn(mainThread())
             .subscribe({
+                val value = if (settings.useMetricSystem()) it.kg else it.pounds
                 setData(
                     it.dateTime.toMutableDateTime(),
-                    it.kg.formatIfInt()
+                    value.round().formatRoundIfInt()
                 )
             }, {
                 it.printStackTrace()
@@ -104,7 +105,9 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
         if (value.isNotBlank()) {
             errorEmpty.value = false
             try {
-                calculateBMI(value.toFloat())
+                val w = value.toFloat()
+                val kg = if (settings.useMetricSystem()) w else w.intoKg()
+                calculateBMI(kg)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -163,9 +166,10 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
 
     private fun createLog(): WeightLog {
         val w = weight.getOrDefault("0").toFloat().round()
-        val inLbs = w.intoLb()
+        val kg = if (settings.useMetricSystem()) w else w.intoKg()
+        val inLbs = if (settings.useMetricSystem()) w.intoLb() else w
         return WeightLog(
-            w, inLbs, dateTime.getOrDateTime()
+            kg, inLbs, dateTime.getOrDateTime()
         ).also { it.id = id }
     }
 

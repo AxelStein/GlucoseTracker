@@ -5,12 +5,10 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditA1c
-import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditApLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditGlucose
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditInsulinLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditMedicationLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditNote
-import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditPulseLog
 import com.axel_stein.glucose_tracker.MainNavDirections.Companion.actionEditWeightLog
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.room.repository.LogRepository.LogListResult
@@ -46,8 +44,6 @@ class LogListViewHelper(
                     ItemType.INSULIN -> actionEditInsulinLog(id)
                     ItemType.MEDICATION -> actionEditMedicationLog(id)
                     ItemType.WEIGHT -> actionEditWeightLog(id)
-                    ItemType.AP -> actionEditApLog(id)
-                    ItemType.PULSE -> actionEditPulseLog(id)
                 }
             )
         }

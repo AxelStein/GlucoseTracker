@@ -20,8 +20,6 @@
         <item>@string/chart_title_blood_sugar_after_meal</item>
         <item>@string/hint_a1c</item>
         <item>@string/chart_title_weight</item>
-        <item>@string/chart_title_ap</item>
-        <item>@string/chart_title_pulse</item>
     </string-array>
     <array name="dosage_form_plurals">
         <item>@plurals/tablet</item>
@@ -82,6 +80,14 @@
         <item>@string/measured_after_dinner</item>
         <item>@string/measured_other</item>
     </string-array>
+    <string-array name="measurement_system_entries">
+        <item>@string/metric</item>
+        <item>@string/imperial</item>
+    </string-array>
+    <string-array name="measurement_system_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
     <string-array name="months">
         <item>@string/month_jan</item>
         <item>@string/month_feb</item>
@@ -120,14 +126,4 @@
         <item>dark</item>
         <item>system</item>
     </string-array>
-    <string-array name="weight_units_entries">
-        <item>@string/weight_unit_kg</item>
-        <item>@string/weight_unit_lb</item>
-    </string-array>
-    <string-array name="weight_units_values">
-        <item>kg</item>
-        <item>lb</item>
-    </string-array>
-    <string name="chart_title_pulse">Pulse</string>
-    <string name="chart_title_ap">Arterial pressure</string>
 </resources>

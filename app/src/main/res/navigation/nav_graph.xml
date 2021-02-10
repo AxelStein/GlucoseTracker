@@ -36,12 +36,6 @@
         <action
             android:id="@+id/action_open_weight_list"
             app:destination="@id/weight_list_fragment" />
-        <action
-            android:id="@+id/action_open_pulse_list"
-            app:destination="@id/pulse_list_fragment" />
-        <action
-            android:id="@+id/action_open_ap_list"
-            app:destination="@id/ap_list_fragment" />
     </fragment>
 
     <fragment
@@ -106,9 +100,11 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_glucose"
         app:destination="@+id/edit_glucose_activity" />
+
     <action
         android:id="@+id/action_edit_glucose"
         app:destination="@+id/edit_glucose_activity" />
@@ -121,9 +117,11 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_note"
         app:destination="@+id/edit_note_activity" />
+
     <action
         android:id="@+id/action_edit_note"
         app:destination="@+id/edit_note_activity" />
@@ -136,6 +134,7 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_edit_a1c"
         app:destination="@id/edit_a1c_activity" />
@@ -148,9 +147,11 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_insulin_log"
         app:destination="@+id/edit_insulin_log_activity" />
+
     <action
         android:id="@+id/action_edit_insulin_log"
         app:destination="@+id/edit_insulin_log_activity" />
@@ -158,6 +159,7 @@
     <activity
         android:id="@+id/settings_activity"
         android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsActivity" />
+
     <action
         android:id="@+id/action_open_settings"
         app:destination="@id/settings_activity" />
@@ -170,9 +172,11 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_medication_log"
         app:destination="@+id/edit_medication_log_activity" />
+
     <action
         android:id="@+id/action_edit_medication_log"
         app:destination="@+id/edit_medication_log_activity" />
@@ -197,63 +201,8 @@
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_edit_weight_log"
         app:destination="@+id/edit_weight_activity" />
-
-    <fragment
-        android:id="@+id/ap_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.list.ap_list.ApListFragment"
-        android:label="@string/plus_pref_ap">
-        <action
-            android:id="@+id/action_add_ap"
-            app:destination="@+id/edit_ap_activity">
-            <argument
-                android:name="id"
-                app:argType="long"
-                android:defaultValue="0L" />
-        </action>
-        <action
-            android:id="@+id/action_edit_ap"
-            app:destination="@id/edit_ap_activity" />
-    </fragment>
-
-    <activity
-        android:id="@+id/edit_ap_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_ap.EditApActivity">
-        <argument
-            android:name="id"
-            app:argType="long" />
-    </activity>
-    <action
-        android:id="@+id/action_edit_ap_log"
-        app:destination="@+id/edit_ap_activity" />
-
-    <fragment
-        android:id="@+id/pulse_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.list.pulse_list.PulseListFragment"
-        android:label="@string/plus_pref_pulse">
-        <action
-            android:id="@+id/action_add_pulse"
-            app:destination="@+id/edit_pulse_activity">
-            <argument
-                android:name="id"
-                app:argType="long"
-                android:defaultValue="0L" />
-        </action>
-        <action
-            android:id="@+id/action_edit_pulse"
-            app:destination="@id/edit_pulse_activity" />
-    </fragment>
-
-    <activity
-        android:id="@+id/edit_pulse_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_pulse.EditPulseActivity">
-        <argument
-            android:name="id"
-            app:argType="long" />
-    </activity>
-    <action
-        android:id="@+id/action_edit_pulse_log"
-        app:destination="@+id/edit_pulse_activity" />
 </navigation>

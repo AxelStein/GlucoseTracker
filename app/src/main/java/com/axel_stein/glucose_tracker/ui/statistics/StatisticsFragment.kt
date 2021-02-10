@@ -137,20 +137,10 @@ class StatisticsFragment: Fragment() {
             val lineData = data.getLineData()
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = lineData.entryCount
-            // val maxValue = data.getMaxValue()
-            /*if (lineData.dataSetCount == 1) {
-                chart.axisLeft.axisMinimum = 0f
-                chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
-            } else {
-                chart.axisLeft.resetAxisMinimum()
-                chart.axisLeft.resetAxisMaximum()
-            }*/
             chart.data = lineData
             chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
             setChartLimitLines(binding.chart, data.getLimits())
             chart.setVisibleXRange(0f, 10f)
-            // chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
-            chart.animateX(400)
         }
     }
 

@@ -16,16 +16,6 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="ap_list"
-            app:title="@string/plus_pref_ap" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="pulse_list"
-            app:title="@string/plus_pref_pulse" />
-
-        <Preference
-            app:iconSpaceReserved="false"
             app:key="a1c_list"
             app:title="@string/plus_pref_a1c" />
 
@@ -33,17 +23,6 @@
             app:iconSpaceReserved="false"
             app:key="weight_list"
             app:title="@string/plus_pref_weight"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/plus_pref_category_report">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="report_export_pdf"
-            app:title="@string/plus_pref_export_report_pdf" />
 
     </PreferenceCategory>
 

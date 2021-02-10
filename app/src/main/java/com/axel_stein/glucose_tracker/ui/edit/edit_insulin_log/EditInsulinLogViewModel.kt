@@ -11,7 +11,7 @@ import com.axel_stein.glucose_tracker.data.room.model.InsulinLog
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
 import com.axel_stein.glucose_tracker.ui.App
-import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.hasValue
 import com.axel_stein.glucose_tracker.utils.ui.Event
@@ -147,7 +147,7 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
             .subscribe({
                 setData(
                     it.log.dateTime.toMutableDateTime(),
-                    it.log.units.formatIfInt(),
+                    it.log.units.formatRoundIfInt(),
                     it.log.measured
                 )
                 if (!it.insulin.active) {

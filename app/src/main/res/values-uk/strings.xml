@@ -17,6 +17,7 @@
         <item quantity="other">%1$s ампул</item>
     </plurals>
     <string name="ap_suffix">мм рт.ст.</string>
+    <string name="app_name">Трекер діабету</string>
     <string name="bmi_category_normal_weight">Норма</string>
     <string name="bmi_category_obese_1">Ожиріння I ступеню</string>
     <string name="bmi_category_obese_2">Ожиріння ІI ступеню</string>
@@ -39,10 +40,8 @@
     <string name="chart_period_half_month">2 тижні</string>
     <string name="chart_period_month">1 місяць</string>
     <string name="chart_period_three_months">3 місяці</string>
-    <string name="chart_title_ap">Артеріальний тиск</string>
     <string name="chart_title_blood_sugar_after_meal">Цукор крові (після їжі)</string>
     <string name="chart_title_blood_sugar_before_meal">Цукор крові (до їжі)</string>
-    <string name="chart_title_pulse">Пульс</string>
     <string name="chart_title_weight">Вага</string>
     <string name="diabetes_control_bad">Поганий контроль діабету</string>
     <string name="diabetes_control_good">Хороший контроль діабету</string>
@@ -211,10 +210,9 @@
         <item quantity="many">%1$s пак.</item>
         <item quantity="other">%1$s пак.</item>
     </plurals>
-    <string name="plus_pref_ap">Артеріальний тиск</string>
+    <string name="plus_pref_ap">АТ та пульс</string>
     <string name="plus_pref_insulin_list">Препарати інсуліну</string>
     <string name="plus_pref_medications">Ліки</string>
-    <string name="plus_pref_pulse">Пульс</string>
     <string name="plus_pref_weight">Вага</string>
     <string name="pref_category_measurements">Вимірювання</string>
     <string name="stats_a1c">a1c розр.</string>
@@ -244,4 +242,7 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
+    <string name="main_pref_measurement_system">Система вимірювання</string>
+    <string name="metric">Метрична</string>
+    <string name="imperial">Імперська</string>
 </resources>

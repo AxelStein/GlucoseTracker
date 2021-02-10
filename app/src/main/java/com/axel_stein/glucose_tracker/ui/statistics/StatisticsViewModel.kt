@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
-import com.axel_stein.glucose_tracker.data.room.dao.*
-import com.axel_stein.glucose_tracker.data.settings.AppSettings
+import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
+import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
+import com.axel_stein.glucose_tracker.data.room.dao.StatsDao
+import com.axel_stein.glucose_tracker.data.room.dao.WeightLogDao
 import com.axel_stein.glucose_tracker.data.room.model.GlucoseStatistics
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
+import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.statistics.helpers.ChartData
 import io.reactivex.Maybe
@@ -21,8 +24,6 @@ class StatisticsViewModel : ViewModel() {
     private lateinit var glucoseDao: GlucoseLogDao
     private lateinit var a1cDao: A1cLogDao
     private lateinit var weightDao: WeightLogDao
-    private lateinit var pulseDao: PulseLogDao
-    private lateinit var apDao: ApLogDao
     private lateinit var settings: AppSettings
     private lateinit var logRepository: LogRepository
     private val disposables = CompositeDisposable()
@@ -46,18 +47,27 @@ class StatisticsViewModel : ViewModel() {
     init {
         App.appComponent.inject(this)
         setStatsPeriod(0)
-        disposables.add(
-            settings.observeGlucoseUnits()
-                .subscribe {
-                    forceUpdate()
-                }
-        )
-        disposables.add(
-            logRepository.observeUpdates()
-                .subscribe {
-                    forceUpdate()
-                }
-        )
+
+        settings.observeGlucoseUnits()
+            .subscribe {
+                forceUpdate()
+            }.also {
+                disposables.add(it)
+            }
+
+        settings.observeMeasurementSystem()
+            .subscribe {
+                forceUpdate()
+            }.also {
+                disposables.add(it)
+            }
+
+        logRepository.observeUpdates()
+            .subscribe {
+                forceUpdate()
+            }.also {
+                disposables.add(it)
+            }
     }
 
     @Inject
@@ -78,16 +88,6 @@ class StatisticsViewModel : ViewModel() {
     @Inject
     fun setWeightDao(dao: WeightLogDao) {
         weightDao = dao
-    }
-
-    @Inject
-    fun setPulseDao(dao: PulseLogDao) {
-        pulseDao = dao
-    }
-
-    @Inject
-    fun setApDao(dao: ApLogDao) {
-        apDao = dao
     }
 
     @Inject
@@ -196,8 +196,6 @@ class StatisticsViewModel : ViewModel() {
             1 -> loadGlucoseChartData(chartPeriod, 1)
             2 -> loadA1cChartData()
             3 -> loadWeightChartData()
-            4 -> loadApChartData(chartPeriod)
-            5 -> loadPulseChartData(chartPeriod)
         }
     }
 
@@ -241,44 +239,6 @@ class StatisticsViewModel : ViewModel() {
             .subscribe({
                 val data = ChartData()
                 data.setWeightLogs(it)
-                if (data.isEmpty()) chart.postValue(null)
-                else chart.postValue(data)
-            }, {
-                it.printStackTrace()
-            })
-    }
-
-    @SuppressLint("CheckResult")
-    private fun loadPulseChartData(period: Int) {
-        Single.fromCallable {
-            when (period) {
-                0 -> pulseDao.getLastTwoWeeks()
-                1 -> pulseDao.getLastMonth()
-                else -> pulseDao.getLastThreeMonths()
-            }
-        }.subscribeOn(io())
-            .subscribe({
-                val data = ChartData()
-                data.setPulseLogs(it)
-                if (data.isEmpty()) chart.postValue(null)
-                else chart.postValue(data)
-            }, {
-                it.printStackTrace()
-            })
-    }
-
-    @SuppressLint("CheckResult")
-    private fun loadApChartData(period: Int) {
-        Single.fromCallable {
-            when (period) {
-                0 -> apDao.getLastTwoWeeks()
-                1 -> apDao.getLastMonth()
-                else -> apDao.getLastThreeMonths()
-            }
-        }.subscribeOn(io())
-            .subscribe({
-                val data = ChartData()
-                data.setApLogs(it)
                 if (data.isEmpty()) chart.postValue(null)
                 else chart.postValue(data)
             }, {

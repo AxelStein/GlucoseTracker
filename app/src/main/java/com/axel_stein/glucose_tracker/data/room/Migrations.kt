@@ -77,17 +77,3 @@ fun migration_1_2() = object : Migration(1, 2) {
         database.execSQL("DROP TABLE IF EXISTS food_log")
     }
 }
-
-fun migration_2_3() = object : Migration(2, 3) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("""
-            CREATE TABLE IF NOT EXISTS ap_log (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, systolic INTEGER NOT NULL, diastolic INTEGER NOT NULL, date_time TEXT NOT NULL)
-            """
-        )
-
-        database.execSQL("""
-            CREATE TABLE IF NOT EXISTS pulse_log (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, value INTEGER NOT NULL, date_time TEXT NOT NULL)
-            """
-        )
-    }
-}

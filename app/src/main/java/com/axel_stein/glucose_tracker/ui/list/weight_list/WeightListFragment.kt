@@ -36,7 +36,7 @@ class WeightListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewHelper.setRecyclerViewBottomPadding(resources.getDimensionPixelSize(R.dimen.padding_small))
+        viewHelper.setRecyclerViewBottomPadding(0)
         viewModel.logListLiveData.observe(viewLifecycleOwner, {
             viewHelper.submitLogList(it)
         })

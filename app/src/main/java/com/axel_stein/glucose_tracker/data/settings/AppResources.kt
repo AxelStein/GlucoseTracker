@@ -12,11 +12,14 @@ class AppResources(private val ctx: Context) {
     val mmolSuffix = ctx.getString(R.string.glucose_unit_mmol_l)
     val mgSuffix = ctx.getString(R.string.glucose_unit_mg_dl)
     val kgSuffix = ctx.getString(R.string.weight_unit_kg)
-    val apSuffix = ctx.getString(R.string.ap_suffix)
+    val lbSuffix = ctx.getString(R.string.weight_unit_lb)
+    val feetSuffix = ctx.getString(R.string.feet_suffix)
+    val inchesSuffix = ctx.getString(R.string.inches_suffix)
     val measuredArray: Array<String> = ctx.resources.getStringArray(R.array.measured)
     val monthsArray: Array<String> = ctx.resources.getStringArray(R.array.months)
     val monthsAbbrArray: Array<String> = ctx.resources.getStringArray(R.array.months_a)
     val dosageFormsPlurals: TypedArray = ctx.resources.obtainTypedArray(R.array.dosage_form_plurals)
+
     private var beforeMealLineColor = 0
     private var beforeMealFillColor = 0
     private var afterMealLineColor = 0
@@ -25,10 +28,6 @@ class AppResources(private val ctx: Context) {
     private var a1cFillColor = 0
     private var weightLineColor = 0
     private var weightFillColor = 0
-    private var pulseLineColor = 0
-    private var pulseFillColor = 0
-    private var systolicLineColor = 0
-    private var diastolicLineColor = 0
 
     fun initColorResources(context: AppCompatActivity) {
         beforeMealLineColor = getColor(context, R.attr.beforeMealLineColor, BLACK)
@@ -39,10 +38,6 @@ class AppResources(private val ctx: Context) {
         a1cFillColor = getColor(context, R.attr.a1cFillColor, BLACK)
         weightLineColor = getColor(context, R.attr.weightLineColor, BLACK)
         weightFillColor = getColor(context, R.attr.weightFillColor, BLACK)
-        pulseLineColor = getColor(context, R.attr.pulseLineColor, BLACK)
-        pulseFillColor = getColor(context, R.attr.pulseFillColor, BLACK)
-        systolicLineColor = getColor(context, R.attr.systolicLineColor, BLACK)
-        diastolicLineColor = getColor(context, R.attr.diastolicLineColor, BLACK)
     }
 
     fun appDir(): File = ctx.filesDir
@@ -55,8 +50,4 @@ class AppResources(private val ctx: Context) {
     fun a1cFillColor() = a1cFillColor
     fun weightLineColor() = weightLineColor
     fun weightFillColor() = weightFillColor
-    fun pulseLineColor() = pulseLineColor
-    fun pulseFillColor() = pulseFillColor
-    fun systolicLineColor() = systolicLineColor
-    fun diastolicLineColor() = diastolicLineColor
 }

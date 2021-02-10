@@ -26,10 +26,6 @@
         <item name="chartTextColor">@color/color_chart_text_day</item>
         <item name="weightFillColor">@color/color_weight_fill_day</item>
         <item name="weightLineColor">@color/color_weight_line_day</item>
-        <item name="pulseFillColor">@color/color_pulse_fill_day</item>
-        <item name="pulseLineColor">@color/color_pulse_line_day</item>
-        <item name="systolicLineColor">@color/color_systolic_line_day</item>
-        <item name="diastolicLineColor">@color/color_diastolic_line_day</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>

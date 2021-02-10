@@ -1,10 +1,12 @@
 package com.axel_stein.glucose_tracker.ui.statistics.helpers
 
-import com.axel_stein.glucose_tracker.data.room.model.*
+import com.axel_stein.glucose_tracker.data.room.model.A1cLog
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.room.model.WeightLog
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
-import com.github.mikephil.charting.data.Entry
+import com.axel_stein.glucose_tracker.utils.round
 import com.github.mikephil.charting.data.LineData
 import javax.inject.Inject
 
@@ -70,23 +72,12 @@ class ChartData {
         val inflater = LineDataInflater()
         inflater.inflate(list.sortedBy { it.dateTime }) {
             val log = it as WeightLog
-            log.kg to log.dateTime
+            val value = if (settings.useMetricSystem()) log.kg else log.pounds
+            value.round() to log.dateTime
         }
         val lineColor = resources.weightLineColor()
         val fillColor = resources.weightFillColor()
         createChartData(inflater, lineColor, fillColor, arrayListOf())
-    }
-
-    fun setPulseLogs(list: List<PulseLog>) {
-        val inflater = LineDataInflater()
-        inflater.inflate(list.sortedBy { it.dateTime }) {
-            val log = it as PulseLog
-            log.value.toFloat() to log.dateTime
-        }
-
-        val lineColor = resources.pulseLineColor()
-        val fillColor = resources.pulseFillColor()
-        createChartData(inflater, lineColor, fillColor, arrayListOf(60f, 90f))
     }
 
     private fun createChartData(inflater: LineDataInflater, lineColor: Int, fillColor: Int, limits: ArrayList<Float>) {
@@ -95,29 +86,6 @@ class ChartData {
         maxValue = inflater.getMaxValue()
         lineData = LineDataCreator()
             .from(inflater.getEntries(), lineColor, fillColor)
-            .create()
-    }
-
-    fun setApLogs(list: List<ApLog>) {
-        val sortedList = list.sortedBy { it.dateTime }
-
-        val inflater = LineDataInflater()
-        inflater.inflate(sortedList) {
-            val log = it as ApLog
-            log.systolic.toFloat() to log.dateTime
-        }
-
-        val systolicEntries = inflater.getEntries()
-        labels = inflater.getLabels()
-        limits = arrayListOf(60f, 130f, 140f)
-
-        val diastolicEntries = sortedList.mapIndexed { index, log ->
-            Entry(index.toFloat(), log.diastolic.toFloat())
-        }
-
-        lineData = LineDataCreator()
-            .from(systolicEntries, resources.systolicLineColor(), -1)
-            .from(diastolicEntries, resources.diastolicLineColor(), -1)
             .create()
     }
 

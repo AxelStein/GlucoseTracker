@@ -25,8 +25,6 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
         "medication_log",
         "note_log",
         "weight_log",
-        "ap_log",
-        "pulse_log"
     )
     private val settings = AppSettings(ctx)
     private val resources = AppResources(ctx)
@@ -43,10 +41,6 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
     fun getA1cLogs() = createFlowable { dao.getA1cLogs() }
 
     fun getWeightLogs() = createFlowable { dao.getWeightLogs() }
-
-    fun getPulseLogs() = createFlowable { dao.getPulseLogs() }
-
-    fun getApLogs() = createFlowable { dao.getApLogs() }
 
     fun getYears() = dao.getYears()
 
@@ -80,8 +74,6 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
                                 is InsulinLogEmbedded -> InsulinLogItem(it)
                                 is MedicationLogEmbedded -> MedicationLogItem(it)
                                 is WeightLog -> WeightLogItem(it)
-                                is ApLog -> ApLogItem(it)
-                                is PulseLog -> PulseLogItem(it)
                                 else -> TODO()
                             }
                         }
@@ -94,12 +86,20 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
             }
 
             val disposables = CompositeDisposable()
-            disposables.add(
-                settings.observeGlucoseUnits()
-                    .subscribe {
-                        emitData()
-                    }
-            )
+            settings.observeGlucoseUnits()
+                .subscribe {
+                    emitData()
+                }.also {
+                    disposables.add(it)
+                }
+
+            settings.observeMeasurementSystem()
+                .subscribe {
+                    emitData()
+                }.also {
+                    disposables.add(it)
+                }
+
             val observer = object : InvalidationTracker.Observer(tables) {
                 override fun onInvalidated(tables: MutableSet<String>) {
                     emitData()
@@ -121,19 +121,6 @@ class LogRepository(private val ctx: Context, private val db: AppDatabase, priva
 
     private fun sort(items: MutableList<LogItem>): List<LogItem> {
         items.sortByDescending { it.dateTime() }
-        items.sortWith { a, b ->
-            val d1 = a?.dateTime()?.toLocalDate()
-            val d2 = b?.dateTime()?.toLocalDate()
-
-            val compareDates = d1?.compareTo(d2)
-            if (compareDates == 0) {
-                val t1 = a.dateTime().toLocalTime()
-                val t2 = b?.dateTime()?.toLocalTime()
-                t1.compareTo(t2)
-            } else {
-                0
-            }
-        }
         return items
     }
 

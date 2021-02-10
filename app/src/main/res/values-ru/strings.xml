@@ -17,6 +17,7 @@
         <item quantity="other">%1$s ампул</item>
     </plurals>
     <string name="ap_suffix">мм рт.ст.</string>
+    <string name="app_name">Трекер диабета</string>
     <string name="bmi_category_normal_weight">Норма</string>
     <string name="bmi_category_obese_1">Ожирение I степени</string>
     <string name="bmi_category_obese_2">Ожирение II степени</string>
@@ -39,10 +40,8 @@
     <string name="chart_period_half_month">2 недели</string>
     <string name="chart_period_month">1 месяц</string>
     <string name="chart_period_three_months">3 месяца</string>
-    <string name="chart_title_ap">Артериальное давление</string>
     <string name="chart_title_blood_sugar_after_meal">Сахар крови (после еды)</string>
     <string name="chart_title_blood_sugar_before_meal">Сахар крови (до еды)</string>
-    <string name="chart_title_pulse">Пульс</string>
     <string name="chart_title_weight">Вес</string>
     <string name="diabetes_control_bad">Плохой контроль диабета</string>
     <string name="diabetes_control_good">Хороший контроль диабета</string>
@@ -211,10 +210,9 @@
         <item quantity="many">%1$s пак.</item>
         <item quantity="other">%1$s пак.</item>
     </plurals>
-    <string name="plus_pref_ap">Артериальное давление</string>
+    <string name="plus_pref_ap">АД и пульс</string>
     <string name="plus_pref_insulin_list">Препараты инсулина</string>
     <string name="plus_pref_medications">Лекарства</string>
-    <string name="plus_pref_pulse">Пульс</string>
     <string name="plus_pref_weight">Вес</string>
     <string name="pref_category_measurements">Измерения</string>
     <string name="stats_a1c">a1c расч.</string>
@@ -244,4 +242,7 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
+    <string name="imperial">Имперская</string>
+    <string name="main_pref_measurement_system">Система измерения</string>
+    <string name="metric">Метрическая</string>
 </resources>

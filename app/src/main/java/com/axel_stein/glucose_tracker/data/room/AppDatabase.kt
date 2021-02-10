@@ -3,8 +3,8 @@ package com.axel_stein.glucose_tracker.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.axel_stein.glucose_tracker.data.room.model.*
 import com.axel_stein.glucose_tracker.data.room.dao.*
+import com.axel_stein.glucose_tracker.data.room.model.*
 
 @Database(
     entities = [
@@ -16,10 +16,8 @@ import com.axel_stein.glucose_tracker.data.room.dao.*
         Medication::class,
         MedicationLog::class,
         WeightLog::class,
-        ApLog::class,
-        PulseLog::class
     ],
-    version = 3
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -33,6 +31,4 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun medicationDao(): MedicationDao
     abstract fun medicationLogDao(): MedicationLogDao
     abstract fun weightLogDao(): WeightLogDao
-    abstract fun apLogDao(): ApLogDao
-    abstract fun pulseLogDao(): PulseLogDao
 }

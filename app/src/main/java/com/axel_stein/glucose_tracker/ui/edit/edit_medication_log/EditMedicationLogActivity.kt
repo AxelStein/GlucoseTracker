@@ -13,7 +13,7 @@ import com.axel_stein.glucose_tracker.databinding.ActivityEditMedicationLogBindi
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog.OnConfirmListener
 import com.axel_stein.glucose_tracker.utils.formatDate
-import com.axel_stein.glucose_tracker.utils.formatIfInt
+import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.formatTime
 import com.axel_stein.glucose_tracker.utils.ui.*
 import com.google.android.material.snackbar.Snackbar
@@ -100,7 +100,7 @@ class EditMedicationLogActivity : AppCompatActivity(), OnConfirmListener {
             binding.inputLayoutMedication.isEnabled = it.isNotEmpty()
             binding.medicationSpinner.setSpinnerItems(it.map { item ->
                 if (item.dosageUnit >= 0) {
-                    "${item.title} (${item.dosage.formatIfInt()} ${dosageUnits[item.dosageUnit]})"
+                    "${item.title} (${item.dosage.formatRoundIfInt()} ${dosageUnits[item.dosageUnit]})"
                 } else {
                     item.title
                 }

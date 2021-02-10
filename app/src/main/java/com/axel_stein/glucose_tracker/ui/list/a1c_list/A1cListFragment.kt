@@ -31,7 +31,7 @@ class A1cListFragment : Fragment() {
             binding.textEmpty,
             findNavController()
         )
-        viewHelper.setRecyclerViewBottomPadding(resources.getDimensionPixelSize(R.dimen.padding_small))
+        viewHelper.setRecyclerViewBottomPadding(0)
         return binding.root
     }
 

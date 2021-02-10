@@ -7,6 +7,4 @@ enum class ItemType {
     INSULIN,
     MEDICATION,
     WEIGHT,
-    AP,
-    PULSE
 }

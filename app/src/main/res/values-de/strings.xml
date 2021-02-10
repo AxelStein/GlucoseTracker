@@ -15,6 +15,7 @@
         <item quantity="other">%1$s Ampullen</item>
     </plurals>
     <string name="ap_suffix">mm Hg</string>
+    <string name="app_name">Diabetes Tracker</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Übergewichtige Klasse I.</string>
     <string name="bmi_category_obese_2">Übergewichtige Klasse II</string>
@@ -35,10 +36,8 @@
     <string name="chart_period_half_month">2 Woche</string>
     <string name="chart_period_month">1 Monat</string>
     <string name="chart_period_three_months">3 Monate</string>
-    <string name="chart_title_ap">Blutdruck</string>
     <string name="chart_title_blood_sugar_after_meal">Blutzucker (nach dem Essen)</string>
     <string name="chart_title_blood_sugar_before_meal">Blutzucker (vor dem Essen)</string>
-    <string name="chart_title_pulse">Puls</string>
     <string name="chart_title_weight">Gewicht</string>
     <string name="diabetes_control_bad">Schlechte Diabetes-Kontrolle</string>
     <string name="diabetes_control_good">Gute Diabetes-Kontrolle</string>
@@ -193,10 +192,9 @@
         <item quantity="one">%1$s Paket</item>
         <item quantity="other">%1$s Pakete</item>
     </plurals>
-    <string name="plus_pref_ap">Blutdruck</string>
+    <string name="plus_pref_ap">Blutdruck und Puls</string>
     <string name="plus_pref_insulin_list">Insulinmedikamente</string>
     <string name="plus_pref_medications">Medikamente</string>
-    <string name="plus_pref_pulse">Puls</string>
     <string name="plus_pref_weight">Gewicht</string>
     <string name="pref_category_measurements">Messungen</string>
     <string name="stats_a1c">a1c</string>

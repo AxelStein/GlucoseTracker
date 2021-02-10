@@ -6,19 +6,32 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.navigation.navArgs
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.settings.AppResources
+import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.databinding.ActivityEditWeightBinding
+import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.EditorActivity
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
 import com.axel_stein.glucose_tracker.utils.ui.*
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class EditWeightActivity : EditorActivity(), ConfirmDialog.OnConfirmListener {
     private val args: EditWeightActivityArgs by navArgs()
     private val viewModel: EditWeightViewModel by viewModels { EditWeightFactory(this, args.id) }
     private lateinit var binding: ActivityEditWeightBinding
+    private lateinit var settings: AppSettings
+    private lateinit var appResources: AppResources
+
+    @Inject
+    fun inject(s: AppSettings, a: AppResources) {
+        settings = s
+        appResources = a
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        App.appComponent.inject(this)
 
         binding = ActivityEditWeightBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -52,6 +65,10 @@ class EditWeightActivity : EditorActivity(), ConfirmDialog.OnConfirmListener {
     }
 
     private fun setupWeightEditor() {
+        binding.inputLayoutWeight.suffixText =
+            if (settings.useMetricSystem()) appResources.kgSuffix
+            else appResources.lbSuffix
+
         binding.editWeight.setupEditor { text ->
             viewModel.setWeight(text)
         }
