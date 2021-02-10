@@ -2,7 +2,6 @@ package com.axel_stein.glucose_tracker.data.settings
 
 import android.content.Context
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.axel_stein.glucose_tracker.utils.heightIntoImperial
@@ -64,7 +63,6 @@ class AppSettings(ctx: Context) {
 
     fun setHeight(height: String) {
         val (feet, inches) = heightIntoImperial(height.toInt())
-        Log.e("TAG", "setHeight $height $feet $inches")
         prefs.edit()
             .putString("height", height)
             .putString("height_feet", feet.toString())

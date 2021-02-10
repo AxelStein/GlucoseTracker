@@ -6,10 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.Medication
-import com.axel_stein.glucose_tracker.data.room.model.MedicationLog
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationLogDao
+import com.axel_stein.glucose_tracker.data.room.model.Medication
+import com.axel_stein.glucose_tracker.data.room.model.MedicationLog
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.get
@@ -59,6 +60,7 @@ class EditMedicationLogViewModel(private val id: Long = 0L, private val state: S
 
     private lateinit var dao: MedicationDao
     private lateinit var logDao: MedicationLogDao
+    private lateinit var scheduler: DriveWorkerScheduler
     private val disposables = CompositeDisposable()
 
     init {
@@ -67,9 +69,10 @@ class EditMedicationLogViewModel(private val id: Long = 0L, private val state: S
     }
 
     @Inject
-    fun setDao(dao: MedicationDao, logDao: MedicationLogDao) {
+    fun inject(dao: MedicationDao, logDao: MedicationLogDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
         this.logDao = logDao
+        this.scheduler = scheduler
     }
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
@@ -194,6 +197,7 @@ class EditMedicationLogViewModel(private val id: Long = 0L, private val state: S
                 Completable.fromAction {
                     logDao.upsert(createLog())
                 }.subscribeOn(io()).subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -221,7 +225,10 @@ class EditMedicationLogViewModel(private val id: Long = 0L, private val state: S
     fun delete() {
         if (id != 0L) {
             logDao.deleteById(id).subscribeOn(io()).subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_saving_log))

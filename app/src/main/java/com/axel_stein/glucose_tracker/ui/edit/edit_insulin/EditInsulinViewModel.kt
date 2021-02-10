@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.Insulin
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
+import com.axel_stein.glucose_tracker.data.room.model.Insulin
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.getOrDefault
 import com.axel_stein.glucose_tracker.utils.ui.Event
@@ -36,6 +37,7 @@ class EditInsulinViewModel(private val id: Long = 0L, private val state: SavedSt
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
 
     private lateinit var dao: InsulinDao
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -43,8 +45,9 @@ class EditInsulinViewModel(private val id: Long = 0L, private val state: SavedSt
     }
 
     @Inject
-    fun setDao(dao: InsulinDao) {
+    fun inject(dao: InsulinDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
+        this.scheduler = scheduler
     }
 
     @SuppressLint("CheckResult")
@@ -85,6 +88,7 @@ class EditInsulinViewModel(private val id: Long = 0L, private val state: SavedSt
         dao.setActive(id, updatedValue)
             .subscribeOn(io())
             .subscribe({
+                scheduler.schedule()
                 active.postValue(updatedValue)
                 actionFinish.postValue(Event())
             }, {
@@ -101,6 +105,7 @@ class EditInsulinViewModel(private val id: Long = 0L, private val state: SavedSt
             Completable.fromAction {
                 dao.upsert(createLog())
             }.subscribeOn(io()).subscribe({
+                scheduler.schedule()
                 actionFinish.postValue(Event())
             }, {
                 it.printStackTrace()
@@ -119,7 +124,10 @@ class EditInsulinViewModel(private val id: Long = 0L, private val state: SavedSt
     fun delete() {
         if (id != 0L) {
             dao.deleteById(id).subscribeOn(io()).subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting))

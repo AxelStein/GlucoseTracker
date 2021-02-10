@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.WeightLogDao
 import com.axel_stein.glucose_tracker.data.room.model.WeightLog
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
@@ -41,6 +42,7 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
 
     private lateinit var dao: WeightLogDao
     private lateinit var settings: AppSettings
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -48,8 +50,9 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
     }
 
     @Inject
-    fun setDao(dao: WeightLogDao) {
+    fun inject(dao: WeightLogDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
+        this.scheduler = scheduler
     }
 
     @Inject
@@ -155,6 +158,7 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
                 Completable.fromAction {
                     dao.upsert(createLog())
                 }.subscribeOn(io()).subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -177,7 +181,10 @@ class EditWeightViewModel(private val id: Long = 0L, private val state: SavedSta
         if (id != 0L) dao.deleteById(id)
             .subscribeOn(io())
             .subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting_log))

@@ -66,14 +66,6 @@
         app:iconSpaceReserved="false"
         app:title="@string/main_pref_category_google_drive">
 
-        <SwitchPreference
-            app:iconSpaceReserved="false"
-            app:isPreferenceVisible="false"
-            app:key="drive_auto_sync"
-            app:summary="@string/main_pref_auto_sync_summary"
-            app:title="@string/main_pref_auto_sync"
-            tools:isPreferenceVisible="true" />
-
         <Preference
             app:iconSpaceReserved="false"
             app:key="drive_create_backup"

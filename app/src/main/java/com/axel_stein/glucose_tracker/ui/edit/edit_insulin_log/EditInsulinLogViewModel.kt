@@ -6,10 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.Insulin
-import com.axel_stein.glucose_tracker.data.room.model.InsulinLog
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinDao
 import com.axel_stein.glucose_tracker.data.room.dao.InsulinLogDao
+import com.axel_stein.glucose_tracker.data.room.model.Insulin
+import com.axel_stein.glucose_tracker.data.room.model.InsulinLog
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
@@ -56,6 +57,7 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
 
     private lateinit var logDao: InsulinLogDao
     private lateinit var dao: InsulinDao
+    private lateinit var scheduler: DriveWorkerScheduler
     private val disposables = CompositeDisposable()
 
     init {
@@ -64,9 +66,10 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
     }
 
     @Inject
-    fun setDao(dao: InsulinDao, logDao: InsulinLogDao) {
+    fun inject(dao: InsulinDao, logDao: InsulinLogDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
         this.logDao = logDao
+        this.scheduler = scheduler
     }
 
     fun getCurrentDateTime(): DateTime = dateTime.value?.toDateTime() ?: DateTime()
@@ -183,6 +186,7 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
                 Completable.fromAction {
                     logDao.upsert(createLog())
                 }.subscribeOn(io()).subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event(true))
                 }, {
                     it.printStackTrace()
@@ -210,7 +214,10 @@ class EditInsulinLogViewModel(private val id: Long = 0L, private val state: Save
     fun delete() {
         if (id != 0L) {
             logDao.deleteById(id).subscribeOn(io()).subscribe(
-                { actionFinish.postValue(Event(true)) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event(true))
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting_log))

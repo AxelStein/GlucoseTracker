@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.NoteLog
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.NoteLogDao
+import com.axel_stein.glucose_tracker.data.room.model.NoteLog
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.DateTimeProvider
 import com.axel_stein.glucose_tracker.utils.getOrDateTime
@@ -34,6 +35,7 @@ class EditNoteViewModel(private val id: Long = 0L, private val state: SavedState
     val actionFinishLiveData: LiveData<Event<Boolean>> = actionFinish
 
     private lateinit var dao: NoteLogDao
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -41,8 +43,9 @@ class EditNoteViewModel(private val id: Long = 0L, private val state: SavedState
     }
 
     @Inject
-    fun setDao(dao: NoteLogDao) {
+    fun inject(dao: NoteLogDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
+        this.scheduler = scheduler
     }
 
     override fun dateTimeLiveData(): LiveData<MutableDateTime> = dateTime
@@ -98,6 +101,7 @@ class EditNoteViewModel(private val id: Long = 0L, private val state: SavedState
                 Completable.fromAction {
                     dao.upsert(createLog())
                 }.subscribeOn(io()).subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -118,7 +122,10 @@ class EditNoteViewModel(private val id: Long = 0L, private val state: SavedState
         if (id != 0L) dao.deleteById(id)
             .subscribeOn(io())
             .subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting_note))

@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.Medication
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.MedicationDao
+import com.axel_stein.glucose_tracker.data.room.model.Medication
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.formatRoundIfInt
 import com.axel_stein.glucose_tracker.utils.getOrDefault
@@ -44,6 +45,7 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
 
     private lateinit var dao: MedicationDao
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -51,8 +53,9 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
     }
 
     @Inject
-    fun setDao(dao: MedicationDao) {
+    fun inject(dao: MedicationDao, scheduler: DriveWorkerScheduler) {
         this.dao = dao
+        this.scheduler = scheduler
     }
 
     @SuppressLint("CheckResult")
@@ -119,6 +122,7 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
         dao.setActive(id, updatedValue)
             .subscribeOn(io())
             .subscribe({
+                scheduler.schedule()
                 actionFinish.postValue(Event())
             }, {
                 it.printStackTrace()
@@ -133,6 +137,7 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
                 Completable.fromAction {
                     dao.upsert(createMedication())
                 }.subscribeOn(io()).subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -164,7 +169,10 @@ class EditMedicationViewModel(private val id: Long = 0L, private val state: Save
         if (id != 0L) dao.deleteById(id)
             .subscribeOn(io())
             .subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    scheduler.schedule()
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting))

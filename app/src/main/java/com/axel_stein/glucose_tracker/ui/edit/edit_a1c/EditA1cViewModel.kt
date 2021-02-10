@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.A1cLog
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
+import com.axel_stein.glucose_tracker.data.room.model.A1cLog
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.getOrDateTime
 import com.axel_stein.glucose_tracker.utils.getOrDefault
@@ -36,6 +37,7 @@ class EditA1cViewModel(private val id: Long = 0L, state: SavedStateHandle) : Vie
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
 
     private lateinit var dao: A1cLogDao
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -46,8 +48,9 @@ class EditA1cViewModel(private val id: Long = 0L, state: SavedStateHandle) : Vie
     }
 
     @Inject
-    fun setDao(dao: A1cLogDao) {
+    fun setDao(dao: A1cLogDao, s: DriveWorkerScheduler) {
         this.dao = dao
+        scheduler = s
     }
 
     fun getCurrentDateTime(): DateTime = dateTime.getOrDateTime()
@@ -77,6 +80,7 @@ class EditA1cViewModel(private val id: Long = 0L, state: SavedStateHandle) : Vie
             Completable.fromAction {
                 this.dao.upsert(createLog())
             }.subscribeOn(io()).subscribe({
+                scheduler.schedule()
                 actionFinish.postValue(Event())
             }, {
                 it.printStackTrace()
@@ -116,6 +120,7 @@ class EditA1cViewModel(private val id: Long = 0L, state: SavedStateHandle) : Vie
         if (id != 0L) Single.fromCallable { this.dao.deleteById(id) }
             .subscribeOn(io())
             .subscribe({
+                scheduler.schedule()
                 actionFinish.postValue(Event())
             }, {
                 it.printStackTrace()

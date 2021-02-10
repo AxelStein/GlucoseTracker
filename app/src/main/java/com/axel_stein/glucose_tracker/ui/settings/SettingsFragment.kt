@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
@@ -27,7 +26,6 @@ import javax.inject.Inject
 class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     private lateinit var viewModel: SettingsViewModel
     private var lastSynced: Preference? = null
-    private var autoSync: SwitchPreference? = null
     private lateinit var appSettings: AppSettings
     private lateinit var appResources: AppResources
 
@@ -183,16 +181,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
         }
 
         lastSynced = preferenceManager.findPreference("drive_last_synced")
-
-        autoSync = preferenceManager.findPreference("drive_auto_sync")
-        autoSync?.setOnPreferenceChangeListener { _, enable ->
-            viewModel.enableAutoSync(enable as Boolean)
-            true
-        }
-
-        viewModel.showAutoSyncLiveData.observe(viewLifecycleOwner, {
-            autoSync?.isVisible = it
-        })
 
         viewModel.lastSyncTimeLiveData.observe(viewLifecycleOwner, { time ->
             if (time > 0) {

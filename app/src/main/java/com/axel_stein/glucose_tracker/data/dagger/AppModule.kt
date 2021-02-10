@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.room.migration_1_2
@@ -145,4 +146,7 @@ class AppModule(private val context: Context) {
     fun provideWeightLogDao(db: AppDatabase): WeightLogDao {
         return db.weightLogDao()
     }
+
+    @Provides
+    fun provideDriveWorkerScheduler() = DriveWorkerScheduler(context)
 }

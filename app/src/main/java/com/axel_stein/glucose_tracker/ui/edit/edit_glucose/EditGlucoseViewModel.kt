@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.axel_stein.glucose_tracker.R
-import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
@@ -51,6 +52,7 @@ class EditGlucoseViewModel(private val id: Long = 0L, private val state: SavedSt
     private lateinit var dao: GlucoseLogDao
     private lateinit var settings: AppSettings
     private lateinit var resources: AppResources
+    private lateinit var scheduler: DriveWorkerScheduler
 
     init {
         App.appComponent.inject(this)
@@ -58,19 +60,13 @@ class EditGlucoseViewModel(private val id: Long = 0L, private val state: SavedSt
     }
 
     @Inject
-    fun setDao(dao: GlucoseLogDao) {
+    fun inject(dao: GlucoseLogDao, settings: AppSettings, resources: AppResources, scheduler: DriveWorkerScheduler) {
         this.dao = dao
-    }
-
-    @Inject
-    fun setSettings(settings: AppSettings) {
         this.settings = settings
         useMmol = this.settings.useMmolAsGlucoseUnits()
-    }
 
-    @Inject
-    fun setResources(resources: AppResources) {
         this.resources = resources
+        this.scheduler = scheduler
     }
 
     fun getCurrentDateTime(): DateTime = dateTime.getOrDefault(MutableDateTime()).toDateTime()
@@ -111,6 +107,7 @@ class EditGlucoseViewModel(private val id: Long = 0L, private val state: SavedSt
             Completable.fromAction { dao.upsert(createLog()) }
                 .subscribeOn(io())
                 .subscribe({
+                    scheduler.schedule()
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -166,6 +163,7 @@ class EditGlucoseViewModel(private val id: Long = 0L, private val state: SavedSt
         if (id != 0L) Completable.fromAction { dao.deleteById(id) }
             .subscribeOn(io())
             .subscribe({
+                scheduler.schedule()
                 actionFinish.postValue(Event())
             }, {
                 it.printStackTrace()
