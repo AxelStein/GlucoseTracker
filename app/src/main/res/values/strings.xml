@@ -16,7 +16,7 @@
     </plurals>
     <string name="ap_suffix">mm Hg</string>
     <string name="app_name">Diabetes Tracker</string>
-    <string name="app_version" translatable="false">1.0.9</string>
+    <string name="app_version" translatable="false">1.1.0</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Obese Class I</string>
     <string name="bmi_category_obese_2">Obese Class II</string>
