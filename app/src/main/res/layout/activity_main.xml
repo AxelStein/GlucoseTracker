@@ -50,7 +50,7 @@
             android:background="?attr/bottomNavBackgroundColor"
             app:itemIconTint="?attr/bottomNavItemIconColor"
             app:itemTextColor="?attr/bottomNavItemTextColor"
-            app:labelVisibilityMode="labeled"
+            app:labelVisibilityMode="auto"
             app:menu="@menu/bottom_nav"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
