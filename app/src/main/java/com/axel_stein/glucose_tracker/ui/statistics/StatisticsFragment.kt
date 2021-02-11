@@ -34,7 +34,11 @@ class StatisticsFragment: Fragment() {
     }
 
     @SuppressLint("CheckResult")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -118,11 +122,20 @@ class StatisticsFragment: Fragment() {
         chart.description.isEnabled = false
         chart.legend.isEnabled = false
         chart.setDrawGridBackground(false)
-        chart.xAxis.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
+        chart.xAxis.textColor = MaterialColors.getColor(
+            requireActivity(),
+            R.attr.chartTextColor,
+            Color.BLACK
+        )
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        chart.axisLeft.textColor = MaterialColors.getColor(requireActivity(), R.attr.chartTextColor, Color.BLACK)
+        chart.axisLeft.textColor = MaterialColors.getColor(
+            requireActivity(),
+            R.attr.chartTextColor,
+            Color.BLACK
+        )
         chart.axisLeft.setDrawAxisLine(true)
         chart.axisLeft.setDrawGridLines(false)
+        chart.axisLeft.setDrawTopYLabelEntry(false)
         chart.axisRight.setDrawLabels(false)
         chart.isDoubleTapToZoomEnabled = false
         chart.setExtraOffsets(8f, 0f, 8f, 4f)
