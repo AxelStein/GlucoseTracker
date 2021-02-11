@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkManager
 import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
+import java.util.concurrent.TimeUnit
 
 class DriveWorkerScheduler(private val context: Context) {
 
@@ -15,16 +17,27 @@ class DriveWorkerScheduler(private val context: Context) {
         val wm = WorkManager.getInstance(context)
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
             .build()
 
         Completable.fromAction {
-            OneTimeWorkRequestBuilder<DriveWorker>()
-                .setConstraints(constraints)
-                .addTag(tag)
-                .build()
-                .also {
-                    wm.enqueue(it)
+            val works = wm.getWorkInfosByTag(tag).get()
+            var addRequest = true
+            works.forEach {
+                if (it.state == ENQUEUED) {
+                    addRequest = false
                 }
-        }.subscribeOn(Schedulers.io()).subscribe()
+            }
+            if (addRequest) {
+                OneTimeWorkRequestBuilder<DriveWorker>()
+                    .setConstraints(constraints)
+                    .addTag(tag)
+                    .setInitialDelay(6, TimeUnit.HOURS)
+                    .build()
+                    .also {
+                        wm.enqueue(it)
+                    }
+            }
+        }.subscribeOn(io()).subscribe()
     }
 }
