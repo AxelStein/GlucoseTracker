@@ -41,12 +41,19 @@ class AppSettings(ctx: Context) {
     }
 
     fun getHeightImperial(): Pair<String, String> {
-        var feet = prefs.getString("height_feet", "0") ?: "0"
-        var inches = prefs.getString("height_inches", "0") ?: "0"
-        if (feet == "0" && inches == "0" && getHeight() != "0") {
-            val pair = heightIntoImperial(getHeight().toInt())
-            feet = pair.first.toString()
-            inches = pair.second.toString()
+        var feet = getOrZero("height_feet")
+        var inches = getOrZero("height_inches")
+        val height = getHeight()
+
+        if (feet == "0" && inches == "0" && height != "0") {
+            try {
+                val pair = heightIntoImperial(height.toInt())
+                feet = pair.first.toString()
+                inches = pair.second.toString()
+            } catch (e: Exception) {
+                feet = "0"
+                inches = "0"
+            }
         }
         return feet to inches
     }
@@ -55,19 +62,39 @@ class AppSettings(ctx: Context) {
         prefs.edit()
             .putString("height_feet", feet)
             .putString("height_inches", inches)
-            .putString("height", heightIntoMetric(feet.toInt(), inches.toFloat()).toString())
             .apply()
+
+        val height = try {
+            heightIntoMetric(feet.toInt(), inches.toFloat()).toString()
+        } catch (e: Exception) {
+            "0"
+        }
+        prefs.edit().putString("height", height).apply()
     }
 
-    fun getHeight() = prefs.getString("height", "0") ?: "0"
+    fun getHeight() = getOrZero("height")
 
     fun setHeight(height: String) {
-        val (feet, inches) = heightIntoImperial(height.toInt())
+        val h = try {
+            height.toInt()
+        } catch (e: Exception) {
+            0
+        }
+        val (feet, inches) = heightIntoImperial(h)
         prefs.edit()
-            .putString("height", height)
+            .putString("height", h.toString())
             .putString("height_feet", feet.toString())
             .putString("height_inches", inches.round().toString())
             .apply()
+    }
+
+    private fun getOrZero(key: String): String {
+        val s = prefs.getString(key, "0")
+        return if (s.isNullOrEmpty()) {
+            "0"
+        } else {
+            s
+        }
     }
 
     fun useMetricSystem() = prefs.getString("measurement_system", "metric") == "metric"

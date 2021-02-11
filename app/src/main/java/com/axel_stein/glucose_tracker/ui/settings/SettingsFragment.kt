@@ -28,6 +28,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     private var lastSynced: Preference? = null
     private lateinit var appSettings: AppSettings
     private lateinit var appResources: AppResources
+    private var heightImperial: Preference? = null
+    private var height: Preference? = null
 
     init {
         App.appComponent.inject(this)
@@ -60,7 +62,26 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
             }
         }
 
-        val heightImperial = preferenceManager.findPreference<Preference>("height_imperial")?.apply {
+        val updateHeightImperialSummary = {
+            with(appSettings.getHeightImperial()) {
+                heightImperial?.summary = if (first.isNotEmpty() && first != "0") {
+                    "$first ${appResources.feetSuffix} $second ${appResources.inchesSuffix}"
+                } else {
+                    resources.getString(R.string.main_pref_height_summary)
+                }
+            }
+        }
+        val updateHeightSummary = {
+            with(appSettings.getHeight()) {
+                height?.summary = if (isNotEmpty() && this != "0") {
+                    "$this ${resources.getString(R.string.height_unit_cm)}"
+                } else {
+                    resources.getString(R.string.main_pref_height_summary)
+                }
+            }
+        }
+
+        heightImperial = preferenceManager.findPreference<Preference>("height_imperial")?.apply {
             isVisible = !appSettings.useMetricSystem()
             setOnPreferenceClickListener {
                 AlertDialog.Builder(requireContext()).apply {
@@ -80,7 +101,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
                     setPositiveButton("OK") { dialog, _ ->
                         val feet = feetEdit.text.toString()
                         val inches = inchesEdit.text.toString()
+
                         appSettings.setHeightImperial(feet, inches)
+                        updateHeightImperialSummary()
+                        updateHeightSummary()
+
                         dialog.dismiss()
                     }
                     setNegativeButton(R.string.action_cancel) { dialog, _ ->
@@ -91,29 +116,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
                 true
             }
         }
-        with(appSettings.getHeightImperial()) {
-            if (first.isNotEmpty() && first != "0") {
-                heightImperial?.summary = "$first ${appResources.feetSuffix} $second ${appResources.inchesSuffix}"
-            }
-        }
 
-        val height = preferenceManager.findPreference<Preference>("height")?.apply {
+        height = preferenceManager.findPreference<Preference>("height")?.apply {
             isVisible = appSettings.useMetricSystem()
-            setOnPreferenceChangeListener { preference, newValue ->
+            setOnPreferenceChangeListener { _, newValue ->
                 appSettings.setHeight(newValue as String)
-                if (newValue.toString().isBlank() || newValue == "0") {
-                    preference.summary = resources.getString(R.string.main_pref_height_summary)
-                } else {
-                    preference.summary = "$newValue ${resources.getString(R.string.height_unit_cm)}"
-                }
+                updateHeightSummary()
+                updateHeightImperialSummary()
                 true
             }
         }
-        with(appSettings.getHeight()) {
-            if (isNotEmpty() && this != "0") {
-                height?.summary = "$this ${resources.getString(R.string.height_unit_cm)}"
-            }
-        }
+
+        updateHeightSummary()
+        updateHeightImperialSummary()
 
         preferenceManager.findPreference<ListPreference>("measurement_system")?.apply {
             setOnPreferenceChangeListener { _, newValue ->
