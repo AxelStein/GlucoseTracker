@@ -32,8 +32,8 @@ class StatisticsViewModel : ViewModel() {
     private var chartPeriod = -1
     private var chartType = -1
 
-    private val statsData = MutableLiveData<GlucoseStatistics>()
-    val glucoseStatisticsLiveData: LiveData<GlucoseStatistics> = statsData
+    private val statsData = MutableLiveData<GlucoseStatistics?>()
+    val glucoseStatisticsLiveData: LiveData<GlucoseStatistics?> = statsData
 
     private val control = MutableLiveData<Int>()
     val diabetesControlLiveData: LiveData<Int> = control
@@ -41,8 +41,8 @@ class StatisticsViewModel : ViewModel() {
     private val showError = MutableLiveData(false)
     val showErrorLiveData: LiveData<Boolean> = showError
 
-    private val chart = MutableLiveData<ChartData>()
-    val chartLiveData: LiveData<ChartData> = chart
+    private val chart = MutableLiveData<ChartData?>()
+    val chartLiveData: LiveData<ChartData?> = chart
 
     init {
         App.appComponent.inject(this)
