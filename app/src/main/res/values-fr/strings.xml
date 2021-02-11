@@ -119,6 +119,7 @@
     <string name="hint_units">Nombre d\'unités</string>
     <string name="hint_weight">Poids</string>
     <string name="humalog">Humalog</string>
+    <string name="imperial">Impérial</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -144,6 +145,7 @@
     <string name="main_pref_import_backup">Importer depuis un fichier</string>
     <string name="main_pref_import_drive">Importer une sauvegarde</string>
     <string name="main_pref_last_synced">Dernière synchronisation</string>
+    <string name="main_pref_measurement_system">Système de mesure</string>
     <string name="main_pref_rate_app">Évaluer l\'application</string>
     <string name="main_pref_theme">Thème</string>
     <string name="measured_after_breakfast">Après le petit-déj\'.</string>
@@ -156,6 +158,7 @@
     <string name="message_drive_export">Toutes les données sur Google Drive seront remplacées.</string>
     <string name="message_import_backup">Toutes les données de cet appareil seront remplacées.</string>
     <string name="metformin">Metformine</string>
+    <string name="metric">Métrique</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>

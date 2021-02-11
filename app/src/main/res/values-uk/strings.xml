@@ -129,6 +129,7 @@
     <string name="hint_units">Кількість одиниць</string>
     <string name="hint_weight">Вага</string>
     <string name="humalog">Хумалог</string>
+    <string name="imperial">Імперська</string>
     <plurals name="injection">
         <item quantity="one">%1$s ін\'єкція</item>
         <item quantity="few">%1$s ін\'єкції</item>
@@ -158,6 +159,7 @@
     <string name="main_pref_import_backup">Імпортувати з файлу</string>
     <string name="main_pref_import_drive">Імпортувати резервну копію</string>
     <string name="main_pref_last_synced">Востаннє синхронізовано</string>
+    <string name="main_pref_measurement_system">Система вимірювання</string>
     <string name="main_pref_rate_app">Оцінити додаток</string>
     <string name="main_pref_theme">Тема</string>
     <string name="measured_after_breakfast">Після сніданку</string>
@@ -170,6 +172,7 @@
     <string name="message_drive_export">Усі дані на Google Drive будуть замінені.</string>
     <string name="message_import_backup">Усі дані на цьому пристрої будуть замінені.</string>
     <string name="metformin">Метформін</string>
+    <string name="metric">Метрична</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -242,7 +245,4 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
-    <string name="main_pref_measurement_system">Система вимірювання</string>
-    <string name="metric">Метрична</string>
-    <string name="imperial">Імперська</string>
 </resources>

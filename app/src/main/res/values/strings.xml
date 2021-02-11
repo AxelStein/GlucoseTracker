@@ -95,6 +95,7 @@
     <string name="fab_menu_insulin">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>
     <string name="fab_menu_note">Note</string>
+    <string name="feet_suffix" translatable="false">ft</string>
     <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="glucose_unit_mmol_l">mmol/L</string>
     <plurals name="gram">
@@ -122,6 +123,7 @@
     <string name="hint_weight">Weight</string>
     <string name="humalog">Humalog</string>
     <string name="imperial">Imperial</string>
+    <string name="inches_suffix" translatable="false">in</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -225,6 +227,4 @@
     </plurals>
     <string name="weight_unit_kg">kg</string>
     <string name="weight_unit_lb">lb</string>
-    <string name="feet_suffix" translatable="false">ft</string>
-    <string name="inches_suffix" translatable="false">in</string>
 </resources>

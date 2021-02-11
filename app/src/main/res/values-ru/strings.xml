@@ -129,6 +129,7 @@
     <string name="hint_units">Количество единиц</string>
     <string name="hint_weight">Вес</string>
     <string name="humalog">Хумалог</string>
+    <string name="imperial">Имперская</string>
     <plurals name="injection">
         <item quantity="one">%1$s инъекция</item>
         <item quantity="few">%1$s инъекции</item>
@@ -158,6 +159,7 @@
     <string name="main_pref_import_backup">Импортировать из файла</string>
     <string name="main_pref_import_drive">Импортировать резервную копию</string>
     <string name="main_pref_last_synced">Последняя синхронизация</string>
+    <string name="main_pref_measurement_system">Система измерения</string>
     <string name="main_pref_rate_app">Оценить приложение</string>
     <string name="main_pref_theme">Тема</string>
     <string name="measured_after_breakfast">После завтрака</string>
@@ -170,6 +172,7 @@
     <string name="message_drive_export">Все данные на Google Диске будут заменены.</string>
     <string name="message_import_backup">Все данные на этом устройстве будут заменены.</string>
     <string name="metformin">Метформин</string>
+    <string name="metric">Метрическая</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -242,7 +245,4 @@
     </plurals>
     <string name="weight_unit_kg">кг</string>
     <string name="weight_unit_lb">фунт</string>
-    <string name="imperial">Имперская</string>
-    <string name="main_pref_measurement_system">Система измерения</string>
-    <string name="metric">Метрическая</string>
 </resources>
