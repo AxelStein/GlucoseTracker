@@ -8,14 +8,18 @@ import com.axel_stein.glucose_tracker.R
 import com.google.android.material.color.MaterialColors.getColor
 import java.io.File
 
-class AppResources(private val ctx: Context, private val settings: AppSettings) {
+class AppResources(private val ctx: Context) {
     val mmolSuffix = ctx.getString(R.string.glucose_unit_mmol_l)
     val mgSuffix = ctx.getString(R.string.glucose_unit_mg_dl)
     val kgSuffix = ctx.getString(R.string.weight_unit_kg)
+    val lbSuffix = ctx.getString(R.string.weight_unit_lb)
+    val feetSuffix = ctx.getString(R.string.feet_suffix)
+    val inchesSuffix = ctx.getString(R.string.inches_suffix)
     val measuredArray: Array<String> = ctx.resources.getStringArray(R.array.measured)
     val monthsArray: Array<String> = ctx.resources.getStringArray(R.array.months)
     val monthsAbbrArray: Array<String> = ctx.resources.getStringArray(R.array.months_a)
     val dosageFormsPlurals: TypedArray = ctx.resources.obtainTypedArray(R.array.dosage_form_plurals)
+
     private var beforeMealLineColor = 0
     private var beforeMealFillColor = 0
     private var afterMealLineColor = 0

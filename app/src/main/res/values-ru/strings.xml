@@ -16,6 +16,8 @@
         <item quantity="many">%1$s ампул</item>
         <item quantity="other">%1$s ампул</item>
     </plurals>
+    <string name="ap_suffix">мм рт.ст.</string>
+    <string name="app_name">Трекер диабета</string>
     <string name="bmi_category_normal_weight">Норма</string>
     <string name="bmi_category_obese_1">Ожирение I степени</string>
     <string name="bmi_category_obese_2">Ожирение II степени</string>
@@ -112,18 +114,22 @@
     <string name="hint_active_insulin_list">Текущие</string>
     <string name="hint_active_medications">Текущие</string>
     <string name="hint_amount">Количество</string>
+    <string name="hint_diastolic">Диастолическое</string>
     <string name="hint_dosage">Дозировка</string>
     <string name="hint_dosage_form">Форма приема</string>
     <string name="hint_indicate_height">Укажите свой рост в настройках для расчета ИМТ</string>
     <string name="hint_insulin_type">Тип инсулина</string>
     <string name="hint_note">Заметка</string>
+    <string name="hint_pulse">Пульс</string>
     <string name="hint_sugar_level">Уровень сахара</string>
     <string name="hint_suspended_insulin_list">Неактивные</string>
     <string name="hint_suspended_medications">Неактивные</string>
+    <string name="hint_systolic">Систолическое</string>
     <string name="hint_title">Название</string>
     <string name="hint_units">Количество единиц</string>
     <string name="hint_weight">Вес</string>
     <string name="humalog">Хумалог</string>
+    <string name="imperial">Имперская</string>
     <plurals name="injection">
         <item quantity="one">%1$s инъекция</item>
         <item quantity="few">%1$s инъекции</item>
@@ -153,6 +159,7 @@
     <string name="main_pref_import_backup">Импортировать из файла</string>
     <string name="main_pref_import_drive">Импортировать резервную копию</string>
     <string name="main_pref_last_synced">Последняя синхронизация</string>
+    <string name="main_pref_measurement_system">Система измерения</string>
     <string name="main_pref_rate_app">Оценить приложение</string>
     <string name="main_pref_theme">Тема</string>
     <string name="measured_after_breakfast">После завтрака</string>
@@ -165,6 +172,7 @@
     <string name="message_drive_export">Все данные на Google Диске будут заменены.</string>
     <string name="message_import_backup">Все данные на этом устройстве будут заменены.</string>
     <string name="metformin">Метформин</string>
+    <string name="metric">Метрическая</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -205,6 +213,7 @@
         <item quantity="many">%1$s пак.</item>
         <item quantity="other">%1$s пак.</item>
     </plurals>
+    <string name="plus_pref_ap">АД и пульс</string>
     <string name="plus_pref_insulin_list">Препараты инсулина</string>
     <string name="plus_pref_medications">Лекарства</string>
     <string name="plus_pref_weight">Вес</string>

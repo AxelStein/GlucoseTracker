@@ -45,7 +45,9 @@ class BackupHelper {
     @Inject
     lateinit var appSettings: AppSettings
 
-    val backupFileName = "backup.json"
+    companion object {
+        const val BACKUP_FILE_NAME = "backup.json"
+    }
 
     init {
         App.appComponent.inject(this)
@@ -59,7 +61,7 @@ class BackupHelper {
 
     fun createBackupImpl(): File {
         val backup = Backup(
-            2,
+            3,
             glucoseLogDao.getAll(),
             noteLogDao.get(),
             a1cLogDao.getAll(),
@@ -69,10 +71,10 @@ class BackupHelper {
             medicationLogDao.getAll(),
             insulinDao.getAll(),
             insulinLogDao.getAll(),
-            weightLogDao.getAll()
+            weightLogDao.getAll(),
         )
         val data = gson.toJson(backup, Backup::class.java)
-        val backupFile = File(appResources.appDir(), backupFileName)
+        val backupFile = File(appResources.appDir(), BACKUP_FILE_NAME)
         backupFile.writeText(data)
         return backupFile
     }
@@ -86,7 +88,7 @@ class BackupHelper {
             a1cLogDao.importBackup(backup.a1cLogs)
             appSettings.setGlucoseUnits(backup.glucoseUnits)
 
-            if (backup.version == 2) {
+            if (backup.version >= 2) {
                 appSettings.setHeight(backup.height)
                 medicationDao.importBackup(backup.medications)
                 medicationLogDao.importBackup(backup.medicationLogs)

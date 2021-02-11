@@ -16,6 +16,8 @@
         <item quantity="many">%1$s ампул</item>
         <item quantity="other">%1$s ампул</item>
     </plurals>
+    <string name="ap_suffix">мм рт.ст.</string>
+    <string name="app_name">Трекер діабету</string>
     <string name="bmi_category_normal_weight">Норма</string>
     <string name="bmi_category_obese_1">Ожиріння I ступеню</string>
     <string name="bmi_category_obese_2">Ожиріння ІI ступеню</string>
@@ -112,18 +114,22 @@
     <string name="hint_active_insulin_list">Поточні</string>
     <string name="hint_active_medications">Поточні</string>
     <string name="hint_amount">Кількість</string>
+    <string name="hint_diastolic">Діастолічний</string>
     <string name="hint_dosage">Дозування</string>
     <string name="hint_dosage_form">Форма прийому</string>
     <string name="hint_indicate_height">Вкажіть свій зріст в настройках для розрахунку ІМТ</string>
     <string name="hint_insulin_type">Тип інсулину</string>
     <string name="hint_note">Замітка</string>
+    <string name="hint_pulse">Пульс</string>
     <string name="hint_sugar_level">Рівень цукру</string>
     <string name="hint_suspended_insulin_list">Неактивні</string>
     <string name="hint_suspended_medications">Неактивні</string>
+    <string name="hint_systolic">Систолічний</string>
     <string name="hint_title">Назва</string>
     <string name="hint_units">Кількість одиниць</string>
     <string name="hint_weight">Вага</string>
     <string name="humalog">Хумалог</string>
+    <string name="imperial">Імперська</string>
     <plurals name="injection">
         <item quantity="one">%1$s ін\'єкція</item>
         <item quantity="few">%1$s ін\'єкції</item>
@@ -153,6 +159,7 @@
     <string name="main_pref_import_backup">Імпортувати з файлу</string>
     <string name="main_pref_import_drive">Імпортувати резервну копію</string>
     <string name="main_pref_last_synced">Востаннє синхронізовано</string>
+    <string name="main_pref_measurement_system">Система вимірювання</string>
     <string name="main_pref_rate_app">Оцінити додаток</string>
     <string name="main_pref_theme">Тема</string>
     <string name="measured_after_breakfast">Після сніданку</string>
@@ -165,6 +172,7 @@
     <string name="message_drive_export">Усі дані на Google Drive будуть замінені.</string>
     <string name="message_import_backup">Усі дані на цьому пристрої будуть замінені.</string>
     <string name="metformin">Метформін</string>
+    <string name="metric">Метрична</string>
     <plurals name="ml">
         <item quantity="one">%1$s мл</item>
         <item quantity="few">%1$s мл</item>
@@ -205,6 +213,7 @@
         <item quantity="many">%1$s пак.</item>
         <item quantity="other">%1$s пак.</item>
     </plurals>
+    <string name="plus_pref_ap">АТ та пульс</string>
     <string name="plus_pref_insulin_list">Препарати інсуліну</string>
     <string name="plus_pref_medications">Ліки</string>
     <string name="plus_pref_weight">Вага</string>

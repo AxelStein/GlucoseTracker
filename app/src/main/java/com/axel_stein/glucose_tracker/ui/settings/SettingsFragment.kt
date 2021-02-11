@@ -2,13 +2,16 @@ package com.axel_stein.glucose_tracker.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.ui.dialogs.ConfirmDialog
@@ -23,13 +26,17 @@ import javax.inject.Inject
 class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     private lateinit var viewModel: SettingsViewModel
     private var lastSynced: Preference? = null
-    private var autoSync: SwitchPreference? = null
-
-    @Inject
-    lateinit var appSettings: AppSettings
+    private lateinit var appSettings: AppSettings
+    private lateinit var appResources: AppResources
 
     init {
         App.appComponent.inject(this)
+    }
+
+    @Inject
+    fun inject(s: AppSettings, r: AppResources) {
+        appSettings = s
+        appResources = r
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,24 +53,83 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val theme = preferenceManager.findPreference<ListPreference>("theme")
-        theme?.setOnPreferenceChangeListener { _, value ->
-            appSettings.applyTheme(value as String)
-            true
+        preferenceManager.findPreference<ListPreference>("theme")?.apply {
+            setOnPreferenceChangeListener { _, value ->
+                appSettings.applyTheme(value as String)
+                true
+            }
         }
 
-        val height = preferenceManager.findPreference<Preference>("height")
-        height?.setOnPreferenceChangeListener { preference, newValue ->
-            if (newValue.toString().isBlank() || newValue == "0") {
-                preference.summary = resources.getString(R.string.main_pref_height_summary)
-            } else {
-                preference.summary = "$newValue ${resources.getString(R.string.height_unit_cm)}"
+        val heightImperial = preferenceManager.findPreference<Preference>("height_imperial")?.apply {
+            isVisible = !appSettings.useMetricSystem()
+            setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.main_pref_height)
+
+                    val v = LayoutInflater.from(context).inflate(R.layout.layout_edit_height_imperial, null)
+                    setView(v)
+
+                    val (currentFeet, currentInches) = appSettings.getHeightImperial()
+
+                    val feetEdit = v.findViewById<EditText>(R.id.feet)
+                    if (currentFeet != "0") feetEdit.setText(currentFeet)
+
+                    val inchesEdit = v.findViewById<EditText>(R.id.inches)
+                    if (currentInches != "0") inchesEdit.setText(currentInches)
+
+                    setPositiveButton("OK") { dialog, _ ->
+                        val feet = feetEdit.text.toString()
+                        val inches = inchesEdit.text.toString()
+                        appSettings.setHeightImperial(feet, inches)
+                        dialog.dismiss()
+                    }
+                    setNegativeButton(R.string.action_cancel) { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    show()
+                }
+                true
             }
-            true
         }
-        val h = appSettings.getHeight()
-        if (h.isNotEmpty() && h != "0") {
-            height?.summary = "$h ${resources.getString(R.string.height_unit_cm)}"
+        with(appSettings.getHeightImperial()) {
+            if (first.isNotEmpty() && first != "0") {
+                heightImperial?.summary = "$first ${appResources.feetSuffix} $second ${appResources.inchesSuffix}"
+            }
+        }
+
+        val height = preferenceManager.findPreference<Preference>("height")?.apply {
+            isVisible = appSettings.useMetricSystem()
+            setOnPreferenceChangeListener { preference, newValue ->
+                appSettings.setHeight(newValue as String)
+                if (newValue.toString().isBlank() || newValue == "0") {
+                    preference.summary = resources.getString(R.string.main_pref_height_summary)
+                } else {
+                    preference.summary = "$newValue ${resources.getString(R.string.height_unit_cm)}"
+                }
+                true
+            }
+        }
+        with(appSettings.getHeight()) {
+            if (isNotEmpty() && this != "0") {
+                height?.summary = "$this ${resources.getString(R.string.height_unit_cm)}"
+            }
+        }
+
+        preferenceManager.findPreference<ListPreference>("measurement_system")?.apply {
+            setOnPreferenceChangeListener { _, newValue ->
+                when (newValue) {
+                    "metric" -> {
+                        height?.isVisible = true
+                        heightImperial?.isVisible = false
+                    }
+
+                    "imperial" -> {
+                        height?.isVisible = false
+                        heightImperial?.isVisible = true
+                    }
+                }
+                true
+            }
         }
 
         val exportBackup = preferenceManager.findPreference<Preference>("export_backup")
@@ -115,16 +181,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnConfirmListener {
         }
 
         lastSynced = preferenceManager.findPreference("drive_last_synced")
-
-        autoSync = preferenceManager.findPreference("drive_auto_sync")
-        autoSync?.setOnPreferenceChangeListener { _, enable ->
-            viewModel.enableAutoSync(enable as Boolean)
-            true
-        }
-
-        viewModel.showAutoSyncLiveData.observe(viewLifecycleOwner, {
-            autoSync?.isVisible = it
-        })
 
         viewModel.lastSyncTimeLiveData.observe(viewLifecycleOwner, { time ->
             if (time > 0) {

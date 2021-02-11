@@ -11,10 +11,10 @@ import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.dagger.AppComponent
 import com.axel_stein.glucose_tracker.data.dagger.AppModule
 import com.axel_stein.glucose_tracker.data.dagger.DaggerAppComponent
-import com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity
-import com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivity
-import com.axel_stein.glucose_tracker.ui.edit_medication_log.EditMedicationLogActivity
-import com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity
+import com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseActivity
+import com.axel_stein.glucose_tracker.ui.edit.edit_insulin_log.EditInsulinLogActivity
+import com.axel_stein.glucose_tracker.ui.edit.edit_medication_log.EditMedicationLogActivity
+import com.axel_stein.glucose_tracker.ui.edit.edit_note.EditNoteActivity
 
 class App: Application() {
     companion object {

@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.axel_stein.glucose_tracker.RxImmediateSchedulerRule
-import com.axel_stein.glucose_tracker.data.model.GlucoseLog
+import com.axel_stein.glucose_tracker.data.room.model.GlucoseLog
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
 import com.axel_stein.glucose_tracker.data.room.dao.A1cLogDao
 import com.axel_stein.glucose_tracker.data.room.dao.GlucoseLogDao
@@ -45,7 +45,7 @@ class StatisticsViewModelTest {
         a1cDao = db.a1cDao()
 
         appSettings = AppSettings(context)
-        appResources = AppResources(context, appSettings)
+        appResources = AppResources(context)
     }
 
     @After

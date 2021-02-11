@@ -1,6 +1,6 @@
 package com.axel_stein.glucose_tracker.data.backup
 
-import com.axel_stein.glucose_tracker.data.model.*
+import com.axel_stein.glucose_tracker.data.room.model.*
 
 data class Backup(
     val version: Int,
@@ -13,5 +13,5 @@ data class Backup(
     val medicationLogs: List<MedicationLog>,
     val insulinList: List<Insulin>,
     val insulinLogs: List<InsulinLog>,
-    val weightLogs: List<WeightLog>
+    val weightLogs: List<WeightLog>,
 )

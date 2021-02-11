@@ -14,6 +14,8 @@
         <item quantity="one">%1$s fiala</item>
         <item quantity="other">%1$s fiale</item>
     </plurals>
+    <string name="ap_suffix">mm Hg</string>
+    <string name="app_name">Diabetes Tracker</string>
     <string name="bmi_category_normal_weight">Normale</string>
     <string name="bmi_category_obese_1">Obesi di classe I</string>
     <string name="bmi_category_obese_2">Obesi di classe II</string>
@@ -102,14 +104,17 @@
     <string name="hint_active_insulin_list">Attivi</string>
     <string name="hint_active_medications">Attivi</string>
     <string name="hint_amount">Quantità</string>
+    <string name="hint_diastolic">Diastolica</string>
     <string name="hint_dosage">Dosaggio</string>
     <string name="hint_dosage_form">Forma di dosaggio</string>
     <string name="hint_indicate_height">Imposta la tua altezza nelle impostazioni per il calcolo dell\'IMC</string>
     <string name="hint_insulin_type">Tipo di insulina</string>
     <string name="hint_note">Nota</string>
+    <string name="hint_pulse">Polso</string>
     <string name="hint_sugar_level">Livello di zucchero</string>
     <string name="hint_suspended_insulin_list">Sospesi</string>
     <string name="hint_suspended_medications">Sospesi</string>
+    <string name="hint_systolic">Sistolica</string>
     <string name="hint_title">Titolo</string>
     <string name="hint_units">Numero di unità</string>
     <string name="hint_weight">Peso</string>
@@ -187,6 +192,7 @@
         <item quantity="one">%1$s pacchetto</item>
         <item quantity="other">%1$s pacchetti</item>
     </plurals>
+    <string name="plus_pref_ap">Pressione arteriosa e polso</string>
     <string name="plus_pref_insulin_list">Farmaci per insulina</string>
     <string name="plus_pref_medications">Farmaci</string>
     <string name="plus_pref_weight">Peso</string>

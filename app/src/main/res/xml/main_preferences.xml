@@ -21,14 +21,30 @@
         app:summary="%s"
         app:title="@string/main_pref_glucose_units" />
 
+    <ListPreference
+        android:entries="@array/measurement_system_entries"
+        app:defaultValue="metric"
+        app:entryValues="@array/measurement_system_values"
+        app:iconSpaceReserved="false"
+        app:key="measurement_system"
+        app:summary="%s"
+        app:title="@string/main_pref_measurement_system"/>
+
     <EditTextPreference
         android:inputType="number"
-        app:dialogLayout="@layout/layout_edit_height"
+        app:dialogLayout="@layout/layout_edit_height_metric"
         app:dialogTitle="@null"
         app:iconSpaceReserved="false"
         app:key="height"
         app:summary="@string/main_pref_height_summary"
         app:title="@string/main_pref_height"/>
+
+    <Preference
+        app:isPreferenceVisible="false"
+        app:iconSpaceReserved="false"
+        app:summary="@string/main_pref_height_summary"
+        app:title="@string/main_pref_height"
+        app:key="height_imperial"/>
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -49,14 +65,6 @@
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/main_pref_category_google_drive">
-
-        <SwitchPreference
-            app:iconSpaceReserved="false"
-            app:isPreferenceVisible="false"
-            app:key="drive_auto_sync"
-            app:summary="@string/main_pref_auto_sync_summary"
-            app:title="@string/main_pref_auto_sync"
-            tools:isPreferenceVisible="true" />
 
         <Preference
             app:iconSpaceReserved="false"

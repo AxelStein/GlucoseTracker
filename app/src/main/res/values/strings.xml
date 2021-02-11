@@ -14,7 +14,12 @@
         <item quantity="one">%1$s ampule</item>
         <item quantity="other">%1$s ampules</item>
     </plurals>
+<<<<<<< HEAD
     <string name="app_name" translatable="false">Glucose Tracker</string>
+=======
+    <string name="ap_suffix">mm Hg</string>
+    <string name="app_name">Diabetes Tracker</string>
+>>>>>>> dev
     <string name="app_version" translatable="false">1.0.8</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Obese Class I</string>
@@ -94,6 +99,7 @@
     <string name="fab_menu_insulin">Insulin intake</string>
     <string name="fab_menu_medication">Medication intake</string>
     <string name="fab_menu_note">Note</string>
+    <string name="feet_suffix" translatable="false">ft</string>
     <string name="glucose_unit_mg_dl">mg/dL</string>
     <string name="glucose_unit_mmol_l">mmol/L</string>
     <plurals name="gram">
@@ -105,18 +111,23 @@
     <string name="hint_active_insulin_list">Active</string>
     <string name="hint_active_medications">Active medications</string>
     <string name="hint_amount">Amount</string>
+    <string name="hint_diastolic">Diastolic</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_dosage_form">Dosage form</string>
     <string name="hint_indicate_height">Set your height in settings for calculating BMI</string>
     <string name="hint_insulin_type">Insulin type</string>
     <string name="hint_note">Note</string>
+    <string name="hint_pulse">Pulse</string>
     <string name="hint_sugar_level">Sugar level</string>
     <string name="hint_suspended_insulin_list">Suspended</string>
     <string name="hint_suspended_medications">Suspended medications</string>
+    <string name="hint_systolic">Systolic</string>
     <string name="hint_title">Title</string>
     <string name="hint_units">Number of units</string>
     <string name="hint_weight">Weight</string>
     <string name="humalog">Humalog</string>
+    <string name="imperial">Imperial</string>
+    <string name="inches_suffix" translatable="false">in</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -143,6 +154,7 @@
     <string name="main_pref_import_backup">Import from file</string>
     <string name="main_pref_import_drive">Import backup</string>
     <string name="main_pref_last_synced">Last sync</string>
+    <string name="main_pref_measurement_system">System of measurement</string>
     <string name="main_pref_rate_app">Rate app</string>
     <string name="main_pref_theme">Theme</string>
     <string name="measured_after_breakfast">After breakfast</string>
@@ -155,6 +167,7 @@
     <string name="message_drive_export">All data on Google Drive will be replaced.</string>
     <string name="message_import_backup">All data on this device will be replaced.</string>
     <string name="metformin">Metformin</string>
+    <string name="metric">Metric</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>
@@ -192,6 +205,7 @@
         <item quantity="other">%1$s packets</item>
     </plurals>
     <string name="plus_pref_a1c" translatable="false">HbA1c</string>
+    <string name="plus_pref_ap">Blood pressure and pulse</string>
     <string name="plus_pref_insulin_list">Insulin medications</string>
     <string name="plus_pref_medications">Medications</string>
     <string name="plus_pref_weight">Weight</string>

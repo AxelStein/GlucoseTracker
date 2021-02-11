@@ -59,7 +59,7 @@ class StatisticsFragment: Fragment() {
     }
 
     private fun setupStatsView() {
-        viewModel.statsLiveData.observe(viewLifecycleOwner, { stats ->
+        viewModel.glucoseStatisticsLiveData.observe(viewLifecycleOwner, { stats ->
             if (stats != null) {
                 binding.min.text = stats.minFormatted
                 binding.max.text = stats.maxFormatted
@@ -100,7 +100,10 @@ class StatisticsFragment: Fragment() {
         setupChartView(binding.chart)
         binding.chartTypeSpinner.onItemSelectedListener = setItemSelectedListener {
             viewModel.setChartType(it)
-            binding.chartPeriodSpinner.visibility = if (it < 2) VISIBLE else INVISIBLE
+            binding.chartPeriodSpinner.visibility = when (it) {
+                0, 1, 4, 5 -> VISIBLE
+                else -> INVISIBLE
+            }
         }
         binding.chartPeriodSpinner.onItemSelectedListener = setItemSelectedListener {
             viewModel.setChartPeriod(it)
@@ -132,17 +135,12 @@ class StatisticsFragment: Fragment() {
         chart.clear()
         if (data != null) {
             val lineData = data.getLineData()
-            val maxValue = data.getMaxValue()
             chart.xAxis.granularity = 1f
             chart.xAxis.labelCount = lineData.entryCount
-            chart.axisLeft.axisMinimum = 0f
-            chart.axisLeft.axisMaximum = maxValue.plus(maxValue.times(0.25f))
             chart.data = lineData
             chart.xAxis.valueFormatter = LabelValueFormatter(data.getLabels())
             setChartLimitLines(binding.chart, data.getLimits())
             chart.setVisibleXRange(0f, 10f)
-            chart.setVisibleYRange(0f, chart.axisLeft.axisMaximum, chart.axisLeft.axisDependency)
-            chart.animateX(400)
         }
     }
 

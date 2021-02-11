@@ -14,6 +14,8 @@
         <item quantity="one">%1$s Ampule</item>
         <item quantity="other">%1$s Ampullen</item>
     </plurals>
+    <string name="ap_suffix">mm Hg</string>
+    <string name="app_name">Diabetes Tracker</string>
     <string name="bmi_category_normal_weight">Normal</string>
     <string name="bmi_category_obese_1">Übergewichtige Klasse I.</string>
     <string name="bmi_category_obese_2">Übergewichtige Klasse II</string>
@@ -102,14 +104,17 @@
     <string name="hint_active_insulin_list">Aktive</string>
     <string name="hint_active_medications">Aktive</string>
     <string name="hint_amount">Menge</string>
+    <string name="hint_diastolic">Diastolysch</string>
     <string name="hint_dosage">Dosierung</string>
     <string name="hint_dosage_form">Darreichungsform</string>
     <string name="hint_indicate_height">Stellen Sie Ihre Körpergröße in den Einstellungen zur Berechnung des BMI ein</string>
     <string name="hint_insulin_type">Insulintyp</string>
     <string name="hint_note">Hinweis</string>
+    <string name="hint_pulse">Puls</string>
     <string name="hint_sugar_level">Zuckergehalt</string>
     <string name="hint_suspended_insulin_list">Suspendierte</string>
     <string name="hint_suspended_medications">Suspendierteente</string>
+    <string name="hint_systolic">Systolisch</string>
     <string name="hint_title">Titel</string>
     <string name="hint_units">Anzahl der Einheiten</string>
     <string name="hint_weight">Gewicht</string>
@@ -187,6 +192,7 @@
         <item quantity="one">%1$s Paket</item>
         <item quantity="other">%1$s Pakete</item>
     </plurals>
+    <string name="plus_pref_ap">Blutdruck und Puls</string>
     <string name="plus_pref_insulin_list">Insulinmedikamente</string>
     <string name="plus_pref_medications">Medikamente</string>
     <string name="plus_pref_weight">Gewicht</string>

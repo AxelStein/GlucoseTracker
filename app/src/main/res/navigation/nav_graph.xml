@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/medication_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.medication_list.MedicationListFragment"
+        android:name="com.axel_stein.glucose_tracker.ui.list.medication_list.MedicationListFragment"
         android:label="@string/plus_pref_medications">
         <action
             android:id="@+id/action_add_medication"
@@ -52,7 +52,7 @@
 
     <activity
         android:id="@+id/edit_medication_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_medication.EditMedicationActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_medication.EditMedicationActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/insulin_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.insulin_list.InsulinListFragment"
+        android:name="com.axel_stein.glucose_tracker.ui.list.insulin_list.InsulinListFragment"
         android:label="@string/plus_pref_insulin_list">
         <action
             android:id="@+id/action_add_insulin"
@@ -73,7 +73,7 @@
 
     <activity
         android:id="@+id/edit_insulin_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin.EditInsulinActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_insulin.EditInsulinActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/a1c_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.a1c_list.A1cListFragment"
+        android:name="com.axel_stein.glucose_tracker.ui.list.a1c_list.A1cListFragment"
         android:label="@string/plus_pref_a1c">
         <action
             android:id="@+id/action_add_a1c"
@@ -94,57 +94,64 @@
 
     <activity
         android:id="@+id/edit_glucose_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_glucose.EditGlucoseActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_glucose.EditGlucoseActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_glucose"
         app:destination="@+id/edit_glucose_activity" />
+
     <action
         android:id="@+id/action_edit_glucose"
         app:destination="@+id/edit_glucose_activity" />
 
     <activity
         android:id="@+id/edit_note_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_note.EditNoteActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_note.EditNoteActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_note"
         app:destination="@+id/edit_note_activity" />
+
     <action
         android:id="@+id/action_edit_note"
         app:destination="@+id/edit_note_activity" />
 
     <activity
         android:id="@+id/edit_a1c_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_a1c.EditA1cActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_a1c.EditA1cActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_edit_a1c"
         app:destination="@id/edit_a1c_activity" />
 
     <activity
         android:id="@+id/edit_insulin_log_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_insulin_log.EditInsulinLogActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_insulin_log.EditInsulinLogActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_insulin_log"
         app:destination="@+id/edit_insulin_log_activity" />
+
     <action
         android:id="@+id/action_edit_insulin_log"
         app:destination="@+id/edit_insulin_log_activity" />
@@ -152,28 +159,31 @@
     <activity
         android:id="@+id/settings_activity"
         android:name="com.axel_stein.glucose_tracker.ui.settings.SettingsActivity" />
+
     <action
         android:id="@+id/action_open_settings"
         app:destination="@id/settings_activity" />
 
     <activity
         android:id="@+id/edit_medication_log_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_medication_log.EditMedicationLogActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_medication_log.EditMedicationLogActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_add_medication_log"
         app:destination="@+id/edit_medication_log_activity" />
+
     <action
         android:id="@+id/action_edit_medication_log"
         app:destination="@+id/edit_medication_log_activity" />
 
     <fragment
         android:id="@+id/weight_list_fragment"
-        android:name="com.axel_stein.glucose_tracker.ui.weight_list.WeightListFragment"
+        android:name="com.axel_stein.glucose_tracker.ui.list.weight_list.WeightListFragment"
         android:label="@string/plus_pref_weight">
         <action
             android:id="@+id/action_add_weight"
@@ -185,14 +195,14 @@
 
     <activity
         android:id="@+id/edit_weight_activity"
-        android:name="com.axel_stein.glucose_tracker.ui.edit_weight.EditWeightActivity">
+        android:name="com.axel_stein.glucose_tracker.ui.edit.edit_weight.EditWeightActivity">
         <argument
             android:name="id"
             android:defaultValue="0L"
             app:argType="long" />
     </activity>
+
     <action
         android:id="@+id/action_edit_weight_log"
         app:destination="@+id/edit_weight_activity" />
-
 </navigation>

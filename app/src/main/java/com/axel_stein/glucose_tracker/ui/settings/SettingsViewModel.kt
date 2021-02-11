@@ -10,20 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.axel_stein.glucose_tracker.R
 import com.axel_stein.glucose_tracker.data.backup.BackupHelper
-import com.axel_stein.glucose_tracker.data.google_drive.DriveWorker
+import com.axel_stein.glucose_tracker.data.backup.BackupHelper.Companion.BACKUP_FILE_NAME
 import com.axel_stein.glucose_tracker.data.google_drive.GoogleDriveService
 import com.axel_stein.glucose_tracker.ui.App
 import com.axel_stein.glucose_tracker.utils.readStrFromFileUri
 import com.axel_stein.glucose_tracker.utils.ui.Event
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 class SettingsViewModel(app: App) : AndroidViewModel(app) {
     companion object {
@@ -33,9 +28,6 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
 
     private val showProgressBar = MutableLiveData(false)
     val showProgressBarLiveData: LiveData<Boolean> = showProgressBar
-
-    private val showAutoSync = MutableLiveData(false)
-    val showAutoSyncLiveData: LiveData<Boolean> = showAutoSync
 
     private val lastSyncTime = MutableLiveData(0L)
     val lastSyncTimeLiveData: LiveData<Long> = lastSyncTime
@@ -48,9 +40,6 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     private var lastAction = ""
 
     init {
-        if (driveService.hasPermissions()) {
-            showAutoSync.value = true
-        }
         updateLastSyncTime()
     }
 
@@ -94,7 +83,6 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
             }
 
             CODE_REQUEST_PERMISSIONS -> {
-                showAutoSync.value = true
                 updateLastSyncTime()
 
                 when (lastAction) {
@@ -124,7 +112,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     @SuppressLint("CheckResult")
     private fun driveCreateBackup() {
         backupHelper.createBackup()
-            .flatMapCompletable { file -> driveService.uploadFile(backupHelper.backupFileName, file) }
+            .flatMapCompletable { file -> driveService.uploadFile(BACKUP_FILE_NAME, file) }
             .observeOn(mainThread())
             .doOnSubscribe { showProgressBar(true) }
             .doOnComplete { updateLastSyncTime() }
@@ -148,7 +136,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
 
     @SuppressLint("CheckResult")
     private fun driveImportBackup() {
-        driveService.downloadFile(backupHelper.backupFileName)
+        driveService.downloadFile(BACKUP_FILE_NAME)
             .flatMapCompletable { data -> backupHelper.importBackup(data) }
             .observeOn(mainThread())
             .doOnSubscribe { showProgressBar(true) }
@@ -164,7 +152,7 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
     @SuppressLint("CheckResult")
     private fun updateLastSyncTime() {
         if (driveService.hasPermissions()) {
-            driveService.getLastSyncTime(backupHelper.backupFileName)
+            driveService.getLastSyncTime(BACKUP_FILE_NAME)
                 .observeOn(mainThread())
                 .doOnSubscribe { showProgressBar(true) }
                 .doFinally { showProgressBar(false) }
@@ -173,23 +161,6 @@ class SettingsViewModel(app: App) : AndroidViewModel(app) {
                 }, {
                     it.printStackTrace()
                 })
-        }
-    }
-
-    fun enableAutoSync(enable: Boolean) {
-        val tag = "com.axel_stein.drive_worker"
-        val wm = WorkManager.getInstance(getApplication())
-        if (enable) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            val request = PeriodicWorkRequestBuilder<DriveWorker>(1, TimeUnit.DAYS)
-                .setConstraints(constraints)
-                .addTag(tag)
-                .build()
-            wm.enqueue(request)
-        } else {
-            wm.cancelAllWorkByTag(tag)
         }
     }
 

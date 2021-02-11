@@ -7,10 +7,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.axel_stein.glucose_tracker.R
+import com.axel_stein.glucose_tracker.data.google_drive.DriveWorkerScheduler
 import com.axel_stein.glucose_tracker.data.room.AppDatabase
-import com.axel_stein.glucose_tracker.data.room.LogRepository
 import com.axel_stein.glucose_tracker.data.room.dao.*
 import com.axel_stein.glucose_tracker.data.room.migration_1_2
+import com.axel_stein.glucose_tracker.data.room.repository.LogRepository
 import com.axel_stein.glucose_tracker.data.settings.AppResources
 import com.axel_stein.glucose_tracker.data.settings.AppSettings
 import com.google.gson.*
@@ -23,21 +24,21 @@ import java.lang.reflect.Type
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val ctx: Context) {
+class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun provideDB(): AppDatabase {
-        return Room.databaseBuilder(ctx, AppDatabase::class.java, ctx.packageName)
+        return Room.databaseBuilder(context, AppDatabase::class.java, context.packageName)
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     Completable.fromAction {
                         db.insert("medication_list", CONFLICT_IGNORE, ContentValues().apply {
-                            put("title", ctx.getString(R.string.metformin))
+                            put("title", context.getString(R.string.metformin))
                             put("dosage", 500f)
                             put("dosage_unit", 0)
                         })
                         db.insert("insulin_list", CONFLICT_IGNORE, ContentValues().apply {
-                            put("title", ctx.getString(R.string.humalog))
+                            put("title", context.getString(R.string.humalog))
                         })
                     }.subscribeOn(io()).subscribe()
                 }
@@ -47,9 +48,12 @@ class AppModule(private val ctx: Context) {
     }
 
     @Provides
+    fun provideAppContext(): Context = context
+
+    @Provides
     @Singleton
     fun provideLogRepository(db: AppDatabase, dao: LogDao): LogRepository {
-        return LogRepository(ctx, db, dao)
+        return LogRepository(context, db, dao)
     }
 
     @Provides
@@ -92,13 +96,13 @@ class AppModule(private val ctx: Context) {
     @Provides
     @Singleton
     fun provideAppSettings(): AppSettings {
-        return AppSettings(ctx)
+        return AppSettings(context)
     }
 
     @Provides
     @Singleton
-    fun provideAppResources(settings: AppSettings): AppResources {
-        return AppResources(ctx, settings)
+    fun provideAppResources(): AppResources {
+        return AppResources(context)
     }
 
     @Provides
@@ -142,4 +146,7 @@ class AppModule(private val ctx: Context) {
     fun provideWeightLogDao(db: AppDatabase): WeightLogDao {
         return db.weightLogDao()
     }
+
+    @Provides
+    fun provideDriveWorkerScheduler() = DriveWorkerScheduler(context)
 }

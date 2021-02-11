@@ -3,7 +3,7 @@ package com.axel_stein.glucose_tracker.data.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.axel_stein.glucose_tracker.data.model.*
+import com.axel_stein.glucose_tracker.data.room.model.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -106,7 +106,6 @@ interface LogDao {
         select substr(date_time, 1, 4) as year from glucose_log union
         select substr(date_time, 1, 4) as year from a1c_log union
         select substr(date_time, 1, 4) as year from note_log union
-        
         select substr(date_time, 1, 4) as year from insulin_log union
         select substr(date_time, 1, 4) as year from medication_log union
         select substr(date_time, 1, 4) as year from weight_log

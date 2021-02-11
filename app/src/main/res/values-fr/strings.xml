@@ -14,6 +14,8 @@
         <item quantity="one">%1$s ampule</item>
         <item quantity="other">%1$s ampules</item>
     </plurals>
+    <string name="ap_suffix">mm Hg</string>
+    <string name="app_name">Diabetes Tracker</string>
     <string name="bmi_category_normal_weight">Normale</string>
     <string name="bmi_category_obese_1">Obèse classe I</string>
     <string name="bmi_category_obese_2">Obèse classe II</string>
@@ -102,18 +104,22 @@
     <string name="hint_active_insulin_list">Actifs</string>
     <string name="hint_active_medications">Actifs</string>
     <string name="hint_amount">Nombre</string>
+    <string name="hint_diastolic">Diastolique</string>
     <string name="hint_dosage">Dosage</string>
     <string name="hint_dosage_form">Forme galénique</string>
     <string name="hint_indicate_height">Veuillez indiquer votre taille dans les paramètres pour calculer l\'IMC</string>
     <string name="hint_insulin_type">Type d\'insuline</string>
     <string name="hint_note">Note</string>
+    <string name="hint_pulse">Pouls</string>
     <string name="hint_sugar_level">Niveau de sucre</string>
     <string name="hint_suspended_insulin_list">Inactifs</string>
     <string name="hint_suspended_medications">Inactifs</string>
+    <string name="hint_systolic">Systolique</string>
     <string name="hint_title">Titre</string>
     <string name="hint_units">Nombre d\'unités</string>
     <string name="hint_weight">Poids</string>
     <string name="humalog">Humalog</string>
+    <string name="imperial">Impérial</string>
     <plurals name="injection">
         <item quantity="one">%1$s injection</item>
         <item quantity="other">%1$s injections</item>
@@ -139,6 +145,7 @@
     <string name="main_pref_import_backup">Importer depuis un fichier</string>
     <string name="main_pref_import_drive">Importer une sauvegarde</string>
     <string name="main_pref_last_synced">Dernière synchronisation</string>
+    <string name="main_pref_measurement_system">Système de mesure</string>
     <string name="main_pref_rate_app">Évaluer l\'application</string>
     <string name="main_pref_theme">Thème</string>
     <string name="measured_after_breakfast">Après le petit-déj\'.</string>
@@ -151,6 +158,7 @@
     <string name="message_drive_export">Toutes les données sur Google Drive seront remplacées.</string>
     <string name="message_import_backup">Toutes les données de cet appareil seront remplacées.</string>
     <string name="metformin">Metformine</string>
+    <string name="metric">Métrique</string>
     <plurals name="ml">
         <item quantity="one">%1$s ml</item>
         <item quantity="other">%1$s ml</item>
@@ -187,6 +195,7 @@
         <item quantity="one">%1$s paquet</item>
         <item quantity="other">%1$s paquets</item>
     </plurals>
+    <string name="plus_pref_ap">Pression artérielle et pouls</string>
     <string name="plus_pref_insulin_list">Médicaments d\'insuline</string>
     <string name="plus_pref_medications">Médicaments</string>
     <string name="plus_pref_weight">Poids</string>
